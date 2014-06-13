@@ -1,0 +1,40 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require bootstrap_and_overrides
+ *= require bootstrap.min.css
+ *= require_tree .
+ *= require_self
+ */
+
+.left{
+  float:left;
+}
+
+.oneeightyWidth{
+  max-width:1080px;
+  width:100%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.center{
+  text-align:center;
+}
+
+.textLeft{
+  text-align:left;
+}
+
+.paddingTop10{
+  padding-top:10px;
+}

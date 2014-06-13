@@ -1,0 +1,75 @@
+<div class="textLeft ">
+<%= form_for @exam, html:{role: 'form', class: 'form-horizontal'} do |f| %>
+  <div class="form-group">
+    <%= f.label :name, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :name, class: 'form-control col-sm-4' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :subject_id, class: 'col-sm-2 control-label' %> 
+    <div class="col-sm-4">
+      <%= f.text_field :subject_id, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :conducted_by, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :conducted_by, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :marks, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :marks, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :exam_date, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :exam_date, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :duration, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :duration, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :exam_type, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :exam_type, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :std, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :std, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :remark, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :remark, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :is_result_decleared, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.check_box :is_result_decleared, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :is_completed, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.check_box :is_completed, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group" style="margin-top:10px;">
+    <div class="col-sm-offset-2">
+      <%= f.submit 'Save' , class: 'btn btn-default'%>
+      <%= link_to "Cancle", exams_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<%- end %>

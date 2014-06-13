@@ -1,0 +1,58 @@
+<div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Name</th>
+	<th>Subject Name</th>
+	<th>Conducted By</th>
+	<th>Marks</th>
+	<th>Date</th>
+	<th>Duration</th>
+	<th>Type</th>
+	<th>Class</th>
+	<th>Remark</th>
+	<th>Actions</th>
+      </tr>
+    </thead>
+    <%- @exams.each_with_index do |exam, index| %>
+      <tr>
+	<td>
+	  <%= index %>
+	</td>
+	<td>
+	  <%= exam.name %>
+	</td>
+	<td>
+	  <%= exam.subject.name %>
+	</td>
+	<td>
+	  <%= exam.conducted_by %>
+	</td>
+	<td>
+	  <%= exam.marks %>
+	</td>
+	<td>
+	  <%= exam.exam_date.to_date %>
+	</td>
+	<td>
+	  <%= exam.duration %>
+	</td>
+	<td>
+	  <%= exam.exam_type %>
+	</td>
+	<td>
+	  <%= exam.std %>
+	</td>
+	<td>
+	  <%= exam.remark %>
+	</td>
+	<td>
+	  <%= link_to 'Show', exam_path(exam) %>
+	  <%= link_to 'Edit exam', edit_exam_path(exam) %>
+	</td>
+      </tr>
+    <%- end %>
+  </table>
+</div>
+<%= link_to 'New Exam', new_exam_path, class: 'btn btn-primary' %>

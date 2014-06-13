@@ -1,0 +1,76 @@
+<div class="textLeft ">
+  <%= form_for @student, html:{role: 'form', class: 'form-horizontal'}  do |f| %>
+    <div class="form-group">
+      <%= f.label :first_name, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :first_name %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :last_name, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :last_name %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :std, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :std %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :email, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.email_field :email %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :mobile, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :mobile %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :parent_name, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :parent_name %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :p_mobile, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :p_mobile %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :p_email, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :p_email %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :address, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_area :address %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :group, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :group %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :rank, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :rank %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+	<%= f.submit 'Save'%>
+	<%= link_to 'Cancel', students_path %>
+      </div>
+    </div>
+  <%- end %>
+</div>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      Exam <%= @exam.name %> result has been announsed and your child <%= @student.name %> got <%= @exam.exam_student_marks(@student) %> out of <%= @exam.marks %>
+    </p>
+    <p>
+      Please contact to teachers to more performance 
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>

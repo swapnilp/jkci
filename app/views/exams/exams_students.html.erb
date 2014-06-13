@@ -1,0 +1,22 @@
+<div class="textLeft ">
+  <h2>Add Absunt Student </h2>
+  <h4><%= @exam.name %></h4>
+  <%= form_tag add_exam_results_path(@exam), method: :get, html:{role: 'form', class: 'form-horizontal'}  do %>
+    <%- @students.each  do  |student| %>
+      <div class="form-group">
+	<div class="col-sm-12">
+	  <div class="col-sm-2">
+	    <%= h student.name %>
+	  </div>
+	  <div class="col-sm-6">
+            <%= text_field_tag "students_results[#{student.id}]", '', class: 'form-control' %>
+	  </div>
+	</div>
+      </div>
+    <%- end %>
+    <div class="form-group">
+      <%= submit_tag 'Save', class: 'btn btn-default' %>
+      <%= link_to 'Back', exam_path(@exam), class: 'btn btn-warning' %>
+    </div>
+  <%- end %>
+</div>

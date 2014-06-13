@@ -1,0 +1,16 @@
+<div class="textLeft col-sm-12">
+  <h2>Add Absunt Student </h2>
+  <%= @exam.name %>
+  <%= form_tag add_exam_absent_students_path(@exam), method: :get, html:{role: 'form', class: 'form-horizontal left'} do %>
+    <%- @students.each  do  |student| %>
+      <div class="form-group">
+        <%= check_box_tag "students_ids[#{student.id}]", student.id %>
+        <%= h student.name %>
+      </div>
+    <%- end %>
+    <div class="form-group">
+      <%= submit_tag 'Save', class: 'btn btn-default' %>
+      <%= link_to 'Back', exam_path(@exam) , class: 'btn btn-warning'%>
+    </div>
+  <%- end %>
+</div>

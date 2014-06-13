@@ -1,0 +1,26 @@
+<%= form_for @teacher do |f| %>
+  <div>
+    <span>First Name : </span>
+    <%= f.text_field :first_name %>
+  </div>
+  <div>
+    <span> Last Name</span>
+    <%= f.text_field :last_name %>
+  </div>
+  <div>
+    <span>Mobile</span>
+    <%= f.text_field :mobile %>
+  </div>
+  <div>
+    <span>Email</span>
+    <%= f.email_field :email %>
+  </div>
+  <div>
+    <span>Address</span>
+    <%= f.text_area :address %>
+  </div>
+  <div>
+    <%= f.submit 'Save' %>
+    <%= link_to 'Cancel', teachers_path %>
+  </div>
+<%- end %>
