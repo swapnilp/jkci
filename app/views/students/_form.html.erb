@@ -15,7 +15,7 @@
     <div class="form-group">
       <%= f.label :std, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">
-	<%= f.text_field :std %>
+	<%= f.select :std , options_for_select([ "11", "12" ], "11") %>
       </div>
     </div>
     <div class="form-group">
@@ -57,7 +57,7 @@
     <div class="form-group">
       <%= f.label :group, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">
-	<%= f.text_field :group %>
+	<%= f.select :group, options_for_select([ "PCB", "PCM", "PCMB" ], "PCMB") %>
       </div>
     </div>
     <div class="form-group">

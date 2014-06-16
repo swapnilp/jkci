@@ -9,7 +9,8 @@
   <div class="form-group">
     <%= f.label :subject_id, class: 'col-sm-2 control-label' %> 
     <div class="col-sm-4">
-      <%= f.text_field :subject_id, class: 'form-control' %>
+      <%= f.select :subject_id, options_from_collection_for_select(@subjects, "id", "name", f.object.subject_id) %>
+      <%# f.text_field :subject_id, class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">
@@ -45,7 +46,7 @@
   <div class="form-group">
     <%= f.label :std, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.text_field :std, class: 'form-control' %>
+      <%= f.select :std , options_for_select([ "11", "12" ], "11"), class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">

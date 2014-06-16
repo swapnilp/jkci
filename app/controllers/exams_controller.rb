@@ -6,6 +6,7 @@ class ExamsController < ApplicationController
   
   def new
     @exam = Exam.new
+    @subjects = Subject.all
   end
 
   def show
@@ -21,6 +22,7 @@ class ExamsController < ApplicationController
   end
 
   def edit
+    @subjects = Subject.all
     @exam = Exam.where(id: params[:id]).first
   end
   
