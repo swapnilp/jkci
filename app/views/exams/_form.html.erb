@@ -28,7 +28,11 @@
   <div class="form-group">
     <%= f.label :exam_date, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.text_field :exam_date, class: 'form-control' %>
+      <div class='input-group date' id='datetimepicker1' data-date-format="YYYY-MM-DD HH:MM">
+	<%= f.text_field :exam_date , class: 'form-control', readonly: true, value: "#{f.object.exam_date.strftime('%F %H:%M') unless f.object.exam_date.nil? }" %>
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
     </div>
   </div>
   <div class="form-group">
@@ -74,3 +78,11 @@
     </div>
   </div>
 <%- end %>
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker1').datetimepicker({
+      minDate: "1/1/<%= Date.today.year %>",
+      maxDate: "31/12/<%= Date.today.year %>",
+    });
+  });
+</script>
