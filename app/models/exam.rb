@@ -19,13 +19,13 @@ class Exam < ActiveRecord::Base
       if marks.present?
         exam_result = ExamResult.new({exam_id: self.id, student_id: id, marks: marks, sms_sent: false, email_sent: false, late_attend: false})
         exam_result.save
-        self.delay.send_result_email(self, exam_result.student)
+        self.send_result_email(self, exam_result.student)
       end
     end
   end
 
   def send_result_email(exam, student)
-    UserMailer.send_result(exam, student)
+    UserMailer.delay.send_result(exam, student)
   end
 
   def exam_student_marks(student)
@@ -33,5 +33,5 @@ class Exam < ActiveRecord::Base
     result.marks    
   end
 
-  handle_asynchronously :send_result_email
+  handle_asynchronously :send_result_email, :priority => 20
 end

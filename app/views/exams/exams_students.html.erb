@@ -1,5 +1,5 @@
 <div class="textLeft ">
-  <h2>Add Absunt Student </h2>
+  <h2>Add Results </h2>
   <h4><%= @exam.name %></h4>
   <%= form_tag add_exam_results_path(@exam), method: :get, html:{role: 'form', class: 'form-horizontal'}  do %>
     <%- @students.each  do  |student| %>
@@ -19,4 +19,26 @@
       <%= link_to 'Back', exam_path(@exam), class: 'btn btn-warning' %>
     </div>
   <%- end %>
+</div>
+
+<div class="textLeft">
+  <h2>Absent Student</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Name</th>
+	<th>Parent Mobile</th>
+	<th>Actions</th>
+      </tr>
+    </thead>
+    <%- @absent_students.each_with_index do |student, index| %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= student.name %></td>
+      <td><%= student.p_mobile %></td>
+      <td></td>
+    </tr>
+    <%- end %>
+  </table>
 </div>
