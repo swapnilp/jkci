@@ -68,8 +68,8 @@
     </div>
     <div class="form-group">
       <div class="col-sm-offset-2">
-	<%= f.submit 'Save'%>
-	<%= link_to 'Cancel', students_path %>
+	<%= f.submit 'Save' , class: 'btn btn-default'%>
+	<%= link_to "Cancel", students_path, class: 'btn btn-warning' %>
       </div>
     </div>
   <%- end %>
