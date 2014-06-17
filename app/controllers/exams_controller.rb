@@ -57,9 +57,10 @@ class ExamsController < ApplicationController
   def exams_students
     @exam = Exam.where(id: params[:id]).first
     ids = [0] << @exam.exam_absents.map(&:student_id) 
+    @absent_students = @exam.students.where('id in (?)',  ids.flatten)
     ids << @exam.exam_results.map(&:student_id)
     @students = @exam.students.where('id not in (?)', ids.flatten)
-    @absent_students = @exam.students.where('id in (?)', ids.flatten)
+    
   end
 
   def add_exam_results
