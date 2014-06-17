@@ -19,8 +19,14 @@ class Exam < ActiveRecord::Base
       if marks.present?
         exam_result = ExamResult.new({exam_id: self.id, student_id: id, marks: marks, sms_sent: false, email_sent: false, late_attend: false})
         exam_result.save
-        self.send_result_email(self, exam_result.student)
+        #self.send_result_email(self, exam_result.student)
       end
+    end
+  end
+
+  def publish_results
+    self.exam_results.each do |exam_result|
+      self.send_result_email(self, exam_result.student)
     end
   end
 

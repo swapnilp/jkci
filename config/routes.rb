@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'exam/:id/exam_students' => "exams#exams_students", as: 'exams_students'
   get 'exam/:id/add_absent_students' => "exams#add_absunt_students", as: 'add_exam_absent_students'
   get 'exam/:id/add_exam_results' => "exams#add_exam_results", as: 'add_exam_results'
+  get 'exam/:id/publish_exam_result' => "exams#publish_exam_result", as: "publish_result"
   resources :exam_absents, only: [:destroy]
   resources :exam_results, only: [:destroy]
 

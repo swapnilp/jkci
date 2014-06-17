@@ -68,4 +68,13 @@ class ExamsController < ApplicationController
     @exam.add_exam_results(params[:students_results])
     redirect_to exam_path(@exam)
   end
+
+  def publish_exam_result
+    @exam = Exam.where(id: params[:id]).first
+    if @exam
+      @exam.publish_results
+      @exam.update({is_result_decleared: true, is_completed: true})
+    end
+    redirect_to exams_path
+  end
 end

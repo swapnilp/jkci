@@ -36,8 +36,8 @@
   <div class="col-sm-12 textLeft paddingTop10">
     <%= link_to "Add Exam Result" , exams_students_path(@exam), class: 'btn btn-primary btn-sm' %>
   </div>
-  <div class="col-sm-12 textLeft paddingTop10 hide">
-    <%#= link_to "Send Exam Result", send_exam_result(@exam), class: 'btn btn-primary btn-sm' %>
+  <div class="col-sm-12 textLeft paddingTop10 ">
+    <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
   </div>
   <h2>Absent Students</h2>
   <div class="col-sm-12 textLeft">
