@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140608071308) do
+ActiveRecord::Schema.define(version: 20141001055733) do
+
+  create_table "class_students", force: true do |t|
+    t.integer  "jkci_class_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "daily_teaching_points", force: true do |t|
+    t.integer  "subject_id"
+    t.datetime "date"
+    t.text     "points"
+    t.integer  "teacher_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -68,6 +84,15 @@ ActiveRecord::Schema.define(version: 20140608071308) do
     t.boolean  "is_active",           default: true
   end
 
+  create_table "jkci_classes", force: true do |t|
+    t.string   "class_name"
+    t.datetime "class_start_time"
+    t.datetime "class_end_time"
+    t.integer  "teacher_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "students", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -83,6 +108,7 @@ ActiveRecord::Schema.define(version: 20140608071308) do
     t.datetime "updated_at"
     t.integer  "std"
     t.boolean  "is_active",   default: true
+    t.string   "middle_name"
   end
 
   create_table "subjects", force: true do |t|

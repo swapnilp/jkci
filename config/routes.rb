@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :teachers
   resources :students
   resources :exams
+  resources :jkci_classes
   get 'exam/:id/absent_students' => "exams#absunts_students", as: 'exam_absent_students'
   get 'exam/:id/exam_students' => "exams#exams_students", as: 'exams_students'
   get 'exam/:id/add_absent_students' => "exams#add_absunt_students", as: 'add_exam_absent_students'

@@ -1,0 +1,2 @@
+module JkciClassesHelper
+end

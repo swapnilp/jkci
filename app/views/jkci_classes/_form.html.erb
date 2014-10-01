@@ -1,0 +1,24 @@
+<%= form_for @jkci_class do |f| %>
+  <div>
+    <span>Class Name : </span>
+    <%= f.text_field :class_name %>
+  </div>
+  <div>
+    <span> Class Start Time</span>
+    <%= f.text_field :class_start_time, value:  Time.now %>
+  </div>
+  <div>
+    <span>Class end Time</span>
+    <%= f.text_field :class_end_time, value: Time.now+ 6.months %>
+  </div>
+  <div>
+    <span>Teacher</span>
+    <%= f.select :teacher_id, options_from_collection_for_select(@teachers, "id", "name"), prompt: "Select something" %>
+  </div>
+  
+  <div>
+    <%= f.submit 'Save', class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+    <%= link_to 'Cancel', jkci_classes_path, class: 'btn btn-warning btn-sm'%>
+  </div>
+<%- end %>
+
