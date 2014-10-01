@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001055733) do
+ActiveRecord::Schema.define(version: 20141001190605) do
 
   create_table "class_students", force: true do |t|
     t.integer  "jkci_class_id"
@@ -21,12 +21,11 @@ ActiveRecord::Schema.define(version: 20141001055733) do
   end
 
   create_table "daily_teaching_points", force: true do |t|
-    t.integer  "subject_id"
     t.datetime "date"
     t.text     "points"
-    t.integer  "teacher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "jkci_class_id"
   end
 
   create_table "delayed_jobs", force: true do |t|
@@ -82,6 +81,7 @@ ActiveRecord::Schema.define(version: 20141001055733) do
     t.datetime "updated_at"
     t.string   "name"
     t.boolean  "is_active",           default: true
+    t.integer  "jkci_class_id"
   end
 
   create_table "jkci_classes", force: true do |t|

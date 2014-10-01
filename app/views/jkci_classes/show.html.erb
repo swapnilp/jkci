@@ -1,1 +1,68 @@
+<div class="col-sm-12 textLeft">
+  <div class="col-sm-12 textLeft">
+    <span class="col-sm-2"><h5>Name</h5></span>
+    <span class="col-sm-6 paddingTop10"><%= @jkci_class.class_name %></span>
+  </div>
+  <div class="col-sm-12 textLeft">
+    <span class="col-sm-2"><h5>Start date</h5> </span>
+    <span class="col-sm-6 paddingTop10"><%= @jkci_class.class_start_time %></span>
+  </div>
+  <div class="col-sm-12 textLeft">
+    <span class="col-sm-2"><h5>End Date</h5></span>
+    <span class="col-sm-6 paddingTop10"><%= @jkci_class.class_end_time %></span>
+  </div>
+  <div class="col-sm-12 textLeft">
+    <span class="col-sm-2"><h5>Teacher</h5></span>
+    <span class="col-sm-6 paddingTop10"><%= @jkci_class.teacher.try(:name) %></span>
+  </div>
+
+  
+  <div class="col-sm-12 textLeft paddingTop10">
+    <%= link_to "Edit" , edit_jkci_class_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
+  
+    <%= link_to "Back", jkci_classes_path, class: 'btn btn-warning btn-sm'%>
+  </div>
+
+  <div class="col-sm-12 textLeft paddingTop10">
+    <%= link_to "Daily Points",  class_assign_students_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
+    <%= link_to "Assign Students",  class_assign_students_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
+  </div>
+  <div class="col-sm-4 textLeft">
+    <h1>Students</h1>  
+
+    <div class="textLeft">
+      <%- @jkci_class.students.each_with_index do |student, index| %>
+      <h4><%= index + 1 %>  :  <%= student.name %> 
+	<span style="font-size:12px;">(<%= "#{student.std}- #{student.group}  - #{student.mobile}" %>)</span>
+      </h4>
+      <%- end %>
+    </div>
+  </div>
+  <div class="col-sm-4 textLeft">
+    <h1>Exams</h1>  
+    
+    <div class="textLeft">
+      <%- @jkci_class.exams.each_with_index do |exam, index| %>
+      <a href="<%= exam_path(exam)%>">
+	<h4><%= index + 1 %>  :  <%= exam.exam_date.to_date %> 
+	  <span style="font-size:12px;">(<%= "#{exam.marks}- comp:#{exam.is_completed} - Res:#{exam.is_result_decleared}" %>)</span>
+	</h4>
+      </a>
+      <%- end %>
+    </div>
+  </div>
+  <div class="col-sm-4 textLeft">
+    <h1>Daily Points</h1>  
+    
+    <div class="textLeft">
+      <%- @jkci_class.daily_teaching_points.each_with_index do |exam, dtp| %>
+      <a href="<%= exam_path(exam)%>">
+	<h4><%= index + 1 %>  :  <%= dtp.date.to_date %> 
+	  <span style="font-size:12px;">(<%= "#{dtp.points.truncate(50)}- absent:" %>)</span>
+	</h4>
+      </a>
+      <%- end %>
+    </div>
+  </div>
+</div>
 

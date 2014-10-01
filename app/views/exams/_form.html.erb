@@ -48,6 +48,12 @@
     </div>
   </div>
   <div class="form-group">
+    <%= f.label :jkci_class_id, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.select :jkci_class_id , options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select something", class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
     <%= f.label :std, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
       <%= f.select :std , options_for_select([ "11", "12" ], "11"), class: 'form-control' %>

@@ -3,6 +3,7 @@ class Exam < ActiveRecord::Base
   belongs_to :subject
   has_many :exam_absents
   has_many :exam_results
+  belongs_to :jkci_class
 
   def students
     Student.where(std: std, is_active: true)

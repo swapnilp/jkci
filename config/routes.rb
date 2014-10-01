@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   resources :teachers
   resources :students
   resources :exams
-  resources :jkci_classes
   get 'exam/:id/absent_students' => "exams#absunts_students", as: 'exam_absent_students'
   get 'exam/:id/exam_students' => "exams#exams_students", as: 'exams_students'
   get 'exam/:id/add_absent_students' => "exams#add_absunt_students", as: 'add_exam_absent_students'
@@ -15,7 +14,9 @@ Rails.application.routes.draw do
   get 'exam/:id/publish_exam_result' => "exams#publish_exam_result", as: "publish_result"
   resources :exam_absents, only: [:destroy]
   resources :exam_results, only: [:destroy]
-
+  resources :jkci_classes
+  get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
+  post "/class/:id/manage_students" => "jkci_classes#manage_students", as: "class_manage_students"
   root 'home#index'
   #root 'welcome#index'
 

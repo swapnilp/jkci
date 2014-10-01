@@ -7,6 +7,7 @@ class ExamsController < ApplicationController
   def new
     @exam = Exam.new
     @subjects = Subject.all
+    @jkci_classes = JkciClass.all
   end
 
   def show
@@ -24,6 +25,7 @@ class ExamsController < ApplicationController
   def edit
     @subjects = Subject.all
     @exam = Exam.where(id: params[:id]).first
+    @jkci_classes = JkciClass.all
   end
   
   def update

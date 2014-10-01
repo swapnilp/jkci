@@ -8,6 +8,11 @@
     <span class="col-sm-6 paddingTop10"><%= @exam.conducted_by %></span>
   </div>
   <div class="col-sm-12 textLeft">
+    <span class="col-sm-2"><h5>Class</h5> </span>
+    <span class="col-sm-6 paddingTop10"><a href="<%= jkci_class_path(@exam.jkci_class) %>"><%= @exam.jkci_class.class_name %></a></span>
+  </div>
+  
+  <div class="col-sm-12 textLeft">
     <span class="col-sm-2"><h5>Exam Date</h5></span>
     <span class="col-sm-6 paddingTop10"><%= @exam.exam_date %></span>
   </div>
