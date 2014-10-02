@@ -1,0 +1,53 @@
+<div style="width:100%;">
+  <table width="100%;">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Date</th>
+	<th>Class</th>
+	<th>Points</th>
+	<th>Teacher</th>
+	<th>Action</th>
+      </tr>
+      </thead>
+    <%- @daily_teaching_points.each_with_index do |dtp, index| %> 
+    <tr>
+      <td>
+	<div class="left">
+	  <%= index %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= dtp.date.try(:to_date) %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= dtp.jkci_class.try(:class_name) %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= dtp.points %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= dtp.teacher.try(:name) %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= link_to 'show', daily_teach_path(dtp) %>
+	  <%= link_to 'Edit', edit_daily_teach_path(dtp) %>
+	</div>
+      </td>
+    </tr>
+    <%- end %>
+  </table>
+</div>
+<div style="margin-top:20px;">
+  <%= link_to 'New Daily Teach',  new_daily_teach_path, class: 'btn btn-primary btn-sm' %>
+</div>
+

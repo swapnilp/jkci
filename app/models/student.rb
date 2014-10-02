@@ -6,6 +6,7 @@ class Student < ActiveRecord::Base
   has_many :exam_results
   has_many :class_students
   has_many :jkci_classes, through: :class_students
+  has_many :class_catlogs
   
   def exams
     Exam.where(std: std, is_active: true)

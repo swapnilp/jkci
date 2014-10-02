@@ -1,9 +1,11 @@
 class JkciClass < ActiveRecord::Base
+ 
   belongs_to :teacher
   has_many :class_students
   has_many :students, through: :class_students
   has_many :exams
   has_many :daily_teaching_points
+  has_many :class_catlogs
 
 
   def manage_students(associate_students)

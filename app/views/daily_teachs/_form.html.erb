@@ -1,0 +1,35 @@
+<div class="textLeft ">
+<%= form_for @daily_teaching_point, url: daily_teachs_path,  html:{role: 'form', class: 'form-horizontal'} do |f| %>
+  <div class="form-group">
+    <span class="col-sm-2 control-label">Class Name : </span>
+    <div class="col-sm-4">
+      <%= f.select :jkci_class_id, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select something" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <span class="col-sm-2 control-label">Date</span>
+    <div class="col-sm-4">
+      <%= f.text_field :date, value:  Time.now %>
+    </div>
+  </div>
+  <div class="form-group">
+    <span class="col-sm-2 control-label">Points</span>
+    <div class="col-sm-4">
+      <%= f.text_area :points %>
+    </div>
+  </div>
+  <div class="form-group">
+    <span class="col-sm-2 control-label">Teacher</span>
+    <div class="col-sm-4">
+      <%= f.select :teacher_id, options_from_collection_for_select(@teachers, "id", "name"), prompt: "Select something" %>
+    </div>
+  </div>
+  
+  <div class="col-sm-offset-2 ">
+    <%= f.submit 'Save', class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+    <%= link_to 'Cancel', daily_teachs_path, class: 'btn btn-warning btn-sm'%>
+  </div>
+<%- end %>
+
+</div>
+
