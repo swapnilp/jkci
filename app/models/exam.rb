@@ -9,7 +9,12 @@ class Exam < ActiveRecord::Base
 
   def students
     #Student.where(std: std, is_active: true)
-    self.jkci_class.students
+    if class_ids.nil?
+      self.jkci_class.students
+    else
+      #JkciClass.where(id: class_ids.split(',').reject(&:blank?)).map(&:students)#.flatten.uniq
+      Student.joins(:class_students).where("class_students.jkci_class_id in (?)", class_ids.split(',').reject(&:blank?))
+    end
   end
   
   def add_absunt_students(exam_students)
