@@ -27,7 +27,11 @@
   
   <div class="col-sm-offset-2 ">
     <%= f.submit 'Save', class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
-    <%= link_to 'Cancel', jkci_classes_path, class: 'btn btn-warning btn-sm'%>
+    <%- if f.object.id.present? %>
+      <%= link_to 'Cancel', jkci_class_path(@jkci_class), class: 'btn btn-warning btn-sm'%>
+    <%- else %>
+      <%= link_to 'Cancel', jkci_classes_path, class: 'btn btn-warning btn-sm'%>
+    <%- end %>
   </div>
 <%- end %>
 
