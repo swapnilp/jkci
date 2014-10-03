@@ -22,6 +22,12 @@ class Exam < ActiveRecord::Base
       ExamAbsent.new({student_id: student, exam_id: self.id, sms_sent: false, email_sent: false}).save
     end
   end
+
+  def jkci_classes
+    unless class_ids.blank?
+      JkciClass.where(id: class_ids.split(',').reject(&:blank?))
+    end
+  end
   
   def add_exam_results(results)
     results.each do |id, marks|

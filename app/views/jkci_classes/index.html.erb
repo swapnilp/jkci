@@ -9,7 +9,6 @@
 	<th>Teacher</th>
 	<th>Show</th>
 	<th>Edit</th>
-	<th>Delete</th>
       </tr>
       </thead>
     <%- @jkci_classes.each do |jkci_class| %> 
@@ -48,13 +47,7 @@
 	<div class="left">
 	  <%= link_to 'Edit', edit_jkci_class_path(jkci_class) %>
 	</div>
-      </td>
-      <td>
-	<div class="left">
-	  <%= link_to 'Delete', jkci_class_path(jkci_class), method: :delete%>
-	</div>
-      </td>
-      
+      </td>      
     </tr>
     <%- end %>
   </table>

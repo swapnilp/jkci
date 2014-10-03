@@ -9,7 +9,15 @@
   </div>
   <div class="col-sm-12 textLeft">
     <span class="col-sm-2"><h5>Class</h5> </span>
-    <span class="col-sm-6 paddingTop10"><a href="<%= jkci_class_path(@exam.jkci_class) %>"><%= @exam.jkci_class.class_name %></a></span>
+    <span class="col-sm-6 paddingTop10">
+      <%- unless @exam.class_ids.blank? %>
+        <%- @exam.jkci_classes.each do |cls| %>
+	  <a href="<%= jkci_class_path(cls) %>"><%= cls.class_name %>  | </a>
+	<%- end %>
+      <%- else %>
+        <a href="<%= jkci_class_path(@exam.jkci_class) %>"><%= @exam.jkci_class.class_name %></a>
+      <%- end %>
+    </span>
   </div>
   
   <div class="col-sm-12 textLeft">

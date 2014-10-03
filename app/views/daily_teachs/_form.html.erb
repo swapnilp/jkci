@@ -1,9 +1,9 @@
 <div class="textLeft ">
-<%= form_for @daily_teaching_point, url: daily_teachs_path,  html:{role: 'form', class: 'form-horizontal'} do |f| %>
+<%= form_for @daily_teaching_point, url: @daily_teaching_point.new_record? ? daily_teachs_path : daily_teach_path,  html:{role: 'form', class: 'form-horizontal'} do |f| %>
   <div class="form-group">
     <span class="col-sm-2 control-label">Class Name : </span>
     <div class="col-sm-4">
-      <%= f.select :jkci_class_id, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select something" %>
+      <%= f.select :jkci_class_id, options_from_collection_for_select(@jkci_classes, "id", "class_name", @daily_teaching_point.jkci_class_id), prompt: "Select something" %>
     </div>
   </div>
   <div class="form-group">
@@ -21,13 +21,15 @@
   <div class="form-group">
     <span class="col-sm-2 control-label">Teacher</span>
     <div class="col-sm-4">
-      <%= f.select :teacher_id, options_from_collection_for_select(@teachers, "id", "name"), prompt: "Select something" %>
+      <%= f.select :teacher_id, options_from_collection_for_select(@teachers, "id", "name", @daily_teaching_point.teacher_id), prompt: "Select something" %>
     </div>
   </div>
   
   <div class="col-sm-offset-2 ">
     <%= f.submit 'Save', class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
-    <%- if f.object.jkci_class_id.present? %>
+    <%- if params[:jkci_class_id].present? %>
+      <%= link_to 'Cancel', jkci_class_path(params[:jkci_class_id]), class: 'btn btn-warning btn-sm'%>
+    <%- elsif f.object.id.present? %>
       <%= link_to 'Cancel', daily_teach_path(@daily_teaching_point), class: 'btn btn-warning btn-sm'%>
     <%- else %>
       <%= link_to 'Cancel', daily_teachs_path, class: 'btn btn-warning btn-sm'%>

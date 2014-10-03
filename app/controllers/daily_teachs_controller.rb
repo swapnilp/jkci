@@ -39,6 +39,10 @@ class DailyTeachsController < ApplicationController
   end
 
   def update
+    params.permit!
+    @daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
+    @daily_teaching_point.update_attributes(params[:daily_teaching_point])
+    redirect_to daily_teach_path(@daily_teaching_point)
   end
 
   def get_class_students

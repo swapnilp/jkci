@@ -14,7 +14,10 @@ class JkciClass < ActiveRecord::Base
     new_std = associate_students -  (curr_students & associate_students)
     self.students.delete(Student.where(id: removed_students))
     self.students << Student.where(id: new_std)
-    
+  end
+  
+  def jk_exams
+    Exam.where("jkci_class_id = ? OR class_ids like '%,?,%'", self.id, self.id)
   end
 
   def fill_catlog(present_list, dtp_id, date)
