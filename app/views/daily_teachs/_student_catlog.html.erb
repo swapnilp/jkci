@@ -1,0 +1,9 @@
+<div class="col-sm-12 textLeft" style="margin-top:20px;">
+  <h2 style="<%= 'color:red;' if @present_students.blank? %>">Student List</h2>
+  <%- @students.each do |student| %>
+    <div style="text-align:left;">
+      <%= check_box_tag student.id, student.name, @present_students.blank? ? true : @present_students.include?(student.id) %> 
+      <label for="<%= student.id%>" style="display:inline-block;"><%= "#{student.name} - #{student.group}  - #{student.std}" %><%= '   No sms sent ' if  !@absent_students[student.id].nil? && !@absent_students[student.id] %> </labbel>
+    </div>
+  <%- end %>
+</div>

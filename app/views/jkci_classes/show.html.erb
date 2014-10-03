@@ -19,12 +19,10 @@
   
   <div class="col-sm-12 textLeft paddingTop10">
     <%= link_to "Edit" , edit_jkci_class_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
-  
-    <%= link_to "Back", jkci_classes_path, class: 'btn btn-warning btn-sm'%>
   </div>
 
   <div class="col-sm-12 textLeft paddingTop10">
-    <%= link_to "Daily Points",  class_assign_students_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
+    <%= link_to "Daily Teach",  new_daily_teach_path({jkci_class_id: @jkci_class.id}), class: 'btn btn-primary btn-sm' %>
     <%= link_to "Assign Students",  class_assign_students_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
   </div>
   <div class="col-sm-4 textLeft">
@@ -52,13 +50,13 @@
     </div>
   </div>
   <div class="col-sm-4 textLeft">
-    <h1>Daily Points</h1>  
+    <h1>Daily Teach</h1>  
     
     <div class="textLeft">
-      <%- @jkci_class.daily_teaching_points.each_with_index do |exam, dtp| %>
-      <a href="<%= exam_path(exam)%>">
-	<h4><%= index + 1 %>  :  <%= dtp.date.to_date %> 
-	  <span style="font-size:12px;">(<%= "#{dtp.points.truncate(50)}- absent:" %>)</span>
+      <%- @jkci_class.daily_teaching_points.each_with_index do |dtp, index| %>
+      <a href="<%= daily_teach_path(dtp) %>">
+	<h4 style="<%= 'color:red;' if dtp.class_catlogs.blank? %>"><%= index + 1 %>  :  <%= dtp.date.to_date %> 
+	  <span style="font-size:12px;">(<%= "#{dtp.points.truncate(50)}- #{dtp.absent_count}" %>)</span>
 	</h4>
       </a>
       <%- end %>

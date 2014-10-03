@@ -44,6 +44,39 @@
   <div class="col-sm-12 textLeft paddingTop10 ">
     <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
   </div>
+
+
+  <h2>Remaining Students</h2>
+  <div class="col-sm-12 textLeft">
+    <table class="table table-striped">
+      <thead>
+	<tr>
+	  <th>#</th>
+	  <th>Student Name</th>
+	  <th>Mobile</th>
+	  <th>Parent Number</th>
+	</tr>
+      </thead>
+      <%- @remaining_students.each_with_index do |student, index| %>
+      <tr>
+	<td>
+	  <%= index %>
+	</td>
+	<td>
+	  <%= student.name %>
+	</td>
+	<td>
+	  <%= student.mobile %>
+	</td>
+	<td>
+	  <%= student.parent_name %>
+	</td>
+      </tr>
+      <%- end %>
+    </table>
+  </div>
+
+
   <h2>Absent Students</h2>
   <div class="col-sm-12 textLeft">
     <table class="table table-striped">

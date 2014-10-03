@@ -3,14 +3,17 @@ class Exam < ActiveRecord::Base
   belongs_to :subject
   has_many :exam_absents
   has_many :exam_results
+  has_many :absent_students, through: :exam_absents, source: :student
+  has_many :present_students, through: :exam_results, source: :student
   belongs_to :jkci_class
 
   def students
-    Student.where(std: std, is_active: true)
+    #Student.where(std: std, is_active: true)
+    self.jkci_class.students
   end
   
-  def add_absunt_students(students)
-    students.each do |student|
+  def add_absunt_students(exam_students)
+    exam_students.each do |student|
       ExamAbsent.new({student_id: student, exam_id: self.id, sms_sent: false, email_sent: false}).save
     end
   end

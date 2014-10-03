@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141002080929) do
+ActiveRecord::Schema.define(version: 20141003054638) do
 
   create_table "class_catlogs", force: true do |t|
     t.integer  "student_id"
@@ -20,6 +20,10 @@ ActiveRecord::Schema.define(version: 20141002080929) do
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_present",              default: false
+    t.boolean  "is_recover",              default: false
+    t.date     "recover_date"
+    t.boolean  "sms_sent",                default: false
   end
 
   create_table "class_students", force: true do |t|

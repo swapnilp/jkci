@@ -16,4 +16,15 @@ class JkciClass < ActiveRecord::Base
     self.students << Student.where(id: new_std)
     
   end
+
+  def fill_catlog(present_list, dtp_id, date)
+    self.students.each do |student|
+     create_catlog(self.id, student.id, dtp_id, date, present_list.map(&:to_i).include?(student.id))
+    end
+  end
+  
+  def create_catlog(class_id, student_id, dtp_id, date, is_present)
+    class_catlog = ClassCatlog.where({jkci_class_id: class_id, student_id: student_id, daily_teaching_point_id: dtp_id, date: date }).first_or_initialize
+    class_catlog.update_attributes({is_present: is_present})
+  end
 end

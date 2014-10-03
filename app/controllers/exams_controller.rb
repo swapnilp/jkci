@@ -12,6 +12,7 @@ class ExamsController < ApplicationController
 
   def show
     @exam = Exam.where(id: params[:id]).first
+    @remaining_students = @exam.students - (@exam.absent_students + @exam.present_students)
   end
 
   def create
@@ -43,7 +44,7 @@ class ExamsController < ApplicationController
     @exam = Exam.where(id: params[:id]).first
     ids = [0] << @exam.exam_absents.map(&:student_id) 
     ids << @exam.exam_results.map(&:student_id)
-    @students = @exam.students.where('id not in (?)', ids.flatten)
+    @students = @exam.students.where('students.id not in (?)', ids.flatten)
   end
 
   def add_absunt_students
@@ -59,9 +60,9 @@ class ExamsController < ApplicationController
   def exams_students
     @exam = Exam.where(id: params[:id]).first
     ids = [0] << @exam.exam_absents.map(&:student_id) 
-    @absent_students = @exam.students.where('id in (?)',  ids.flatten)
+    @absent_students = @exam.students.where('students.id in (?)',  ids.flatten)
     ids << @exam.exam_results.map(&:student_id)
-    @students = @exam.students.where('id not in (?)', ids.flatten)
+    @students = @exam.students.where('students.id not in (?)', ids.flatten)
     
   end
 

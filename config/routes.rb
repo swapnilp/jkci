@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
   post "/class/:id/manage_students" => "jkci_classes#manage_students", as: "class_manage_students"
   resources :daily_teachs
+  get "daily_teach/:id/students" => "daily_teachs#get_class_students"
+  post "daily_teach/:id/fill_catlog" => "daily_teachs#fill_catlog"
   root 'home#index'
   #root 'welcome#index'
 
