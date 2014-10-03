@@ -17,6 +17,7 @@ class ExamsController < ApplicationController
 
   def create
     params.permit!
+    params[:exam][:class_ids] =  ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','
     exam = Exam.new(params[:exam])
     if exam.save
       redirect_to exams_path
@@ -31,6 +32,7 @@ class ExamsController < ApplicationController
   
   def update
     params.permit!
+    params[:exam][:class_ids] =  ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','
     exam = Exam.where(id: params[:id]).first
     if exam && exam.update(params[:exam])
       redirect_to exams_path

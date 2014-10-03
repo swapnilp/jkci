@@ -6,6 +6,6 @@
   =require twitter-bootstrap-static/fontawesome
   */
 
-.form-control{
-  height:34px !important;
+input[type=text]{
+    height:30px !important;
 }
