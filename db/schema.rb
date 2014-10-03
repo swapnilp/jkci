@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003054638) do
+ActiveRecord::Schema.define(version: 20141003074326) do
 
   create_table "class_catlogs", force: true do |t|
     t.integer  "student_id"
@@ -94,8 +94,10 @@ ActiveRecord::Schema.define(version: 20141003054638) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.boolean  "is_active",           default: true
+    t.boolean  "is_active",             default: true
     t.integer  "jkci_class_id"
+    t.string   "class_ids"
+    t.string   "daily_teaching_points"
   end
 
   create_table "jkci_classes", force: true do |t|
