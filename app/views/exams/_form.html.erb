@@ -50,7 +50,7 @@
   <div class="form-group">
     <%= f.label :class_ids, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.select(:class_ids , options_from_collection_for_select(@jkci_classes, "id", "class_name"), {}, { multiple: true, :size =>10, class: 'form-control' }) %>
+      <%= f.select(:class_ids , options_from_collection_for_select(@jkci_classes, "id", "class_name", f.object.class_ids.present? ? f.object.class_ids.split(',').reject(&:blank?).map(&:to_i) : []), {}, { multiple: true, :size =>10, class: 'form-control' }) %>
     </div>
   </div>
   <div class="form-group">
