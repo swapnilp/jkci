@@ -11,7 +11,7 @@
 	  <a href="<%= jkci_class_path(cls) %>"><%= cls.class_name %>  | </a>
 	<%- end %>
       <%- else %>
-        <a href="<%= jkci_class_path(@exam.jkci_class) %>"><%= @exam.jkci_class.class_name %></a>
+        <a href="<%= jkci_class_path(@exam.jkci_class || 0) %>"><%= @exam.jkci_class.try(:class_name) %></a>
       <%- end %>
     </span>
   </div>
@@ -42,6 +42,9 @@
   <div class="col-sm-12 textLeft" style="margin-top:20px;">
     <%= link_to "Add Absent Student", exam_absent_students_path(@exam), class: 'btn btn-primary btn-sm' %>
     <%= link_to "Add Exam Result" , exams_students_path(@exam), class: 'btn btn-primary btn-sm' %>
+    <%- unless @exam.is_completed %>
+    <%= link_to "Exam Conducted", exam_completed_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+    <%- end %>
     <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
   </div>
   <div class="col-sm-12 textLeft paddingTop10 hide">

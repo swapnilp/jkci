@@ -1,5 +1,5 @@
 <div style="width:100%;">
-  <table width="100%;">
+  <table width="100%;" class="table table-hover">
     <thead>
       <tr>
 	<th>#</th>
@@ -7,8 +7,7 @@
 	<th>Start Time</th>
 	<th>End Time</th>
 	<th>Teacher</th>
-	<th>Show</th>
-	<th>Edit</th>
+	<th>Action</th>
       </tr>
       </thead>
     <%- @jkci_classes.each do |jkci_class| %> 
@@ -40,11 +39,7 @@
       </td>
       <td>
 	<div class="left">
-	  <%= link_to 'show', jkci_class_path(jkci_class) %>
-	</div>
-      </td>
-      <td>
-	<div class="left">
+	  <%= link_to 'show', jkci_class_path(jkci_class) %>  |  
 	  <%= link_to 'Edit', edit_jkci_class_path(jkci_class) %>
 	</div>
       </td>      

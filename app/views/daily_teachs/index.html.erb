@@ -1,5 +1,10 @@
 <div style="width:100%;">
-  <table width="100%;">
+  <div class="textLeft">
+    <h2 class="left">Filter By</h2>
+    <%= select_tag :filter_teach_class, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select class", style:"margin:15px 20px;" %>
+    <%= select_tag :filter_teach_teacher, options_from_collection_for_select(@teachers, "id", "name"), prompt: "Select teacher", style:"margin:15px 20px;" %>
+  </div>
+  <table width="100%;" class="table table-hover">
     <thead>
       <tr>
 	<th>#</th>
@@ -39,7 +44,7 @@
       </td>
       <td>
 	<div class="left">
-	  <%= link_to 'show', daily_teach_path(dtp) %>
+	  <%= link_to 'show', daily_teach_path(dtp) %>  |  
 	  <%= link_to 'Edit', edit_daily_teach_path(dtp) %>
 	</div>
       </td>

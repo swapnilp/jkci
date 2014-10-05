@@ -39,3 +39,39 @@
 .paddingTop10{
   padding-top:10px;
 }
+
+.examComplete{
+  background:green;
+  color:lightgray;
+}
+.examComplete a{
+    color:#FFF !important;
+}
+tr.examComplete:hover > td{
+    background:green !important;
+  color:#FFF;
+}
+
+.examResultRemaining{
+  background:lightgreen;
+  color:grey;
+}
+.examResultRemaining a{
+    color:blue !important;
+}
+tr.examResultRemaining:hover > td{
+  background:lightgreen !important;
+  color:#000;
+}
+
+.examOverDate{
+  background:red;
+  color:#FFF;
+}
+.examOverDate a{
+    color:blue !important;
+}
+tr.examOverDate:hover > td{
+  background:red !important;
+  color:#grey !important;
+}

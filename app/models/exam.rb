@@ -10,10 +10,10 @@ class Exam < ActiveRecord::Base
   def students
     #Student.where(std: std, is_active: true)
     if class_ids.nil?
-      self.jkci_class.students
+      self.jkci_class.students rescue []
     else
       #JkciClass.where(id: class_ids.split(',').reject(&:blank?)).map(&:students)#.flatten.uniq
-      Student.joins(:class_students).where("class_students.jkci_class_id in (?)", class_ids.split(',').reject(&:blank?))
+      Student.joins(:class_students).where("class_students.jkci_class_id in (?)", class_ids.split(',').reject(&:blank?)).uniq
     end
   end
   
@@ -26,6 +26,8 @@ class Exam < ActiveRecord::Base
   def jkci_classes
     unless class_ids.blank?
       JkciClass.where(id: class_ids.split(',').reject(&:blank?))
+    else
+      JkciClass.where(id: jkci_class_id)
     end
   end
   

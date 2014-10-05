@@ -2,6 +2,8 @@ class DailyTeachsController < ApplicationController
   
   def index
     @daily_teaching_points = DailyTeachingPoint.all
+    @jkci_classes = JkciClass.all
+    @teachers = Teacher.all
   end
   
   def new

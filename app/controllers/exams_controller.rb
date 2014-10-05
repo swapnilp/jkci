@@ -2,6 +2,7 @@ class ExamsController < ApplicationController
 
   def index
     @exams = Exam.all
+    @jkci_classes = JkciClass.all
   end
   
   def new
@@ -16,7 +17,7 @@ class ExamsController < ApplicationController
 
   def show
     @exam = Exam.where(id: params[:id]).first
-    @remaining_students = @exam.students - (@exam.absent_students + @exam.present_students)
+    @remaining_students = (@exam.students - (@exam.absent_students + @exam.present_students)).uniq
   end
 
   def create
@@ -85,5 +86,21 @@ class ExamsController < ApplicationController
       @exam.update({is_result_decleared: true, is_completed: true})
     end
     redirect_to exams_path
+  end
+  
+  def exam_completed
+    @exam = Exam.where(id: params[:id]).first
+    if @exam
+      @exam.update_attributes({is_completed: true})
+    end
+    redirect_to exam_path(@exam)
+  end
+
+  def filter_exam
+    exams = params[:class_id].present? ? Exam.where("jkci_class_id = ? OR class_ids like ?", params[:class_id], "%,#{params[:class_id]},%") : Exam.all
+    if params[:type].present?
+      exams = exams.where(exam_type: params[:type])
+    end
+    render json: {success: true, html: render_to_string(:partial => "exam.html.erb", :layout => false, locals: {exams: exams})}
   end
 end

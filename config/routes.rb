@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   get 'exam/:id/add_absent_students' => "exams#add_absunt_students", as: 'add_exam_absent_students'
   get 'exam/:id/add_exam_results' => "exams#add_exam_results", as: 'add_exam_results'
   get 'exam/:id/publish_exam_result' => "exams#publish_exam_result", as: "publish_result"
+  get 'exam/:id/exam_completed' => "exams#exam_completed", as: "exam_completed"
+  get "/exams/filter_exam/exam" => "exams#filter_exam", as: "filter_exam"
+  
   resources :exam_absents, only: [:destroy]
   resources :exam_results, only: [:destroy]
   resources :jkci_classes
