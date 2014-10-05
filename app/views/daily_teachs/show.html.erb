@@ -31,4 +31,14 @@
       </div>
     <%- end %>
   </div>
+  <div class="textLeft">
+    <%- if @exams.present? %>
+      <h2>Exams</h2>
+      <%- @exams.each_with_index do |exam, index| %>
+        <div>
+	  <%= index + 1 %> : <%= link_to exam.name, exam_path(exam) %>
+        </div>
+      <%- end %>
+    <%- end %>
+  </div>
 </div>

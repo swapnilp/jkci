@@ -142,4 +142,14 @@
       <%- end %>
     </table>
   </div>
+  <%- if @exam.dtps.present? %>
+  <h2>Related Points</h2>
+  <div class="col-sm-12 textLeft" style="margin-bottom:20px;">
+    <%- @exam.dtps.each_with_index do |dtp, index| %>
+    <div>
+      <%= index + 1 %>  : <%= link_to dtp.points, daily_teach_path(dtp) %> (absent - <%= dtp.absent_count %>)
+    </div>
+    <%- end %>
+  </div>
+  <%- end %>
 </div>

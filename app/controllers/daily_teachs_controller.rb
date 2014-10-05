@@ -30,6 +30,7 @@ class DailyTeachsController < ApplicationController
     @students = @daily_teaching_point.jkci_class.students
     @present_students = @daily_teaching_point.class_catlogs.where(is_present: true).map(&:student_id)
     @absent_students = @daily_teaching_point.class_catlogs.where(is_present: false).collect{|cc| {cc.student_id =>  cc.sms_sent}}.reduce(Hash.new, :merge)
+    @exams = @daily_teaching_point.exams
   end
   
   def edit

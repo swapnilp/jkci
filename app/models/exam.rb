@@ -54,5 +54,9 @@ class Exam < ActiveRecord::Base
     result.marks    
   end
 
+  def dtps
+    DailyTeachingPoint.where(id: daily_teaching_points.split(',').reject(&:blank?)) rescue []
+  end
+
   handle_asynchronously :send_result_email, :priority => 20
 end
