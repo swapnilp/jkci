@@ -7,4 +7,8 @@ class DailyTeachingPoint < ActiveRecord::Base
     students_count = self.class_catlogs.where(is_present: false).count
     students_count.zero? ? "" : "absents : #{students_count}"
   end
+  
+  def exams
+    Exam.where("daily_teaching_points like '%?%'", self.id)
+  end
 end

@@ -1,16 +1,13 @@
 <div class="textLeft ">
 <%= form_for @exam, html:{role: 'form', class: 'form-horizontal'} do |f| %>
+  <%- if f.object.daily_teaching_points.present? %>
+   <%= f.hidden_field  :jkci_class_id, value: f.object.jkci_class_id %>
+   <%= f.hidden_field  :daily_teaching_points, value: f.object.daily_teaching_points %>
+  <%- end %>
   <div class="form-group">
     <%= f.label :name, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
       <%= f.text_field :name, class: 'form-control col-sm-4' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :subject_id, class: 'col-sm-2 control-label' %> 
-    <div class="col-sm-4">
-      <%= f.select :subject_id, options_from_collection_for_select(@subjects, "id", "name", f.object.subject_id) %>
-      <%# f.text_field :subject_id, class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">
@@ -29,7 +26,7 @@
     <%= f.label :exam_date, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
       <div class='input-group date' id='datetimepicker1' data-date-format="YYYY-MM-DD HH:MM">
-	<%= f.text_field :exam_date , class: 'form-control', readonly: true, value: "#{f.object.exam_date.strftime('%F %H:%M') unless f.object.exam_date.nil? }" %>
+	<%= f.text_field :exam_date , class: 'form-control', readonly: true, value: "#{ f.object.exam_date.nil? ? (Time.now+ 1.day).strftime('%F %H:%M') : f.object.exam_date.strftime('%F %H:%M')}" %>
         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
         </span>
       </div>
@@ -44,21 +41,23 @@
   <div class="form-group">
     <%= f.label :exam_type, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.text_field :exam_type, class: 'form-control' %>
+      <%= f.select :exam_type , options_for_select([ "Subjective", "Objective" ], "Subjective"), class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :class_ids, class: 'col-sm-2 control-label' %>
+    <%= f.label :jkci_class_id, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.select(:class_ids , options_from_collection_for_select(@jkci_classes, "id", "class_name", f.object.class_ids.present? ? f.object.class_ids.split(',').reject(&:blank?).map(&:to_i) : []), {}, { multiple: true, :size =>10, class: 'form-control' }) %>
+      <%= f.select(:jkci_class_id , options_from_collection_for_select(@jkci_classes, "id", "class_name", f.object.jkci_class_id),{}, class: 'form-control', disabled:  f.object.daily_teaching_points.present?) %>
     </div>
   </div>
-  <div class="form-group">
-    <%= f.label :std, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-      <%= f.select :std , options_for_select([ "11", "12" ], "11"), class: 'form-control' %>
+  <%- unless f.object.daily_teaching_points.present? %>
+    <div class="form-group">
+      <%= f.label :class_ids, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+        <%= f.select(:class_ids , options_from_collection_for_select(@jkci_classes, "id", "class_name", f.object.class_ids.present? ? f.object.class_ids.split(',').reject(&:blank?).map(&:to_i) : []), {}, { multiple: true, :size =>10, class: 'form-control' }) %>
+      </div>
     </div>
-  </div>
+  <%- end %>
   <div class="form-group">
     <%= f.label :remark, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
@@ -80,7 +79,13 @@
   <div class="form-group" style="margin-top:10px;">
     <div class="col-sm-offset-2">
       <%= f.submit 'Save' , class: 'btn btn-default'%>
+      <%- if params[:jkci_class_id].present? %>
+      <%= link_to "Cancel", jkci_class_path(params[:jkci_class_id]), class: 'btn btn-warning' %>
+      <%- elsif f.object.id.present? %>
+        <%= link_to "Cancel", exam_path(@exam), class: 'btn btn-warning' %>
+      <%- else %>
       <%= link_to "Cancel", exams_path, class: 'btn btn-warning' %>
+      <%- end %>
     </div>
   </div>
 <%- end %>

@@ -27,7 +27,7 @@
 	  <%= exam.name %>
 	</td>
 	<td>
-	  <%= exam.subject.name %>
+	  <%= exam.subject.try(:name) %>
 	</td>
 	<td>
 	  <%= exam.conducted_by %>

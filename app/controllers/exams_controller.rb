@@ -5,7 +5,11 @@ class ExamsController < ApplicationController
   end
   
   def new
-    @exam = Exam.new
+    if params[:jkci_class_id].present?
+      @exam = Exam.new({jkci_class_id: params[:jkci_class_id], daily_teaching_points: ",#{params[:dtp]},"})
+    else
+      @exam = Exam.new
+    end
     @subjects = Subject.all
     @jkci_classes = JkciClass.all
   end
@@ -17,7 +21,7 @@ class ExamsController < ApplicationController
 
   def create
     params.permit!
-    params[:exam][:class_ids] =  ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','
+    params[:exam][:class_ids] = (params[:exam][:class_ids].present? && params[:exam][:class_ids].last.present?) ? ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','  : nil
     exam = Exam.new(params[:exam])
     if exam.save
       redirect_to exams_path
@@ -32,7 +36,7 @@ class ExamsController < ApplicationController
   
   def update
     params.permit!
-    params[:exam][:class_ids] =  ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','
+    params[:exam][:class_ids] =  (params[:exam][:class_ids].present? && params[:exam][:class_ids].last.present?) ? ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','  : nil
     exam = Exam.where(id: params[:id]).first
     if exam && exam.update(params[:exam])
       redirect_to exams_path

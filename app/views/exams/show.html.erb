@@ -1,9 +1,5 @@
 <div class="col-sm-12 textLeft">
   <div class="col-sm-12 textLeft">
-    <span class="col-sm-2"><h5>Subject</h5></span>
-    <span class="col-sm-6 paddingTop10"><%= @exam.subject.name %></span>
-  </div>
-  <div class="col-sm-12 textLeft">
     <span class="col-sm-2"><h5>Conducted By</h5> </span>
     <span class="col-sm-6 paddingTop10"><%= @exam.conducted_by %></span>
   </div>
@@ -40,19 +36,18 @@
     <span class="col-sm-2"><h5>Is Completed</h5></span>
     <span class="col-sm-6 paddingTop10"><%= @exam.is_completed %></span>
   </div>
-  <div class="col-sm-12 textLeft">
+  <div class="col-sm-12 textLeft paddingTop10">
+    <%= link_to "Edit", edit_exam_path(@exam),  class: 'btn btn-primary btn-sm' %>
+  </div>
+  <div class="col-sm-12 textLeft" style="margin-top:20px;">
     <%= link_to "Add Absent Student", exam_absent_students_path(@exam), class: 'btn btn-primary btn-sm' %>
+    <%= link_to "Add Exam Result" , exams_students_path(@exam), class: 'btn btn-primary btn-sm' %>
+    <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
   </div>
   <div class="col-sm-12 textLeft paddingTop10 hide">
     <%#= link_to "Send Absent Student SMS", send_exam_absent_student_sms_path(@exam), class: 'btn btn-primary btn-sm' %>
   </div>
-  <div class="col-sm-12 textLeft paddingTop10">
-    <%= link_to "Add Exam Result" , exams_students_path(@exam), class: 'btn btn-primary btn-sm' %>
-  </div>
-  <div class="col-sm-12 textLeft paddingTop10 ">
-    <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
-  </div>
-
+  
 
   <h2>Remaining Students</h2>
   <div class="col-sm-12 textLeft">
