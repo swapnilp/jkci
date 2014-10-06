@@ -15,6 +15,10 @@ class StudentsController < ApplicationController
     end
   end
   
+  def show
+    @student = Student.where(id: params[:id]).first
+  end
+  
   def edit
     @student = Student.where(id: params[:id]).first
     

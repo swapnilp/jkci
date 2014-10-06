@@ -1,0 +1,25 @@
+<div class="col-sm-12 textLeft">
+  <div class="textLeft">
+    <h5><span class="col-sm-2">Name :</span> <span style="font-size:20px;"><%= @student.name %></span></h5>
+  </div>
+  <div class="textLeft">
+    <h5><span class="col-sm-2">Mobile :</span> <span style="font-size:20px;"><%= @student.mobile %></span></h5>
+  </div>
+  <div class="textLeft">
+    <h5><span class="col-sm-2">Parent Name:</span> <span style="font-size:20px;"><%= @student.parent_name %></span></h5>
+  </div>
+  <div class="textLeft">
+    <h5><span class="col-sm-2">Parent Mobile :</span> <span style="font-size:20px;"><%= @student.p_mobile %></span></h5>
+  </div>
+  <div class="textLeft">
+    <h5><span class="col-sm-2">Group :</span> <span style="font-size:20px;"><%= @student.group %></span></h5>
+  </div>
+  <div class="textLeft">
+    <h5>
+      <span class="col-sm-2">Classes :</span> 
+      <%- @student.jkci_classes.each do |jkci_class| %>
+        <%= link_to jkci_class.class_name, jkci_class_path(jkci_class) %>  |  
+      <%- end %>
+    </h5>
+  </div>
+</div>

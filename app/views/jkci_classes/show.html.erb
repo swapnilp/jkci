@@ -31,7 +31,7 @@
 
     <div class="textLeft">
       <%- @jkci_class.students.each_with_index do |student, index| %>
-      <h4><%= index + 1 %>  :  <%= student.name %> 
+      <h4><%= index + 1 %>  :  <%= link_to student.name, student_path(student) %> 
 	<span style="font-size:12px;">(<%= "#{student.std}- #{student.group}  - #{student.mobile}" %>)</span>
       </h4>
       <%- end %>

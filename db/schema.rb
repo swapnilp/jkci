@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003074326) do
+ActiveRecord::Schema.define(version: 20141006102231) do
 
   create_table "class_catlogs", force: true do |t|
     t.integer  "student_id"
@@ -65,6 +65,19 @@ ActiveRecord::Schema.define(version: 20141003074326) do
     t.boolean  "email_sent"
     t.boolean  "reattend"
     t.datetime "attend_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "exam_catlogs", force: true do |t|
+    t.integer  "exam_id"
+    t.integer  "student_id"
+    t.integer  "jkci_class_id"
+    t.float    "marks"
+    t.boolean  "is_present",    default: true
+    t.boolean  "is_recover",    default: false
+    t.date     "recover_date"
+    t.text     "remark"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

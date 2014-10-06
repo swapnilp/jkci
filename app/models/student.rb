@@ -9,11 +9,23 @@ class Student < ActiveRecord::Base
   has_many :class_catlogs
   
   def exams
-    Exam.where(std: std, is_active: true)
+    #Exam.where(std: std, is_active: true)
+    Exam.where("id in (?)  or ?", self.jkci_classes.map(&:id), exam_query)
   end
 
   def name
     "#{first_name} #{last_name}"
   end
   
+  def exam_query
+    query = " "
+    ids = self.jkci_classes.map(&:id)
+    ids.each do |class_id|
+      query << "class_ids like '%,#{class_id},%'"
+      unless ids.last == class_id
+        query << " or "
+      end
+    end
+    query
+  end
 end

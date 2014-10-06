@@ -7,7 +7,7 @@ class Exam < ActiveRecord::Base
   has_many :present_students, through: :exam_results, source: :student
   belongs_to :jkci_class
 
-  def students
+  def exam_students
     #Student.where(std: std, is_active: true)
     if class_ids.nil?
       self.jkci_class.students rescue []
