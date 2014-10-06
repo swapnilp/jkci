@@ -1,6 +1,7 @@
 <div class="textLeft col-sm-12">
   <h2>Add Absunt Student </h2>
-  <%= @exam.name %>
+  <span>Exam name :</span><span style="font-weight:bold;"><%= @exam.name %></span>
+  <div style="margin-top:15px;">
   <%= form_tag add_exam_absent_students_path(@exam), method: :get, html:{role: 'form', class: 'form-horizontal left'} do %>
     <%- @students.each  do  |student| %>
       <div class="form-group">
@@ -13,4 +14,5 @@
       <%= link_to 'Back', exam_path(@exam) , class: 'btn btn-warning'%>
     </div>
   <%- end %>
+  </div>
 </div>

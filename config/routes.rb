@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'exam/:id/publish_exam_result' => "exams#publish_exam_result", as: "publish_result"
   get 'exam/:id/exam_completed' => "exams#exam_completed", as: "exam_completed"
   get "/exams/filter_exam/exam" => "exams#filter_exam", as: "filter_exam"
+  get "/exam/:id/student/:student_id/remove" =>  "exams#remove_exam_absent", as: "remove_exam_absent"
   
   resources :exam_absents, only: [:destroy]
   resources :exam_results, only: [:destroy]

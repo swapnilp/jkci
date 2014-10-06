@@ -40,8 +40,10 @@
     <%= link_to "Edit", edit_exam_path(@exam),  class: 'btn btn-primary btn-sm' %>
   </div>
   <div class="col-sm-12 textLeft" style="margin-top:20px;">
+    <%- if @exam.is_completed %>
     <%= link_to "Add Absent Student", exam_absent_students_path(@exam), class: 'btn btn-primary btn-sm' %>
     <%= link_to "Add Exam Result" , exams_students_path(@exam), class: 'btn btn-primary btn-sm' %>
+    <%- end %>
     <%- unless @exam.is_completed %>
     <%= link_to "Exam Conducted", exam_completed_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
     <%- end %>
@@ -94,19 +96,19 @@
 	  <th>Remove</th>
 	</tr>
       </thead>
-      <%- @exam.exam_absents.each_with_index do |absent, index| %>
+      <%- @exam.absent_students.each_with_index do |student, index| %>
       <tr>
 	<td>
 	  <%= index %>
 	</td>
 	<td>
-	  <%= absent.student.name %>
+	  <%= student.name %>
 	</td>
 	<td>
-	  <%= absent.student.p_mobile %>
+	  <%= student.p_mobile %>
 	</td>
 	<td>
-	  <%= link_to 'Remove', exam_absent_path(absent), method: :delete %>
+	  <%= link_to 'Remove', remove_exam_absent_path(@exam, student)  %>
 	</td>
       </tr>
       <%- end %>

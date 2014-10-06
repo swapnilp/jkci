@@ -7,10 +7,12 @@ class Student < ActiveRecord::Base
   has_many :class_students
   has_many :jkci_classes, through: :class_students
   has_many :class_catlogs
+  has_many :exam_catlogs
+  has_many :exams, through: :exam_catlogs 
   
-  def exams
+  def all_exams
     #Exam.where(std: std, is_active: true)
-    Exam.where("id in (?)  or ?", self.jkci_classes.map(&:id), exam_query)
+    Exam.where("jkci_class_id in (?)  or ?", self.jkci_classes.map(&:id), exam_query)
   end
 
   def name

@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20141006102231) do
     t.integer  "student_id"
     t.integer  "jkci_class_id"
     t.float    "marks"
-    t.boolean  "is_present",    default: true
+    t.boolean  "is_present"
     t.boolean  "is_recover",    default: false
     t.date     "recover_date"
     t.text     "remark"

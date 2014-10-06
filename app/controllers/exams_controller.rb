@@ -49,9 +49,15 @@ class ExamsController < ApplicationController
 
   def absunts_students
     @exam = Exam.where(id: params[:id]).first
-    ids = [0] << @exam.exam_absents.map(&:student_id) 
-    ids << @exam.exam_results.map(&:student_id)
-    @students = @exam.exam_students.where('students.id not in (?)', ids.flatten)
+    #ids = [0] << @exam.exam_absents.map(&:student_id) 
+    #ids << @exam.exam_results.map(&:student_id)
+    @students = @exam.students.where("exam_catlogs.is_present is ?", nil)
+  end
+
+  def remove_exam_absent
+    exam_catlog = ExamCatlog.where(exam_id: params[:id], student_id: params[:student_id]).first
+    exam_catlog.update_attributes({is_present: nil})
+    redirect_to exam_path(params[:id])
   end
 
   def add_absunt_students
@@ -67,9 +73,9 @@ class ExamsController < ApplicationController
   def exams_students
     @exam = Exam.where(id: params[:id]).first
     ids = [0] << @exam.exam_absents.map(&:student_id) 
-    @absent_students = @exam.exam_students.where('students.id in (?)',  ids.flatten)
-    ids << @exam.exam_results.map(&:student_id)
-    @students = @exam.exam_students.where('students.id not in (?)', ids.flatten)
+    @absent_students = @exam.students.where("exam_catlogs.is_present = false")
+    #ids << @exam.exam_results.map(&:student_id)
+    @students = @exam.students.where("exam_catlogs.is_present = false")
   end
 
   def add_exam_results
@@ -90,7 +96,7 @@ class ExamsController < ApplicationController
   def exam_completed
     @exam = Exam.where(id: params[:id]).first
     if @exam
-      @exam.update_attributes({is_completed: true})
+      @exam.complete_exam
     end
     redirect_to exam_path(@exam)
   end
