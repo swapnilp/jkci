@@ -66,4 +66,15 @@ class DailyTeachsController < ApplicationController
     @daily_teaching_point.jkci_class.fill_catlog(params[:students_list].split(','), @daily_teaching_point.id, params[:date])
     redirect_to jkci_class_path(@daily_teaching_point.jkci_class)
   end
+  
+  def filter_teach
+    daily_teaching_points = DailyTeachingPoint.where("")
+    if params[:class_id].present?
+      daily_teaching_points = daily_teaching_points.where(jkci_class_id: params[:class_id])
+    end
+    if params[:teacher].present?
+      daily_teaching_points = daily_teaching_points.where(teacher_id: params[:teacher])
+    end
+    render json: {success: true, html: render_to_string(:partial => "daily_teach.html.erb", :layout => false, locals: {daily_teaching_points: daily_teaching_points})}
+  end
 end

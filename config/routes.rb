@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :daily_teachs
   get "daily_teach/:id/students" => "daily_teachs#get_class_students"
   post "daily_teach/:id/fill_catlog" => "daily_teachs#fill_catlog"
+  get "/daily_teach/filter_daily_teach/daily_teach" => "daily_teachs#filter_teach", as: "filter_teach"
   root 'home#index'
   #root 'welcome#index'
 

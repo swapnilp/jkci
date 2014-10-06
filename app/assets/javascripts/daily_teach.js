@@ -20,3 +20,11 @@ function saveDailyCatlog(event, self){
 	$(".fillCatlogForm").submit();
     }
 }
+
+function dailyTeachFilter(event, self){
+    class_id = $("#filter_teach_class").val();
+    teacher= $("#filter_teach_teacher").val();
+    $.get("/daily_teach/filter_daily_teach/daily_teach?&class_id="+class_id+"&teacher="+teacher, function(data){
+	$(".dailyTeachTable tbody").html(data['html']);
+    });
+}
