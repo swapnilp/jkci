@@ -75,3 +75,15 @@ tr.examOverDate:hover > td{
   background:red !important;
   color:#grey !important;
 }
+
+.red{
+    color:red;
+}
+
+.orange{
+    color:orange;
+}
+.paddingL0{
+    padding-left:0;
+}
+

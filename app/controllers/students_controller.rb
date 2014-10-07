@@ -17,6 +17,8 @@ class StudentsController < ApplicationController
   
   def show
     @student = Student.where(id: params[:id]).first
+    @exam_catlogs = @student.exam_catlogs.includes([:exam])
+    @class_catlogs = @student.class_catlogs.includes([:jkci_class, :daily_teaching_point])
   end
   
   def edit

@@ -14,12 +14,35 @@
   <div class="textLeft">
     <h5><span class="col-sm-2">Group :</span> <span style="font-size:20px;"><%= @student.group %></span></h5>
   </div>
-  <div class="textLeft">
+  <div class="col-sm-12 textLeft">
+    <%= link_to "Edit", edit_student_path(@student), class: "btn btn-primary" %>
+  </div>
+  <div class="col-sm-12 textLeft" style="margin-top:15px;">
     <h5>
-      <span class="col-sm-2">Classes :</span> 
+      <span class="col-sm-2 paddingL0">Classes :</span> 
       <%- @student.jkci_classes.each do |jkci_class| %>
         <%= link_to jkci_class.class_name, jkci_class_path(jkci_class) %>  |  
       <%- end %>
     </h5>
   </div>
+  <div class="col-sm-4">
+    <h3>Exams Report</h3>
+    <%- @exam_catlogs.each_with_index do |exam_catlog, index| %>
+    <div>
+      <%= index + 1 %>  :  <a class="<%= 'red' unless exam_catlog.is_present.present? %>" href="<%= exam_path(exam_catlog.exam) %>"><%= exam_catlog.exam_report %></a>
+    </div>
+    <%- end %>
+  </div>
+  <div class="col-sm-8">
+    <h3>Daily Report</h3>
+    <%- @class_catlogs.each_with_index do |class_catlog, index| %>
+      <div>
+	<%= index + 1 %> <a class="<%= 'red' unless class_catlog.is_present.present? %>" href="<%= daily_teach_path(class_catlog.daily_teaching_point) %>"><%= class_catlog.class_report %></a>
+      </div>
+    <%- end %>
+    <div>
+      
+    </div>
+  </div>
+  
 </div>

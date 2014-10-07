@@ -17,7 +17,8 @@ class ExamsController < ApplicationController
 
   def show
     @exam = Exam.where(id: params[:id]).first
-    @remaining_students = (@exam.exam_students - (@exam.absent_students + @exam.present_students)).uniq
+    @remaining_students = @exam.students.where("exam_catlogs.is_present is ?", nil)
+    @exam_absents = @exam.exam_catlogs.includes([:student, :exam]).where(is_present: false)
   end
 
   def create
@@ -56,7 +57,7 @@ class ExamsController < ApplicationController
 
   def remove_exam_absent
     exam_catlog = ExamCatlog.where(exam_id: params[:id], student_id: params[:student_id]).first
-    exam_catlog.update_attributes({is_present: nil})
+    exam_catlog.update_attributes({is_present: nil, is_recover: nil})
     redirect_to exam_path(params[:id])
   end
 
@@ -66,16 +67,18 @@ class ExamsController < ApplicationController
     redirect_to exam_path(@exam)
   end
 
-  def add_reattend_absent_exam
+  def recover_exam
     #@exam = Exam.where(id: params[:id]).first
+    exam_catlog = ExamCatlog.where(id: params[:exam_catlog_id]).first
+    exam_catlog.update_attributes({is_recover: true})
+    redirect_to exam_path(params[:id])
+    
   end
 
   def exams_students
     @exam = Exam.where(id: params[:id]).first
-    ids = [0] << @exam.exam_absents.map(&:student_id) 
-    @absent_students = @exam.students.where("exam_catlogs.is_present = false")
-    #ids << @exam.exam_results.map(&:student_id)
-    @students = @exam.students.where("exam_catlogs.is_present = false")
+    @absent_students = @exam.absent_students
+    @students = @exam.students.where("(exam_catlogs.is_present is ? && exam_catlogs.marks is ? ) || (exam_catlogs.is_present = ? && exam_catlogs.marks is ? && exam_catlogs.is_recover = ?)", nil, nil, false, nil, true)
   end
 
   def add_exam_results
@@ -83,6 +86,12 @@ class ExamsController < ApplicationController
     @exam.add_exam_results(params[:students_results])
     redirect_to exam_path(@exam)
   end
+
+  def remove_exam_result
+    ExamCatlog.where(id: params[:exam_catlog_id]).first.update_attributes({marks: nil, is_present: false})
+    redirect_to exam_path(params[:id])
+  end
+
 
   def publish_exam_result
     @exam = Exam.where(id: params[:id]).first
@@ -100,7 +109,7 @@ class ExamsController < ApplicationController
     end
     redirect_to exam_path(@exam)
   end
-
+  
   def filter_exam
     exams = params[:class_id].present? ? Exam.where("jkci_class_id = ? OR class_ids like ?", params[:class_id], "%,#{params[:class_id]},%") : Exam.all
     if params[:type].present?

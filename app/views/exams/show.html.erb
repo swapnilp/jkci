@@ -53,7 +53,7 @@
     <%#= link_to "Send Absent Student SMS", send_exam_absent_student_sms_path(@exam), class: 'btn btn-primary btn-sm' %>
   </div>
   
-
+  <%- if @exam.is_completed %>
   <h2>Remaining Students</h2>
   <div class="col-sm-12 textLeft">
     <table class="table table-striped">
@@ -71,7 +71,7 @@
 	  <%= index %>
 	</td>
 	<td>
-	  <%= student.name %>
+	  <%= link_to student.name, student_path(student) %>
 	</td>
 	<td>
 	  <%= student.mobile %>
@@ -93,22 +93,28 @@
 	  <th>#</th>
 	  <th>Student Name</th>
 	  <th>Parent Number</th>
+	  <th>Recover</th>
 	  <th>Remove</th>
 	</tr>
       </thead>
-      <%- @exam.absent_students.each_with_index do |student, index| %>
+      <%- @exam_absents.each_with_index do |exam_catlog, index| %>
       <tr>
 	<td>
 	  <%= index %>
 	</td>
 	<td>
-	  <%= student.name %>
+	  <%= link_to exam_catlog.student.name, student_path(exam_catlog.student) %>
 	</td>
 	<td>
-	  <%= student.p_mobile %>
+	  <%= exam_catlog.student.p_mobile %>
 	</td>
 	<td>
-	  <%= link_to 'Remove', remove_exam_absent_path(@exam, student)  %>
+	  <%- unless exam_catlog.is_recover %>
+	  <%= link_to 'Recover', recover_exam_path(exam_catlog.exam, exam_catlog) %>
+	  <%- end %>
+	</td>
+	<td>
+	  <%= link_to 'Remove', remove_exam_absent_path(exam_catlog.exam, exam_catlog.student)  %>
 	</td>
       </tr>
       <%- end %>
@@ -132,7 +138,7 @@
 	  <%= index %>
 	</td>
 	<td>
-	  <%= result.student.name %>
+	  <%= link_to result.student.name, student_path(result.student), class: "#{'orange' if result.is_recover}"%>
 	</td>
 	<td>
 	  <%= result.marks %>
@@ -141,12 +147,13 @@
 	  <%= result.student.p_mobile %>
 	</td>
 	<td>
-	  <%=  link_to 'remove', exam_result_path(result), method: :delete %>
+	  <%= link_to 'remove', remove_exam_result_path(@exam,result.id) %>
 	</td>
       </tr>
       <%- end %>
     </table>
   </div>
+  <%- end %>
   <%- if @exam.dtps.present? %>
   <h2>Related Points</h2>
   <div class="col-sm-12 textLeft" style="margin-bottom:20px;">

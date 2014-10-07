@@ -27,7 +27,8 @@
       <input name="students_list" type="hidden" value="" class="dtpStudents">
       <input name="date" type="hidden" value="" class="dtpDate">
       <div style="margin-top:20px;">
-	<%= link_to "Save", "#", onclick: "saveDailyCatlog(event, this);", class:"btn btn-primary" %>
+	<%= link_to "Edit", "#", onclick: "editDailyCatlog(event, this);", class:"btn btn-primary editDailyCatlog" %>
+	<%= link_to "Save", "#", onclick: "saveDailyCatlog(event, this);", class:"btn btn-primary hide saveDailyCatlog" %>
       </div>
     <%- end %>
   </div>

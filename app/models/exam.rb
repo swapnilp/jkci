@@ -2,7 +2,7 @@ class Exam < ActiveRecord::Base
 
   belongs_to :subject
   #has_many :exam_absents
-  has_many :exam_results
+  #has_many :exam_results
   #has_many :absent_students, through: :exam_absents, source: :student
   has_many :present_students, through: :exam_results, source: :student
   belongs_to :jkci_class
@@ -21,8 +21,12 @@ class Exam < ActiveRecord::Base
     end
   end
 
+  def exam_results
+    exam_catlogs.where("(is_present = ?  || is_recover= ? ) && marks is not  ?", true, true, nil)  
+  end
+
   def absent_students
-    students.where("exam_catlogs.is_present = ?", false)  
+    students.where("exam_catlogs.is_present = ? && exam_catlogs.is_recover = ?", false, false)  
   end
   
   def add_absunt_students(exam_students)
@@ -43,8 +47,9 @@ class Exam < ActiveRecord::Base
   def add_exam_results(results)
     results.each do |id, marks|
       if marks.present?
-        exam_result = ExamResult.new({exam_id: self.id, student_id: id, marks: marks, sms_sent: false, email_sent: false, late_attend: false})
-        exam_result.save
+        self.exam_catlogs.where(student_id: id).first.update_attributes({marks: marks, is_present: true})
+        #exam_result = ExamResult.new({exam_id: self.id, student_id: id, marks: marks, sms_sent: false, email_sent: false})
+        #exam_result.save
         #self.send_result_email(self, exam_result.student)
       end
     end
