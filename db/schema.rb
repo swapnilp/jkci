@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141007122747) do
+ActiveRecord::Schema.define(version: 20141008120122) do
 
   create_table "class_catlogs", force: true do |t|
     t.integer  "student_id"
@@ -120,6 +120,16 @@ ActiveRecord::Schema.define(version: 20141007122747) do
     t.datetime "class_start_time"
     t.datetime "class_end_time"
     t.integer  "teacher_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sms_sents", force: true do |t|
+    t.text     "number"
+    t.string   "obj_type"
+    t.integer  "obj_id"
+    t.text     "message"
+    t.boolean  "is_parent"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
