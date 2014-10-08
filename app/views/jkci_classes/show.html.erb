@@ -59,7 +59,7 @@
 	<%= check_box_tag dtp.id, dtp.points, false, style: 'display:inline-block;margin:0;' %>
 	<a href="<%= daily_teach_path(dtp) %>" style="display:inline-block;">
 	  <h4 style="<%= 'color:red;' if dtp.class_catlogs.blank? %>"><%= index + 1 %>  :  <%= dtp.date.to_date %> 
-	    <span style="font-size:12px;">(<%= "#{dtp.points.truncate(50)}- #{dtp.absent_count}" %>)</span>
+	    <span style="font-size:12px;">(<%= "#{dtp.points.truncate(10)}- #{dtp.absent_count}" %>)</span>
 	  </h4>
 	</a>
       </div>
