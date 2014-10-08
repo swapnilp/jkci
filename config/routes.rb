@@ -17,16 +17,22 @@ Rails.application.routes.draw do
   get "/exam/:id/abesnt_student/:student_id/remove" =>  "exams#remove_exam_absent", as: "remove_exam_absent"
   get "/exam/:id/exam_result/:exam_catlog_id/remove" =>  "exams#remove_exam_result", as: "remove_exam_result"
   get "/exam/:id/exam_recover/:exam_catlog_id/recover" =>  "exams#recover_exam", as: "recover_exam"
+  get "/exam/follow_exam_absent_student/:exam_catlog_id" =>  "exams#follow_exam_absent_student", as: "follow_exam_absent_student"
   
   resources :exam_absents, only: [:destroy]
   resources :exam_results, only: [:destroy]
+
   resources :jkci_classes
   get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
   post "/class/:id/manage_students" => "jkci_classes#manage_students", as: "class_manage_students"
+  
   resources :daily_teachs
   get "daily_teach/:id/students" => "daily_teachs#get_class_students"
   post "daily_teach/:id/fill_catlog" => "daily_teachs#fill_catlog"
   get "/daily_teach/filter_daily_teach/daily_teach" => "daily_teachs#filter_teach", as: "filter_teach"
+  get "/daily_teach/:id/follow" => "daily_teachs#follow_teach", as: "follow_teach"
+  get "/daily_teach/:class_catlog_id/recover" => "daily_teachs#recover_daily_teach", as: "recover_daily_teach"
+  
   root 'home#index'
   #root 'welcome#index'
 

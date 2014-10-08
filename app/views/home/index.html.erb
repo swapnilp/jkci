@@ -1,6 +1,124 @@
-<h1>Welcome To </h1>
-<%= link_to 'Exam', exams_path %>
-<%= link_to 'Student', students_path %>
-<%= link_to 'Classes', jkci_classes_path %>
-<%= link_to 'Daily Teach', daily_teachs_path %>
-<%#= link_to ''%>
+<div class="col-sm-12">
+  <h2>Today's Exams</h2>
+
+  <table class="table table-hover examsTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Exam Name</th>
+	<th>Class</th>
+	<th>Type</th>
+	<th>Mark</th>
+	<th>Duration</th>
+      </tr>
+    </thead>
+    <%= render partial: "exam", locals:{exams: @todays_exams}%>
+  </table>
+</div>
+<div class="col-sm-12">
+  <h2>Unconducted Exams</h2>
+  <table class="table table-hover examsTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Exam Name</th>
+	<th>Class</th>
+	<th>Type</th>
+	<th>Mark</th>
+	<th>Duration</th>
+      </tr>
+    </thead>
+    <%= render partial: "exam", locals:{exams: @unconducted_exams}%>
+  </table>
+</div>
+
+<div class="col-sm-12">
+  <h2>Recent Exams</h2>
+  <table class="table table-hover examsTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Exam Name</th>
+	<th>Class</th>
+	<th>Type</th>
+	<th>Mark</th>
+	<th>Duration</th>
+      </tr>
+    </thead>
+    <%= render partial: "exam", locals:{exams:  @recent_exams}%>
+  </table>
+</div>
+
+<div class="col-sm-6">
+<h2>Class absents</h2>
+<table class="table table-hover examsTable">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Student Name</th>
+      <th>Class</th>
+      <th>Parent Mobile</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <%- @class_absents.each_with_index do |class_absent, index| %>
+    <tr>
+      <td>
+        <%= index + 1 %>
+      </td>
+      <td>
+        <%= link_to class_absent.student.name, student_path(class_absent.student) %>
+      </td>
+      <td>
+        <%= link_to  class_absent.jkci_class.class_name, daily_teach_path(class_absent.daily_teaching_point) %>
+      </td>
+      <td>
+	<%= class_absent.student.p_mobile %>
+      </td>
+      <td>
+        <%= class_absent.created_at.to_date %>
+      </td>
+      <td>
+	<a href="#" data-href="<%= follow_teach_path(class_absent) %>" onclick="followStudent(event, this);">x</a>
+      </td>
+    </tr>
+  <%- end %>
+</table>
+</div>
+
+<div class="col-sm-6">
+<h2>Exam absents</h2>
+<table class="table table-hover examsTable">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Student Name</th>
+      <th>Exam</th>
+      <th>Parent Mobile</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <%- @exam_absents.each_with_index do |exam_absent, index| %>
+    <tr>
+      <td>
+        <%= index + 1 %>
+      </td>
+      <td>
+        <%= link_to exam_absent.student.name, student_path(exam_absent.student) %>
+      </td>
+      <td>
+        <%= link_to exam_absent.exam.name, exam_path(exam_absent.exam) %>
+      </td>
+      <td>
+	<%= exam_absent.student.p_mobile %>
+      </td>
+      <td>
+        <%= exam_absent.created_at.to_date %>
+      </td>
+      <td>
+	<a href="#" data-href="<%= follow_exam_absent_student_path(exam_absent) %>" onclick="followStudent(event, this);">x</a>
+      </td>
+    </tr>
+  <%- end %>
+</table>
+</div>

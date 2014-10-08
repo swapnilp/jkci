@@ -50,7 +50,7 @@
       <%= f.select(:jkci_class_id , options_from_collection_for_select(@jkci_classes, "id", "class_name", f.object.jkci_class_id),{}, class: 'form-control', disabled:  f.object.daily_teaching_points.present?) %>
     </div>
   </div>
-  <%- unless f.object.daily_teaching_points.present? %>
+  <%- unless true #f.object.daily_teaching_points.present? %>
     <div class="form-group">
       <%= f.label :class_ids, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">

@@ -21,6 +21,7 @@ class DailyTeachsController < ApplicationController
     params.permit!
     @daily_teaching_point = DailyTeachingPoint.new(params[:daily_teaching_point])
     if @daily_teaching_point.save
+      @daily_teaching_point.create_catlog
       redirect_to daily_teach_path(@daily_teaching_point)
     else
       render :new
@@ -29,9 +30,10 @@ class DailyTeachsController < ApplicationController
 
   def show
     @daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
-    @students = @daily_teaching_point.jkci_class.students
-    @present_students = @daily_teaching_point.class_catlogs.where(is_present: true).map(&:student_id)
-    @absent_students = @daily_teaching_point.class_catlogs.where(is_present: false).collect{|cc| {cc.student_id =>  cc.sms_sent}}.reduce(Hash.new, :merge)
+    @class_catlogs = @daily_teaching_point.class_catlogs.includes([:student, :jkci_class])
+    #@students = @daily_teaching_point.jkci_class.students
+    #@present_students = @daily_teaching_point.class_catlogs.where(is_present: true).map(&:student_id)
+    #@absent_students = @daily_teaching_point.class_catlogs.where(is_present: false).collect{|cc| {cc.student_id =>  cc.sms_sent}}.reduce(Hash.new, :merge)
     @exams = @daily_teaching_point.exams
   end
   
@@ -63,7 +65,7 @@ class DailyTeachsController < ApplicationController
 
   def fill_catlog
     @daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
-    @daily_teaching_point.jkci_class.fill_catlog(params[:students_list].split(','), @daily_teaching_point.id, params[:date])
+    @daily_teaching_point.fill_catlog(params[:students_list].split(','), params[:date])
     redirect_to jkci_class_path(@daily_teaching_point.jkci_class)
   end
   
@@ -77,4 +79,18 @@ class DailyTeachsController < ApplicationController
     end
     render json: {success: true, html: render_to_string(:partial => "daily_teach.html.erb", :layout => false, locals: {daily_teaching_points: daily_teaching_points})}
   end
+
+  
+  def follow_teach
+    class_catlog = ClassCatlog.where(id: params[:id]).first
+    class_catlog.update_attributes({is_followed: true}) if class_catlog
+    render json: {success: true}
+  end
+
+  def recover_daily_teach
+    class_catlog = ClassCatlog.where(id: params[:class_catlog_id]).first
+    class_catlog.update_attributes({is_recover: true, recover_date: Date.today}) if class_catlog
+    render json: {success: true}
+  end
+  
 end

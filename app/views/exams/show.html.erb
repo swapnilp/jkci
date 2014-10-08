@@ -1,3 +1,4 @@
+<h2><%= @exam.name %></h2>
 <div class="col-sm-12 textLeft">
   <div class="col-sm-12 textLeft">
     <span class="col-sm-2"><h5>Conducted By</h5> </span>
@@ -36,6 +37,7 @@
     <span class="col-sm-2"><h5>Is Completed</h5></span>
     <span class="col-sm-6 paddingTop10"><%= @exam.is_completed %></span>
   </div>
+  <%- unless @exam.is_result_decleared %>
   <div class="col-sm-12 textLeft paddingTop10">
     <%= link_to "Edit", edit_exam_path(@exam),  class: 'btn btn-primary btn-sm' %>
   </div>
@@ -52,7 +54,7 @@
   <div class="col-sm-12 textLeft paddingTop10 hide">
     <%#= link_to "Send Absent Student SMS", send_exam_absent_student_sms_path(@exam), class: 'btn btn-primary btn-sm' %>
   </div>
-  
+  <%- end %>
   <%- if @exam.is_completed %>
   <h2>Remaining Students</h2>
   <div class="col-sm-12 textLeft">
@@ -65,19 +67,19 @@
 	  <th>Parent Number</th>
 	</tr>
       </thead>
-      <%- @remaining_students.each_with_index do |student, index| %>
-      <tr>
+      <%- @remaining_students.each_with_index do |exam_catlog, index| %>
+      <tr class="<%= 'red' if exam_catlog.is_recover %> ">
 	<td>
 	  <%= index %>
 	</td>
 	<td>
-	  <%= link_to student.name, student_path(student) %>
+	  <%= link_to exam_catlog.student.name, student_path(exam_catlog.student) %>
 	</td>
 	<td>
-	  <%= student.mobile %>
+	  <%= exam_catlog.student.mobile %>
 	</td>
 	<td>
-	  <%= student.parent_name %>
+	  <%= exam_catlog.student.parent_name %>
 	</td>
       </tr>
       <%- end %>

@@ -1,0 +1,22 @@
+<%- exams.each_with_index do |exam, index| %>
+      <tr>
+	<td>
+          <%= index + 1 %>
+	</td>
+	<td>
+	  <%= link_to exam.name, exam_path(exam) %>
+	</td>
+	<td>
+	  <%= link_to exam.jkci_class.class_name, jkci_class_path(exam.jkci_class) %>
+	</td>
+	<td>
+	  <%= exam.exam_type %>
+	</td>
+	<td>
+	 <%= exam.marks %> 
+	</td>
+	<td>
+	  <%= exam.duration %>
+	</td>
+      </tr>
+    <%- end %>

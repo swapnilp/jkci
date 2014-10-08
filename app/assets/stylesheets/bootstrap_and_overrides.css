@@ -9,3 +9,7 @@
 input[type=text]{
     height:30px !important;
 }
+
+.navbar {
+    min-height:42px !important;
+}

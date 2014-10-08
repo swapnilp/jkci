@@ -1,9 +1,17 @@
 <div class="col-sm-12 textLeft dailyTeachStudents" style="margin-top:20px;">
   <h2 style="<%= 'color:red;' if @present_students.blank? %>">Student List</h2>
-  <%- @students.each do |student| %>
+  <%- @class_catlogs.each do |class_catlog| %>
     <div style="text-align:left;">
-      <%= check_box_tag student.id, student.name, @present_students.blank? ? true : @present_students.include?(student.id), disabled: true %> 
-      <label for="<%= student.id%>" style="display:inline-block;"><%= "#{student.name} - #{student.group}  - #{student.std}" %><%= '   No sms sent ' if  !@absent_students[student.id].nil? && !@absent_students[student.id] %> </labbel>
+      <%= check_box_tag class_catlog.student.id, class_catlog.student.name, class_catlog.is_present  , disabled: true %> 
+    
+      <label for="<%= class_catlog.student.id%>" style="display:inline-block;">
+	<%= "#{class_catlog.student.name} - #{class_catlog.student.group}  - #{class_catlog.student.std}" %>
+      </label>
+      <%= ' |  No sms sent ' if (!class_catlog.is_present && !class_catlog.sms_sent) %> 
+      <%- if !class_catlog.is_present  && class_catlog.is_recover == false %>
+        <%= link_to "Recover", recover_daily_teach_path(class_catlog), onclick: "recoverDailyTeach(event, this);" %>
+      <%- end %>
+    
     </div>
   <%- end %>
 </div>

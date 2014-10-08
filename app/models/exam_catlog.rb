@@ -6,7 +6,7 @@ class ExamCatlog < ActiveRecord::Base
   def exam_report
     r_name = "#{exam.name} "
     if exam.marks.present?
-      r_name << "  |  marks - #{exam.marks}"
+      r_name << "  |  marks - #{marks || 'not available'}/#{exam.marks}"
     end
     if is_recover
       r_name << " | Recovered"

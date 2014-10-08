@@ -11,8 +11,37 @@
   <a href="<%= root_url%>"><h2>HH</h2></a>
 </div>
 <div style="position:fixed;right:20px;top:10px;" class="right">
-  Time : <%= Time.now %>
+  Date : <%= Date.today %>
 </div>
+<div class="center">
+  <div class="oneeightyWidth headerLink">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	  <ul class="nav navbar-nav">
+	    <li class="<%= 'active' if params[:controller] == 'home' %>" >
+	      <%= link_to 'Home', root_path %>
+	    </li>
+	    <li class="<%= 'active' if params[:controller] == 'exams' %>" >
+	      <%= link_to 'Exam', exams_path %>
+	    </li>
+	    <li class="<%= 'active' if params[:controller] == 'students' %>">
+	      <%= link_to 'Student', students_path %>
+	    </li>
+	    <li class="<%= 'active' if params[:controller] == 'jkci_classes' %>">
+	      <%= link_to 'Classes', jkci_classes_path %>
+	    </li>
+	    <li class="<%= 'active' if params[:controller] == 'daily_teachs' %>">
+	      <%= link_to 'Daily Teach', daily_teachs_path %>
+	    </li>
+	    <%#= link_to ''%>
+	  </ul>
+	</div>
+      </div>
+    </nav>
+  </div>
+</div>
+
 <div class="center">
   <div class="oneeightyWidth">
     <%= yield %>

@@ -17,7 +17,7 @@ class ExamsController < ApplicationController
 
   def show
     @exam = Exam.where(id: params[:id]).first
-    @remaining_students = @exam.students.where("exam_catlogs.is_present is ?", nil)
+    @remaining_students = @exam.exam_catlogs.includes([:student]).where("is_present is ? || (is_recover =  true && marks is ?)", nil, nil)
     @exam_absents = @exam.exam_catlogs.includes([:student, :exam]).where(is_present: false)
   end
 
@@ -70,9 +70,8 @@ class ExamsController < ApplicationController
   def recover_exam
     #@exam = Exam.where(id: params[:id]).first
     exam_catlog = ExamCatlog.where(id: params[:exam_catlog_id]).first
-    exam_catlog.update_attributes({is_recover: true})
+    exam_catlog.update_attributes({is_recover: true, recover_date: Date.today})
     redirect_to exam_path(params[:id])
-    
   end
 
   def exams_students
@@ -115,6 +114,23 @@ class ExamsController < ApplicationController
     if params[:type].present?
       exams = exams.where(exam_type: params[:type])
     end
+    if params[:status].present?
+      if params[:status] == "Created"
+        exams = exams.where(is_completed: [nil, false])
+      elsif params[:status] == "Conducted"
+        exams = exams.where(is_completed: true, is_result_decleared: [nil, false])
+      elsif params[:status] == "Published"
+        exams = exams.where(is_result_decleared: true)
+      end
+      
+    end
     render json: {success: true, html: render_to_string(:partial => "exam.html.erb", :layout => false, locals: {exams: exams})}
   end
+
+  def follow_exam_absent_student
+    exam_catlog = ExamCatlog.where(id: params[:exam_catlog_id]).first
+    exam_catlog.update_attributes({is_followed: true}) if exam_catlog
+    render json: {success: true}
+  end
+
 end

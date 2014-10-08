@@ -37,6 +37,24 @@ function editDailyCatlog(event, self){
     event.preventDefault();
     $(self).addClass('hide');
     $(".saveDailyCatlog").removeClass('hide');
+    $(".cancelSaveClassCatlog").removeClass("hide");
     $(".dailyTeachStudents input[type=checkbox]").attr('disabled', false);
     
+}
+
+
+
+function cancelClassCatlog(event, self){
+    event.preventDefault();
+    $(".saveDailyCatlog").addClass('hide');
+    $(".cancelSaveClassCatlog").addClass("hide");
+    $(".editDailyCatlog").removeClass('hide');
+    $(".dailyTeachStudents input[type=checkbox]").attr('disabled', 'disabled');
+}
+
+function recoverDailyTeach(event, self){
+    event.preventDefault();
+    $.get($(self).attr('href')+".json", function(){
+	$(self).parent().remove();
+    })
 }

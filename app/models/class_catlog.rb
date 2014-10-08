@@ -5,6 +5,8 @@ class ClassCatlog < ActiveRecord::Base
   
   validates :student_id, uniqueness: {scope: [:jkci_class_id, :daily_teaching_point_id, :date]}
 
+  scope :absent, -> {where(is_present: [false, nil]) }
+
     def class_report
     r_name = "#{jkci_class.class_name} "
       r_name << "  |  points - #{daily_teaching_point.points.truncate(30)}"
