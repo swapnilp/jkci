@@ -19,6 +19,7 @@ class DailyTeachingPoint < ActiveRecord::Base
   end
 
   def fill_catlog(present_list,  date)
+    self.update_attributes({is_fill_catlog: true}) unless self.is_fill_catlog
     class_catlogs.each do |class_catlog|
       if present_list.map(&:to_i).include?(class_catlog.student_id)
         class_catlog.update_attributes({is_present: true, date: date})

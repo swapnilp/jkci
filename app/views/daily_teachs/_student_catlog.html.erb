@@ -1,5 +1,5 @@
 <div class="col-sm-12 textLeft dailyTeachStudents" style="margin-top:20px;">
-  <h2 style="<%= 'color:red;' if @present_students.blank? %>">Student List</h2>
+  <h2 style="<%= 'color:red;' unless @daily_teaching_point.is_fill_catlog.present? %>">Student List</h2>
   <%- @class_catlogs.each do |class_catlog| %>
     <div style="text-align:left;">
       <%= check_box_tag class_catlog.student.id, class_catlog.student.name, class_catlog.is_present  , disabled: true %> 
