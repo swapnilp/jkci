@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008121919) do
+ActiveRecord::Schema.define(version: 20141008131527) do
 
   create_table "class_catlogs", force: true do |t|
     t.integer  "student_id"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20141008121919) do
     t.integer  "jkci_class_id"
     t.integer  "teacher_id"
     t.boolean  "is_fill_catlog", default: false
+    t.boolean  "is_sms_sent",    default: false
   end
 
   create_table "delayed_jobs", force: true do |t|

@@ -1,4 +1,4 @@
-<div class="col-sm-12 textLeft dailyTeachStudents" style="margin-top:20px;">
+<div class="col-sm-12 textLeft dailyTeachStudents">
   <h2 style="<%= 'color:red;' unless @daily_teaching_point.is_fill_catlog.present? %>">Student List</h2>
   <%- @class_catlogs.each do |class_catlog| %>
     <div style="text-align:left;">

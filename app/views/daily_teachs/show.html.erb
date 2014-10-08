@@ -21,6 +21,11 @@
     <%= link_to "Edit", edit_daily_teach_path(@daily_teaching_point),  class: "btn btn-primary" %>
     <%= link_to "Back", jkci_class_path(@daily_teaching_point.jkci_class),  class: "btn btn-primary" %>
   </div>
+  <%- if @daily_teaching_point.is_fill_catlog.present? && @daily_teaching_point.is_sms_sent == false %>
+  <div class="textLeft" style="margin-top:20px;">
+    <%= link_to "Send sms", jkci_class_path(@daily_teaching_point.jkci_class),  class: "btn btn-primary", onclick: "return confirm('Are you sure?')" %>
+  </div>
+  <%- end %>
   <div class="textLeft classCatlog" data-date="<%= @daily_teaching_point.date.to_date %>" data-id="<%= @daily_teaching_point.id %>">
     <%= render partial: "student_catlog" %>
     <%= form_tag("/daily_teach/#{@daily_teaching_point.id}/fill_catlog", method: "post", class: "fillCatlogForm") do %>
