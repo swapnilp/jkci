@@ -1,7 +1,8 @@
+<%- if @todays_exams.present? %>
 <div class="col-sm-12">
   <h2>Today's Exams</h2>
 
-  <table class="table table-hover examsTable">
+  <table class="table table-hover examsTable highlight">
     <thead>
       <tr>
 	<th>#</th>
@@ -16,9 +17,10 @@
     <%= render partial: "exam", locals:{exams: @todays_exams, type: "todays"}%>
   </table>
 </div>
+<%- end %>
 <div class="col-sm-12">
   <h2>Unconducted Exams</h2>
-  <table class="table table-hover examsTable">
+  <table class="table table-hover examsTable highlight">
     <thead>
       <tr>
 	<th>#</th>
@@ -36,7 +38,7 @@
 
 <div class="col-sm-12">
   <h2>Recent Exams</h2>
-  <table class="table table-hover examsTable">
+  <table class="table table-hover examsTable highlight">
     <thead>
       <tr>
 	<th>#</th>
@@ -54,7 +56,7 @@
 
 <div class="col-sm-6">
 <h2>Class absents</h2>
-<table class="table table-hover examsTable">
+<table class="table table-hover examsTable highlight">
   <thead>
     <tr>
       <th>#</th>
@@ -91,7 +93,7 @@
 
 <div class="col-sm-6">
 <h2>Exam absents</h2>
-<table class="table table-hover examsTable">
+<table class="table table-hover examsTable highlight">
   <thead>
     <tr>
       <th>#</th>
