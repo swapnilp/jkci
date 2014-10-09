@@ -3,6 +3,9 @@ class ExamCatlog < ActiveRecord::Base
   belongs_to :exam
   belongs_to :student
 
+  scope :only_absents, -> {where(is_present: [nil, false], is_recover: [nil, false])}
+  scope :only_results, -> {where("marks is not ?", nil)}
+
   def exam_report
     r_name = "#{exam.name} "
     if exam.marks.present?
