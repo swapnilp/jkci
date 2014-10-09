@@ -20,6 +20,7 @@ gem "chagol"
 #gem "resque", "~> 2.0.0.pre.1", github: "resque/resque"
 gem 'delayed_job_active_record'
 gem "daemons"
+gem "delayed_job_web"
 gem 'momentjs-rails', '~> 2.5.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0.1'
 
