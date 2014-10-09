@@ -7,7 +7,8 @@ class JkciClass < ActiveRecord::Base
   has_many :daily_teaching_points
   has_many :class_catlogs
   belongs_to :batch
-
+  
+  default_scope  {where(is_active: true)} 
 
   def manage_students(associate_students)
     curr_students = self.students.map(&:id)
