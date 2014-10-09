@@ -1,5 +1,13 @@
+<div style="margin-top:20px;">
+  <%= link_to 'New class',  new_jkci_class_path, class: 'btn btn-primary btn-sm' %>
+</div>
+<div class="textLeft">
+  <h2 class="left">Filter By</h2>
+  <%= select_tag :filter_batch_class, options_from_collection_for_select(@batches, "id", "name"), prompt: "Select class", style:"margin:15px 20px;", class: "filter_batch_class", onchange: "classFilterByBatch(event, this);" %>
+</div>
+
 <div style="width:100%;">
-  <table width="100%;" class="table table-hover">
+  <table width="100%;" class="table table-hover jkciClassTable">
     <thead>
       <tr>
 	<th>#</th>
@@ -11,49 +19,7 @@
 	<th>Action</th>
       </tr>
       </thead>
-    <%- @jkci_classes.each do |jkci_class| %> 
-    <tr>
-      <td>
-	<div class="left">
-	  <%= jkci_class.id %>
-	</div>
-      </td>
-      <td>
-	<div class="left">
-	  <%= jkci_class.class_name %>
-	</div>
-      </td>
-      <td>
-	<div class="left">
-	  <%= jkci_class.class_start_time %>
-	</div>
-      </td>
-      <td>
-	<div class="left">
-	  <%= jkci_class.class_end_time %>
-	</div>
-      </td>
-      <td>
-	<div class="left">
-	  <%= jkci_class.teacher.try(:name) %>
-	</div>
-      </td>
-      <td>
-	<div class="left">
-	  <%= jkci_class.batch.try(:name) %>
-	</div>
-      </td>
-      <td>
-	<div class="left">
-	  <%= link_to 'show', jkci_class_path(jkci_class) %>  |  
-	  <%= link_to 'Edit', edit_jkci_class_path(jkci_class) %>
-	</div>
-      </td>      
-    </tr>
-    <%- end %>
+    <%= render partial: "jkci_class", locals: {jkci_classes: @jkci_classes} %>
   </table>
-</div>
-<div style="margin-top:20px;">
-  <%= link_to 'New class',  new_jkci_class_path, class: 'btn btn-primary btn-sm' %>
 </div>
 

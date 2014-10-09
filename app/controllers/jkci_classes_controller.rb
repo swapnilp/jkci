@@ -1,6 +1,7 @@
 class JkciClassesController < ApplicationController
   def index
     @jkci_classes = JkciClass.includes([:batch]).all
+    @batches = Batch.all
   end
   
   def new
@@ -56,5 +57,13 @@ class JkciClassesController < ApplicationController
     if jkci_class.destroy
       redirect_to jkci_classes_path
     end
+  end
+  
+  def filter_class
+    jkci_classes = JkciClass.all
+    if params[:batch_id].present?
+      jkci_classes = jkci_classes.where(batch_id: params[:batch_id])
+    end
+    render json: {success: true, html: render_to_string(:partial => "jkci_class.html.erb", :layout => false, locals: {jkci_classes: jkci_classes})}
   end
 end

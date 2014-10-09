@@ -27,3 +27,11 @@ function createClassExam(event, self){
 	    window.location = "/exams/new?&jkci_class_id="+ id +"&dtp="+ selectedPoints;
     }
 }
+
+function classFilterByBatch(event, self){
+    event.preventDefault();
+    batch_id = $("#filter_batch_class").val();
+    $.get("/jkci_class/filter_class/batch?&btch_id="+batch_id, function(data){
+	$(".jkciClassTable tbody").html(data['html']);
+    });
+}

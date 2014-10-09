@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :jkci_classes
   get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
   post "/class/:id/manage_students" => "jkci_classes#manage_students", as: "class_manage_students"
+  get "/jkci_class/filter_class/batch" => "jkci_classes#filter_class", as: "filter_class"
   
   resources :daily_teachs
   get "daily_teach/:id/students" => "daily_teachs#get_class_students"

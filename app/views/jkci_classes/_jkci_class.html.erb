@@ -1,0 +1,40 @@
+<%- jkci_classes.each do |jkci_class| %> 
+    <tr>
+      <td>
+	<div class="left">
+	  <%= jkci_class.id %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= jkci_class.class_name %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= jkci_class.class_start_time %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= jkci_class.class_end_time %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= jkci_class.teacher.try(:name) %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= jkci_class.batch.try(:name) %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= link_to 'show', jkci_class_path(jkci_class) %>  |  
+	  <%= link_to 'Edit', edit_jkci_class_path(jkci_class) %>
+	</div>
+      </td>      
+    </tr>
+    <%- end %>
