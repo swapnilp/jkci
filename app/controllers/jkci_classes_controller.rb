@@ -1,11 +1,12 @@
 class JkciClassesController < ApplicationController
   def index
-    @jkci_classes = JkciClass.all
+    @jkci_classes = JkciClass.includes([:batch]).all
   end
   
   def new
     @jkci_class = JkciClass.new
     @teachers = Teacher.all
+    @batches = Batch.all
   end
 
   def show
@@ -24,6 +25,7 @@ class JkciClassesController < ApplicationController
   def edit
     @jkci_class = JkciClass.where(id: params[:id]).first
     @teachers = Teacher.all
+    @batches = Batch.all
   end
 
   def assign_students

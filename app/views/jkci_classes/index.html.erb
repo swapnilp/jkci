@@ -7,6 +7,7 @@
 	<th>Start Time</th>
 	<th>End Time</th>
 	<th>Teacher</th>
+	<th>Batch</th>
 	<th>Action</th>
       </tr>
       </thead>
@@ -35,6 +36,11 @@
       <td>
 	<div class="left">
 	  <%= jkci_class.teacher.try(:name) %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= jkci_class.batch.try(:name) %>
 	</div>
       </td>
       <td>

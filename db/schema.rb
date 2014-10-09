@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008131527) do
+ActiveRecord::Schema.define(version: 20141009102600) do
+
+  create_table "batches", force: true do |t|
+    t.string   "name"
+    t.string   "std"
+    t.string   "year"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "class_catlogs", force: true do |t|
     t.integer  "student_id"
@@ -124,6 +132,7 @@ ActiveRecord::Schema.define(version: 20141008131527) do
     t.integer  "teacher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "batch_id"
   end
 
   create_table "sms_sents", force: true do |t|

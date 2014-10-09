@@ -6,6 +6,7 @@ class JkciClass < ActiveRecord::Base
   has_many :exams
   has_many :daily_teaching_points
   has_many :class_catlogs
+  belongs_to :batch
 
 
   def manage_students(associate_students)
