@@ -11,3 +11,4 @@ class ClassAbsentSms < Struct.new(:daily_teaching_point)
     end
   end
 end
+#Delayed::Job.enqueue ClassAbsentSms.new(DailyTeachingPoint.last)

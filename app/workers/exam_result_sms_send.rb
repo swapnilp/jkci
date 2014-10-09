@@ -11,3 +11,4 @@ class ExamResultSmsSend < Struct.new(:exam)
     end
   end
 end
+#Delayed::Job.enqueue ExamResultSmsSend.new(Exam.last)
