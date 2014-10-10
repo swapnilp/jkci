@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   def index
-    @students = Student.all
+    @students = Student.all.order("id desc").paginate(:page => params[:page])
   end
 
   def new

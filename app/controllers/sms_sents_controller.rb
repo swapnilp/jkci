@@ -1,23 +1,13 @@
 class SmsSentsController < ApplicationController
-
-  def send_daily_class_sms
-    
+  include SendingSms
+  
+  def index
+    @sms_logs = SmsSent.all.order("id desc").paginate(:page => params[:page])
   end
+  
+  def check_balance
+    @balance = SendingSms.new.deliver_sms(URI::encode("https://www.txtguru.in/imobile/balancecheckapi.php?&username=#{SMSUNAME}&password=#{SMSUPASSWORD}"))
 
-  def send_exam_absent_sms
-    
+    render json: {success: true, balance: @balance}
   end
-
-  def send_exam_recover_sms
-    
-  end
-
-  def send_exam_result_sms
-    
-  end
-
-  def send_brodcast_message
-    
-  end
-    
 end

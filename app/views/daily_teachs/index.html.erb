@@ -18,6 +18,7 @@
     <%= render partial: 'daily_teach', locals:{daily_teaching_points: @daily_teaching_points}%>
 
   </table>
+  <%= will_paginate @daily_teaching_points %>
 </div>
 <div style="margin-top:20px;">
   <%= link_to 'New Daily Teach',  new_daily_teach_path, class: 'btn btn-primary btn-sm' %>

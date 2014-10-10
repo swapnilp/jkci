@@ -24,5 +24,6 @@
     </thead>
     <%= render partial: 'exam', locals: {exams: @exams}%>
   </table>
+  <%= will_paginate @exams %>
 </div>
 

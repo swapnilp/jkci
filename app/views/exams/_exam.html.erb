@@ -1,31 +1,31 @@
 <%- exams.each_with_index do |exam, index| %>
-      <tr class="<%= checkExam(exam) %>">
-	<td>
-	  <%= index + 1 %>
-	</td>
-	<td>
-	  <%= exam.name %>
-	</td>
-	<td>
-	  <%= exam.conducted_by %>
-	</td>
-	<td>
-	  <%= exam.marks %>
-	</td>
-	<td>
-	  <%= exam.exam_date.to_date %>
-	</td>
-	<td>
-	  <%= exam.exam_type %>
-	</td>
-	<td>
-	  <%- exam.jkci_classes.each do |jkci_class| %>
-	    <%= link_to jkci_class.class_name, jkci_class_path(jkci_class) %>  | 
-	  <%- end %>
-	</td>
-	<td>
-	  <%= link_to 'Show', exam_path(exam) %>  |  
-	  <%= link_to 'Edit', edit_exam_path(exam) %>
-	</td>
-      </tr>
-    <%- end %>
+  <tr class="<%= checkExam(exam) %>">
+    <td>
+      cx<%= exam.id %>
+    </td>
+    <td>
+      <%= exam.name %>
+    </td>
+    <td>
+      <%= exam.conducted_by %>
+    </td>
+    <td>
+      <%= exam.marks %>
+    </td>
+    <td>
+      <%= exam.exam_date.to_date %>
+    </td>
+    <td>
+      <%= exam.exam_type %>
+    </td>
+    <td>
+      <%- exam.jkci_classes.each do |jkci_class| %>
+      <%= link_to jkci_class.class_name, jkci_class_path(jkci_class) %>  | 
+      <%- end %>
+    </td>
+    <td>
+      <%= link_to 'Show', exam_path(exam) %>  |  
+      <%= link_to 'Edit', edit_exam_path(exam) %>
+    </td>
+  </tr>
+<%- end %>

@@ -1,6 +1,6 @@
 class JkciClassesController < ApplicationController
   def index
-    @jkci_classes = JkciClass.includes([:batch]).all
+    @jkci_classes = JkciClass.includes([:batch]).all.order("id desc").paginate(:page => params[:page])
     @batches = Batch.all
   end
   

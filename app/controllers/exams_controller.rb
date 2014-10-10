@@ -1,7 +1,7 @@
 class ExamsController < ApplicationController
 
   def index
-    @exams = Exam.all
+    @exams = Exam.all.order("id desc").paginate(:page => params[:page])
     @jkci_classes = JkciClass.all
   end
   

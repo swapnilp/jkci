@@ -1,7 +1,7 @@
 class DailyTeachsController < ApplicationController
   
   def index
-    @daily_teaching_points = DailyTeachingPoint.all
+    @daily_teaching_points = DailyTeachingPoint.all.paginate(:page => params[:page])
     @jkci_classes = JkciClass.all
     @teachers = Teacher.all
   end
