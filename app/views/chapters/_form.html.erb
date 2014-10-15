@@ -1,0 +1,35 @@
+<div class="textLeft ">
+  <%= form_for @chapter, html:{role: 'form', class: 'form-horizontal'}  do |f| %>
+  <div class="form-group">
+      <%= f.label :chapt_no, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :chapt_no, class: 'form-control col-sm-4', onkeypress:"return event.charCode >= 48 && event.charCode <= 57;"  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :name, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :name, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :std, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.select :std , options_for_select([ "11", "12" ], "11") %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :subject_id, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.select :subject_id, options_from_collection_for_select(@subjects, "id", "name"), prompt: "Select Subject" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+	<%= f.submit 'Save' , class: 'btn btn-default'%>
+	<%= link_to "Cancel", chapters_path, class: 'btn btn-warning' %>
+      </div>
+    </div>
+  <%- end %>
+</div>
+

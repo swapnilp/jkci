@@ -3,4 +3,5 @@ class Subject < ActiveRecord::Base
   has_many :teachers
   has_many :subjects
   has_many :jkci_classes
+  has_many :chapters
 end

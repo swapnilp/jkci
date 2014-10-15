@@ -1,0 +1,19 @@
+<%- chapters.each do |chapter| %>
+<tr>
+  <td>
+    <%= chapter.chapt_no %>
+  </td>
+  <td>
+    <%= chapter.name %>
+  </td>
+  <td>
+    <%= chapter.subject.try(:name) %>
+  </td>
+  <td>
+    <%= chapter.std %>
+  </td>
+  <td>
+    <%= link_to "Edit", edit_chapter_path(chapter) %>
+  </td>
+</tr>
+<%- end %>
