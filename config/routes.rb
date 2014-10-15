@@ -34,6 +34,9 @@ Rails.application.routes.draw do
   get "/daily_teach/:id/follow" => "daily_teachs#follow_teach", as: "follow_teach"
   get "/daily_teach/:class_catlog_id/recover" => "daily_teachs#recover_daily_teach", as: "recover_daily_teach"
   
+  resources :chapters
+  
+
   match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
   root 'home#index'
   #root 'welcome#index'
