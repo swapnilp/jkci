@@ -33,6 +33,13 @@
     </div>
   </div>
   
+  <div class="form-group">
+    <span class="col-sm-2 control-label">Subject</span>
+    <div class="col-sm-4">
+      <%= f.select :subject_id, options_from_collection_for_select(@subjects, "id", "name"), prompt: "Select something" %>
+    </div>
+  </div>
+  
   <div class="col-sm-offset-2 ">
     <%= f.submit 'Save', class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
     <%- if f.object.id.present? %>

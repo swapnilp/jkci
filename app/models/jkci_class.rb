@@ -7,6 +7,7 @@ class JkciClass < ActiveRecord::Base
   has_many :daily_teaching_points
   has_many :class_catlogs
   belongs_to :batch
+  belongs_to :subject
   
   default_scope  {where(is_active: true)} 
 

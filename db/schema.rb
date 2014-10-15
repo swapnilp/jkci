@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009120510) do
+ActiveRecord::Schema.define(version: 20141015050514) do
 
   create_table "batches", force: true do |t|
     t.string   "name"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 20141009120510) do
     t.datetime "updated_at"
     t.integer  "batch_id"
     t.boolean  "is_active",        default: true
+    t.integer  "subject_id"
   end
 
   create_table "sms_sents", force: true do |t|

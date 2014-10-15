@@ -12,12 +12,12 @@
       </td>
       <td>
 	<div class="left">
-	  <%= jkci_class.class_start_time %>
+	  <%= jkci_class.class_start_time.to_date %>
 	</div>
       </td>
       <td>
 	<div class="left">
-	  <%= jkci_class.class_end_time %>
+	  <%= jkci_class.class_end_time.to_date %>
 	</div>
       </td>
       <td>
@@ -28,6 +28,11 @@
       <td>
 	<div class="left">
 	  <%= jkci_class.batch.try(:name) %>
+	</div>
+      </td>
+      <td>
+	<div class="left">
+	  <%= jkci_class.subject.try(:name) %>
 	</div>
       </td>
       <td>

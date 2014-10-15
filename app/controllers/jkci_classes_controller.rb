@@ -2,12 +2,14 @@ class JkciClassesController < ApplicationController
   def index
     @jkci_classes = JkciClass.includes([:batch]).all.order("id desc").paginate(:page => params[:page])
     @batches = Batch.all
+    @subjects = Subject.all
   end
   
   def new
     @jkci_class = JkciClass.new
     @teachers = Teacher.all
     @batches = Batch.all
+    @subjects = Subject.all
   end
 
   def show
@@ -27,6 +29,7 @@ class JkciClassesController < ApplicationController
     @jkci_class = JkciClass.where(id: params[:id]).first
     @teachers = Teacher.all
     @batches = Batch.all
+    @subjects = Subject.all
   end
 
   def assign_students
@@ -63,6 +66,9 @@ class JkciClassesController < ApplicationController
     jkci_classes = JkciClass.all
     if params[:batch_id].present?
       jkci_classes = jkci_classes.where(batch_id: params[:batch_id])
+    end
+    if params[:subject_id].present?
+      jkci_classes = jkci_classes.where(subject_id: params[:subject_id])
     end
     render json: {success: true, html: render_to_string(:partial => "jkci_class.html.erb", :layout => false, locals: {jkci_classes: jkci_classes})}
   end
