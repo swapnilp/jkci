@@ -10,8 +10,10 @@ class DailyTeachsController < ApplicationController
     if params[:jkci_class_id].present?
       jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
       @daily_teaching_point = jkci_class.daily_teaching_points.new({teacher_id: jkci_class.teacher_id})
+      @chapters = jkci_class.try(:subject).try(:chapters)
     else
       @daily_teaching_point = DailyTeachingPoint.new
+      @chapters = Chapter.all
     end
     @jkci_classes = JkciClass.all
     @teachers = Teacher.all

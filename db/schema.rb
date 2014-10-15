@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015074250) do
+ActiveRecord::Schema.define(version: 20141015163606) do
 
   create_table "batches", force: true do |t|
     t.string   "name"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20141015074250) do
     t.integer  "teacher_id"
     t.boolean  "is_fill_catlog", default: false
     t.boolean  "is_sms_sent",    default: false
+    t.integer  "chapter_id"
   end
 
   create_table "delayed_jobs", force: true do |t|
