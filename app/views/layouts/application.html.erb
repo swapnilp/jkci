@@ -1,52 +1,34 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Jkci</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<div class="oneeightyWidth" style="margin:0 auto;">
-  <a href="<%= root_url%>"><h2>HH</h2></a>
-</div>
-<div style="position:fixed;right:20px;top:10px;" class="right">
-  Date : <%= Date.today %>
-</div>
-<div class="center">
-  <div class="oneeightyWidth headerLink">
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container">
-	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	  <ul class="nav navbar-nav">
-	    <li class="<%= 'active' if params[:controller] == 'home' %>" >
-	      <%= link_to 'Home', root_path %>
-	    </li>
-	    <li class="<%= 'active' if params[:controller] == 'exams' %>" >
-	      <%= link_to 'Exam', exams_path %>
-	    </li>
-	    <li class="<%= 'active' if params[:controller] == 'students' %>">
-	      <%= link_to 'Student', students_path %>
-	    </li>
-	    <li class="<%= 'active' if params[:controller] == 'jkci_classes' %>">
-	      <%= link_to 'Classes', jkci_classes_path %>
-	    </li>
-	    <li class="<%= 'active' if params[:controller] == 'daily_teachs' %>">
-	      <%= link_to 'Daily Teach', daily_teachs_path %>
-	    </li>
-	    <%#= link_to ''%>
-	  </ul>
-	</div>
-      </div>
-    </nav>
-  </div>
-</div>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JK Science Academy</title>
+    <!-- Styles -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,700,800" rel="stylesheet" type="text/css"><!-- Google web fonts -->
 
-<div class="center">
-  <div class="oneeightyWidth">
+    <%# stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%# javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
+    <!--link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"><!-- font-awesome -->
+    <!--link href="js/dropdown-menu/dropdown-menu.css" rel="stylesheet" type="text/css"><!-- dropdown-menu -->
+    <!--link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"><!-- Bootstrap -->
+    <!--link href="js/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css"><!-- Fancybox -->
+    <!--link href="js/audioplayer/audioplayer.css" rel="stylesheet" type="text/css"><!-- Audioplayer -->
+    <!--link href="style.css" rel="stylesheet" type="text/css"><!-- theme styles -->
+
+  </head>
+  
+  <body role="document">
+    <!-- device test, don't remove. javascript needed! -->
+    <span class="visible-xs"></span><span class="visible-sm"></span><span class="visible-md"></span><span class="visible-lg"></span>
+    <!-- device test end -->
+    <%= render partial: 'layouts/header' %>
     <%= yield %>
-  </div>
-</div>
 
+    <%= render partial: 'layouts/footer' %>
+					
 </body>
 </html>

@@ -13,8 +13,12 @@
  *= require bootstrap_and_overrides
  *= require bootstrap.min.css
  *= require bootstrap-datetimepicker
+ *= require jquery.fancybox
+ *= require dropdown-menu
+ *= require font-awesome
  *= require_tree .
  *= require_self
+ *= require style
  */
 
 .left{
