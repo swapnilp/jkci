@@ -102,3 +102,18 @@ border-radius: 4px;
 .adminDesk h4, .adminDesk h5 {
   margin: 0 0 5px;
 }
+
+.adminDesk h2  {
+  margin: 15px 0 5px;
+}
+
+
+.adminDesk a:link, a:visited {
+  color: #363636;
+  text-decoration: none;
+}
+
+.adminDesk a:hover {
+  color: #ea5644;
+  text-decoration: none;
+}
