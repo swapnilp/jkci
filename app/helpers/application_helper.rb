@@ -24,6 +24,14 @@ module ApplicationHelper
     else
       ''
     end
-      
+  end
+
+  def event_select(cur_path)
+    p cur_path
+    cur_path == 'events' ? 'current-menu-item' : ''
+  end
+
+  def home_select(cur_path)
+    return cur_path == root_path ? 'current-menu-item' : ''
   end
 end

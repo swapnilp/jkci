@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
 
+  #before_action :authenticate_user!
   #before_filter :authentication_check
 
   # Prevent CSRF attacks by raising an exception.

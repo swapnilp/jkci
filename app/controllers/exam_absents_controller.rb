@@ -1,5 +1,5 @@
 class ExamAbsentsController < ApplicationController
-
+  before_action :authenticate_user!
   def destroy
     exam_absent = ExamAbsent.where(id: params[:id]).first
     exam = exam_absent.exam

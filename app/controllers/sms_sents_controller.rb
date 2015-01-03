@@ -1,4 +1,5 @@
 class SmsSentsController < ApplicationController
+  before_action :authenticate_user!
   include SendingSms
   
   def index

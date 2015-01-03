@@ -1,3 +1,4 @@
+<%- if request.fullpath == root_path %>
 <div id="k-footer"><!-- footer -->
   <div class="container"><!-- container -->
     <div class="row no-gutter"><!-- row -->
@@ -5,14 +6,7 @@
         <div class="col-padded col-naked">
           <ul class="list-unstyled clear-margins"><!-- widgets -->
             <li class="widget-container widget_nav_menu"><!-- widgets list -->
-              <h1 class="title-widget">Useful links</h1>
-              <ul>
-                <li><a href="#" title="menu item">Placement Exam Schedule</a></li>
-                <li><a href="#" title="menu item">Superintendent's Hearing Audio</a></li>
-                <li><a href="#" title="menu item">Budget Central</a></li>
-                <li><a href="#" title="menu item">Job Opportunities - Application</a></li>
-                <li><a href="#" title="menu item">College Acceptances as of May 12</a></li>
-              </ul>
+	      <%= render partial: 'layouts/links' %>
 	    </li>
           </ul>
         </div>
@@ -21,23 +15,22 @@
         <div class="col-padded col-naked">
           <ul class="list-unstyled clear-margins"><!-- widgets -->
             <li class="widget-container widget_recent_news"><!-- widgets list -->
-              <h1 class="title-widget">School Contact</h1>
+              <h1 class="title-widget">Academy Contact</h1>
               <div itemscope itemtype="http://data-vocabulary.org/Organization"> 
-                <h2 class="title-median m-contact-subject" itemprop="name">Buntington Public Schools</h2>
+                <h2 class="title-median m-contact-subject" itemprop="name">J K science Academy Islampur</h2>
                 <div class="m-contact-address" itemprop="address" itemscope itemtype="http://data-vocabulary.org/Address">
-                  <span class="m-contact-street" itemprop="street-address">19 Tower Avenue, Buntington Station</span>
+                  <span class="m-contact-street" itemprop="street-address">JK Building, Mahadevnagar</span>
                   <span class="m-contact-city-region">
-		    <span class="m-contact-city" itemprop="locality">New York</span>, 
-		    <span class="m-contact-region" itemprop="region">NY</span>
+		    <span class="m-contact-city" itemprop="locality">Islampur</span>, 
+		    <span class="m-contact-region" itemprop="region">Maharashtra</span>
 		  </span>
                   <span class="m-contact-zip-country">
-		    <span class="m-contact-zip" itemprop="postal-code">11506</span> 
-		    <span class="m-contact-country" itemprop="country-name">USA</span>
+		    <span class="m-contact-zip" itemprop="postal-code">411415</span> 
 		  </span>
                 </div>
                 <div class="m-contact-tel-fax">
-                  <span class="m-contact-tel">Tel: <span itemprop="tel">631-551-3678</span></span>
-                  <span class="m-contact-fax">Fax: <span itemprop="fax">631-551-3688</span></span>
+                  <span class="m-contact-tel">Tel: <span itemprop="tel">02342(220364)</span></span>
+                  <span class="m-contact-fax">Mob: <span itemprop="fax">9420674796</span></span>
                 </div>
               </div>
               <div class="social-icons">
@@ -57,14 +50,14 @@
             <li class="widget-container widget_sofa_flickr"><!-- widgets list -->
               <h1 class="title-widget">Flickr Stream</h1>
               <ul class="k-flickr-photos list-unstyled">
-                <li><a href="#" title="Flickr photo"><img src="assets/img/flickr-1.jpg" alt="Photo 1" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="assets/img/flickr-2.jpg" alt="Photo 2" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="assets/img/flickr-3.jpg" alt="Photo 3" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="assets/img/flickr-4.jpg" alt="Photo 4" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="assets/img/flickr-5.jpg" alt="Photo 5" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="assets/img/flickr-6.jpg" alt="Photo 6" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="assets/img/flickr-7.jpg" alt="Photo 7" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="assets/img/flickr-8.jpg" alt="Photo 8" /></a></li>
+                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-1.jpg" alt="Photo 1" /></a></li>
+                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-2.jpg" alt="Photo 2" /></a></li>
+                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-3.jpg" alt="Photo 3" /></a></li>
+                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-4.jpg" alt="Photo 4" /></a></li>
+                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-5.jpg" alt="Photo 5" /></a></li>
+                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-6.jpg" alt="Photo 6" /></a></li>
+                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-7.jpg" alt="Photo 7" /></a></li>
+                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-8.jpg" alt="Photo 8" /></a></li>
               </ul>
 	    </li>
           </ul> 
@@ -73,6 +66,7 @@
     </div><!-- row end -->
   </div><!-- container end -->
 </div><!-- footer end -->
+<%- end %>
 <div id="k-subfooter"><!-- subfooter -->
   <div class="container"><!-- container -->
     <div class="row"><!-- row -->

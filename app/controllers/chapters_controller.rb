@@ -1,5 +1,6 @@
 class ChaptersController < ApplicationController
-  
+  before_action :authenticate_user!
+
   def index
     @subjects = Subject.all
     @chapters = Chapter.all.order("id desc").paginate(:page => params[:page])

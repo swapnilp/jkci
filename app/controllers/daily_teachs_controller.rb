@@ -1,5 +1,5 @@
 class DailyTeachsController < ApplicationController
-  
+  before_action :authenticate_user!  
   def index
     @daily_teaching_points = DailyTeachingPoint.all.paginate(:page => params[:page])
     @jkci_classes = JkciClass.all
