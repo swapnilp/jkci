@@ -1,0 +1,52 @@
+<div class="textLeft ">
+<%= form_for @album, html:{role: 'form', class: 'form-horizontal'} do |f| %>
+  <div class="form-group">
+    <%= f.label :name, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :name, class: 'form-control col-sm-4' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :description, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :location, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :location, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :date, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <div class='input-group date' id='datetimepicker1' data-date-format="YYYY-MM-DD HH:MM">
+	<%= f.text_field :date , class: 'form-control', value: "#{ f.object.date.nil? ? (Date.today) : f.object.date}" %>
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group" style="margin-top:10px;">
+    <div class="col-sm-offset-2">
+      <%= f.submit 'Save' , class: 'btn btn-default'%>
+      <%- if params[:jkci_class_id].present? %>
+      <%= link_to "Cancel", jkci_class_path(params[:jkci_class_id]), class: 'btn btn-warning' %>
+      <%- elsif f.object.id.present? %>
+        <%= link_to "Cancel", album_path(@album), class: 'btn btn-warning' %>
+      <%- else %>
+      <%= link_to "Cancel", albums_path, class: 'btn btn-warning' %>
+      <%- end %>
+    </div>
+  </div>
+<%- end %>
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker1').datetimepicker({
+      minDate: "1/1/<%= Date.today.year %>",
+      maxDate: "31/12/<%= Date.today.year %>",
+    });
+  });
+</script>
+

@@ -1,0 +1,24 @@
+<%- albums.each_with_index do |album, index| %>
+  <tr>
+    <td>
+      <%= album.id %>
+    </td>
+    <td>
+      <%= album.name %>
+    </td>
+    <td>
+      <%= album.description.truncate(10) %>
+    </td>
+    <td>
+      <%= album.location %>
+    </td>
+    <td>
+      <%= album.date.to_date %>
+    </td>
+    <td>
+      <%= link_to 'Show', album_path(album) %>  |  
+      <%= link_to 'Edit', edit_album_path(album) %>
+    </td>
+  </tr>
+<%- end %>
+

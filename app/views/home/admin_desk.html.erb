@@ -8,7 +8,7 @@
 	<th>#</th>
 	<th>Name</th>
 	<th>Teacher</th>
-	<th>Add catlog</th>
+	<th>Fill Daily Catlog</th>
       </tr>
     </thead>
     <%- @jkci_classes.each_with_index do |jkci_class, index| %>
@@ -23,7 +23,7 @@
 	<%= jkci_class.teacher.name %>
       </td>
       <td>
-	<%= link_to "Add",  new_daily_teach_path({jkci_class_id: jkci_class.id}) %>
+	<%= link_to "Fill Daily Catlog",  new_daily_teach_path({jkci_class_id: jkci_class.id}) %>
       </td>
     </tr>
     <%- end %>
