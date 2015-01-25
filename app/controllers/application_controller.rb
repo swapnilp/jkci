@@ -3,6 +3,9 @@ class ApplicationController < ActionController::Base
   #before_action :authenticate_user!
   #before_filter :authentication_check
 
+  before_filter :authentication_check
+
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -10,7 +13,7 @@ class ApplicationController < ActionController::Base
   
   def authentication_check
     authenticate_or_request_with_http_basic do |user, password|
-      user == "user" && password == "password" 
+      user == "jkci" && password == "jkciPassword" 
     end
   end
   
