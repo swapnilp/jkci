@@ -4,7 +4,7 @@ class Gallery < ActiveRecord::Base
   require 'open-uri'
   require 'net/http'
 
-  attr_accessible :image, :image_file_name, :height, :width, :attachable_type, :attachable_id
+  #attr_accessible :image, :image_file_name, :height, :width, :attachable_type, :attachable_id
 
   has_attached_file :image, 
       :whiny => true,
@@ -24,7 +24,7 @@ class Gallery < ActiveRecord::Base
   #  :bucket => 'buploads',
   #  :styles => { :medium => "x400"}
 
-  after_create :transliterate_file_name
+  #after_create :transliterate_file_name
 
 #  validates_attachment :image, 
 #			:presence => true, 

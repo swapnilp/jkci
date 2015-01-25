@@ -26,8 +26,8 @@ gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0.1'
 gem 'will_paginate', '~> 3.0'
 gem "font-awesome-rails"
 gem 'devise', '~> 3.4.1'
-gem 'delayed_paperclip', '~> 2.9.0'
-
+#gem 'delayed_paperclip', '~> 2.9.0'
+gem "paperclip", "~> 4.2"
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"

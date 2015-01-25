@@ -1,0 +1,30 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <h2><%= @album.name %></h2>
+    <p>Description  - <%= @album.description %></p>
+    <p>Location     - <%= @album.location %></p>
+    <p>Date  -  <%= @album.date.try(:to_date) %></p>
+    <p>Add Photo  -
+      <div>
+	<%= form_for(Gallery.new, url:'/galleries', remote: true, id: 'gallery_image_attachment', method: :post, html: {multipart: true, class: ''}) do |f| %>
+	  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+          <%= hidden_field_tag :album_id, @album.id %>
+          <%= f.file_field :image, class: 'attachment', id: 'image_attachment_field', onChange:"addGalleryImage(this);"  %>
+	<% end %>
+      </div>
+    </p>
+    <div class="textLeft">
+      <%= link_to "Edit", edit_album_path(@album),  class: 'btn btn-default btn-sm' %>
+      <%= link_to "Back", albums_path,  class: 'btn btn-default btn-sm' %>
+    </div>
+
+    <div class="imageUplaodBoxContainer">
+      <%- @images.each do |image| %>
+        <%= render partial: 'image', locals: {image: image} %>
+      <%- end %>
+    </div>
+  </div>
+</div>
+
+
+ 

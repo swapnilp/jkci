@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-
+  before_action :authenticate_user!, excepts: [:index, :show]
   def index
     @events = Event.remaining_events
   end
@@ -9,6 +9,16 @@ class EventsController < ApplicationController
     unless @event.is_public_event
       redirect_to events_path
     end
+  end
+
+  def manage_events
+  end
+
+  def new
+    
+  end
+
+  def create
   end
   
 

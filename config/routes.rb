@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   post "/class/:id/manage_students" => "jkci_classes#manage_students", as: "class_manage_students"
   get "/jkci_class/filter_class/batch" => "jkci_classes#filter_class", as: "filter_class"
   
+
+  resources :galleries
   resources :daily_teachs
   get "daily_teach/:id/students" => "daily_teachs#get_class_students"
   post "daily_teach/:id/fill_catlog" => "daily_teachs#fill_catlog"

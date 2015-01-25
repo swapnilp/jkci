@@ -117,3 +117,23 @@ border-radius: 4px;
   color: #ea5644;
   text-decoration: none;
 }
+
+.imageUplaodBoxContainer{
+  margin-top:20px;
+}
+
+.albumImages{
+  width:200px;
+  float:left;
+  margin-left:15px;
+  position:relative;
+  margin-top:10px;
+}
+
+.albumImages i{
+  position:absolute;
+  top:10px;
+  right:10px;
+  color:red;
+  cursor:pointer;
+}
