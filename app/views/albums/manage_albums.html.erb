@@ -1,0 +1,33 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+<div>
+  <h1>Albums</h1>
+</div>
+<%= link_to 'New Album', new_album_path, class: 'btn btn-primary' %>
+<div class="textLeft">
+  <h2 class="left">Filter By</h2>
+  <%# select_tag :filter_exam_class, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select class", style:"margin:15px 20px;width:200px;", class: "filter_exam_class form-control left", onchange: "examFilterByClass(event, this)" %>
+  <%# select_tag :filter_exam_type,  options_for_select([ "Subjective", "Objective" ]), prompt: "Select type", style:"width:200px;margin:15px 20px;", onchange: "examFilterByClass(event, this)", class: 'form-control left'  %>
+  <%# select_tag :filter_exam_status,  options_for_select([ "Created", "Conducted", "Published"]), prompt: "Select type", style:"width:200px;margin:15px 20px;", onchange: "examFilterByClass(event, this)", class: "form-control left"  %>
+</div>
+<div>
+  <table class="table table-hover examsTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Name</th>
+	<th>description</th>
+	<th>Location</th>
+	<th>Date</th>
+	<th>Actions</th>
+      </tr>
+    </thead>
+    <%= render partial: 'album', locals: {albums: @albums}%>
+  </table>
+  <%# will_paginate @albums %>
+</div>
+
+</div>
+</div>
+
+

@@ -1,6 +1,13 @@
 class GalleriesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index, :show]
+  
+  def index
+    @albums = Album.includes(:galleries).all.order("id desc").paginate(:page => params[:page])
+  end
+  
 
+  def show
+  end
   def create
     params.permit!
     attachment = Gallery.new(params[:gallery])
@@ -16,4 +23,18 @@ class GalleriesController < ApplicationController
       end
     end
   end
+
+  def destroy
+    params.permit!
+    attachment = Gallery.where(id: params[:id]).first
+    attachment.image = nil
+    respond_to do |format|
+      if attachment.destroy
+        format.json {render json: {success: true}}
+      else
+        format.json {render json: {success: false}}
+      end
+    end
+  end
+
 end

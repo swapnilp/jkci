@@ -24,3 +24,19 @@ function addGalleryImage(self){
     }
 
   }
+
+function destroyAlbumImage(self) {
+    var id = $(self).parent().attr('data-id');
+    $.ajax({
+	url: '/galleries/'+ id,
+	type: 'DELETE',
+	headers: {
+	    'X-Transaction': 'POST Example',
+	    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+	},
+	success: function(result) {
+            $(self).parent().remove();
+	}
+    });
+}
+

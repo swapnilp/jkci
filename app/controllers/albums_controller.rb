@@ -1,7 +1,7 @@
 class AlbumsController < ApplicationController
 
   def index
-    @albums = Album.all
+    @albums = Album.all.order("id desc").paginate(:page => params[:page])
   end
 
   def new
@@ -35,5 +35,8 @@ class AlbumsController < ApplicationController
   
   def destroy
   end
-
+  
+  def manage_albums
+    @albums = Album.all
+  end
 end

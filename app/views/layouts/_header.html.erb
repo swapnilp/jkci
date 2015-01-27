@@ -35,7 +35,7 @@
             <a href="courses.html" title="Available Courses">Courses</a>
           </li>
           <li>
-            <a href="#" class="Pages Collection" title="More Templates">Gallery</a>
+            <a href="<%= galleries_path %>" class="Pages Collection" title="More Templates">Gallery</a>
             <ul class="sub-menu">
               <li><a href="news-single.html">News Single Page</a></li>
               <li><a href="events-single.html">Events Single Page</a></li>
@@ -79,7 +79,8 @@
 		<li><a href="<%= students_path %>">Student</a></li>
 		<li><a href="<%= jkci_classes_path %>">Classes</a></li>
 		<li><a href="<%= daily_teachs_path %>">Daily Teach</a></li>
-		<li><a href="<%= albums_path %>">Albums</a></li>
+		<li><a href="<%= manage_albums_path %>">Albums</a></li>
+		<li><a href="<%= manage_events_path %>">Events</a></li>
               </ul>
 	    <%- else %>
               <a href="contact-us.html" title="School Contacts">Contact Us</a>

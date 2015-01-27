@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!, excepts: [:index, :show]
   def index
-    @events = Event.remaining_events
+    @events = Event.master_events
   end
 
   def show

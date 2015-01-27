@@ -23,7 +23,11 @@ Rails.application.routes.draw do
   resources :exam_absents, only: [:destroy]
   resources :exam_results, only: [:destroy]
   
-  resources :events, only: [:index, :show]
+  resources :events, only: [:index, :show] do
+    collection do
+      get 'manage_events', as: 'manage'
+    end
+  end
 
   resources :jkci_classes
   get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
@@ -40,7 +44,9 @@ Rails.application.routes.draw do
   get "/daily_teach/:class_catlog_id/recover" => "daily_teachs#recover_daily_teach", as: "recover_daily_teach"
   
   resources :chapters
-  resources :albums
+  resources :albums do 
+    get 'manage_albums', on: :collection, as: 'manage'
+  end
   
 
   match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]

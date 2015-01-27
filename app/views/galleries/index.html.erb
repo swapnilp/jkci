@@ -4,7 +4,7 @@
       <div id="k-top-search" class="col-lg-12 clearfix"><!-- top search -->
         <form action="#" id="top-searchform" method="get" role="search">
           <div class="input-group">
-            <input type="text" name="s" id="sitesearch" class="form-control" autocomplete="off" placeholder="Type in keyword(s) then hit Enter on keyboard" />
+            <input type="text" name="s" id="sitesearch" class="form-control" autocomplete="off" placeholder="Type in keyword(s) then hit Enter on keyboard">
           </div>
         </form>
         <div id="bt-toggle-search" class="search-icon text-center"><i class="s-open fa fa-search"></i><i class="s-close fa fa-times"></i></div><!-- toggle search button -->
@@ -12,7 +12,7 @@
       <div class="k-breadcrumbs col-lg-12 clearfix"><!-- breadcrumbs -->
         <ol class="breadcrumb">
           <li><a href="<%= root_path %>">Home</a></li>
-          <li class="active">Events</li>
+          <li class="active">Gallery</li>
         </ol>
       </div><!-- breadcrumbs end -->               
     </div><!-- row end -->
@@ -21,37 +21,33 @@
         <div class="col-padded"><!-- inner custom column -->
           <div class="row gutter"><!-- row -->
             <div class="col-lg-12 col-md-12">
-              <h1 class="page-title">Events</h1><!-- category title -->
+              <h1 class="page-title">School Galleries</h1><!-- category title -->
             </div>
           </div><!-- row end -->
           <div class="row gutter"><!-- row -->
             <div class="col-lg-12 col-md-12">
-              <%- @events.each do |event| %>
-	        <div class="up-event-wrapper"><!-- event summary -->
-                  <h1 class="title-median">
-		    <a href="<%= event_path(event) %>" title="Annual alumni game"><%= event.name %></a>
-		  </h1>
-                  <div class="up-event-meta clearfix">
-	            <%- if event.is_single_day %>
-                      <div class="up-event-date"><%= event.start_date %></div>
-	              <%- if event.time.present? %>
-	                <div class="up-event-time"><%= event.time %></div>
-		      <%- end %>
-	            <%- else %>
-	              <div class="up-event-date"><%= event.start_date%></div>
-	              <div class="up-event-date"><%= event.end_date%></div>
-	            <%- end %>
+	      <%- @albums.each do |album| %>
+                <div class="gallery-wrapper"><!-- gallery single wrap -->
+                  <figure class="gallery-last-photo clearfix">
+                    <a href="#" title="Gallery 01"><img src="img/news-5.jpg" alt="Leading photo"></a>
+                  </figure>
+                  <div class="gallery-info">
+                    <span class="gallery-photos-num"><%= album.galleries.count %></span>
+                    <span class="gallery-photos-tag">photos</span>
                   </div>
-                  <p>
-                    <%= event.description.truncate(180) %>
-		    <%- if event.description.length >  180 %>
-	              <a href="<%= event_path(event) %>" class="moretag" title="read more">MORE</a> 
-		    <%- end %>
-                  </p>
-                </div><!-- event summary end -->
+                  <div class="gallery-meta">
+                    <h1 class="gallery-title">
+		      <a href="<%= gallery_path(album.id) %>" title="Gallery 01"><%= album.name %></a>
+		    </h1>
+                    <p class="gallery-description">
+	              <%= album.description %>
+	            </p>
+                  </div>
+                </div><!-- gallery single wrap end -->
 	      <%- end %>
+              
             </div>
-          </div><!-- row end --> 
+          </div><!-- row end -->
           <div class="row gutter"><!-- row -->
             <div class="col-lg-12">
               <ul class="pagination pull-right"><!-- pagination -->
@@ -64,14 +60,21 @@
                 <li><a href="#">Next</a></li>
               </ul><!-- pagination end -->
             </div>
-          </div><!-- row end -->                 
+          </div><!-- row end -->
         </div><!-- inner custom column end -->
       </div><!-- doc body wrapper end -->
       <div id="k-sidebar" class="col-lg-4 col-md-4"><!-- sidebar wrapper -->
         <div class="col-padded col-shaded"><!-- inner custom column -->
           <ul class="list-unstyled clear-margins"><!-- widgets -->
             <li class="widget-container widget_nav_menu"><!-- widget -->
-              <%= render partial: 'layouts/links' %>
+              <h1 class="title-widget">Useful links</h1>
+              <ul>
+                <li><a href="#" title="menu item">News Archive</a></li>
+                <li><a href="#" title="menu item">Tradition of School Events</a></li>
+                <li><a href="#" title="menu item">Report Asocial Behaviour</a></li>
+                <li><a href="#" title="menu item">Trends and Tips</a></li>
+                <li><a href="#" title="menu item">Events Poll</a></li>
+              </ul>
 	    </li>
             <li class="widget-container widget_recent_news"><!-- widgets list -->
               <h1 class="title-widget">School News</h1>
@@ -79,7 +82,7 @@
 		<li class="recent-news-wrap news-no-summary">
                   <div class="recent-news-content clearfix">
                     <figure class="recent-news-thumb">
-                      <a href="#" title="Megan Boyle flourishes..."><img src="img/recent-news-thumb-1.jpg" class="attachment-thumbnail wp-post-image" alt="Thumbnail 1" /></a>
+                      <a href="#" title="Megan Boyle flourishes..."><img src="img/recent-news-thumb-1.jpg" class="attachment-thumbnail wp-post-image" alt="Thumbnail 1"></a>
                     </figure>
                     <div class="recent-news-text">
                       <div class="recent-news-meta">
@@ -92,7 +95,7 @@
 		<li class="recent-news-wrap news-no-summary">
                   <div class="recent-news-content clearfix">
                     <figure class="recent-news-thumb">
-                      <a href="#" title="Buntington Alum..."><img src="img/recent-news-thumb-2.jpg" class="attachment-thumbnail wp-post-image" alt="Thumbnail 2" /></a>
+                      <a href="#" title="Buntington Alum..."><img src="img/recent-news-thumb-2.jpg" class="attachment-thumbnail wp-post-image" alt="Thumbnail 2"></a>
                     </figure>
                     <div class="recent-news-text">
                       <div class="recent-news-meta">
@@ -105,7 +108,7 @@
 		<li class="recent-news-wrap news-no-summary">
                   <div class="recent-news-content clearfix">
                     <figure class="recent-news-thumb">
-                      <a href="#" title="Cody Rotschild Enjoys..."><img src="img/recent-news-thumb-3.jpg" class="attachment-thumbnail wp-post-image" alt="Thumbnail 3" /></a>
+                      <a href="#" title="Cody Rotschild Enjoys..."><img src="img/recent-news-thumb-3.jpg" class="attachment-thumbnail wp-post-image" alt="Thumbnail 3"></a>
                     </figure>
                     <div class="recent-news-text">
                       <div class="recent-news-meta">
@@ -121,7 +124,7 @@
               <h1 class="title-titan">School Newsletter</h1>
               <form role="search" method="get" class="newsletter-form" action="#">
                 <div class="input-group">
-                  <input type="text" placeholder="Your e-mail address" autocomplete="off" class="form-control newsletter-form-input" name="email" />
+                  <input type="text" placeholder="Your e-mail address" autocomplete="off" class="form-control newsletter-form-input" name="email">
                   <span class="input-group-btn"><button type="submit" class="btn btn-default">GO!</button></span>
                 </div>
                 <span class="help-block">* Enter your e-mail address to subscribe.</span>
@@ -132,7 +135,7 @@
                 <i class="custom-button-icon fa fa-empire"></i>
                 <span class="custom-button-wrap">
                   <span class="custom-button-title">Donate Now</span>
-                  <span class="custom-button-tagline">Become a corporate sponsor of our academy!</span>
+                  <span class="custom-button-tagline">Become a corporate sponsor of our schools!</span>
                 </span>
                 <em></em>
               </a>
@@ -142,5 +145,4 @@
       </div><!-- sidebar wrapper end -->
     </div><!-- row end -->
   </div><!-- container end -->
-</div><!-- content wrapper end -->
-
+</div>
