@@ -61,7 +61,7 @@
             </ul>
           </li>
           <li>
-            <a href="about-us.html" title="How things work">About Us</a>
+            <a href="<%= about_us_path %>" title="How things work">About Us</a>
             <ul class="sub-menu">
               <li><a href="full-width.html">Full Width Page</a></li>
               <li><a href="sidebar-left.html">Sidebar on Left</a></li>
@@ -83,7 +83,7 @@
 		<li><a href="<%= manage_events_path %>">Events</a></li>
               </ul>
 	    <%- else %>
-              <a href="contact-us.html" title="School Contacts">Contact Us</a>
+              <a href="<%= contact_us_path %>" title="School Contacts">Contact Us</a>
 	    <%- end %>
           </li>
         </ul>

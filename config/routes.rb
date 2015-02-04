@@ -47,7 +47,10 @@ Rails.application.routes.draw do
   resources :albums do 
     get 'manage_albums', on: :collection, as: 'manage'
   end
-  
+
+  resources :about_us, only: [:index]
+
+  get 'contact_us' => "about_us#contact_us"
 
   match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
   get '/admin_desk' => "home#admin_desk"

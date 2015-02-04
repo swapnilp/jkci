@@ -107,6 +107,11 @@ class Gallery < ActiveRecord::Base
     self.image.instance_write(:file_name, "#{Time.now.to_i.to_s}.#{transliterate(extension)}")
   end
 
+  def image_url(type= 'original')
+    image.url(type.to_sym)
+  end
+
+
   private
 
   def transliterate(str)
@@ -127,5 +132,6 @@ class Gallery < ActiveRecord::Base
       errors.add :image, :invalid, :type =>Paperclip::Errors::NotIdentifiedByImageMagickError.new("Invalid file")
     end
   end
+
 
 end

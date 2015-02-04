@@ -30,6 +30,8 @@
 
     <%= render partial: 'layouts/footer' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
-
+    <%- if request.fullpath == contact_us_path %> 
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <%- end %>
 </body>
 </html>

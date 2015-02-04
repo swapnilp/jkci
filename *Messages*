@@ -1,0 +1,127 @@
+("/Applications/Emacs.app/Contents/MacOS/Emacs-10.7" "app/views/home/index.html.erb")
+For information about GNU Emacs and the GNU system, type C-h C-a.
+Loading vc-git...done
+Saving file /Users/swapnil/work/jkci/app/views/home/index.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/home/index.html.erb
+(No changes need to be saved)
+Saving file /Users/swapnil/work/jkci/app/views/home/index.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/home/index.html.erb
+(No changes need to be saved)
+Undo! [7 times]
+user-error: No further undo information [4 times]
+Saving file /Users/swapnil/work/jkci/app/views/home/index.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/home/index.html.erb
+(No changes need to be saved)
+Saving file /Users/swapnil/work/jkci/app/views/home/index.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/home/index.html.erb
+(No changes need to be saved) [9 times]
+Mark set
+Quit [2 times]
+(No changes need to be saved) [4 times]
+Read-Only mode enabled
+call-interactively: Buffer is read-only: #<buffer index.html.erb> [6 times]
+(No changes need to be saved) [4 times]
+Auto-saving...done
+Saving file /Users/swapnil/work/jkci/app/views/about_us/index.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/about_us/index.html.erb
+Saving file /Users/swapnil/work/jkci/app/views/about_us/index.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/about_us/index.html.erb
+(No changes need to be saved)
+Saving file /Users/swapnil/work/jkci/app/views/about_us/index.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/about_us/index.html.erb
+(No changes need to be saved)
+Saving file /Users/swapnil/work/jkci/app/views/about_us/index.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/about_us/index.html.erb
+(No changes need to be saved) [5 times]
+Saving file /Users/swapnil/work/jkci/app/controllers/about_us_controller.rb...
+Wrote /Users/swapnil/work/jkci/app/controllers/about_us_controller.rb
+(No changes need to be saved) [2 times]
+Saving file /Users/swapnil/work/jkci/app/controllers/about_us_controller.rb...
+Wrote /Users/swapnil/work/jkci/app/controllers/about_us_controller.rb
+(No changes need to be saved)
+Read-Only mode enabled
+call-interactively: Buffer is read-only: #<buffer about_us_controller.rb> [6 times]
+Buffer is read-only: #<buffer about_us_controller.rb> [2 times]
+Read-Only mode disabled
+Saving file /Users/swapnil/work/jkci/app/controllers/about_us_controller.rb...
+Wrote /Users/swapnil/work/jkci/app/controllers/about_us_controller.rb
+(New file)
+Saving file /Users/swapnil/work/jkci/app/views/about_us/contact_us.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/about_us/contact_us.html.erb
+Saving file /Users/swapnil/work/jkci/app/views/about_us/contact_us.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/about_us/contact_us.html.erb
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Auto-saving...done
+Saving file /Users/swapnil/work/jkci/app/views/about_us/contact_us.html.erb...
+Wrote /Users/swapnil/work/jkci/app/views/about_us/contact_us.html.erb
+(No changes need to be saved) [4 times]
+Mark saved where search started
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved) [3 times]
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved)
+Auto-saving...done
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved) [2 times]
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved)
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved) [2 times]
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved) [6 times]
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved) [7 times]
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved) [3 times]
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+Mark set
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved)
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+Saving file /Users/swapnil/work/jkci/config/routes.rb...
+Wrote /Users/swapnil/work/jkci/config/routes.rb
+(No changes need to be saved) [6 times]
+completing-read-default: Command attempted to use minibuffer while in minibuffer
