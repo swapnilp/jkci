@@ -108,16 +108,16 @@ border-radius: 4px;
 }
 
 
-.adminDesk a:link, a:visited {
-  color: #363636;
-  text-decoration: none;
-}
-
-.adminDesk a:hover {
-  color: #ea5644;
-  text-decoration: none;
-}
-
+//.adminDesk a:link, a:visited {
+//  color: #363636;
+//  text-decoration: none;
+//}
+//
+//.adminDesk a:hover {
+//  color: #ea5644;
+//  text-decoration: none;
+//}
+//
 .imageUplaodBoxContainer{
   margin-top:20px;
 }
@@ -136,4 +136,17 @@ border-radius: 4px;
   right:10px;
   color:red;
   cursor:pointer;
+}
+
+
+figure.gallery-last-photo {
+  max-height: 300px;
+}
+
+figure.gallery-last-photo img{
+  width:100%;
+}
+
+figure.gallery-photo-thumb{
+  max-height: 200px;
 }

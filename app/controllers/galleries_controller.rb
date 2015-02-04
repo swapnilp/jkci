@@ -7,7 +7,10 @@ class GalleriesController < ApplicationController
   
 
   def show
+    @album = Album.includes([:galleries]).where(id: params[:id]).first
   end
+
+
   def create
     params.permit!
     attachment = Gallery.new(params[:gallery])

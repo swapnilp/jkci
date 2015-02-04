@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user!, excepts: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
+  
   def index
     @events = Event.master_events
   end
@@ -12,6 +13,7 @@ class EventsController < ApplicationController
   end
 
   def manage_events
+    @events = Event.master_events
   end
 
   def new
@@ -20,6 +22,4 @@ class EventsController < ApplicationController
 
   def create
   end
-  
-
 end

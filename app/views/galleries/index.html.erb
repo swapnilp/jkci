@@ -21,7 +21,7 @@
         <div class="col-padded"><!-- inner custom column -->
           <div class="row gutter"><!-- row -->
             <div class="col-lg-12 col-md-12">
-              <h1 class="page-title">School Galleries</h1><!-- category title -->
+              <h1 class="page-title">Galleries</h1><!-- category title -->
             </div>
           </div><!-- row end -->
           <div class="row gutter"><!-- row -->
@@ -29,7 +29,9 @@
 	      <%- @albums.each do |album| %>
                 <div class="gallery-wrapper"><!-- gallery single wrap -->
                   <figure class="gallery-last-photo clearfix">
-                    <a href="#" title="Gallery 01"><img src="img/news-5.jpg" alt="Leading photo"></a>
+                    <a href="<%= gallery_path(album.id) %>" title="<%= album.name %>">
+		      <img src="<%= album.cover_image %>" alt="Leading photo">
+		    </a>
                   </figure>
                   <div class="gallery-info">
                     <span class="gallery-photos-num"><%= album.galleries.count %></span>
