@@ -29,7 +29,7 @@
 	      <%- @albums.each do |album| %>
                 <div class="gallery-wrapper"><!-- gallery single wrap -->
                   <figure class="gallery-last-photo clearfix">
-                    <a href="<%= gallery_path(album.id) %>" title="<%= album.name %>">
+                    <a href="<%= gallery_path(album.id) %>" title="<%= album.name %>"  data-no-turbolink="true">
 		      <img src="<%= album.cover_image %>" alt="Leading photo">
 		    </a>
                   </figure>
@@ -39,7 +39,7 @@
                   </div>
                   <div class="gallery-meta">
                     <h1 class="gallery-title">
-		      <a href="<%= gallery_path(album.id) %>" title="Gallery 01"><%= album.name %></a>
+		      <a href="<%= gallery_path(album.id) %>" title="Gallery 01" data-no-turbolink="true"><%= album.name %></a>
 		    </h1>
                     <p class="gallery-description">
 	              <%= album.description %>

@@ -1,30 +1,33 @@
 <div id="k-body" class="k-body adminDesk">
   <div class="container">
-<div style="width:100%;">
-  <div class="textLeft">
-    <h2 class="left">Filter By</h2>
-    <%= select_tag :filter_teach_class, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select class", style:"margin:15px 20px;", onchange:"dailyTeachFilter(event, this);" %>
-    <%= select_tag :filter_teach_teacher, options_from_collection_for_select(@teachers, "id", "name"), prompt: "Select teacher", style:"margin:15px 20px;", onchange:"dailyTeachFilter(event, this);" %>
+    <div>
+      <h1>Daily Teach</h1>
+    </div>
+    <div style="width:100%;">
+      <div class="textLeft">
+	<h2 class="left">Filter By</h2>
+	<%= select_tag :filter_teach_class, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select class", style:"margin:15px 20px;", onchange:"dailyTeachFilter(event, this);" %>
+	<%= select_tag :filter_teach_teacher, options_from_collection_for_select(@teachers, "id", "name"), prompt: "Select teacher", style:"margin:15px 20px;", onchange:"dailyTeachFilter(event, this);" %>
+      </div>
+      <table width="100%;" class="table table-hover dailyTeachTable">
+	<thead>
+	  <tr>
+	    <th>#</th>
+	    <th>Date</th>
+	    <th>Class</th>
+	    <th>Points</th>
+	    <th>Teacher</th>
+	    <th>Action</th>
+	  </tr>
+	</thead>
+	<%= render partial: 'daily_teach', locals:{daily_teaching_points: @daily_teaching_points}%>
+	
+      </table>
+      <%= will_paginate @daily_teaching_points %>
+    </div>
+    <div style="margin-top:20px;">
+      <%= link_to 'New Daily Teach',  new_daily_teach_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+    
   </div>
-  <table width="100%;" class="table table-hover dailyTeachTable">
-    <thead>
-      <tr>
-	<th>#</th>
-	<th>Date</th>
-	<th>Class</th>
-	<th>Points</th>
-	<th>Teacher</th>
-	<th>Action</th>
-      </tr>
-      </thead>
-    <%= render partial: 'daily_teach', locals:{daily_teaching_points: @daily_teaching_points}%>
-
-  </table>
-  <%= will_paginate @daily_teaching_points %>
-</div>
-<div style="margin-top:20px;">
-  <%= link_to 'New Daily Teach',  new_daily_teach_path, class: 'btn btn-primary btn-sm' %>
-</div>
-
-</div>
 </div>

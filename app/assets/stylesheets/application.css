@@ -150,3 +150,8 @@ figure.gallery-last-photo img{
 figure.gallery-photo-thumb{
   max-height: 200px;
 }
+
+.widget_sofa_flickr li{
+  width: 75px;
+  height: 56px;
+}

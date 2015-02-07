@@ -21,13 +21,8 @@
 //= require jquery.easy-pie-chart
 //= require fancybox/jquery.fancybox.pack
 // require fancybox/jquery.fancybox-media
+//= require gmaps/google
+//= require underscore
 //= require theme
 //= require_tree .
 
-
-
-$(document).on("ready page:change", function() {
-$(".fancybox").fancybox({
-        openEffect  : 'elastic'
-    });
-});

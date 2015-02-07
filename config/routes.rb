@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   end
 
   resources :about_us, only: [:index]
+  resources :courses, olny: [:index]
 
   get 'contact_us' => "about_us#contact_us"
 

@@ -1,5 +1,5 @@
 class Gallery < ActiveRecord::Base
-
+  include Rails.application.routes.url_helpers
 
   require 'open-uri'
   require 'net/http'
@@ -109,6 +109,10 @@ class Gallery < ActiveRecord::Base
 
   def image_url(type= 'original')
     image.url(type.to_sym)
+  end
+
+  def flickers_images
+    {image_url('thumb') =>  album_path(album_id)}
   end
 
 

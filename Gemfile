@@ -31,7 +31,8 @@ gem "paperclip", "~> 4.2"
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
-
+gem 'gmaps4rails'
+gem 'underscore-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.0.3'

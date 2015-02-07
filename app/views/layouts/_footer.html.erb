@@ -50,14 +50,13 @@
             <li class="widget-container widget_sofa_flickr"><!-- widgets list -->
               <h1 class="title-widget">Flickr Stream</h1>
               <ul class="k-flickr-photos list-unstyled">
-                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-1.jpg" alt="Photo 1" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-2.jpg" alt="Photo 2" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-3.jpg" alt="Photo 3" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-4.jpg" alt="Photo 4" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-5.jpg" alt="Photo 5" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-6.jpg" alt="Photo 6" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-7.jpg" alt="Photo 7" /></a></li>
-                <li><a href="#" title="Flickr photo"><img src="/assets/img/flickr-8.jpg" alt="Photo 8" /></a></li>
+		<%- @flicker_photos.each do |img, album| %>
+                <li>
+		  <a href="<%= album%>" title="Flickr photo">
+		    <img src="<%= img %>" alt="Photo 1" />
+		  </a>
+		</li>
+                <%- end %>
               </ul>
 	    </li>
           </ul> 

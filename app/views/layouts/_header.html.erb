@@ -32,7 +32,7 @@
             <a href="<%= events_path %>" title="Upcoming Events">Events</a>
           </li>
           <li>
-            <a href="courses.html" title="Available Courses">Courses</a>
+            <a href="<%= courses_path %>" title="Available Courses">Courses</a>
           </li>
           <li>
             <a href="<%= galleries_path %>" class="Pages Collection" title="More Templates">Gallery</a>
@@ -63,12 +63,8 @@
           <li>
             <a href="<%= about_us_path %>" title="How things work">About Us</a>
             <ul class="sub-menu">
-              <li><a href="full-width.html">Full Width Page</a></li>
-              <li><a href="sidebar-left.html">Sidebar on Left</a></li>
-              <li><a href="formatting.html">Formatting</a></li>
-              <li><a href="school-leadership.html">School Leadership</a></li>
-              <li><a href="gallery.html">Gallery</a></li>
-              <li><a href="404.html">404 Error</a></li>
+              <li><a href="full-width.html">Testimony</a></li>
+              <li><a href="sidebar-left.html">Results</a></li>
             </ul>
           </li>
           <li>
@@ -83,7 +79,7 @@
 		<li><a href="<%= manage_events_path %>">Events</a></li>
               </ul>
 	    <%- else %>
-              <a href="<%= contact_us_path %>" title="School Contacts">Contact Us</a>
+	      <%= link_to "Contact Us", contact_us_path, 'data-no-turbolink' => true %>
 	    <%- end %>
           </li>
         </ul>

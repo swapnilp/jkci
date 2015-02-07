@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   #before_action :authenticate_user!
   #before_filter :authentication_check
 
-  #before_filter :authentication_check
+  before_filter :flicker_photos
 
 
   # Prevent CSRF attacks by raising an exception.
@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     authenticate_or_request_with_http_basic do |user, password|
       user == "jkci" && password == "jkciPassword" 
     end
+  end
+  
+  def flicker_photos
+    @flicker_photos = Gallery.all.sample(10).map(&:flickers_images).reduce(:merge)
   end
   
   #private 
