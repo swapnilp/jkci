@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
   
   def flicker_photos
-    @flicker_photos = Gallery.all.sample(10).map(&:flickers_images).reduce(:merge)
+    @flicker_photos = Gallery.all.sample(10).map(&:flickers_images).reduce(:merge) || []
   end
   
   #private 
