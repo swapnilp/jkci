@@ -3,6 +3,8 @@ class EventsController < ApplicationController
   
   def index
     @events = Event.master_events
+    @events = @events.where("name like ? or description like ?", "%#{params[:s]}%", "%#{params[:s]}%") if params[:s].present?
+    @events = @events.page(params[:page]).per(10)
   end
 
   def show

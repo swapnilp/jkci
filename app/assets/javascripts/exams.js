@@ -6,7 +6,13 @@ function examFilterByClass(event, self){
     status = $("#filter_exam_status").val();
     $.get("/exams/filter_exam/exam?&class_id="+class_id+"&type="+type+"&status="+status, function(data){
 	$(".examsTable tbody").html(data['html']);
+	$(".paginationDiv").html(data['pagination_html']);
     });
 }
 
 
+function jsonPagination(event){
+  $(".paginationDiv .pagination a").on('click', function(){
+    alert("asdasd");
+  })
+}

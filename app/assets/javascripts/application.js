@@ -21,8 +21,15 @@
 //= require jquery.easy-pie-chart
 //= require fancybox/jquery.fancybox.pack
 // require fancybox/jquery.fancybox-media
-//= require gmaps/google
-//= require underscore
 //= require theme
 //= require_tree .
 
+function adminPagination(event, self){
+  event.preventDefault();
+  href = $(self).attr('href');
+  $.get(href, function(data){
+    $(""+ data['css_holder']).html(data['html']);
+    $(".paginationDiv").html(data['pagination_html']);
+  }, function(
+  ){}, "JSON");
+}

@@ -1,0 +1,26 @@
+<%- @students.each_with_index do |student, index| %>
+  <tr>
+    <td>
+      <%= index %>
+    </td>
+    <td>
+      <%= student.name %>
+    </td>
+    <td>
+      <%= student.std %>
+    </td>
+    <td>
+      <%= student.group %>
+    </td>
+    <td>
+      <%= student.mobile %>
+    </td>
+    <td>
+      <%= student.p_mobile %>
+    </td>
+    <td>
+      <%= link_to 'Show', student_path(student) %>  | 
+      <%= link_to 'Edit', edit_student_path(student) %>
+    </td>
+  </tr>
+<%- end %>

@@ -23,7 +23,8 @@ gem "daemons"
 gem "delayed_job_web"
 gem 'momentjs-rails', '~> 2.5.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0.1'
-gem 'will_paginate', '~> 3.0'
+#gem 'will_paginate', '~> 3.0'
+gem 'kaminari'
 gem "font-awesome-rails"
 gem 'devise', '~> 3.4.1'
 #gem 'delayed_paperclip', '~> 2.9.0'
@@ -31,8 +32,6 @@ gem "paperclip", "~> 4.2"
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
-gem 'gmaps4rails'
-gem 'underscore-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.0.3'

@@ -1,8 +1,12 @@
 class ExamsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @exams = Exam.all.order("id desc").paginate(:page => params[:page])
+    @exams = Exam.all.order("id desc").page(params[:page])
     @jkci_classes = JkciClass.all
+    respond_to do |format|
+      format.html
+      format.json {render json: {success: true, html: render_to_string(:partial => "exam.html.erb", :layout => false, locals: {exams: @exams}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {exams: @exams}), css_holder: ".examsTable tbody"}}
+    end
   end
   
   def new
@@ -122,9 +126,10 @@ class ExamsController < ApplicationController
       elsif params[:status] == "Published"
         exams = exams.where(is_result_decleared: true)
       end
-      
     end
-    render json: {success: true, html: render_to_string(:partial => "exam.html.erb", :layout => false, locals: {exams: exams})}
+    exams = exams.order("id desc").page(params[:page]).per(10);
+    pagination_html = render_to_string(partial: 'pagination.html.erb', layout: false, locals: {exams: exams})
+    render json: {success: true, html: render_to_string(:partial => "exam.html.erb", :layout => false, locals: {exams: exams}), pagination_html:  pagination_html, css_holder: ".examsTable tbody"}
   end
 
   def follow_exam_absent_student

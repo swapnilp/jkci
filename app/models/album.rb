@@ -3,7 +3,6 @@ class Album < ActiveRecord::Base
 
 
   def cover_image
-    galleries.sample.image.url(:hunt_img)
-
+    galleries.sample.image.url(:hunt_img) rescue ''
   end
 end

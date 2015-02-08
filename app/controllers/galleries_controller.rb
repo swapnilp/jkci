@@ -2,7 +2,7 @@ class GalleriesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   
   def index
-    @albums = Album.includes(:galleries).all.order("id desc").paginate(:page => params[:page])
+    @albums = Album.includes(:galleries).all.order("id desc").page(params[:page])
   end
   
 
