@@ -1,4 +1,4 @@
-class Gallery < ActiveRecord::Base
+class ResultsPhoto < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
   require 'open-uri'
@@ -8,7 +8,7 @@ class Gallery < ActiveRecord::Base
 
   has_attached_file :image, 
       :whiny => true,
-      :path => ":rails_root/public/system/image/:id/:style/:filename",
+      :path => ":rails_root/public/system/result_image/:id/:style/:filename",
       :url => "/system/image/:id/:style/:filename",
       :styles => { :medium => "400x400>", :hunt_img => "x400",
       :thumb => "212x" }
@@ -112,7 +112,7 @@ class Gallery < ActiveRecord::Base
   end
 
   def flickers_images
-    {image_url('thumb') =>  gallery_path(album_id)}
+    {image_url('thumb') =>  album_path(album_id)}
   end
 
 
@@ -136,6 +136,6 @@ class Gallery < ActiveRecord::Base
       errors.add :image, :invalid, :type =>Paperclip::Errors::NotIdentifiedByImageMagickError.new("Invalid file")
     end
   end
-
-
 end
+
+

@@ -1,5 +1,5 @@
 class AlbumsController < ApplicationController
-
+  before_action :authenticate_user!
   def index
     @albums = Album.all.order("id desc").page(params[:page])
     respond_to do |format|

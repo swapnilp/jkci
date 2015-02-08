@@ -52,7 +52,7 @@
               <ul class="k-flickr-photos list-unstyled">
 		<%- @flicker_photos.each do |img, album| %>
                 <li>
-		  <a href="<%= album%>" title="Flickr photo">
+		  <a href="<%= album%>" title="Flickr photo" data-no-turbolink="true">
 		    <img src="<%= img %>" alt="Photo 1" />
 		  </a>
 		</li>

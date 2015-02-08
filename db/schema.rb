@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150103053318) do
+ActiveRecord::Schema.define(version: 20150208123719) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -185,6 +185,35 @@ ActiveRecord::Schema.define(version: 20150103053318) do
     t.integer  "batch_id",         limit: 4
     t.boolean  "is_active",        limit: 1,   default: true
     t.integer  "subject_id",       limit: 4
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.string   "name",             limit: 255
+    t.string   "marks",            limit: 255
+    t.string   "stream",           limit: 255
+    t.string   "college",          limit: 255
+    t.integer  "rank",             limit: 4
+    t.integer  "disp_rank",        limit: 4
+    t.integer  "results_photo_id", limit: 4
+    t.integer  "batch_id",         limit: 4
+    t.integer  "student_id",       limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "results_photos", force: :cascade do |t|
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.float    "height",             limit: 24
+    t.float    "width",              limit: 24
+    t.datetime "image_updated_at"
+    t.string   "location",           limit: 255
+    t.string   "description",        limit: 255
+    t.date     "event_date"
+    t.integer  "result_id",          limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "sms_sents", force: :cascade do |t|
