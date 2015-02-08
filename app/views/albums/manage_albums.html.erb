@@ -11,7 +11,7 @@
   <%# select_tag :filter_exam_status,  options_for_select([ "Created", "Conducted", "Published"]), prompt: "Select type", style:"width:200px;margin:15px 20px;", onchange: "examFilterByClass(event, this)", class: "form-control left"  %>
 </div>
 <div>
-  <table class="table table-hover examsTable">
+  <table class="table table-hover albumsTable">
     <thead>
       <tr>
 	<th>#</th>
@@ -24,7 +24,9 @@
     </thead>
     <%= render partial: 'album', locals: {albums: @albums}%>
   </table>
-  <%# will_paginate @albums %>
+  <div class="paginationDiv">
+    <%= render partial: 'pagination', locals: {albums: @albums} %>
+  </div>
 </div>
 
 </div>

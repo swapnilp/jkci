@@ -155,3 +155,7 @@ figure.gallery-photo-thumb{
   width: 75px;
   height: 56px;
 }
+
+.paginationDiv ul{
+  margin-top:20px;
+}

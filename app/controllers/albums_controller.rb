@@ -1,7 +1,11 @@
 class AlbumsController < ApplicationController
 
   def index
-    @albums = Album.all.order("id desc").paginate(:page => params[:page])
+    @albums = Album.all.order("id desc").page(params[:page])
+    respond_to do |format|
+      format.html
+      format.json {render json: {success: true, html: render_to_string(:partial => "album.html.erb", :layout => false, locals: {albums: @albums}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {albums: @albums}), css_holder: ".albumsTable tbody"}}
+    end
   end
 
   def new
@@ -37,6 +41,10 @@ class AlbumsController < ApplicationController
   end
   
   def manage_albums
-    @albums = Album.all
+    @albums = Album.all.page(params[:page])
+    respond_to do |format|
+      format.html
+      format.json {render json: {success: true, html: render_to_string(:partial => "album.html.erb", :layout => false, locals: {albums: @albums}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {albums: @albums}), css_holder: ".albumsTable tbody"}}
+    end    
   end
 end
