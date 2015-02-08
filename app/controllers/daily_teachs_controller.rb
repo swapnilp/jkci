@@ -1,9 +1,13 @@
 class DailyTeachsController < ApplicationController
   before_action :authenticate_user!  
   def index
-    @daily_teaching_points = DailyTeachingPoint.all.paginate(:page => params[:page])
+    @daily_teaching_points = DailyTeachingPoint.all.page(params[:page])
     @jkci_classes = JkciClass.all
     @teachers = Teacher.all
+    respond_to do |format|
+      format.html
+      format.json {render json: {success: true, html: render_to_string(:partial => "daily_teach.html.erb", :layout => false, locals: {daily_teaching_points: @daily_teaching_points}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {daily_teaching_points: @daily_teaching_points}), css_holder: ".dailyTeachTable tbody"}}
+    end
   end
   
   def new
@@ -72,14 +76,14 @@ class DailyTeachsController < ApplicationController
   end
   
   def filter_teach
-    daily_teaching_points = DailyTeachingPoint.where("")
+    daily_teaching_points = DailyTeachingPoint.all.page(params[:page])
     if params[:class_id].present?
       daily_teaching_points = daily_teaching_points.where(jkci_class_id: params[:class_id])
     end
     if params[:teacher].present?
       daily_teaching_points = daily_teaching_points.where(teacher_id: params[:teacher])
     end
-    render json: {success: true, html: render_to_string(:partial => "daily_teach.html.erb", :layout => false, locals: {daily_teaching_points: daily_teaching_points})}
+    render json: {success: true, html: render_to_string(:partial => "daily_teach.html.erb", :layout => false, locals: {daily_teaching_points: daily_teaching_points}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {daily_teaching_points: daily_teaching_points}), css_holder: ".dailyTeachTable tbody"}
   end
 
   

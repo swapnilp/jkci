@@ -28,6 +28,9 @@
       </thead>
     <%= render partial: "jkci_class", locals: {jkci_classes: @jkci_classes} %>
   </table>
+  <div class="paginationDiv">
+    <%= render partial: 'pagination', locals: {jkci_classes: @jkci_classes} %>
+  </div>
 </div>
 
 </div>

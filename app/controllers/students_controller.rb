@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @students = Student.all.order("id desc").page(params[:page]).per(1)
+    @students = Student.all.order("id desc").page(params[:page])
     respond_to do |format|
       format.html
       format.json {render json: {success: true, html: render_to_string(:partial => "student.html.erb", :layout => false, locals: {students: @students}), pagination_html: render_to_string(partial: 'pagination.html.erb', layout: false, locals: {students: @students}), css_holder: ".studentsTable tbody"}}

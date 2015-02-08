@@ -1,9 +1,13 @@
 class JkciClassesController < ApplicationController
   before_action :authenticate_user!
   def index
-    @jkci_classes = JkciClass.includes([:batch]).all.order("id desc").paginate(:page => params[:page])
+    @jkci_classes = JkciClass.includes([:batch]).all.order("id desc").page(params[:page])
     @batches = Batch.all
     @subjects = Subject.all
+    respond_to do |format|
+      format.html
+      format.json {render json: {success: true, html: render_to_string(:partial => "jkci_class.html.erb", :layout => false, locals: {jkci_classes: @jkci_classes}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {jkci_classes: @jkci_classes}), css_holder: ".jkciClassTable tbody"}}
+    end
   end
   
   def new
@@ -64,13 +68,15 @@ class JkciClassesController < ApplicationController
   end
   
   def filter_class
-    jkci_classes = JkciClass.all
+    jkci_classes = JkciClass.includes([:batch]).all.order("id desc").page(params[:page])
     if params[:batch_id].present?
       jkci_classes = jkci_classes.where(batch_id: params[:batch_id])
     end
     if params[:subject_id].present?
       jkci_classes = jkci_classes.where(subject_id: params[:subject_id])
     end
-    render json: {success: true, html: render_to_string(:partial => "jkci_class.html.erb", :layout => false, locals: {jkci_classes: jkci_classes})}
+    
+    render json: {success: true, html: render_to_string(:partial => "jkci_class.html.erb", :layout => false, locals: {jkci_classes: jkci_classes}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {jkci_classes: jkci_classes}), css_holder: ".jkciClassTable tbody"}
+
   end
 end
