@@ -8,7 +8,8 @@ function addBatchResult(event, self){
   }, function(){}, "JSON" );
 }
 
-function  cancelAddStudent(){
+function  cancelAddStudent(event){
+  event.preventDefault();
   $(".newBatchResult").addClass('hide');
   $(".newBatchResult").html('');
 }

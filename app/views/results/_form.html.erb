@@ -56,7 +56,7 @@
     <div class="form-group">
       <div class="col-sm-offset-2">
 	<%= f.submit 'Save' , class: 'btn btn-default'%>
-	<%= link_to "Cancel", '', class: 'btn btn-warning', onclick: 'cancelAddStudent();' %>
+	<%= link_to "Cancel", '', class: 'btn btn-warning', onclick: 'cancelAddStudent(event);' %>
       </div>
     </div>
   <%- end %>
