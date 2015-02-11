@@ -1,0 +1,27 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+<div>
+  <h1>Batch Result</h1>
+</div>
+<%= link_to 'New Batch Result', new_batch_result_path, class: 'btn btn-primary' %>
+<div>
+  <table class="table table-hover studentsTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Batch</th>
+	<th>Desc</th>
+	<th>Actions</th>
+      </tr>
+    </thead>
+    <%= render partial: 'batch_result', locals: {batch_results: @batch_results} %>
+    
+  </table>
+  <div class="paginationDiv">
+    <%= render partial: 'pagination', locals: {batch_results: @batch_results} %>
+  </div>
+</div>
+
+</div>
+</div>
+

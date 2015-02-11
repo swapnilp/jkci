@@ -9,7 +9,7 @@ class ResultsPhoto < ActiveRecord::Base
   has_attached_file :image, 
       :whiny => true,
       :path => ":rails_root/public/system/result_image/:id/:style/:filename",
-      :url => "/system/image/:id/:style/:filename",
+      :url => "/system/result_image/:id/:style/:filename",
       :styles => { :medium => "400x400>", :hunt_img => "x400",
       :thumb => "212x" }
  

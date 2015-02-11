@@ -26,10 +26,9 @@ class Gallery < ActiveRecord::Base
 
   #after_create :transliterate_file_name
 
-#  validates_attachment :image, 
-#			:presence => true, 
-#			:content_type => { :content_type => ["image/jpg", "image/jpeg", "image/gif", "image/png"] },
-#			:size => { :less_than => 4.megabytes }
+  validates_attachment :image, 
+  :presence => true, 
+  :content_type => { :content_type => ["image/jpg", "image/jpeg", "image/gif", "image/png"] }
 
   validates_attachment_size :image, :less_than=>5.megabyte, message: "Oops! the file you have selected is too large. You can only upload a file less than 5 MB"
   validates_attachment_content_type :image, :content_type=>['image/jpeg', 'image/png', "image/jpg","image/pjpeg", "image/gif"], message: "Oops! only Jpeg, Jpg, PJpeg & Gif files are supported."

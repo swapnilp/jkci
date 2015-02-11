@@ -50,6 +50,10 @@ Rails.application.routes.draw do
 
   resources :about_us, only: [:index]
   resources :courses, olny: [:index]
+  resources :batch_results
+  resources :results do 
+    post 'add_result_photo', on: :collection, as: 'add_image'
+  end
 
   get 'contact_us' => "about_us#contact_us"
 

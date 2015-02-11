@@ -11,13 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150208123719) do
+ActiveRecord::Schema.define(version: 20150210190256) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
     t.string   "location",    limit: 255
     t.date     "date"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "batch_results", force: :cascade do |t|
+    t.string   "batch",       limit: 255
+    t.string   "description", limit: 255
+    t.string   "cover_img",   limit: 255
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
@@ -199,6 +207,8 @@ ActiveRecord::Schema.define(version: 20150208123719) do
     t.integer  "student_id",       limit: 4
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.integer  "batch_result_id",  limit: 4
+    t.string   "student_img",      limit: 255
   end
 
   create_table "results_photos", force: :cascade do |t|

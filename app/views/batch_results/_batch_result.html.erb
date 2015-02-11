@@ -1,0 +1,18 @@
+<%- batch_results.each_with_index do |batch_result, index| %>
+  <tr>
+    <td>
+      <%= batch_result.id %>
+    </td>
+    <td>
+      <%= batch_result.batch %>
+    </td>
+    <td>
+      <%= batch_result.description %>
+    </td>
+    <td>
+      <%= link_to 'Show', batch_result_path(batch_result) %>  | 
+      <%= link_to 'Edit', edit_batch_result_path(batch_result) %>
+    </td>
+  </tr>
+<%- end %>
+

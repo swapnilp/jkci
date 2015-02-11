@@ -1,0 +1,64 @@
+<div class="textLeft ">
+  <%= form_for result, html:{role: 'form', class: 'form-horizontal', onSubmit: "submitResultForm(event, this);"}  do |f| %>
+    <%= f.hidden_field :batch_result_id %>
+    <div class="form-group">
+      <%= f.label :name, class: 'col-sm-3 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :name, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :marks, class: 'col-sm-3 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :marks, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :stream, class: 'col-sm-3 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :stream, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :college, class: 'col-sm-3 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :college, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :rank, class: 'col-sm-3 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :rank, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :disp_rank, class: 'col-sm-3 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :disp_rank, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3">
+      <%= label_tag 'Add Student Result' %>
+      </div>
+      <div class="col-sm-4">
+	<%=  link_to "Add Student Image", '', class:"btn form-control", onClick:"addImageEvent(event);" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3">
+	<%= f.label :student_img, class: 'col-sm-3 control-label' %>
+      </div>
+      <div class="col-sm-4">
+	<%= f.text_field :student_img, class: 'form-control col-sm-4', id:"result_student_img", readonly: true %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+	<%= f.submit 'Save' , class: 'btn btn-default'%>
+	<%= link_to "Cancel", '', class: 'btn btn-warning', onclick: 'cancelAddStudent();' %>
+      </div>
+    </div>
+  <%- end %>
+</div>
+

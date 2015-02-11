@@ -1,0 +1,51 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <div class="col-sm-12 textLeft">
+      <div class="col-sm-4 textLeft">
+	<div class="textLeft">
+	  <h5>
+	    <span class="col-sm-6">Batch :</span> 
+	  </h5>
+	  <span style="font-size:20px;font-weight:normal;"><%= @batch_result.batch %></span>
+	</div>
+	<div class="textLeft">
+	  <h5>
+	    <span class="col-sm-6">Description :</span> 
+	  </h5>
+	  <span style="font-size:14px;font-weight:normal;">
+	      <%= @batch_result.description %>
+	    </span>
+	</div>
+	<div class="textLeft">
+	  <img src=""/>
+	</div>
+	
+	<div class="col-sm-12 textLeft">
+	  <%= link_to "Edit", edit_batch_result_path(@batch_result), class: "btn btn-primary" %>
+	  <%= link_to "Back", batch_results_path, class: "btn btn-primary" %>
+	  <%= link_to "Add Result", new_result_path({batch_id: @batch_result.id}), class: "btn btn-primary", data: {batch_id: @batch_result.id}, onClick: "addBatchResult(event, this);" %>
+	</div>
+      </div>
+      <div class="col-sm-8 textLeft hide newBatchResult" style="margin-top:15px;">
+	
+      </div>
+    </div>
+    <div class="col-sm-12 textLeft" style="margin-top:15px;">
+      <h5>
+	<span class="col-sm-2 paddingL0">Results :</span> 
+	<div class="col-sm-12 batchResultStudent">
+	  <%- @batch_result.results.each do |result| %>
+	    <%= render partial: "/results/result", locals: {result: result} %>
+	  <%- end %>
+	</div>
+      </h5>
+    </div>
+  </div>
+</div>
+<div class="hide">
+  <%= form_for(ResultsPhoto.new, url:add_image_results_path, remote: true, id: 'gallery_image_attachment', method: :post, html: {multipart: true, class: ''}) do |f| %>
+  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+  <%= f.file_field :image, class: 'attachment', id: 'image_attachment_field', onChange:"addResultImage(this);"  %>
+  <% end %>
+</div>
+

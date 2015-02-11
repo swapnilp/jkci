@@ -13,7 +13,7 @@ class StudentsController < ApplicationController
   end
   
   def create
-     params.permit!
+    params.permit!
     student = Student.new(params[:student])
     if student.save
       redirect_to students_path

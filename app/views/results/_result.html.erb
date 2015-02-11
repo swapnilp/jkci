@@ -1,0 +1,10 @@
+<div class="batchResult_<%= result.id %>" data-id="<%= result.id %>">
+  <%- if result.student_img.present? %>
+    <img src="<%= result.student_img %>" />
+  <%- else %>
+    <img src="/assets/img/man_icon.png" />
+  <%- end %>
+  <i class="fa fa-times removeBatchResult" onClick="removeBatchResult(event, this);"></i>
+  <i class="fa fa-edit editBatchResult" data-href="<%= edit_result_path(result) %>"  onClick="editBatchResult(event, this);"></i>
+  <span><%= result.name %></span>
+</div>
