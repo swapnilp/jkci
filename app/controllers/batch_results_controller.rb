@@ -1,4 +1,5 @@
 class BatchResultsController < ApplicationController
+  before_action :authenticate_user!
   def index
     @batch_results = BatchResult.all.page(params[:page])
   end
