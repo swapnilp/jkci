@@ -55,6 +55,8 @@ Rails.application.routes.draw do
     post 'add_result_photo', on: :collection, as: 'add_image'
   end
 
+  resources :career, only: [:index]
+
   get 'contact_us' => "about_us#contact_us"
 
   match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
