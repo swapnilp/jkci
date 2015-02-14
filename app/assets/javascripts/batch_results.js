@@ -70,21 +70,44 @@ function addImageEvent(event){
   $('#image_attachment_field').click();
 }
 
+function addCoverImageEvent(event){
+  event.preventDefault();
+  $('#image_cover_attachment_field').click();
+}
+
 
 function addResultImage(self){
-    $('.seek_img_spinner').show();
-    var file_path = $(self).val()
-    var thsEle = $(self);
-    if(file_path != ''){
-      $('#new_results_photo').ajaxSubmit(function(data){
-       if(data.success){
-         $("#result_student_img").val(''+ data['url']);
-         
-       }else{
-         brandiktivAlert(""+ data.msg);
-         $('.seek_img_spinner').hide();
-       }
-      });
-    }
-
+  $a = self;
+  $('.seek_img_spinner').show();
+  var file_path = $(self).val()
+  var thsEle = $(self);
+  if(file_path != ''){
+    $(self).parent('form').ajaxSubmit(function(data){
+      if(data.success){
+        $("#result_student_img").val(''+ data['url']);
+        
+      }else{
+        brandiktivAlert(""+ data.msg);
+        $('.seek_img_spinner').hide();
+      }
+    });
   }
+}
+
+function addCoverResultImage(self){
+  $a = self;
+  $('.seek_img_spinner').show();
+  var file_path = $(self).val()
+  var thsEle = $(self);
+  if(file_path != ''){
+    $(self).parent('form').ajaxSubmit(function(data){
+      if(data.success){
+	$("#result_student_img").val(''+ data['url']);
+      }else{
+        brandiktivAlert(""+ data.msg);
+        $('.seek_img_spinner').hide();
+      }
+    });
+  }
+  
+}

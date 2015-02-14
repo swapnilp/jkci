@@ -13,6 +13,13 @@
       </div>
     </div>
     <div class="form-group">
+      <%= f.label :cover_img, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :cover_img, id: 'result_student_img' %>
+	<%= link_to 'Add Cover Image', '#', onclick:"addCoverImageEvent(event);" %>
+      </div>
+    </div>
+    <div class="form-group">
       <div class="col-sm-offset-2">
 	<%= f.submit 'Save' , class: 'btn btn-default'%>
 	<%= link_to "Cancel", batch_results_path, class: 'btn btn-warning' %>
@@ -21,3 +28,9 @@
   <%- end %>
 </div>
 
+<div class="hide">
+  <%= form_for(ResultsPhoto.new, url:add_image_results_path, remote: true, id: 'gallery_cover_image_attachment', method: :post, html: {multipart: true, class: ''}) do |f| %>
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+    <%= f.file_field :image, class: 'attachment', id: 'image_cover_attachment_field', onChange:"addCoverResultImage(this);"  %>
+  <% end %>
+</div>

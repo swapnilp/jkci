@@ -35,32 +35,33 @@
             </div>
           </div><!-- row end -->
           <div class="row gutter k-equal-height"><!-- row -->
-            <div class="news-mini-wrap col-lg-6 col-md-6"><!-- news mini-wrap -->
-              <figure class="news-featured-image">
-                <img src="img/news-1.jpg" alt="Featured image 1" class="img-responsive">
-              </figure>
-              <div class="page-title-meta">
-                <h1 class="page-title">
-		  <a href="#" title="Cody Rotschild enjoys...">
-		    Cody Rotschild enjoys life in Montreal University
-		  </a>
-		</h1>
-                <div class="news-meta">
-                  <span class="news-meta-date red">March 2014</span>
-                  <span class="news-meta-comments">
-		    3 rankers out of 
-		  </span>
-                </div>
-              </div>
-              <div class="news-summary">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit. In pretium vulputate scelerisque. Nulla in
-                  suscipit risus... 
-		  <a href="" title="Read more" class="moretag">More</a>
-                </p>
-              </div>
-            </div><!-- news mini-wrap end -->
+	    <%- @results.each do |result| %>
+              <div class="news-mini-wrap col-lg-6 col-md-6"><!-- news mini-wrap -->
+		<figure class="news-featured-image">
+                  <img src="<%= result.cover_img %>" alt="<%= result.title %>" class="img-responsive">
+		</figure>
+		<div class="page-title-meta">
+                  <h1 class="page-title">
+		    <a href="#" title="Cody Rotschild enjoys...">
+		      <%= result.title %>
+		    </a>
+		  </h1>
+                  <div class="news-meta">
+                    <span class="news-meta-date red">
+		      <a href="<%= result_path(result) %>"><%= result.batch %></a>
+		    </span>
+                    <span class="news-meta-comments">
+		      <%= result.id %>
+		    </span>
+                  </div>
+		</div>
+		<div class="news-summary">
+                  <p>
+		    <%= result.description.truncate(100) %>
+                  </p>
+		</div>
+              </div><!-- news mini-wrap end -->
+	    <%- end %>
           </div><!-- row end -->
           <div class="row gutter"><!-- row -->
             <div class="col-lg-12">

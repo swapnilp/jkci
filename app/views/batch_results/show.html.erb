@@ -17,7 +17,10 @@
 	    </span>
 	</div>
 	<div class="textLeft">
-	  <img src=""/>
+	  
+	</div>
+	<div class="textLeft coverImage">
+	  <img src="<%= @batch_result.cover_img %>" style="max-height:100px;max-width:100px;"/>
 	</div>
 	
 	<div class="col-sm-12 textLeft">
@@ -46,6 +49,5 @@
   <%= form_for(ResultsPhoto.new, url:add_image_results_path, remote: true, id: 'gallery_image_attachment', method: :post, html: {multipart: true, class: ''}) do |f| %>
   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
   <%= f.file_field :image, class: 'attachment', id: 'image_attachment_field', onChange:"addResultImage(this);"  %>
-  <% end %>
+  <% end %>  
 </div>
-

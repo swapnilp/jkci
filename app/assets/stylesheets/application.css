@@ -163,3 +163,7 @@ figure.gallery-photo-thumb{
 .batchResultStudent{
   margin-top:20px;
 }
+
+.result figure.gallery-photo-thumb{
+  text-align: center;
+} 

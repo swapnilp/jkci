@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210190256) do
+ActiveRecord::Schema.define(version: 20150214111224) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -23,11 +23,13 @@ ActiveRecord::Schema.define(version: 20150210190256) do
   end
 
   create_table "batch_results", force: :cascade do |t|
-    t.string   "batch",       limit: 255
-    t.string   "description", limit: 255
-    t.string   "cover_img",   limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "batch",        limit: 255
+    t.string   "description",  limit: 255
+    t.string   "cover_img",    limit: 255
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "title",        limit: 255
+    t.boolean  "is_published", limit: 1,   default: true
   end
 
   create_table "batches", force: :cascade do |t|
@@ -201,7 +203,7 @@ ActiveRecord::Schema.define(version: 20150210190256) do
     t.string   "stream",           limit: 255
     t.string   "college",          limit: 255
     t.integer  "rank",             limit: 4
-    t.integer  "disp_rank",        limit: 4
+    t.string   "disp_rank",        limit: 255
     t.integer  "results_photo_id", limit: 4
     t.integer  "batch_id",         limit: 4
     t.integer  "student_id",       limit: 4

@@ -1,0 +1,48 @@
+<div id="k-body"><!-- content wrapper -->
+  <div class="container"><!-- container -->
+    <div class="row"><!-- row -->
+      <div id="k-top-search" class="col-lg-12 clearfix"><!-- top search -->
+        <form action="#" id="top-searchform" method="get" role="search">
+          <div class="input-group">
+            <input type="text" name="s" id="sitesearch" class="form-control" autocomplete="off" placeholder="Type in keyword(s) then hit Enter on keyboard">
+          </div>
+        </form>
+        <div id="bt-toggle-search" class="search-icon text-center">
+	  <i class="s-open fa fa-search"></i><i class="s-close fa fa-times"></i>
+	</div><!-- toggle search button -->
+      </div><!-- top search end -->
+      <div class="k-breadcrumbs col-lg-12 clearfix"><!-- breadcrumbs -->
+        <ol class="breadcrumb">
+          <li><a href="<%= root_path %>">Home</a></li>
+          <li><a href="<%= results_path %>">Results</a></li>
+          <li class="active"><%= @batch_result.batch %></li>
+        </ol>
+      </div><!-- breadcrumbs end -->               
+    </div><!-- row end -->
+    <div class="row no-gutter fullwidth"><!-- row -->
+      <div class="col-lg-12 col-md-12"><!-- doc body wrapper -->
+        <div class="col-padded"><!-- inner custom column -->
+          <h1 class="page-title"><%= @batch_result.batch %> <span class="label label-info"><%= @results.count %> Rankers</span></h1>
+          <div class="news-body">
+            <div class="row gutter k-equal-height result"><!-- row -->
+	      <%- @results.each do |result| %>
+                <div class="col-lg-2 col-md-4 col-sm-12">
+                  <figure class="gallery-photo-thumb">
+                    <a href="<%= result.student_image %>" title="<%= result.name %>" data-fancybox-group="gallery-bssb" class="fancybox">
+		      <img src="<%= result.student_image %>" alt="Image 1">
+		    </a>
+                  </figure>
+                  <div class="gallery-photo-description">
+		    <p><%= result.name %></p>
+                    <p><%= result.stream %></p>
+		    <p><%= result.disp_rank %></p>
+                  </div>
+                </div>
+		<%- end %>
+            </div><!-- row end -->
+          </div>
+        </div><!-- inner custom column end -->
+      </div><!-- doc body wrapper end -->
+    </div><!-- row end -->
+  </div><!-- container end -->
+</div>

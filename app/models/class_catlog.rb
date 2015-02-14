@@ -8,13 +8,18 @@ class ClassCatlog < ActiveRecord::Base
   scope :absent, -> {where(is_present: [false, nil]) }
   scope :only_absents, -> {where(is_present: [nil, false], is_recover: [nil, false])}
 
-    def class_report
+  def class_report
     r_name = "#{jkci_class.class_name} "
-      r_name << "  |  points - #{daily_teaching_point.points.truncate(30)}"
-       if is_recover
+    r_name << "  |  points - #{daily_teaching_point.points.truncate(30)}"
+    if ! is_present.present? && ! is_recover.present?
+      r_name << " | Absent"
+    end
+    if is_recover
       r_name << " | Recovered"
+      
     end
     r_name
   end
-
+  
 end
+  
