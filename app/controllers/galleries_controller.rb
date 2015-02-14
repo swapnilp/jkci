@@ -4,7 +4,6 @@ class GalleriesController < ApplicationController
   def index
     @albums = Album.includes(:galleries).all.order("id desc").page(params[:page])
   end
-  
 
   def show
     @album = Album.includes([:galleries]).where(id: params[:id]).first
