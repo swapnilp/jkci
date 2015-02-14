@@ -32,6 +32,7 @@ gem "paperclip", "~> 4.2"
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+gem 'fancybox2-rails', '~> 0.2.8'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.0.3'

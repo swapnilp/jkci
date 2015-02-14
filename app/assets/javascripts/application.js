@@ -19,10 +19,18 @@
 //= require bootstrap-datetimepicker
 //= require dropdown-menu/dropdown-menu
 //= require jquery.easy-pie-chart
-//= require fancybox/jquery.fancybox.pack
+// require fancybox/jquery.fancybox.pack
 // require fancybox/jquery.fancybox-media
-//= require theme
-//= require_tree .
+//= require fancybox
+//= require about_us 
+//= require home
+//= require albums
+//= require daily_teach
+//= require jkci_classes
+//= require batch_results
+//= require exams
+// require theme
+// require_tree .
 
 function adminPagination(event, self){
   event.preventDefault();
@@ -33,3 +41,6 @@ function adminPagination(event, self){
   }, function(
   ){}, "JSON");
 }
+
+
+$('.fancybox').fancybox({ parent: "body"})

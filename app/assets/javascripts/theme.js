@@ -151,25 +151,7 @@
 	
 	/* ---------- Fancybox ---------- */
 	CHEF.fancyBoxer = function() {
-		if( $( '.fancybox' ).length || $( '.fancybox-media' ).length ) {
-			
-			$( '.fancybox' ).fancybox( {				
-				padding : 0,
-				helpers : {
-					title : { type: 'inside' }
-				}
-			} );
-				
-			$( '.fancybox-media' ).fancybox( {
-				padding : 0,
-				openEffect  : 'none',
-				closeEffect : 'none',
-				helpers : {
-					media : {}
-				}
-			} );
-
-		}
+		
 	}
 	/* ---------- end Fancybox ---------- */
 	
@@ -239,7 +221,7 @@
 		CHEF.IEpatches(); // set of patches relating to IE
 		CHEF.topSearchToggle(); // toggle top-search
 		CHEF.googleMaps(); // Google Maps
-		CHEF.fancyBoxer(); // fancybox
+		//CHEF.fancyBoxer(); // fancybox
 		CHEF.responsiveVideos(); // fitVids
 		CHEF.responsiveAudios(); // audio player
 		CHEF.pieChartz(); // easy pie charts
