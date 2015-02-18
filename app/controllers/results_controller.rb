@@ -1,7 +1,7 @@
 class ResultsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   def index
-    @results = BatchResult.published
+    @results = BatchResult.published.page(params[:page])
   end
   
   def new
@@ -25,7 +25,7 @@ class ResultsController < ApplicationController
   
   def show
     @batch_result = BatchResult.where(id: params[:id]).first
-    @results = @batch_result.results.published
+    @results = @batch_result.published_results
   end
 
   def edit

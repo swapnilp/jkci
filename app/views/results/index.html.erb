@@ -53,7 +53,7 @@
 		      <a href="<%= result_path(result) %>"><%= result.batch %></a>
 		    </span>
                     <span class="news-meta-comments">
-		      <%= result.id %>
+		      <%= result.published_results.count %>
 		    </span>
                   </div>
 		</div>
@@ -67,15 +67,7 @@
           </div><!-- row end -->
           <div class="row gutter"><!-- row -->
             <div class="col-lg-12">
-              <ul class="pagination pull-right"><!-- pagination -->
-                <li class="disabled"><a href="#">Prev</a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">Next</a></li>
-              </ul><!-- pagination end -->
+	      <%= paginate @results, theme: 'default_pagination' %>
             </div>
           </div><!-- row end -->
         </div><!-- inner custom column end -->

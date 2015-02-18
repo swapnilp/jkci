@@ -1,5 +1,8 @@
 class ExamsController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
+
+
   def index
     @exams = Exam.all.order("id desc").page(params[:page])
     @jkci_classes = JkciClass.all

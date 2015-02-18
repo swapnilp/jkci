@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+  
   def flicker_photos
     @flicker_photos = Gallery.all.sample(10).map(&:flickers_images).reduce(:merge) || []
   end

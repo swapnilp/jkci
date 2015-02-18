@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150214111224) do
+ActiveRecord::Schema.define(version: 20150217182913) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -207,10 +207,11 @@ ActiveRecord::Schema.define(version: 20150214111224) do
     t.integer  "results_photo_id", limit: 4
     t.integer  "batch_id",         limit: 4
     t.integer  "student_id",       limit: 4
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.integer  "batch_result_id",  limit: 4
     t.string   "student_img",      limit: 255
+    t.boolean  "is_published",     limit: 1,   default: true
   end
 
   create_table "results_photos", force: :cascade do |t|
@@ -274,18 +275,19 @@ ActiveRecord::Schema.define(version: 20150214111224) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "email",                  limit: 255, default: "",       null: false
+    t.string   "encrypted_password",     limit: 255, default: "",       null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,        null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "role",                   limit: 255, default: "parent"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
