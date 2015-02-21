@@ -1,5 +1,6 @@
 class StudentsController < ApplicationController
   before_action :authenticate_user!
+
   def index
     @students = Student.all.order("id desc").page(params[:page])
     respond_to do |format|

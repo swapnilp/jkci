@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
+  load_and_authorize_resource :class => false, :class => "Gallery"
 
+  #load_and_authorize_resource :class => false
 
   def index
     @events = Event.remaining_home_events

@@ -1,4 +1,8 @@
 class GalleriesController < ApplicationController
+  load_and_authorize_resource :class => false, :class => "Album", only: [:index, :show]
+  load_and_authorize_resource :class => "Gallery", only: [:create, :destroy], param_method: :my_sanitizer
+
+
   before_action :authenticate_user!, except: [:index, :show]
   
   def index
@@ -37,6 +41,13 @@ class GalleriesController < ApplicationController
         format.json {render json: {success: false}}
       end
     end
+  end
+
+  private
+  
+  def my_sanitizer
+    #params.permit!
+    params.require(:gallery).permit!
   end
 
 end

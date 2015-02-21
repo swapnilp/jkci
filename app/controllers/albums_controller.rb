@@ -1,4 +1,5 @@
 class AlbumsController < ApplicationController
+  load_and_authorize_resource 
   before_action :authenticate_user!
   def index
     @albums = Album.all.order("id desc").page(params[:page])
