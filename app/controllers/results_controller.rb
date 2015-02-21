@@ -2,7 +2,7 @@ class ResultsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   load_and_authorize_resource :class => false, :class => "BatchResult", only: [:index, :show]
-  #load_and_authorize_resource param_method: :my_sanitizer
+  load_and_authorize_resource param_method: :my_sanitizer
 
   def index
     @results = BatchResult.published.page(params[:page])

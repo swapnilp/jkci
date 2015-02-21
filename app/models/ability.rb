@@ -55,7 +55,8 @@ class Ability
       can :create_update, DailyTeachingPoint 
       can :read, Student 
     elsif user.parent?
-    
+      can :roll, :parent
+      can :roll, :contact_us
       #can :read, Chapter 
       can :read, Event
       #can :read, JkciClass 
@@ -72,7 +73,7 @@ class Ability
       can :read, ResultsPhoto 
       #can :read, ClassStudent 
       #can :read, ExamResult 
-      can :read, BatchResult 
+      #can :read, BatchResult 
       can :read, Gallery 
       #can :read, DailyTeachingPoint 
       #can :read, Student

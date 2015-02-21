@@ -1,5 +1,7 @@
 class JkciClassesController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
+
   def index
     @jkci_classes = JkciClass.includes([:batch]).all.order("id desc").page(params[:page])
     @batches = Batch.all

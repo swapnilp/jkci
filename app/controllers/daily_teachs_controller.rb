@@ -1,5 +1,7 @@
 class DailyTeachsController < ApplicationController
   before_action :authenticate_user!  
+  load_and_authorize_resource class: 'DailyTeachingPoint'
+
   def index
     @daily_teaching_points = DailyTeachingPoint.all.page(params[:page])
     @jkci_classes = JkciClass.all
