@@ -1,6 +1,6 @@
 class BatchResultsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource param_method: :my_sanitizer
 
   def index
     @batch_results = BatchResult.all.page(params[:page])
@@ -32,5 +32,12 @@ class BatchResultsController < ApplicationController
     if @batch_result && @batch_result.update(params[:batch_result])
       redirect_to batch_results_path
     end
+  end
+
+  private
+  
+  def my_sanitizer
+    #params.permit!
+    params.require(:batch_result).permit!
   end
 end
