@@ -8,7 +8,7 @@ class Result < ActiveRecord::Base
 
 
   def student_image 
-    student_img || "/assets/img/man_icon.png"
+    student_img.present? ? student_img :  "/assets/img/man_icon.png"
   end
   
 end
