@@ -6,23 +6,23 @@ class ResultsPhoto < ActiveRecord::Base
 
   #attr_accessible :image, :image_file_name, :height, :width, :attachable_type, :attachable_id
 
-  has_attached_file :image, 
-      :whiny => true,
-      :path => ":rails_root/public/system/result_image/:id/:style/:filename",
-      :url => "/system/result_image/:id/:style/:filename",
-      :styles => { :medium => "400x400>", :hunt_img => "x400",
-      :thumb => "212x" }
+  #has_attached_file :image, 
+  #    :whiny => true,
+  #    :path => ":rails_root/public/system/result_image/:id/:style/:filename",
+  #    :url => "/system/result_image/:id/:style/:filename",
+  #    :styles => { :medium => "400x400>", :hunt_img => "x400",
+  #    :thumb => "212x" }
  
-  #has_attached_file :image,
-  #  :whiny => true,
-  #  :storage => :s3,
-  #  :path => "#{SERVER_TYPE}/seek_image/:id/:style/:filename",
-  #  :url => "http://s3.amazonaws.com/buploads/#{SERVER_TYPE}/seek_image/:id/:style/:filename",
-  #  :s3_credentials => File.join(Rails.root,'config', 's3.yml'),
-  #  :s3_premissions => 'public',
-  #  :s3_protocol => 'http',
-  #  :bucket => 'buploads',
-  #  :styles => { :medium => "x400"}
+  has_attached_file :image,
+    :whiny => true,
+    :storage => :s3,
+    :path => "#{SERVER_TYPE}/result_image/:id/:style/:filename",
+    :url => "http://s3-ap-southeast-1.amazonaws.com/jkciPhoto/#{SERVER_TYPE}/result_image/:id/:style/:filename",
+    :s3_credentials => File.join(Rails.root,'config', 's3.yml'),
+    :s3_premissions => 'public',
+    :s3_protocol => 'http',
+    :bucket => 'buploads',
+    :styles => { :medium => "x400"}
 
   #after_create :transliterate_file_name
 

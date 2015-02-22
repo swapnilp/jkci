@@ -17,6 +17,7 @@ config/secrets.yml
 /.bundle
 /vendor/bundle
 /config/initializers/00_tokens.rb
+config/s3.yml
 
 # these should all be checked in to normalise the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset

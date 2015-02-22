@@ -17,7 +17,7 @@ class Gallery < ActiveRecord::Base
     :whiny => true,
     :storage => :s3,
     :path => "#{SERVER_TYPE}/image/:id/:style/:filename",
-    :url => "http://s3.amazonaws.com/buploads/#{SERVER_TYPE}/image/:id/:style/:filename",
+    :url => "http://s3-ap-southeast-1.amazonaws.com/jkciPhoto/#{SERVER_TYPE}/image/:id/:style/:filename",
     :s3_credentials => File.join(Rails.root,'config', 's3.yml'),
     :s3_premissions => 'public',
     :s3_protocol => 'http',
