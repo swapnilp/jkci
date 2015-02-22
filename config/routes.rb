@@ -29,8 +29,16 @@ Rails.application.routes.draw do
     end
   end
 
+  
+  
+  get 'parent_desk' => "parent_desk#parent_desk"
+  get 'parent_desk/student_info/:id' => "parent_desk#student_info", as: 'parent_student_info'
+  
+
+
   resources :jkci_classes
   get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
+  get "/class/:id/daily_teaches" => "jkci_classes#class_daily_teaches", as: "class_daily_teaches"
   post "/class/:id/manage_students" => "jkci_classes#manage_students", as: "class_manage_students"
   get "/jkci_class/filter_class/batch" => "jkci_classes#filter_class", as: "filter_class"
   

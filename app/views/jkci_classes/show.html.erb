@@ -1,74 +1,75 @@
 <div id="k-body" class="k-body adminDesk">
   <div class="container">
-<div class="col-sm-12 textLeft">
-  <div class="col-sm-12 textLeft">
-    <span class="col-sm-2"><h5>Name</h5></span>
-    <span class="col-sm-6 paddingTop10"><%= @jkci_class.class_name %></span>
-  </div>
-  <div class="col-sm-12 textLeft">
-    <span class="col-sm-2"><h5>Start date</h5> </span>
-    <span class="col-sm-6 paddingTop10"><%= @jkci_class.class_start_time %></span>
-  </div>
-  <div class="col-sm-12 textLeft">
-    <span class="col-sm-2"><h5>End Date</h5></span>
-    <span class="col-sm-6 paddingTop10"><%= @jkci_class.class_end_time %></span>
-  </div>
-  <div class="col-sm-12 textLeft">
-    <span class="col-sm-2"><h5>Teacher</h5></span>
-    <span class="col-sm-6 paddingTop10"><%= @jkci_class.teacher.try(:name) %></span>
-  </div>
-
-  
-  <div class="col-sm-12 textLeft paddingTop10">
-    <%= link_to "Edit" , edit_jkci_class_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
-  </div>
-
-  <div class="col-sm-12 textLeft paddingTop10">
-    <%= link_to "Daily Teach",  new_daily_teach_path({jkci_class_id: @jkci_class.id}), class: 'btn btn-primary btn-sm' %>
-    <%= link_to "Create Exam",  "#", onclick: "createClassExam(event, this);" , class: 'btn btn-primary btn-sm', data: {id: @jkci_class.id} %>
-    <%= link_to "Assign Students",  class_assign_students_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
-  </div>
-  <div class="col-sm-4 textLeft">
-    <h1>Students</h1>  
-
-    <div class="textLeft">
-      <%- @jkci_class.students.each_with_index do |student, index| %>
-      <h4><%= index + 1 %>  :  <%= link_to student.name, student_path(student) %> 
-	<span style="font-size:12px;">(<%= "#{student.std}- #{student.group}  - #{student.mobile}" %>)</span>
-      </h4>
-      <%- end %>
-    </div>
-  </div>
-  <div class="col-sm-4 textLeft">
-    <h1>Exams</h1>  
-    
-    <div class="textLeft">
-      <%- @jkci_class.jk_exams.each_with_index do |exam, index| %>
-      <a href="<%= exam_path(exam)%>">
-	<h4 style="font-size:14px;"><%= index + 1 %>  :  <%= exam.exam_date.to_date %> 
-	  <span style="font-size:12px;">(<%= "#{exam.marks}- comp:#{exam.is_completed} - Res:#{exam.is_result_decleared}" %>)</span>
-	</h4>
-      </a>
-      <%- end %>
-    </div>
-  </div>
-  <div class="col-sm-4 textLeft">
-    <h1>Daily Teach</h1>  
-    
-    <div class="textLeft dailyTeach">
-      <%- @jkci_class.daily_teaching_points.each_with_index do |dtp, index| %>
-      <div>
-	<%= check_box_tag dtp.id, dtp.points, false, style: 'display:inline-block;margin:0;' %>
-	<a href="<%= daily_teach_path(dtp) %>" style="display:inline-block;">
-	  <h4 style="<%= 'color:red;' if dtp.class_catlogs.blank? %>"><%= index + 1 %>  :  <%= dtp.date.to_date %> 
-	    <span style="font-size:12px;">(<%= "#{dtp.points.truncate(10)}- #{dtp.absent_count}" %>)</span>
-	  </h4>
-	</a>
+    <div class="col-sm-12 textLeft">
+      <div class="col-sm-12 textLeft">
+	<span class="col-sm-2"><h5>Name</h5></span>
+	<span class="col-sm-6 paddingTop10"><%= @jkci_class.class_name %></span>
       </div>
-      <%- end %>
+      <div class="col-sm-12 textLeft">
+	<span class="col-sm-2"><h5>Start date</h5> </span>
+	<span class="col-sm-6 paddingTop10"><%= @jkci_class.class_start_time %></span>
+      </div>
+      <div class="col-sm-12 textLeft">
+	<span class="col-sm-2"><h5>End Date</h5></span>
+	<span class="col-sm-6 paddingTop10"><%= @jkci_class.class_end_time %></span>
+      </div>
+      <div class="col-sm-12 textLeft">
+	<span class="col-sm-2"><h5>Teacher</h5></span>
+	<span class="col-sm-6 paddingTop10"><%= @jkci_class.teacher.try(:name) %></span>
+      </div>
+
+      
+      <div class="col-sm-12 textLeft paddingTop10">
+	<%= link_to "Edit" , edit_jkci_class_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
+      </div>
+
+      <div class="col-sm-12 textLeft paddingTop10">
+	<%= link_to "Daily Teach",  new_daily_teach_path({jkci_class_id: @jkci_class.id}), class: 'btn btn-primary btn-sm' %>
+	<%= link_to "Create Exam",  "#", onclick: "createClassExam(event, this);" , class: 'btn btn-primary btn-sm', data: {id: @jkci_class.id} %>
+	<%= link_to "Assign Students",  class_assign_students_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
+      </div>
+      <div class="col-sm-4 textLeft">
+	<h1>Students</h1>  
+
+	<div class="textLeft">
+	  <%- @jkci_class.students.each_with_index do |student, index| %>
+	  <h4><%= index + 1 %>  :  <%= link_to student.name, student_path(student) %> 
+	    <span style="font-size:12px;">(<%= "#{student.std}- #{student.group}  - #{student.mobile}" %>)</span>
+	  </h4>
+	  <%- end %>
+	</div>
+      </div>
+      <div class="col-sm-4 textLeft">
+	<h1>Exams</h1>  
+	
+	<div class="textLeft">
+	  <%- @jkci_class.jk_exams.each_with_index do |exam, index| %>
+	  <a href="<%= exam_path(exam)%>">
+	    <h4 style="font-size:14px;"><%= index + 1 %>  :  <%= exam.exam_date.to_date %> 
+	      <span style="font-size:12px;">(<%= "#{exam.marks}- comp:#{exam.is_completed} - Res:#{exam.is_result_decleared}" %>)</span>
+	    </h4>
+	  </a>
+	  <%- end %>
+	</div>
+      </div>
+      <div class="col-sm-4 textLeft">
+	<h1>
+	  <a href="<%= class_daily_teaches_path(@jkci_class) %>">Daily Teach</a>
+	</h1>  
+	
+	<div class="textLeft dailyTeach">
+	  <%- @daily_teaching_points.each_with_index do |dtp, index| %>
+	  <div>
+	    <%= check_box_tag dtp.id, dtp.points, false, style: 'display:inline-block;margin:0;' %>
+	    <a href="<%= daily_teach_path(dtp) %>" style="display:inline-block;">
+	      <h4 style="<%= 'color:red;' if dtp.class_catlogs.blank? %>"><%= index + 1 %>  :  <%= dtp.date.to_date %> 
+		<span style="font-size:12px;">(<%= "#{dtp.points.truncate(10)}- #{dtp.absent_count}" %>)</span>
+	      </h4>
+	    </a>
+	  </div>
+	  <%- end %>
+	</div>
+      </div>
     </div>
   </div>
-</div>
-
-</div>
 </div>

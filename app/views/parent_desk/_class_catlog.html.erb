@@ -1,0 +1,29 @@
+<%- class_catlogs.each_with_index do |catlog, index| %>
+  <tr>
+    <td>
+      <%= index %>
+    </td>
+    <td>
+      <%= catlog.date %>
+    </td>
+    <td>
+      <%= catlog.jkci_class.class_name %>
+    </td>
+    <td>
+      <%= catlog.daily_teaching_point.chapter_id %>
+    </td>
+    <td>
+      <%= catlog.daily_teaching_point.points %>
+    </td>
+    <td>
+      <%= catlog.is_present %>
+    </td>
+    <td>
+      <%= catlog.is_recover %>
+    </td>
+    <td>
+      <%= catlog.daily_teaching_point.exams.count %>
+    </td>
+  </tr>
+<%- end %>
+

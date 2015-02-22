@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   load_and_authorize_resource :class => false, :class => "Gallery"
-
+  before_action :authenticate_user!, only: [:admin_desk]
   #load_and_authorize_resource :class => false
 
   def index

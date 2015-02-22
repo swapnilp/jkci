@@ -21,6 +21,7 @@ class JkciClassesController < ApplicationController
 
   def show
     @jkci_class = JkciClass.where(id: params[:id]).first
+    @daily_teaching_points = @jkci_class.daily_teaching_points.order('id desc').first(20)
   end
 
 
@@ -79,6 +80,11 @@ class JkciClassesController < ApplicationController
     end
     
     render json: {success: true, html: render_to_string(:partial => "jkci_class.html.erb", :layout => false, locals: {jkci_classes: jkci_classes}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {jkci_classes: jkci_classes}), css_holder: ".jkciClassTable tbody"}
+  end
 
+
+  def class_daily_teaches
+    jkci_class = JkciClass.includes(:daily_teaching_points).where(id: params[:id]).first
+    @daily_teaching_points = jkci_class.daily_teaching_points.order('id desc')
   end
 end

@@ -1,0 +1,19 @@
+<div id="k-body"><!-- content wrapper -->
+  <div class="container"><!-- container -->
+    <div class="row"><!-- row -->
+      <h1>Welcome <%= current_user.email %></h1>
+    </div>
+    <div class="row"><!-- row -->
+      <%- if @students.count > 1 %>
+        <%- @students.each do |student| %>
+          <%= link_to student.name, parent_student_info_path(student) %>
+	  <br />
+        <%- end %>
+      <%- else %>
+        
+        <%= render partial: 'student_catlog_info', locals: {student: @student.first, class_catlogs: @class_catlogs}%>
+      <%- end %>
+    </div>
+  </div>
+</div>
+

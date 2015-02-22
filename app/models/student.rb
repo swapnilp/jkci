@@ -30,4 +30,25 @@ class Student < ActiveRecord::Base
     end
     query
   end
+
+  def class_info
+    jkci_classes.select([:id, :class_name, :class_start_time, :teacher_id]).includes([:teacher])
+  end
+
+  def learned_point(class_id= nil, min_date_filter = nil, max_date_filter = nil)
+    jk_catlogs = class_catlogs.order('id desc')#.includes([:daily_teaching_points])
+
+    if class_id.present?
+      jk_catlogs = jk_catlogs.where(jkci_class_id: class_id)
+    end
+
+    if min_date_filter.present?
+      jk_catlogs = jk_catlogs.where("date >= ?", min_date_filter)
+    end
+
+    if max_date_filter.present?
+      jk_catlogs = jk_catlogs.where("date <= ?", max_date_filter)
+    end
+    return jk_catlogs
+  end
 end

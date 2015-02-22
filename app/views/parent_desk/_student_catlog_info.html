@@ -1,0 +1,19 @@
+<div>Name : <%= student.name %></div>
+<div>Parent Mobile: <%= student.p_mobile %></div>
+<h4>He learned</h4>
+<table class="table table-hover studentLearnTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Date</th>
+	<th>Class</th>
+	<th>Chapter</th>
+	<th>Point</th>
+	<th>IsPresent</th>
+	<th>is Recovered</th>
+	<th>Number of exams</th>
+      </tr>
+    </thead>
+    <%= render partial: 'class_catlog', locals: {class_catlogs: class_catlogs }%>
+    
+  </table>
