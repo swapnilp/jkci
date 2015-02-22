@@ -1,0 +1,9 @@
+production:
+  access_key_id: AKIAJCENF2MYWXLJRNHQ
+  secret_access_key: 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
+  bucket: jkciphoto
+
+development:
+  access_key_id: AKIAJCENF2MYWXLJRNHQ
+  secret_access_key: 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
+  bucket: jkciphoto

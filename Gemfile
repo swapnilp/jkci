@@ -34,6 +34,8 @@ gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem 'fancybox2-rails', '~> 0.2.8'
 gem 'cancancan', '~> 1.10'
+gem 'aws-sdk', '< 2.0'
+
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.0.3'

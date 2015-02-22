@@ -73,7 +73,7 @@ class Ability
       can :read, ResultsPhoto 
       #can :read, ClassStudent 
       #can :read, ExamResult 
-      #can :read, BatchResult 
+      can :read, BatchResult 
       can :read, Gallery 
       #can :read, DailyTeachingPoint 
       #can :read, Student
