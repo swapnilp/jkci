@@ -52,31 +52,32 @@
 .examComplete a{
     color:#FFF !important;
 }
+
 tr.examComplete:hover > td{
-    background:green !important;
+  background:green !important;
   color:#FFF;
 }
 
-.examResultRemaining{
+.examResultRemaining, .studentRecovered{
   background:lightgreen;
   color:grey;
 }
 .examResultRemaining a{
     color:blue !important;
 }
-tr.examResultRemaining:hover > td{
+tr.examResultRemaining:hover > td, tr.studentRecovered:hover > td{
   background:lightgreen !important;
   color:#000;
 }
 
-.examOverDate{
+.examOverDate, .studentAbsent{
   background:red;
   color:#FFF;
 }
 .examOverDate a{
     color:blue !important;
 }
-tr.examOverDate:hover > td{
+tr.examOverDate:hover > td, tr.studentAbsent:hover > td {
   background:red !important;
   color:#grey !important;
 }
@@ -172,4 +173,8 @@ figure.gallery-photo-thumb{
 .result figure.gallery-photo-thumb img{
   max-width:100px;
   max-height:100px;
+}
+
+#k-body{
+  background-color:#F5F5F2;
 }

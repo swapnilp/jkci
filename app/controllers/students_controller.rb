@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource param_method: :my_sanitizer
 
   def index
     @students = Student.all.order("id desc").page(params[:page])
@@ -44,5 +44,11 @@ class StudentsController < ApplicationController
   def destroy
   end
 
+  private
+  
+  def my_sanitizer
+    #params.permit!
+    params.require(:student).permit!
+  end
 
 end

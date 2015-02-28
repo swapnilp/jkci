@@ -10,7 +10,9 @@ class Ability
 
     if user.admin?
       can :manage, :all
-      
+      can :roll, :admin
+      can :roll, :clark
+
     elsif user.staff?
       can :create_update, :chapter 
       can :read, :event 
@@ -34,6 +36,7 @@ class Ability
       can :read, :student 
       
     elsif user.clark?
+      can :roll, :clark
       can :create_update, Chapter 
       can :read, Event 
       can :read, JkciClass 

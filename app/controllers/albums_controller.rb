@@ -1,5 +1,5 @@
 class AlbumsController < ApplicationController
-  load_and_authorize_resource 
+  load_and_authorize_resource param_method: :my_sanitizer
   before_action :authenticate_user!
   def index
     @albums = Album.all.order("id desc").page(params[:page])
@@ -47,5 +47,12 @@ class AlbumsController < ApplicationController
       format.html
       format.json {render json: {success: true, html: render_to_string(:partial => "album.html.erb", :layout => false, locals: {albums: @albums}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {albums: @albums}), css_holder: ".albumsTable tbody"}}
     end    
+  end
+
+  private
+  
+  def my_sanitizer
+    #params.permit!
+    params.require(:album).permit!
   end
 end

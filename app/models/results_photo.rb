@@ -21,8 +21,10 @@ class ResultsPhoto < ActiveRecord::Base
     :s3_credentials => File.join(Rails.root,'config', 's3.yml'),
     :s3_premissions => 'public',
     :s3_protocol => 'http',
-    :bucket => 'buploads',
-    :styles => { :medium => "x400"}
+    :bucket => 'jkciphoto',
+    :styles => { :medium => "400x400>", :hunt_img => "x400",
+      :thumb => "212x" }
+
 
   #after_create :transliterate_file_name
 

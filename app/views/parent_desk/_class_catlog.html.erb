@@ -1,7 +1,7 @@
 <%- class_catlogs.each_with_index do |catlog, index| %>
-  <tr>
+  <tr class="<%= parentStudentCatlog(catlog) %>">
     <td>
-      <%= index %>
+      <%= index + 1 %>
     </td>
     <td>
       <%= catlog.date %>

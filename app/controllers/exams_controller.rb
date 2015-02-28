@@ -1,6 +1,6 @@
 class ExamsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource param_method: :my_sanitizer
 
 
   def index
@@ -139,6 +139,13 @@ class ExamsController < ApplicationController
     exam_catlog = ExamCatlog.where(id: params[:exam_catlog_id]).first
     exam_catlog.update_attributes({is_followed: true}) if exam_catlog
     render json: {success: true}
+  end
+
+  private
+  
+  def my_sanitizer
+    #params.permit!
+    params.require(:exam).permit!
   end
 
 end

@@ -34,4 +34,13 @@ module ApplicationHelper
   def home_select(cur_path)
     return cur_path == root_path ? 'current-menu-item' : ''
   end
+  
+  def parentStudentCatlog(catlog)
+    if !catlog.is_present && !catlog.is_recover
+      return 'studentAbsent'
+    elsif  !catlog.is_present && catlog.is_recover
+      return 'studentRecovered'
+    end
+    return ''
+  end
 end

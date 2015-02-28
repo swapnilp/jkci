@@ -1,6 +1,6 @@
 class DailyTeachsController < ApplicationController
   before_action :authenticate_user!  
-  load_and_authorize_resource class: 'DailyTeachingPoint'
+  load_and_authorize_resource class: 'DailyTeachingPoint', param_method: :my_sanitizer
 
   def index
     @daily_teaching_points = DailyTeachingPoint.all.page(params[:page])
@@ -99,6 +99,13 @@ class DailyTeachsController < ApplicationController
     class_catlog = ClassCatlog.where(id: params[:class_catlog_id]).first
     class_catlog.update_attributes({is_recover: true, recover_date: Date.today}) if class_catlog
     render json: {success: true}
+  end
+
+  private
+  
+  def my_sanitizer
+    #params.permit!
+    params.require(:daily_teaching_point).permit!
   end
   
 end

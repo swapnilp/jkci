@@ -51,4 +51,21 @@ class Student < ActiveRecord::Base
     end
     return jk_catlogs
   end
+
+  def class_exams(class_id= nil, min_date_filter = nil, max_date_filter = nil)
+    ex_catlogs = exam_catlogs.includes([:exam]).completed.order('id desc')#.includes([:daily_teaching_points])
+    
+    if class_id.present?
+      ex_catlogs = ex_catlogs.where(jkci_class_id: class_id)
+    end
+    
+    if min_date_filter.present?
+      ex_catlogs = ex_catlogs.where("date >= ?", min_date_filter)
+    end
+    
+    if max_date_filter.present?
+      ex_catlogs = ex_catlogs.where("date <= ?", max_date_filter)
+    end
+    return ex_catlogs
+  end
 end

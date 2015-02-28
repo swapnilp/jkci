@@ -1,6 +1,6 @@
 class JkciClassesController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource param_method: :my_sanitizer
 
   def index
     @jkci_classes = JkciClass.includes([:batch]).all.order("id desc").page(params[:page])
@@ -86,5 +86,10 @@ class JkciClassesController < ApplicationController
   def class_daily_teaches
     jkci_class = JkciClass.includes(:daily_teaching_points).where(id: params[:id]).first
     @daily_teaching_points = jkci_class.daily_teaching_points.order('id desc')
+  end
+
+  def my_sanitizer
+    #params.permit!
+    params.require(:jkci_class).permit!
   end
 end
