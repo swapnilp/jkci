@@ -60,7 +60,7 @@ tr.examComplete:hover > td{
 
 .examResultRemaining, .studentRecovered{
   background:lightgreen;
-  color:grey;
+  color: grey;
 }
 .examResultRemaining a{
     color:blue !important;
@@ -79,7 +79,7 @@ tr.examResultRemaining:hover > td, tr.studentRecovered:hover > td{
 }
 tr.examOverDate:hover > td, tr.studentAbsent:hover > td {
   background:red !important;
-  color:#grey !important;
+  color:grey !important;
 }
 
 .red{
