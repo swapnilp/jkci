@@ -69,6 +69,8 @@ Rails.application.routes.draw do
 
   match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
   get '/admin_desk' => "home#admin_desk"
+  get '/batch2015/jksaitalent' => "talent#new_talent2015"
+  get '/batch2015/createjksaitalent' => "talent#create_talent2015"
   root 'home#index'
   #root 'welcome#index'
 
