@@ -42,7 +42,8 @@
       <%= label_tag 'Add Student Result' %>
       </div>
       <div class="col-sm-4">
-	<%=  link_to "Add Student Image", '', class:"btn form-control", onClick:"addImageEvent(event);" %>
+	<%=  link_to "Add Student Image", '', class:"btn form-control", onClick:"addImageEvent(event);", style: 'display:inline;' %>
+	<img class="resultLoadingImg hide" src="https://s3-ap-southeast-1.amazonaws.com/jkciphoto/jkProdPhoto/useful/loading.gif" style="width:25px;display:inline;;">
       </div>
     </div>
     <div class="form-group">

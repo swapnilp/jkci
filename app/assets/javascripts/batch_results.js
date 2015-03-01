@@ -82,13 +82,14 @@ function addResultImage(self){
   var file_path = $(self).val()
   var thsEle = $(self);
   if(file_path != ''){
+    $('.resultLoadingImg').removeClass('hide');
     $(self).parent('form').ajaxSubmit(function(data){
       if(data.success){
         $("#result_student_img").val(''+ data['url']);
-        
+        $('.resultLoadingImg').addClass('hide');
       }else{
         brandiktivAlert(""+ data.msg);
-        $('.seek_img_spinner').hide();
+	$('.resultLoadingImg').addClass('hide');
       }
     });
   }
@@ -100,12 +101,14 @@ function addCoverResultImage(self){
   var file_path = $(self).val()
   var thsEle = $(self);
   if(file_path != ''){
+    $('.batchRLoadingImg').removeClass('hide');
     $(self).parent('form').ajaxSubmit(function(data){
       if(data.success){
 	$("#result_student_img").val(''+ data['url']);
+	$('.batchRLoadingImg').addClass('hide');
       }else{
         brandiktivAlert(""+ data.msg);
-        $('.seek_img_spinner').hide();
+	$('.batchRLoadingImg').addClass('hide');
       }
     });
   }
