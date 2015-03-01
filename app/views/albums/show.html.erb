@@ -5,12 +5,14 @@
     <p>Location     - <%= @album.location %></p>
     <p>Date  -  <%= @album.date.try(:to_date) %></p>
     <p>Add Photo  -
-      <div>
+      <div style="float:left;width:100%;margin-bottom:20px;">
 	<%= form_for(Gallery.new, url:'/galleries', remote: true, id: 'gallery_image_attachment', method: :post, html: {multipart: true, class: ''}) do |f| %>
 	  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
           <%= hidden_field_tag :album_id, @album.id %>
-          <%= f.file_field :image, class: 'attachment', id: 'image_attachment_field', onChange:"addGalleryImage(this);"  %>
+          <%= f.file_field :image, class: 'attachment', id: 'image_attachment_field', onChange:"addGalleryImage(this);", style:'float:left;'  %>
+	  <img class="loadingImg hide" src="https://s3-ap-southeast-1.amazonaws.com/jkciphoto/jkProdPhoto/useful/loading.gif" style="width:25px;float:left;">
 	<% end %>
+	
       </div>
     </p>
     <div class="textLeft">
