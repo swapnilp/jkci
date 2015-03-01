@@ -1,0 +1,31 @@
+<%- exam_catlogs.each_with_index do |catlog, index| %>
+  <tr class="<%= parentStudentCatlog(catlog) %>">
+    <td>
+      <%= index + 1 %>
+    </td>
+    <td>
+      <%= catlog.created_at.to_date %>
+    </td>
+    <td>
+      <%= catlog.exam.name %>
+    </td>
+    <td>
+      <%= catlog.exam.jkci_class.class_name %>
+    </td>
+    <td>
+      <%= catlog.exam.exam_type %>
+    </td>
+    <td>
+      <%= "#{catlog.marks}/ #{catlog.exam.marks}" %>
+    </td>
+    <td>
+      <%= catlog.is_present %>
+    </td>
+    <td>
+      <%= catlog.is_recover %>
+    </td>
+    
+  </tr>
+<%- end %>
+
+

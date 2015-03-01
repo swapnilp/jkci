@@ -1,0 +1,59 @@
+<div class="textLeft">
+  <%= form_for @talent, url: '/batch2015/createjksaitalent', html:{role: 'form', class: 'form-horizontal', method: :get}  do |f| %>
+    <div class="form-group">
+      <%= f.label :name, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-8">
+	<%= f.text_field :name, class: 'form-control col-sm-8' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :school_name, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-8">
+	<%= f.text_field :school_name, class: 'form-control col-sm-8' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :medium, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-8">
+	<%= f.select :medium , options_for_select([ "Marathi", "Semi" , "English"], "Semi"),{},  class:"form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :parent_name, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-8">
+	<%= f.text_field :parent_name, class: 'form-control col-sm-8' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :p_occupation, "Parent's Occupation", class: 'col-sm-2 control-label' %>
+      <div class="col-sm-8">
+	<%= f.text_field :p_occupation, class: 'form-control col-sm-8' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :email, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-8">
+	<%= f.email_field :email, class: 'form-control col-sm-8' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :contact_number, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-8">
+	<%= f.text_field :contact_number, class: 'form-control col-sm-8' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :address, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-8">
+	<%= f.text_field :address, class: 'form-control col-sm-8' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+	<%= f.submit 'Save' , class: 'btn btn-default'%>
+	<%= link_to "Cancel", root_path, class: 'btn btn-warning' %>
+      </div>
+    </div>
+  <%- end %>
+</div>
+
