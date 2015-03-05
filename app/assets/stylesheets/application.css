@@ -178,3 +178,18 @@ figure.gallery-photo-thumb{
 #k-body{
   background-color:#F5F5F2;
 }
+
+.loginContainer{
+  background-image: url('https://s3-ap-southeast-1.amazonaws.com/jkciphoto/jkProdPhoto/useful/board.jpg');
+  height:277px;
+  width:100%;
+  background-repeat:no-repeat;
+  background-position: right;
+  background-size:cover;
+}
+
+@media screen and (max-width: 991px) {
+  .sideBarLink{
+    display:none !important;
+  }
+}

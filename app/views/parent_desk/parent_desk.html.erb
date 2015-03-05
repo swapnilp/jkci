@@ -9,7 +9,7 @@
           <%= link_to student.name, parent_student_info_path(student) %>
 	  <br />
         <%- end %>
-      <%- else %>
+      <%- elsif @students.count ==  1 %>
         <%= render partial: 'student_catlog_info', locals: {student: @student.first, class_catlogs: @class_catlogs}%>
       <%- end %>
     </div>
