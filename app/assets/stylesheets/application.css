@@ -59,25 +59,23 @@ tr.examComplete:hover > td{
 }
 
 .examResultRemaining, .studentRecovered{
-  background:lightgreen;
-  color: grey;
+  color:plum;
 }
 .examResultRemaining a{
     color:blue !important;
 }
-tr.examResultRemaining:hover > td, tr.studentRecovered:hover > td{
+tr.examResultRemaining:hover > td{
   background:lightgreen !important;
   color:#000;
 }
 
 .examOverDate, .studentAbsent{
-  background:red;
-  color:#FFF;
+  color:red;
 }
 .examOverDate a{
     color:blue !important;
 }
-tr.examOverDate:hover > td, tr.studentAbsent:hover > td {
+tr.examOverDate:hover > td{
   background:red !important;
   color:grey !important;
 }
@@ -188,8 +186,13 @@ figure.gallery-photo-thumb{
   background-size:cover;
 }
 
+.parentDeskMenu .active a{
+  color:#ea5644;
+}
+
 @media screen and (max-width: 991px) {
   .sideBarLink{
     display:none !important;
   }
 }
+

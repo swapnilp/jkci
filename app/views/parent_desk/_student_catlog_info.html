@@ -1,14 +1,17 @@
 <div>Name : <%= student.name %></div>
 <div>Parent Mobile: <%= student.p_mobile %></div>
-<h4>
-  <a href="#">
-    Daily Learned
-  </a>
-  |
-  <a href="#">
+<ul class="k-dropdown-menu parentDeskMenu">
+  <li class="active">
+    <a href="<%= parent_teached_info_path(student.id) %>" onClick="parentDeskToggle(event, this);">
+      Daily Learned
+    </a>
+  </li>
+  <li>
+  <a href="<%= parent_exam_info_path(student.id) %>" onClick="parentDeskToggle(event, this);">
     Class Exams 
   </a>
-</h4>
+  </li>
+</ul>
 <div class="parentCatlogDiv">
-  <%= render partial: "teaching_info" %>
+  <%= render partial: "teaching_info", locals: {class_catlogs: @class_catlogs, jkci_classes: @jkci_classes} %>
 </div>

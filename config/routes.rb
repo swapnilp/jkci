@@ -33,7 +33,9 @@ Rails.application.routes.draw do
   
   get 'parent_desk' => "parent_desk#parent_desk"
   get 'parent_desk/student_info/:id' => "parent_desk#student_info", as: 'parent_student_info'
-  get 'parent_desk/student_info/:id/paginate_class_catlog' => "parent_desk#paginate_class_catlog", as: 'parent_paginate_class_catlog'
+  get 'parent_desk/student_info/:id/teached_info' => "parent_desk#teached_info", as: 'parent_teached_info'
+  get 'parent_desk/student_info/:id/exam_info' => "parent_desk#exam_info", as: 'parent_exam_info'
+  get 'parent_desk/student_info/:id/paginate_catlog' => "parent_desk#paginate_catlog", as: 'parent_paginate_catlog'
   
 
 

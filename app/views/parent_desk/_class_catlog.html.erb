@@ -16,10 +16,10 @@
       <%= catlog.daily_teaching_point.points %>
     </td>
     <td>
-      <%= catlog.is_present %>
+      <%= catlog.is_present.present? ? 'Present' : 'Absent' %>
     </td>
     <td>
-      <%= catlog.is_recover %>
+      <%= catlog.is_recover.present? ? 'Recover' : 'No' %>
     </td>
     <td>
       <%= catlog.daily_teaching_point.exams.count %>

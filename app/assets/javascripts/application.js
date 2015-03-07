@@ -29,6 +29,7 @@
 //= require jkci_classes
 //= require batch_results
 //= require exams
+//= require parent_desk
 //= require ajax-submit
 // require theme
 // require_tree .

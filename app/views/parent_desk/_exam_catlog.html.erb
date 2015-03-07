@@ -19,12 +19,11 @@
       <%= "#{catlog.marks}/ #{catlog.exam.marks}" %>
     </td>
     <td>
-      <%= catlog.is_present %>
+      <%= catlog.is_present.present? ? 'Present' : 'Absent' %>
     </td>
     <td>
-      <%= catlog.is_recover %>
+      <%= catlog.is_recover.present? ? 'Recover' : 'No' %>
     </td>
-    
   </tr>
 <%- end %>
 

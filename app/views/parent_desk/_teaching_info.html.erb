@@ -1,7 +1,7 @@
-
+<h4>Daily Teaching</h4>
 <div class="textLeft">
   <h2 class="left">Filter By</h2>
-  <%= select_tag :filter_exam_class, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select class", style:"margin:15px 20px;width:200px;", class: "filter_exam_class form-control left", onchange: "pStudentFilterByClass(event, this)" %>
+  <%= select_tag :filter_exam_class, options_from_collection_for_select(jkci_classes, "id", "class_name"), prompt: "Select class", style:"margin:15px 20px;width:200px;", class: "filter_exam_class form-control left", onchange: "pStudentFilterByClass(event, this)" %>
   <%# select_tag :filter_exam_type,  options_for_select([ "Subjective", "Objective" ]), prompt: "Select type", style:"width:200px;margin:15px 20px;", onchange: "examFilterByClass(event, this)", class: 'form-control left'  %>
   <%# select_tag :filter_exam_status,  options_for_select([ "Created", "Conducted", "Published"]), prompt: "Select type", style:"width:200px;margin:15px 20px;", onchange: "examFilterByClass(event, this)", class: "form-control left"  %>
 </div>
@@ -19,9 +19,9 @@
       <th>Number of exams</th>
     </tr>
   </thead>
-  <%= render partial: 'class_catlog', locals: {class_catlogs: @class_catlogs }%>
+  <%= render partial: 'class_catlog', locals: {class_catlogs: class_catlogs }%>
   
 </table>
 <div class="paginationDiv">
-  <%= render partial: 'pagination', locals: {class_catlogs: @class_catlogs} %>
+  <%= render partial: 'pagination', locals: {class_catlogs: class_catlogs, stream: 'teached'} %>
 </div>
