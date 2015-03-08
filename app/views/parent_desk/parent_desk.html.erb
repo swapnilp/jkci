@@ -5,10 +5,25 @@
     </div>
     <div class="row"><!-- row -->
       <%- if @students.count > 1 %>
-        <%- @students.each do |student| %>
-          <%= link_to student.name, parent_student_info_path(student) %>
-	  <br />
-        <%- end %>
+        <strong>Students </strong><br />
+	<table class="table table-hover studentsTable">
+	  <thead>
+	    <tr>
+	      <th>#</th>
+	      <th>Name</th>
+	      <th>Class</th>
+	      <th>Group</th>
+	      <th>Mobile</th>
+	      <th>Parent Mobile</th>
+	    </tr>
+	  </thead>
+	  <%= render partial: 'student', locals: {students: @students}%>
+    
+
+          <%- @students.each do |student| %>
+            <%= link_to student.name, parent_student_info_path(student) %>
+          <%- end %>
+	</table>
       <%- elsif @students.count ==  1 %>
         <%= render partial: 'student_catlog_info', locals: {student: @student.first, class_catlogs: @class_catlogs}%>
       <%- end %>

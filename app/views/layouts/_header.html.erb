@@ -7,9 +7,7 @@
 	<%- end %>
         <li>
 	  <%- if user_signed_in? %>
-	  <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-	  <%- else %>
-	  <a  href="<%= new_user_session_path %>" method="delete">Login</a>
+	    <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
 	  <%- end %>
 	</li>
       </ul>
@@ -53,6 +51,7 @@
           </li>
           <li>
 	    <%- if user_signed_in? %>
+	      <%- if current_user.admin? %>
 	      <a href="/admin_desk" title="Manage Your Desk">Admin Desk</a>
               <ul class="sub-menu">
 		<li><a href="<%= exams_path%>">Exam</a></li>
@@ -63,8 +62,11 @@
 		<li><a href="<%= manage_events_path %>">Events</a></li>
 		<li><a href="<%= batch_results_path %>">Batch Results</a></li>
               </ul>
+	      <%- elsif current_user.parent? %>
+	        <a href="/parent_desk" title="Manage Your Desk">Parent's Desk</a>
+	      <%- end %>
 	    <%- else %>
-	      <%= link_to "Contact Us", contact_us_path, 'data-no-turbolink' => true %>
+	      <%= link_to "Contact Us", contact_us_path, 'data-no-turbolink' => true, title: 'Contact Us' %>
                <ul class="sub-menu">
 		 <li>
 		   <a  href="<%= new_user_session_path %>" method="delete">Login</a>

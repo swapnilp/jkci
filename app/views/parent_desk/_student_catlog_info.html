@@ -1,13 +1,13 @@
-<div>Name : <%= student.name %></div>
-<div>Parent Mobile: <%= student.p_mobile %></div>
+<h3><small>Student Name</small> : <%= student.name %></h3>
+<h3><small>Parent Mobile</small>&nbsp: <%= student.p_mobile %></h3>
 <ul class="k-dropdown-menu parentDeskMenu">
   <li class="active">
-    <a href="<%= parent_teached_info_path(student.id) %>" onClick="parentDeskToggle(event, this);">
+    <a href="<%= parent_teached_info_path(student.id) %>" onClick="parentDeskToggle(event, this);" class="btn btn-info btn-xs">
       Daily Learned
     </a>
   </li>
   <li>
-  <a href="<%= parent_exam_info_path(student.id) %>" onClick="parentDeskToggle(event, this);">
+  <a href="<%= parent_exam_info_path(student.id) %>" onClick="parentDeskToggle(event, this);" class="btn btn-info btn-xs">
     Class Exams 
   </a>
   </li>
