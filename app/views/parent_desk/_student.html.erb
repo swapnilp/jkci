@@ -1,0 +1,24 @@
+<%- students.each_with_index do |student, index| %>
+  
+    <tr>
+      
+      <td>
+	<a href="<%= parent_student_info_path(student) %>">
+	  <%= student.name %>
+	</a>
+      </td>
+      <td>
+	<%= student.std %>
+      </td>
+      <td>
+	<%= student.group %>
+      </td>
+      <td>
+	<%= student.mobile %>
+      </td>
+      <td>
+	<%= student.p_mobile %>
+      </td>
+    </tr>
+
+<%- end %>
