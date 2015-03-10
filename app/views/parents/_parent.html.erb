@@ -1,0 +1,17 @@
+<%- parents.each_with_index do |parent, index| %>
+  <tr>
+    <td>
+      <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+    </td>
+    <td>
+      <%= parent.email %>
+    </td>
+    <td>
+      <%= parent.username %>
+    </td>
+    <td>
+      <%= link_to 'Show', parent_path(parent) %>
+      <%# link_to 'Edit', edit_student_path(student) %>
+    </td>
+  </tr>
+<%- end %>

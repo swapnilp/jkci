@@ -1,0 +1,25 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <div>
+      <h1>Parents</h1>
+    </div>
+    <%= link_to 'New Parent', new_parent_path, class: 'btn btn-primary' %>
+    <div>
+      <table class="table table-hover studentsTable">
+	<thead>
+	  <tr>
+	    <th>#</th>
+	    <th>Email</th>
+	    <th>Username</th>
+	    <th>Actions</th>
+	  </tr>
+	</thead>
+	<%= render partial: 'parent', locals: {parents: @parents}%>
+      </table>
+      <div class="paginationDiv">
+	<%= render partial: 'pagination', locals: {parents: @parents} %>
+      </div>
+    </div>
+  </div>
+</div>
+

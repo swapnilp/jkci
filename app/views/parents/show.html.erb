@@ -1,0 +1,18 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <div class="col-sm-12 textLeft">
+      <p>&nbsp;</p>
+      <div class="textLeft">
+	<h5><span class="col-sm-2">Email :</span> <span style="font-size:20px;"><%= @parent.email %></span></h5>
+      </div>
+      <div class="textLeft">
+	<h5><span class="col-sm-2">Username :</span> <span style="font-size:20px;"><%= @parent.username %></span></h5>
+      </div>
+      <div class="col-sm-12 textLeft">
+	<%# link_to "Edit", edit_parent_path(@parent), class: "btn btn-primary" %>
+	<%= link_to "Back", parents_path, class: "btn btn-primary" %>
+      </div>
+      
+    </div>
+  </div>
+</div>

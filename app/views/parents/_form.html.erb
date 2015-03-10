@@ -1,0 +1,43 @@
+<% if @parent.errors.any? %>
+  <p class="alert alert-error red" style="padding:0;margin:0;">Ooops!</p>
+  <ul>
+    <% @parent.errors.each do |key, msg| %>
+      <li class="error red"><%= key %> <%=  msg %></li>
+    <% end %>
+  </ul> 
+<% end %>
+<div class="textLeft ">
+  <%= form_for @parent, url: parents_path, html:{role: 'form', class: 'form-horizontal'}  do |f| %>
+    <div class="form-group">
+      <%= f.label :email, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.email_field :email, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :username, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :username, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :password, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.password_field :password, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :password_confirmation, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.password_field :password_confirmation, class: 'form-control col-sm-4', autocomplete: "off" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+	<%= f.submit 'Save' , class: 'btn btn-default'%>
+	<%= link_to "Cancel", students_path, class: 'btn btn-warning' %>
+      </div>
+    </div>
+  <%- end %>
+</div>
+
