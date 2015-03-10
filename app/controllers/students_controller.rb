@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
   load_and_authorize_resource param_method: :my_sanitizer
 
   def index
-    @students = Student.all.order("id desc").page(params[:page])
+    @students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile]).order("id desc").page(params[:page])
     respond_to do |format|
       format.html
       format.json {render json: {success: true, html: render_to_string(:partial => "student.html.erb", :layout => false, locals: {students: @students}), pagination_html: render_to_string(partial: 'pagination.html.erb', layout: false, locals: {students: @students}), css_holder: ".studentsTable tbody"}}
