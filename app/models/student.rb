@@ -9,6 +9,7 @@ class Student < ActiveRecord::Base
   has_many :class_catlogs
   has_many :exam_catlogs
   has_many :exams, through: :exam_catlogs 
+  belongs_to :batch
   
   def all_exams
     #Exam.where(std: std, is_active: true)

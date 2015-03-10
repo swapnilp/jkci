@@ -5,8 +5,8 @@ class ParentDeskController < ApplicationController
   def parent_desk
     authorize! :roll, :parent
     @students = Student.where(id: current_user.student_id.to_s.split(','))
-    @class_catlogs = @students.first.learned_point.first(10)    if @students.count == 1
-    @jkci_classes = @students.first.jkci_classes.select([:class_name, :id]) if @students.count == 1
+    #@class_catlogs = @students.first.learned_point.page(params[:page])    if @students.count == 1
+    #@jkci_classes = @students.first.jkci_classes.select([:class_name, :id]) if @students.count == 1
   end
 
   def student_info

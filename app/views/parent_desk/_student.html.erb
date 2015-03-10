@@ -1,7 +1,5 @@
 <%- students.each_with_index do |student, index| %>
-  
     <tr>
-      
       <td>
 	<a href="<%= parent_student_info_path(student) %>">
 	  <%= student.name %>
@@ -20,5 +18,4 @@
 	<%= student.p_mobile %>
       </td>
     </tr>
-
 <%- end %>

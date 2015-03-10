@@ -1,6 +1,11 @@
 <div id="k-body"><!-- content wrapper -->
   <div class="container"><!-- container -->
-    <div class="row"><!-- row -->
+    <div class="k-breadcrumbs col-lg-12 clearfix" style="padding-left:0;"><!-- breadcrumbs -->
+      <ol class="breadcrumb">
+        <li><a href="/parent_desk">Students</a></li>
+      </ol>
+    </div><!-- breadcrumbs end -->               
+    <div class="row col-lg-12"><!-- row -->
       <%= render partial: 'student_catlog_info', locals: {student: @student, class_catlogs: @class_catlogs, exam_catlogs: @exam_catlogs} %>
     </div>
   </div>

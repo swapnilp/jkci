@@ -12,6 +12,7 @@ class StudentsController < ApplicationController
 
   def new
     @student = Student.new
+    @batches = Batch.active
   end
   
   def create
@@ -30,7 +31,7 @@ class StudentsController < ApplicationController
   
   def edit
     @student = Student.where(id: params[:id]).first
-    
+    @batches = Batch.active
   end
 
   def update
