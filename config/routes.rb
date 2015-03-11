@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   #require 'resque/server'
   resources :teachers
   resources :students
+  get "/students/filter_student/student" => "students#filter_students", as: "filter_students"
   resources :parents
   resources :exams
   get 'exam/:id/absent_students' => "exams#absunts_students", as: 'exam_absent_students'

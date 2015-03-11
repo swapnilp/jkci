@@ -30,6 +30,7 @@
 //= require batch_results
 //= require exams
 //= require parent_desk
+//= require students
 //= require ajax-submit
 // require theme
 // require_tree .

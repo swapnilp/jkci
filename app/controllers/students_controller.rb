@@ -4,6 +4,7 @@ class StudentsController < ApplicationController
 
   def index
     @students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile]).order("id desc").page(params[:page])
+    @batches = Batch.active
     respond_to do |format|
       format.html
       format.json {render json: {success: true, html: render_to_string(:partial => "student.html.erb", :layout => false, locals: {students: @students}), pagination_html: render_to_string(partial: 'pagination.html.erb', layout: false, locals: {students: @students}), css_holder: ".studentsTable tbody"}}
@@ -43,6 +44,22 @@ class StudentsController < ApplicationController
   end
 
   def destroy
+  end
+
+  def filter_students
+    students = Student.all
+    if params[:batch_id].present?
+      students = students.where(batch_id: params[:batch_id])
+    end
+
+    if params[:filter].present?
+      students = students.where("first_name like ? OR last_name like ? OR mobile like ? OR p_mobile like ?", "%#{params[:filter]}%", "%#{params[:filter]}%", "%#{params[:filter]}%", "%#{params[:filter]}%")
+    end
+    
+    students = students.order("id desc").page(params[:page])
+    pagination_html = render_to_string(partial: 'pagination.html.erb', layout: false, locals: {students: students})
+
+    render json: {success: true, html: render_to_string(:partial => "student.html.erb", :layout => false, locals: {students: students}), pagination_html:  pagination_html, css_holder: ".studentsTable tbody"}
   end
 
   private

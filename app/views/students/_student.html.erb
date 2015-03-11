@@ -1,4 +1,4 @@
-<%- @students.each_with_index do |student, index| %>
+<%- students.each_with_index do |student, index| %>
   <tr>
     <td>
       <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
