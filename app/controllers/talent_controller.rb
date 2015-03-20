@@ -1,5 +1,5 @@
 class TalentController < ApplicationController
-  load_and_authorize_resource :class => false, :class => "Talent2015", only: [:index]
+  load_and_authorize_resource :class => false, :class => "Talent2015", only: [:index, :download_talent_2015]
   def index
     @students = Talent2015.all.page(params[:page])
     respond_to do |format|
