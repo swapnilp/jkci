@@ -21,5 +21,12 @@ class TalentController < ApplicationController
       redirect_to root_path, flash: {success: false, notice: "Oops!! Something went wrong. Please try again."} 
     end
   end
+
+  def download_talent_2015
+    @students = Talent2015.all
+    respond_to do |format|
+      format.xls { send_data @students.to_csv(col_sep: "\t"), filename: "#{Date.today}_talent2015.xls" }
+    end
+  end
   
 end
