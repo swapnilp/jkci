@@ -21,6 +21,10 @@
     <td>
       <%= link_to 'Show', student_path(student) %>  | 
       <%= link_to 'Edit', edit_student_path(student) %>
+      <%- if !student.enable_sms %>
+      
+       | <%= link_to "Enable Sms", enable_student_sms_path(student) %>
+      <%- end %>
     </td>
   </tr>
 <%- end %>

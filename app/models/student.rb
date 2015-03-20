@@ -10,6 +10,7 @@ class Student < ActiveRecord::Base
   has_many :exam_catlogs
   has_many :exams, through: :exam_catlogs 
   belongs_to :batch
+  belongs_to :user
   
   def all_exams
     #Exam.where(std: std, is_active: true)
@@ -18,6 +19,10 @@ class Student < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def sms_mobile
+    return p_mobile.present? ?  "91" << p_mobile : nil
   end
   
   def exam_query

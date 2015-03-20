@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310084421) do
+ActiveRecord::Schema.define(version: 20150315062717) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -197,6 +197,16 @@ ActiveRecord::Schema.define(version: 20150310084421) do
     t.integer  "subject_id",       limit: 4
   end
 
+  create_table "parents_meetings", force: :cascade do |t|
+    t.string   "agenda",         limit: 255
+    t.datetime "date"
+    t.string   "contact_person", limit: 255
+    t.integer  "batch_id",       limit: 4
+    t.boolean  "sms_sent",       limit: 1,   default: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
   create_table "results", force: :cascade do |t|
     t.string   "name",             limit: 255
     t.string   "marks",            limit: 255
@@ -256,6 +266,8 @@ ActiveRecord::Schema.define(version: 20150310084421) do
     t.boolean  "is_active",   limit: 1,     default: true
     t.string   "middle_name", limit: 255
     t.integer  "batch_id",    limit: 4
+    t.boolean  "enable_sms",  limit: 1,     default: false
+    t.integer  "user_id",     limit: 4
   end
 
   create_table "subjects", force: :cascade do |t|

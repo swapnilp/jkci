@@ -3,14 +3,17 @@ class ExamAbsentSmsSend < Struct.new(:exam)
   def perform
     send_sms(exam)
   end
-
+  
   def send_sms(exam)
-    exam.exam_catlogs.includes([:student]).only_absents.in_groups_of(50).each_with_index do |exam_catlog_group, index|
-      message = "Your child is not attended #{exam.name} exam. Please contact with us"
-      url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=#{exam_catlog_group.compact.map(&:student).map(&:p_mobile).join(',')}&message=#{message}"
-      deliver_sms(URI::encode(url))
-      SmsSent.new({number: index, obj_type: "absent_exam", obj_id: exam.id, message: message, is_parent: true}).save
+    exam.exam_catlogs.includes([:student]).only_absents.each_with_index do |exam_catlog, index|
+      if exam_catlog.student.enable_sms
+        message = "#{exam_catlog.student.first_name} is not attended #{exam.name} exam. Please contact with us.JKSAI !!!"
+        url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=JKSaiu&dmobile=#{exam_catlog.student.sms_mobile}&message=#{message}"
+        deliver_sms(URI::encode(url))
+        SmsSent.new({number: index, obj_type: "absent_exam", obj_id: exam.id, message: message, is_parent: true}).save
+      end
     end
   end
 end
 #Delayed::Job.enqueue ExamAbsentSmsSend.new(Exam.last)
+  

@@ -196,3 +196,19 @@ figure.gallery-photo-thumb{
   }
 }
 
+.studentShow div{
+  margin-bottom:10px;
+}
+
+.studentShow{
+  display:inline-block;
+  width:50%;
+  float:left;
+}
+
+.userLoginDiv{
+  display:inline-block;
+  width:49%;
+  max-width:600px;
+  float:left;
+}

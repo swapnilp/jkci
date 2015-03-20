@@ -1,0 +1,31 @@
+<%- meetings.each_with_index do |meeting, index| %>
+  <tr>
+    <td>
+      <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+    </td>
+    <td>
+      <%= meeting.agenda %>
+    </td>
+    <td>
+      <%= meeting.date %>
+    </td>
+    <td>
+      <%= meeting.contact_person %>
+    </td>
+    <td>
+      <%= meeting.batch.name %>
+    </td>
+    <td>
+      <%= meeting.sms_sent %>
+    </td>
+    <td>
+      <%=  link_to 'Show', parents_meeting_path(meeting) %>  | 
+      <%= link_to 'Edit', edit_parents_meeting_path(meeting) %>
+      <%# if !meeting.enable_sms %>
+      
+       | <%# link_to "Send Sms", enable_meeting_sms_path(meeting) %>
+      <%# end %>
+    </td>
+  </tr>
+<%- end %>
+

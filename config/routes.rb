@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   resources :teachers
   resources :students
   get "/students/filter_student/student" => "students#filter_students", as: "filter_students"
+  get "/student/:id/enable_sms" => "students#enable_sms", as: "enable_student_sms"
+  get "/student/:id/select_user" => "students#select_user", as: "select_login_user"
   resources :parents
+  resources :parents_meeting
+  get '/parents_meeting/:id/send_sms' => "parents_meeting#sms_send", as: "meeting_sms_send"
   resources :exams
   get 'exam/:id/absent_students' => "exams#absunts_students", as: 'exam_absent_students'
   get 'exam/:id/exam_students' => "exams#exams_students", as: 'exams_students'
@@ -76,6 +80,7 @@ Rails.application.routes.draw do
   get '/admin_desk' => "home#admin_desk"
   get '/batch2015/jksaitalent' => "talent#new_talent2015"
   get '/batch2015/createjksaitalent' => "talent#create_talent2015"
+  get '/batch2015/talents' => "talent#index", as: 'talent2015'
   root 'home#index'
   #root 'welcome#index'
 

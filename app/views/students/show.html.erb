@@ -1,27 +1,55 @@
 <div id="k-body" class="k-body adminDesk">
   <div class="container">
 <div class="col-sm-12 textLeft">
-  <div class="textLeft">
-    <h5><span class="col-sm-2">Name :</span> <span style="font-size:20px;"><%= @student.name %></span></h5>
+  <div class="studentShow">
+    <p>&nbsp;</p>
+    <div class="col-sm-12">
+      <h5>
+	<small class="col-sm-4">Name :</small> 
+	<span style="font-size:20px;"><%= @student.name %></span>
+      </h5>
+    </div>
+    <div class="col-sm-12">
+      <h5>
+	<small class="col-sm-4">Mobile :</small> 
+	<span style="font-size:20px;"><%= @student.mobile %></span>
+    </h5>
+    </div>
+    <div class="col-sm-12">
+      <h5>
+	<small class="col-sm-4">Parent Name:</small> 
+	<span style="font-size:20px;"><%= @student.parent_name %></span>
+      </h5>
+    </div>
+    <div class="col-sm-12">
+      <h5>
+	<small class="col-sm-4">Parent Mobile :</small> 
+	<span style="font-size:20px;"><%= @student.p_mobile %></span>
+      </h5>
+    </div>
+    <div class="col-sm-12">
+      <h5>
+	<small class="col-sm-4">Group :</small> 
+	<span style="font-size:20px;"><%= @student.group %></span>
+      </h5>
+    </div>
+    <div class="col-sm-12">
+      <h5>
+	<small class="col-sm-4">Parent Login User :</small> 
+	<span style="font-size:20px;"><%= @student.user.try(:username) %></span>
+	<span style="font-size:12px;" class=""><%= link_to "Assign user", select_login_user_path(@student) , onClick: "getUsersForStudent(event, this);"%></span>
+      </h5>
+    </div>
   </div>
-  <div class="textLeft">
-    <h5><span class="col-sm-2">Mobile :</span> <span style="font-size:20px;"><%= @student.mobile %></span></h5>
+  <div class="userLoginDiv">
+    
   </div>
-  <div class="textLeft">
-    <h5><span class="col-sm-2">Parent Name:</span> <span style="font-size:20px;"><%= @student.parent_name %></span></h5>
-  </div>
-  <div class="textLeft">
-    <h5><span class="col-sm-2">Parent Mobile :</span> <span style="font-size:20px;"><%= @student.p_mobile %></span></h5>
-  </div>
-  <div class="textLeft">
-    <h5><span class="col-sm-2">Group :</span> <span style="font-size:20px;"><%= @student.group %></span></h5>
-  </div>
-  <div class="col-sm-12 textLeft">
+  <div class="col-sm-12">
     <%= link_to "Edit", edit_student_path(@student), class: "btn btn-primary" %>
   </div>
-  <div class="col-sm-12 textLeft" style="margin-top:15px;">
+  <div class="col-sm-12" style="margin-top:15px;">
     <h5>
-      <span class="col-sm-2 paddingL0">Classes :</span> 
+      <span class="col-sm-4 paddingL0">Classes :</span> 
       <%- @student.jkci_classes.each do |jkci_class| %>
         <%= link_to jkci_class.class_name, jkci_class_path(jkci_class) %>  |  
       <%- end %>

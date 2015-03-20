@@ -1,0 +1,26 @@
+<%- students.each_with_index do |student, index| %>
+  <tr>
+    <td>
+      <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+    </td>
+    <td>
+      <%= student.name %>
+    </td>
+    <td>
+      <%= student.school_name %>
+    </td>
+    <td>
+      <%= student.parent_name %>
+    </td>
+    <td>
+      <%= student.p_occupation %>
+    </td>
+    <td>
+      <%= student.contact_number %>
+    </td>
+    <td>
+      <%# link_to 'Show', student_path(student) %>
+    </td>
+  </tr>
+<%- end %>
+

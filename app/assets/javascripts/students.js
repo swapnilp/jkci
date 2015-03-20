@@ -23,3 +23,10 @@ function studentFilterByBatch(event, self){
     $(".paginationDiv").html(data['pagination_html']);
   });
 }
+
+function getUsersForStudent(event, self){
+  event.preventDefault();
+  $.get($(self).attr('href'), function(data){
+    $('.userLoginDiv').html( data['html']);
+  }, function(){}, 'JSON');
+}

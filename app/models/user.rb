@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
           :rememberable, :trackable, :validatable, :authentication_keys => [:login]
   attr_accessor :login
 
+  has_many :students
+
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

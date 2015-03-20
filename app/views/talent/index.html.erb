@@ -1,0 +1,27 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+<div>
+  <h1>Students</h1>
+</div>
+<div>
+  <table class="table table-hover studentsTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Name</th>
+	<th>School Name</th>
+	<th>parent_name</th>
+	<th>p_occupation</th>
+	<th>contact_number</th>
+      </tr>
+    </thead>
+    <%= render partial: 'student', locals: {students: @students}%>
+    
+  </table>
+  <div class="paginationDiv">
+    <%= render partial: 'pagination', locals: {students: @students} %>
+  </div>
+</div>
+
+</div>
+</div>

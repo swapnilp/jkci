@@ -1,0 +1,43 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <div class="col-sm-12 textLeft">
+      <div class="studentShow">
+	<p>&nbsp;</p>
+	<div class="col-sm-12">
+	  <h5>
+	    <small class="col-sm-2">Agenda :</small> 
+	    <span style="font-size:20px;"><%= @meeting.agenda %></span>
+	  </h5>
+	</div>
+	<div class="col-sm-12">
+	  <h5>
+	    <small class="col-sm-2">Date:</small> 
+	    <span style="font-size:20px;"><%= @meeting.date %></span>
+	  </h5>
+	</div>
+	<div class="col-sm-12">
+	  <h5>
+	    <small class="col-sm-2">Contact Person :</small> 
+	    <span style="font-size:20px;"><%= @meeting.contact_person %></span>
+	  </h5>
+	</div>
+	<div class="col-sm-12">
+	  <h5>
+	    <small class="col-sm-2">Batch :</small> 
+	    <span style="font-size:20px;"><%= @meeting.batch.name %></span>
+	  </h5>
+	</div>
+      </div>
+      <%- unless @meeting.sms_sent %>
+        <div class="col-sm-12" style="margin-bottom:20px;">
+	  <%= link_to "Sms Send", meeting_sms_send_path(@meeting), class: "btn btn-primary", onClick: "meetingSmsSend(event, this);" %>
+	</div>
+      <%- end %>
+      <div class="col-sm-12">
+	<%= link_to "Edit", edit_parents_meeting_path(@meeting), class: "btn btn-primary" %>
+	<%= link_to "Back", parents_meeting_index_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
+

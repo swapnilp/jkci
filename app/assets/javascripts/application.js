@@ -31,6 +31,7 @@
 //= require exams
 //= require parent_desk
 //= require students
+//= require parents_meeting
 //= require ajax-submit
 // require theme
 // require_tree .

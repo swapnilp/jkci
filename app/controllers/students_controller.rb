@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
   load_and_authorize_resource param_method: :my_sanitizer
 
   def index
-    @students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile]).order("id desc").page(params[:page])
+    @students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms]).order("id desc").page(params[:page])
     @batches = Batch.active
     respond_to do |format|
       format.html
@@ -45,9 +45,12 @@ class StudentsController < ApplicationController
 
   def destroy
   end
+  
+  def enable_sms
+  end
 
   def filter_students
-    students = Student.all
+    students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :batch_id])
     if params[:batch_id].present?
       students = students.where(batch_id: params[:batch_id])
     end
@@ -60,6 +63,11 @@ class StudentsController < ApplicationController
     pagination_html = render_to_string(partial: 'pagination.html.erb', layout: false, locals: {students: students})
 
     render json: {success: true, html: render_to_string(:partial => "student.html.erb", :layout => false, locals: {students: students}), pagination_html:  pagination_html, css_holder: ".studentsTable tbody"}
+  end
+
+  def select_user
+    users = User.where(role: 'parent')
+    render json: {success: true, html: render_to_string(:partial => "user.html.erb", :layout => false, locals: {users: users})}
   end
 
   private

@@ -56,11 +56,11 @@ class Exam < ActiveRecord::Base
   end
 
   def publish_results
-    self.exam_results.each do |exam_result|
-      self.send_result_email(self, exam_result.student)
-    end
+    
+    Delayed::Job.enqueue ExamAbsentSmsSend.new(self)
+    Delayed::Job.enqueue ExamResultSmsSend.new(self)
   end
-
+  
   def send_result_email(exam, student)
     UserMailer.delay.send_result(exam, student)
   end
