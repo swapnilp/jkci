@@ -16,9 +16,9 @@ class TalentController < ApplicationController
     params.require(:talent2015).permit!
     talent = Talent2015.new(params[:talent2015])
     if talent.save
-      redirect_to root_path
+      redirect_to root_path, flash: {success: true, notice: "Thank you for registation. We'll get back to you as soon as possible."} 
     else
-      redirect_to root_path
+      redirect_to root_path, flash: {success: false, notice: "Oops!! Something went wrong. Please try again."} 
     end
   end
   
