@@ -27,6 +27,7 @@
           <div class="row gutter"><!-- row -->
             <div class="col-lg-12 col-md-12">
 	      <%- @albums.each do |album| %>
+	      <%- if album.galleries.count > 0 %>
                 <div class="gallery-wrapper"><!-- gallery single wrap -->
                   <figure class="gallery-last-photo clearfix">
                     <a href="<%= gallery_path(album.id) %>" title="<%= album.name %>"  data-no-turbolink="true">
@@ -46,6 +47,7 @@
 	            </p>
                   </div>
                 </div><!-- gallery single wrap end -->
+		<%- end %>
 	      <%- end %>
               
             </div>

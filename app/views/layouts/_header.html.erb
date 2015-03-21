@@ -29,10 +29,10 @@
           <li class="<%= event_select(params[:controller]) %>">
             <a href="<%= events_path %>" title="Upcoming Events">Events</a>
           </li>
-          <li>
+          <li class="<%= course_select(params[:controller]) %>">
             <a href="<%= courses_path %>" title="Available Courses">Courses</a>
           </li>
-          <li>
+          <li class="<%= gallery_select(params[:controller]) %>">
             <a href="<%= galleries_path %>" class="Pages Collection" title="More Templates">Gallery</a>
             <!--ul class="sub-menu">
               <li><a href="news-single.html">News Single Page</a></li>
@@ -43,7 +43,7 @@
               <li><a href="search-results.html">Search Results Page</a></li>
             </ul-->
           </li>
-          <li>
+          <li class="<%= about_select(params[:controller]) %>">
             <a href="<%= about_us_path %>" title="How things work">About Us</a>
             <ul class="sub-menu">
               <li><a href="<%= results_path %>">Results</a></li>
@@ -54,6 +54,7 @@
 	      <%- if current_user.admin? %>
 	      <a href="/admin_desk" title="Manage Your Desk">Admin Desk</a>
               <ul class="sub-menu">
+		<li><a href="<%= subjects_path %>">Subjects</a></li>
 		<li><a href="<%= exams_path%>">Exam</a></li>
 		<li><a href="<%= students_path %>">Student</a></li>
 		<li><a href="<%= jkci_classes_path %>">Classes</a></li>
@@ -64,6 +65,7 @@
 		<li><a href="<%= parents_path %>">Parents Login</a></li>
 		<li><a href="<%= parents_meeting_index_path %>">Parents Meeting</a></li>
 		<li><a href="<%= talent2015_path %>">talent2015</a></li>
+		
               </ul>
 	      <%- elsif current_user.parent? %>
 	        <a href="/parent_desk" title="Manage Your Desk">Parent's Desk</a>

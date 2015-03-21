@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   get "/daily_teach/:class_catlog_id/recover" => "daily_teachs#recover_daily_teach", as: "recover_daily_teach"
   
   resources :chapters
+  resources :subjects
   resources :albums do 
     get 'manage_albums', on: :collection, as: 'manage'
   end

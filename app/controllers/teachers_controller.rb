@@ -1,5 +1,7 @@
 class TeachersController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource param_method: :my_sanitizer
+  
   def index
     @teachers = Teacher.all
   end
@@ -36,5 +38,11 @@ class TeachersController < ApplicationController
     if teacher.destroy
       redirect_to teachers_path
     end
+  end
+  private
+  
+  def my_sanitizer
+    #params.permit!
+    params.require(:teacher).permit!
   end
 end

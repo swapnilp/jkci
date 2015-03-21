@@ -27,13 +27,25 @@ module ApplicationHelper
   end
 
   def event_select(cur_path)
-    p cur_path
     cur_path == 'events' ? 'current-menu-item' : ''
   end
+  
+  def course_select(cur_path)
+    cur_path == 'courses' ? 'current-menu-item' : ''
+  end
+  
+  def gallery_select(cur_path)
+    cur_path == 'galleries' ? 'current-menu-item' : ''
+  end
 
+  def about_select(cur_path)
+    cur_path == 'about_us' ? 'current-menu-item' : ''
+  end
+  
   def home_select(cur_path)
     return cur_path == root_path ? 'current-menu-item' : ''
   end
+  
   
   def parentStudentCatlog(catlog)
     if !catlog.is_present && !catlog.is_recover
