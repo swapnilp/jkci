@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require jquery-migrate-1.2.1.min
 //= require twitter/bootstrap
-//= require turbolinks
+// require turbolinks
 //= require moment
 //= require bootstrap-datetimepicker
 //= require dropdown-menu/dropdown-menu
