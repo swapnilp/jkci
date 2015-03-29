@@ -37,7 +37,7 @@ class ChaptersController < ApplicationController
   
   def my_sanitizer
     #params.permit!
-    params.require(:student).permit!
+    params.require(:chapter).permit!
   end
   
 end
