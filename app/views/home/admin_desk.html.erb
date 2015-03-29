@@ -20,7 +20,7 @@
 	<%= link_to  jkci_class.class_name, jkci_class_path(jkci_class) %>
       </td>
       <td>
-	<%= jkci_class.teacher.name %>
+	<%= jkci_class.teacher.try(:name) %>
       </td>
       <td>
 	<%= link_to "Fill Daily Catlog",  new_daily_teach_path({jkci_class_id: jkci_class.id}) %>
