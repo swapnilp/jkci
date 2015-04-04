@@ -3,13 +3,11 @@
 <div class="col-sm-12">
   
   <div class="textLeft">
-    <span style="font-size:22px;font-weight:bold;">Points   - </span>
-    <span>
-      <%= @daily_teaching_point.points %>
+    <h3 style="font-size:22px;font-weight:bold;">Points   - <small><%= @daily_teaching_point.points %></small></h3>
     </span>
   </div>
   <div class="textLeft">
-    <h3>Class: <a href="<%= jkci_class_path(@daily_teaching_point.jkci_class) %>"><%= @daily_teaching_point.jkci_class.try(:class_name)%></a></h3>
+    <h3 style="margin-top:5px;">Class: <small><a href="<%= jkci_class_path(@daily_teaching_point.jkci_class) %>"><%= @daily_teaching_point.jkci_class.try(:class_name)%></a></small></h3>
   </div>
   <div class="textLeft">
     <h4>Teacher: <%= @daily_teaching_point.teacher.try(:name) %></h4>
@@ -29,17 +27,17 @@
   </div>
   <%- end %>
   <div class="textLeft classCatlog" data-date="<%= @daily_teaching_point.date.to_date %>" data-id="<%= @daily_teaching_point.id %>">
-    <%= render partial: "student_catlog" %>
     <%= form_tag("/daily_teach/#{@daily_teaching_point.id}/fill_catlog", method: "post", class: "fillCatlogForm") do %>
       <input name="students_list" type="hidden" value="" class="dtpStudents">
       <input name="date" type="hidden" value="" class="dtpDate">
       <div style="margin-top:20px;">
-	<%= link_to "Edit", "#", onclick: "editDailyCatlog(event, this);", class:"btn btn-primary editDailyCatlog" %>
-	<%= link_to "Save", "#", onclick: "saveDailyCatlog(event, this);", class:"btn btn-primary hide saveDailyCatlog" %>
+	<%= link_to "Edit Presenty", "#", onclick: "editDailyCatlog(event, this);", class:"btn btn-primary editDailyCatlog" %>
+	<%= link_to "Save Presenty", "#", onclick: "saveDailyCatlog(event, this);", class:"btn btn-primary hide saveDailyCatlog" %>
 	<%= link_to "Cancel", "#", onclick: "cancelClassCatlog(event, this);", class:"btn btn-primary hide cancelSaveClassCatlog" %>
-	
       </div>
     <%- end %>
+    <%= render partial: "student_catlog" %>
+    
   </div>
   <div class="textLeft">
     <%- if @exams.present? %>

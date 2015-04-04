@@ -43,7 +43,7 @@
 	<h1>Exams</h1>  
 	
 	<div class="textLeft">
-	  <%- @jkci_class.jk_exams.each_with_index do |exam, index| %>
+	  <%- @jkci_class.jk_exams.order("id desc").each_with_index do |exam, index| %>
 	  <a href="<%= exam_path(exam)%>">
 	    <h4 style="font-size:14px;"><%= index + 1 %>  :  <%= exam.exam_date.to_date %> 
 	      <span style="font-size:12px;">(<%= "#{exam.marks}- comp:#{exam.is_completed} - Res:#{exam.is_result_decleared}" %>)</span>
