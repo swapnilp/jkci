@@ -1,5 +1,9 @@
 <div class="col-sm-12 textLeft dailyTeachStudents">
   <h2 style="<%= 'color:red;' unless @daily_teaching_point.is_fill_catlog.present? %>">Student List</h2>
+  <%- if @daily_teaching_point.is_fill_catlog %>
+   <%= link_to "select_all", "#", onclick: "selectAllCatlog(this, event);" %>
+   <%= link_to "un_select_all", "#", onclick: "unSelectAllCatlog(this, event);" %>
+  <%- end %>
   <%- @class_catlogs.each do |class_catlog| %>
     <div style="text-align:left;">
       <%= check_box_tag class_catlog.student.id, class_catlog.student.name, class_catlog.is_present  , disabled: true %> 

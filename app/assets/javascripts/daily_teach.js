@@ -59,3 +59,15 @@ function recoverDailyTeach(event, self){
     $(self).parent().remove();
   })
 }
+
+function selectAllCatlog(self, event){
+  event.preventDefault();
+  $(".dailyTeachStudents input[type=checkbox]").prop("checked", true);
+}
+
+function unSelectAllCatlog(self, event){
+  event.preventDefault();
+  $(".dailyTeachStudents input[type=checkbox]").prop("checked", false);
+}
+
+
