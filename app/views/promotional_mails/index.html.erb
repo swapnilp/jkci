@@ -1,0 +1,29 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+<div>
+  <h1>Promotional Mail</h1>
+</div>
+<%= link_to 'New Promotional Mail', new_promotional_mail_path, class: 'btn btn-primary' %>
+<div>
+  <table class="table table-hover studentsTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Emails</th>
+	<th>Message</th>
+	<th>Subject</th>
+	<th>Date</th>
+	<th>Actions</th>
+      </tr>
+    </thead>
+    <%= render partial: 'mail', locals: {mails: @mails}%>
+    
+  </table>
+  <div class="paginationDiv">
+    <%= render partial: 'pagination', locals: {mails: @mails} %>
+  </div>
+</div>
+
+</div>
+</div>
+

@@ -1,0 +1,2 @@
+module PromotionalMailsHelper
+end

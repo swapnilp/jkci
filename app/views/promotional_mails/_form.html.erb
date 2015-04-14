@@ -1,0 +1,29 @@
+<div class="textLeft ">
+  <%= form_for @mail, html:{role: 'form', class: 'form-horizontal'}  do |f| %>
+    <div class="form-group">
+      <%= f.label :mails, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_area :mails, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :msg, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :msg, class: 'form-control col-sm-4', placeholder: 'Optional' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :subject, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :subject, class: 'form-control col-sm-4', placeholder: 'Optional' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+	<%= f.submit 'Save' , class: 'btn btn-default'%>
+	<%= link_to "Cancel", students_path, class: 'btn btn-warning' %>
+      </div>
+    </div>
+  <%- end %>
+</div>
+

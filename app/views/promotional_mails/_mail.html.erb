@@ -1,0 +1,23 @@
+<%- mails.each_with_index do |mail, index| %>
+  <tr>
+    <td>
+      <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+    </td>
+    <td>
+      <%= mail.mails.truncate(100) %>
+    </td>
+    <td>
+      <%= mail.msg %>
+    </td>
+    <td>
+      <%= mail.subject %>
+    </td>
+    <td>
+      <%= mail.created_at.to_date %>
+    </td>
+    <td>
+      <%= link_to 'Show', promotional_mail_path(mail) %>
+    </td>
+  </tr>
+<%- end %>
+

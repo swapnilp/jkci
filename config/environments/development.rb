@@ -51,8 +51,8 @@ Rails.application.configure do
     domain: 'railscasts.com',
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: ENV["EMAIL_USER_NAME"],
-    password: ENV["EMAIL_PASSOWRD"]
+    user_name: 'swapnil.patil04@gmail.com',#ENV["EMAIL_USER_NAME"],
+    password: 'nseetap'#ENV["EMAIL_PASSOWRD"]
   }
 
   config.paperclip_defaults = {
@@ -63,5 +63,5 @@ Rails.application.configure do
       :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
     }
   }
-  
+
 end

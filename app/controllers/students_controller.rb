@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
   load_and_authorize_resource param_method: :my_sanitizer
 
   def index
-    @students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms]).order("id desc").page(params[:page])
+    @students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :gender]).order("id desc").page(params[:page])
     @batches = Batch.active
     respond_to do |format|
       format.html
@@ -50,13 +50,17 @@ class StudentsController < ApplicationController
   end
 
   def filter_students
-    students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :batch_id])
+    students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :batch_id, :gender])
     if params[:batch_id].present?
       students = students.where(batch_id: params[:batch_id])
     end
 
     if params[:filter].present?
       students = students.where("first_name like ? OR last_name like ? OR mobile like ? OR p_mobile like ?", "%#{params[:filter]}%", "%#{params[:filter]}%", "%#{params[:filter]}%", "%#{params[:filter]}%")
+    end
+
+    if params[:gender].present?
+      students = students.where(gender: params[:gender])
     end
     
     students = students.order("id desc").page(params[:page])

@@ -65,6 +65,9 @@
 		<li><a href="<%= parents_path %>">Parents Login</a></li>
 		<li><a href="<%= parents_meeting_index_path %>">Parents Meeting</a></li>
 		<li><a href="<%= talent2015_path %>">talent2015</a></li>
+		<%- if current_user.email == "swapnil.patil04@gmail.com" %>
+		  <li><a href="<%= promotional_mails_path %>">Promotional Mail</a></li>
+		<%- end %>
 		
               </ul>
 	      <%- elsif current_user.parent? %>

@@ -1,0 +1,32 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <div class="col-sm-12 textLeft">
+      <div class="">
+	<p>&nbsp;</p>
+	<div class="col-sm-12">
+	  <h5>
+	    <small class="col-sm-2">Emails :</small> 
+	    <span style="font-size:14px;"><%= @mail.mails %></span>
+	  </h5>
+	</div>
+	
+	<div class="col-sm-12">
+	  <h5>
+	    <small class="col-sm-2">Message :</small> 
+	    <span style="font-size:20px;">&nbsp;<%= @mail.msg %></span>
+	  </h5>
+	</div>
+
+	<div class="col-sm-12">
+	  <h5>
+	    <small class="col-sm-2">Subject :</small> 
+	    <span style="font-size:20px;"><%= @mail.subject %></span>
+	  </h5>
+	</div>
+      </div>
+      <div class="col-sm-12" style="padding-left:40px;">
+	<%= link_to "Back", promotional_mails_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
