@@ -52,7 +52,7 @@ Rails.application.configure do
     authentication: "plain",
     enable_starttls_auto: true,
     user_name: 'swapnil.patil04@gmail.com',#ENV["EMAIL_USER_NAME"],
-    password: 'nseetap'#ENV["EMAIL_PASSOWRD"]
+    password: ENV["EMAIL_PASSOWRD"]
   }
 
   config.paperclip_defaults = {
