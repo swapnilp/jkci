@@ -1,5 +1,5 @@
 class GalleriesController < ApplicationController
-  load_and_authorize_resource :class => false, :class => "Album", only: [:index, :show]
+  load_and_authorize_resource :class => "Album", only: [:index, :show]
   load_and_authorize_resource :class => "Gallery", only: [:create, :destroy], param_method: :my_sanitizer
 
 
