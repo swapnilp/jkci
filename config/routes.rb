@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   get "/daily_teach/filter_daily_teach/daily_teach" => "daily_teachs#filter_teach", as: "filter_teach"
   get "/daily_teach/:id/follow" => "daily_teachs#follow_teach", as: "follow_teach"
   get "/daily_teach/:class_catlog_id/recover" => "daily_teachs#recover_daily_teach", as: "recover_daily_teach"
+  #get "/daily_teach/:class_catlog_id/recover" => 
   
   resources :chapters
   resources :subjects

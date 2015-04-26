@@ -48,3 +48,13 @@ function studentFilterByGender(event, self){
   });
   
 }
+
+function enableStudentSms(self, event){
+  event.preventDefault();
+
+  $.get(''+ $(self).attr('href'), function(data){
+    if(data.success){
+      $(self).remove();
+    }
+  }, function(){}, "JSON");
+}

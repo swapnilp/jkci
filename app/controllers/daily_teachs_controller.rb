@@ -101,6 +101,11 @@ class DailyTeachsController < ApplicationController
     render json: {success: true}
   end
 
+  def send_class_absent_sms
+    class_catlog = ClassCatlog.where(id: params[:id]).first
+    class_catlog.update_attributes({sms_sent: true}) if class_catlog
+  end
+
   private
   
   def my_sanitizer

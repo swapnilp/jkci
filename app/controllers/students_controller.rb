@@ -47,6 +47,10 @@ class StudentsController < ApplicationController
   end
   
   def enable_sms
+    student = Student.select([:id, :enable_sms, ]).where(id: params[:id]).first
+    student.update_attributes({enable_sms: true})
+    Delayed::Job.enqueue ActivationSms.new(student)
+    render json: {success: true}
   end
 
   def filter_students

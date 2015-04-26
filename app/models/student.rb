@@ -21,6 +21,10 @@ class Student < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def short_name
+    "#{initl} #{last_name}"
+  end
+
   def sms_mobile
     return p_mobile.present? ?  "91" << p_mobile : nil
   end
