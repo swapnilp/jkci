@@ -85,6 +85,7 @@ Rails.application.routes.draw do
   get '/batch2015/createjksaitalent' => "talent#create_talent2015"
   get '/batch2015/talents' => "talent#index", as: 'talent2015'
   get '/batch2015/talents/download' => "talent#download_talent_2015", as: 'talent2015_download' 
+  get '/timetable' => "home#timetable", as: 'timetable'
   root 'home#index'
   #root 'welcome#index'
 

@@ -60,6 +60,7 @@ class Ability
     elsif user.parent?
       can :roll, :parent
       can :roll, :contact_us
+      can :role, :timetable
       #can :read, Chapter 
       can :read, Event
       #can :read, JkciClass 

@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  load_and_authorize_resource :class => "Gallery"
+  load_and_authorize_resource :class => "Gallery", only: [:index]
   before_action :authenticate_user!, only: [:admin_desk]
   #load_and_authorize_resource :class => false
 
@@ -12,6 +12,10 @@ class HomeController < ApplicationController
 #    @recent_exams = Exam.where(is_completed: true, is_result_decleared: [nil, false])
 #    @todays_exams = Exam.where("exam_date < ? && exam_date > ? ", Date.today + 1.day, Date.today - 1.day)
 #    @jkci_classes = JkciClass.all
+  end
+
+  def timetable
+    
   end
 
 
