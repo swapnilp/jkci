@@ -8,6 +8,7 @@ class ExamAbsentSmsSend < Struct.new(:exam)
     exam.exam_catlogs.includes([:student]).only_absents.each_with_index do |exam_catlog, index|
       if exam_catlog.student.enable_sms
         #message = "#{exam_catlog.student.first_name} is not attended #{exam.name} exam. Please contact with us.JKSAI !!!"
+        message = "We regret to convey you that #{exam_catlog.student.short_name} is absent for #{exam.name} exam.Plz contact us. JKSai!!"
         url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=JKSaiu&dmobile=#{exam_catlog.student.sms_mobile}&message=#{message}"
         if exam_catlog.student.sms_mobile.present?
           deliver_sms(URI::encode(url))
@@ -18,4 +19,4 @@ class ExamAbsentSmsSend < Struct.new(:exam)
   end
 end
 #Delayed::Job.enqueue ExamAbsentSmsSend.new(Exam.last)
-  
+
