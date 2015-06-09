@@ -77,6 +77,12 @@ class StudentsController < ApplicationController
     users = User.where(role: 'parent')
     render json: {success: true, html: render_to_string(:partial => "user.html.erb", :layout => false, locals: {users: users})}
   end
+  
+  def disable_student
+    student = Student.where(id: params[:id]).first
+    student.jkci_classes.clear
+    redirect_to student_path(student)
+  end
 
   private
   

@@ -46,6 +46,7 @@
   </div>
   <div class="col-sm-12">
     <%= link_to "Edit", edit_student_path(@student), class: "btn btn-primary" %>
+    <%= link_to "Disable Student", disable_student_path(@student), class: "btn btn btn-default", onclick: "return confirm('Are you sure?')"%>
   </div>
   <div class="col-sm-12" style="margin-top:15px;">
     <h5>
