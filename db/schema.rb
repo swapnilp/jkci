@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415130950) do
+ActiveRecord::Schema.define(version: 20150609102129) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -278,6 +278,7 @@ ActiveRecord::Schema.define(version: 20150415130950) do
     t.integer  "user_id",     limit: 4
     t.string   "gender",      limit: 255
     t.string   "initl",       limit: 255
+    t.boolean  "is_disabled", limit: 1,     default: false
   end
 
   create_table "subjects", force: :cascade do |t|

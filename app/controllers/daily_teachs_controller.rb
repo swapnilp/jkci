@@ -74,6 +74,7 @@ class DailyTeachsController < ApplicationController
   def fill_catlog
     @daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
     @daily_teaching_point.fill_catlog(params[:students_list].split(','), params[:date])
+    @daily_teaching_point.publish_absenty
     redirect_to jkci_class_path(@daily_teaching_point.jkci_class)
   end
   

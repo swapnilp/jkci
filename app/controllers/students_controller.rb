@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
   load_and_authorize_resource param_method: :my_sanitizer
 
   def index
-    @students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :gender]).order("id desc").page(params[:page])
+    @students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :gender, :is_disabled]).order("id desc").page(params[:page])
     @batches = Batch.active
     respond_to do |format|
       format.html
@@ -80,8 +80,13 @@ class StudentsController < ApplicationController
   
   def disable_student
     student = Student.where(id: params[:id]).first
-    student.jkci_classes.clear
-    redirect_to student_path(student)
+    if student
+      student.update_attributes({is_disabled: true})
+      student.jkci_classes.clear
+      redirect_to student_path(student)
+    else
+      redirect_to students_path
+    end
   end
 
   private

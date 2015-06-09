@@ -29,4 +29,8 @@ class DailyTeachingPoint < ActiveRecord::Base
       end
     end
   end
+
+  def publish_absenty
+    Delayed::Job.enqueue ClassAbsentSms.new(self)
+  end
 end

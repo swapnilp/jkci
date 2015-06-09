@@ -12,6 +12,8 @@ class Student < ActiveRecord::Base
   belongs_to :batch
   belongs_to :user
   
+  scope :enable_students, -> { where(is_disabled: false) }
+  
   def all_exams
     #Exam.where(std: std, is_active: true)
     Exam.where("jkci_class_id in (?)  or ?", self.jkci_classes.map(&:id), exam_query)
