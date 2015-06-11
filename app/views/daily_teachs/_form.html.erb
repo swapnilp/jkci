@@ -21,7 +21,7 @@
   <div class="form-group">
     <span class="col-sm-2 control-label">Chapter</span>
     <div class="col-sm-4">
-      <%= f.select :chapter_id, options_from_collection_for_select(@chapters, "id", "name", @daily_teaching_point.chapter_id), prompt: "Select something" %>
+      <%= f.select :chapter_id, options_from_collection_for_select(@chapters, "id", "name", @daily_teaching_point.chapter_id || @chapters.first.try(:id)) %>
     </div>
   </div>
   <div class="form-group">
