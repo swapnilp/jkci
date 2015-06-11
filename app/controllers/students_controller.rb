@@ -81,7 +81,7 @@ class StudentsController < ApplicationController
   def disable_student
     student = Student.where(id: params[:id]).first
     if student
-      student.update_attributes({is_disabled: true})
+      student.update_attributes({is_disabled: true, enable_sms: false})
       student.jkci_classes.clear
       redirect_to student_path(student)
     else
