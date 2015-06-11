@@ -21,6 +21,7 @@ class JkciClassesController < ApplicationController
 
   def show
     @jkci_class = JkciClass.where(id: params[:id]).first
+    @chapters = @jkci_class.subject.chapters
     @daily_teaching_points = @jkci_class.daily_teaching_points.order('id desc').first(20)
   end
 
@@ -86,6 +87,17 @@ class JkciClassesController < ApplicationController
   def class_daily_teaches
     jkci_class = JkciClass.includes(:daily_teaching_points).where(id: params[:id]).first
     @daily_teaching_points = jkci_class.daily_teaching_points.order('id desc')
+    if params[:chapters].present?
+      @daily_teaching_points = @daily_teaching_points.where(chapter_id: params[:chapters].split(',').map(&:to_i))
+    end
+    respond_to do |format|
+      format.html
+      format.json {render json: {success: true, html: render_to_string(:partial => "daily_teaching_point.html.erb", :layout => false, locals: {daily_teaching_points: @daily_teaching_points}),  css_holder: ".dailyTeach"}}
+    end
+  end
+  
+  def filter_daily_teaches
+    
   end
 
   def my_sanitizer

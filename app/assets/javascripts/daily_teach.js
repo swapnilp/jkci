@@ -14,8 +14,8 @@ function saveDailyCatlog(event, self){
     selectedStudents = [];
     $(".classCatlog input[type=checkbox]:checked").each(function(){
       selectedStudents.push($(this).attr("id"));
-    })
-      $(".dtpStudents").val(""+ selectedStudents);
+    });
+    $(".dtpStudents").val(""+ selectedStudents);
     $(".dtpDate").val("" + $(".dailyTeachDate").text().trim());
     $(".fillCatlogForm").submit();
     $(".editDailyCatlog").removeClass('hide');
@@ -71,3 +71,18 @@ function unSelectAllCatlog(self, event){
 }
 
 
+function dailyTeachingChapterSelect(event, self){
+  //event.preventDefault();
+  $(".dailyTeach").html('');
+  selectedChapters = "";
+  $(".dailyTeachChapters input[type=checkbox]:checked").each(function(){
+    selectedChapters = selectedChapters + $(this).attr("data-id") + ",";
+  });
+  classId = $(self).parent().attr('data-class-id');
+  $('#k-tab-daily_teach .loadingImg').removeClass('hide');
+  
+  $.get("/jkci_class/" + classId + "/daily_teaches?&chapters="+ selectedChapters, function(data){
+    $(".dailyTeach").html(''+ data.html);
+    $('#k-tab-daily_teach .loadingImg').addClass('hide');
+  }, function(){}, "JSON")
+}

@@ -3,6 +3,7 @@ class DailyTeachingPoint < ActiveRecord::Base
   belongs_to :jkci_class
   belongs_to :teacher
   has_many :class_catlogs
+  belongs_to :chapter
 
   def absent_count
     students_count = self.class_catlogs.where(is_present: false).count
