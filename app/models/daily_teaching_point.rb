@@ -4,6 +4,8 @@ class DailyTeachingPoint < ActiveRecord::Base
   belongs_to :teacher
   has_many :class_catlogs
   belongs_to :chapter
+  
+  scope :chapters_points, -> { where("chapter_id is not ?", nil) }
 
   def absent_count
     students_count = self.class_catlogs.where(is_present: false).count

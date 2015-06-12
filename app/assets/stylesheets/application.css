@@ -46,11 +46,10 @@
 }
 
 .examComplete{
-  background:green;
-  color:lightgray;
+  color:green;
 }
 .examComplete a{
-    color:#FFF !important;
+    color:red !important;
 }
 
 tr.examComplete:hover > td{

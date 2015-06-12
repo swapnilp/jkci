@@ -49,6 +49,8 @@ class DailyTeachsController < ApplicationController
     @daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
     @jkci_classes = JkciClass.all
     @teachers = Teacher.all
+    @chapters = @daily_teaching_point.jkci_class.subject.chapters
+    
   end
 
   def update
