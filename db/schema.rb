@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609102129) do
+ActiveRecord::Schema.define(version: 20150613104448) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -126,17 +126,18 @@ ActiveRecord::Schema.define(version: 20150609102129) do
   end
 
   create_table "exam_catlogs", force: :cascade do |t|
-    t.integer  "exam_id",       limit: 4
-    t.integer  "student_id",    limit: 4
-    t.integer  "jkci_class_id", limit: 4
-    t.float    "marks",         limit: 24
-    t.boolean  "is_present",    limit: 1
-    t.boolean  "is_recover",    limit: 1,     default: false
+    t.integer  "exam_id",         limit: 4
+    t.integer  "student_id",      limit: 4
+    t.integer  "jkci_class_id",   limit: 4
+    t.float    "marks",           limit: 24
+    t.boolean  "is_present",      limit: 1
+    t.boolean  "is_recover",      limit: 1,     default: false
     t.date     "recover_date"
-    t.text     "remark",        limit: 65535
+    t.text     "remark",          limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_followed",   limit: 1,     default: false
+    t.boolean  "is_followed",     limit: 1,     default: false
+    t.boolean  "absent_sms_sent", limit: 1,     default: false
   end
 
   create_table "exam_results", force: :cascade do |t|

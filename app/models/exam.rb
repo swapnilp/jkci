@@ -60,6 +60,10 @@ class Exam < ActiveRecord::Base
     Delayed::Job.enqueue ExamAbsentSmsSend.new(self)
     Delayed::Job.enqueue ExamResultSmsSend.new(self)
   end
+
+  def publish_absentee
+    Delayed::Job.enqueue ExamAbsentSmsSend.new(self)
+  end
   
   def send_result_email(exam, student)
     UserMailer.delay.send_result(exam, student)

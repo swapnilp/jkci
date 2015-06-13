@@ -108,6 +108,14 @@ class ExamsController < ApplicationController
     end
     redirect_to exams_path
   end
+
+  def publish_absent_exam
+    @exam = Exam.where(id: params[:id]).first
+    if @exam
+      @exam.publish_absentee
+    end
+    redirect_to exam_path(@exam)
+  end
   
   def exam_completed
     @exam = Exam.where(id: params[:id]).first
