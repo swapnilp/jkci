@@ -38,8 +38,9 @@ class ExamsController < ApplicationController
   end
 
   def edit
-    @subjects = Subject.all
     @exam = Exam.where(id: params[:id]).first
+    redirect_to exams_path if @exam.is_completed
+    @subjects = Subject.all
     @jkci_classes = JkciClass.all
   end
   

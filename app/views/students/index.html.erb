@@ -4,7 +4,7 @@
   <h1>Students</h1>
 </div>
 <%= link_to 'New Student', new_student_path, class: 'btn btn-primary' %>
-<div class="textLeft">
+<div class="textLeft fullWidth">
   <h2 class="left">Filter By</h2>
   <%= text_field_tag :filter_student, nil ,  placeholder: "Filter Student", style:"margin:15px 20px;width:200px;", class: "filter_student form-control left", onkeyup: "searchStudentByFilter(event);" %>
   <%= select_tag :filter_student_batch, options_from_collection_for_select(@batches, "id", "name"), prompt: "Select Batch", style:"margin:15px 20px;width:200px;", class: "filter_student_batch form-control left", onchange: "studentFilterByBatch(event, this)" %>

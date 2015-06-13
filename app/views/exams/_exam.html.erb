@@ -25,7 +25,7 @@
     </td>
     <td>
       <%= link_to 'Show', exam_path(exam) %>  |  
-      <%- unless defined?(hide_edit) %>
+      <%- unless defined?(hide_edit) || exam.is_completed %>
       <%= link_to 'Edit', edit_exam_path(exam) %>
       <%- end %>
     </td>
