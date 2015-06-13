@@ -4,7 +4,7 @@
       <h1>Daily Teach</h1>
     </div>
     <div style="width:100%;">
-      <div class="textLeft">
+      <div class="textLeft fullWidth">
 	<h2 class="left">Filter By</h2>
 	<%= select_tag :filter_teach_class, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select class", style:"margin:15px 20px;", onchange:"dailyTeachFilter(event, this);" %>
 	<%= select_tag :filter_teach_teacher, options_from_collection_for_select(@teachers, "id", "name"), prompt: "Select teacher", style:"margin:15px 20px;", onchange:"dailyTeachFilter(event, this);" %>
