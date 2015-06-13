@@ -211,3 +211,8 @@ figure.gallery-photo-thumb{
   max-width:600px;
   float:left;
 }
+
+.fullWidth{
+  display:inline-block;
+  width:100%;
+}
