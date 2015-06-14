@@ -53,6 +53,7 @@
     <%- end %>
     <%- unless @exam.is_completed %>
     <%= link_to "Exam Conducted", exam_completed_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+    <%- else %>
     <%= link_to "Publish Absent catlog", publish_absent_exam_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
     <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
     <%- end %>
