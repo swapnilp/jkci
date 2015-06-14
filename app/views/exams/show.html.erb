@@ -53,9 +53,9 @@
     <%- end %>
     <%- unless @exam.is_completed %>
     <%= link_to "Exam Conducted", exam_completed_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
-    <%- end %>
     <%= link_to "Publish Absent catlog", publish_absent_exam_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
     <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+    <%- end %>
   </div>
   <div class="col-sm-12 textLeft paddingTop10 hide">
     <%#= link_to "Send Absent Student SMS", send_exam_absent_student_sms_path(@exam), class: 'btn btn-primary btn-sm' %>

@@ -29,8 +29,8 @@ class Exam < ActiveRecord::Base
     students.where("exam_catlogs.is_present = ? && exam_catlogs.is_recover = ?", false, false)  
   end
   
-  def add_absunt_students(exam_students)
-    self.exam_catlogs.where(student_id: exam_students).update_all({is_present: false})
+  def add_absunt_students(exam_absent_students)
+    self.exam_catlogs.where(student_id: exam_absent_students).update_all({is_present: false})
     #exam_students.each do |student|
       #ExamAbsent.new({student_id: student, exam_id: self.id, sms_sent: false, email_sent: false}).save
     #end
