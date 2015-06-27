@@ -30,9 +30,10 @@ function addExamDocumant(self){
 	//$("#result_student_img").val(''+ data['url']);
 	//$('.batchRLoadingImg').addClass('hide');
 	$(".examDocument").append("<a href='"+data['url']+"' target='_blank'>"+data['name']+"</a>&nbsp;&nbsp;");
-	alert('asdasd');
+	alert('Paper Uploaded');
       }else{
-        brandiktivAlert(""+ data.msg);
+        //brandiktivAlert(""+ data.msg);
+	alert('Something went long');
 	$('.batchRLoadingImg').addClass('hide');
       }
     });
