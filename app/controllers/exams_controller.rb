@@ -150,6 +150,22 @@ class ExamsController < ApplicationController
     render json: {success: true}
   end
 
+  def upload_paper
+    params.permit!
+    attachment = Document.new(params[:document])
+    attachment.exam_id= params[:exam_id]
+    if attachment.save     
+      respond_to do |format|
+        format.json {render json: {success: true, id: attachment.id, url: attachment.document.url, name: attachment.document_file_name}}
+      end
+    else
+      Rails.logger.info attachment.errors.inspect
+      respond_to do |format|
+        format.json {render json: {success: false, msg: attachment.errors.messages.values.first.first}}
+      end
+    end
+  end
+
   private
   
   def my_sanitizer

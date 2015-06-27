@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150613104448) do
+ActiveRecord::Schema.define(version: 20150614093751) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -98,6 +98,16 @@ ActiveRecord::Schema.define(version: 20150613104448) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "documents", force: :cascade do |t|
+    t.string   "document_file_name",    limit: 255
+    t.string   "document_content_type", limit: 255
+    t.integer  "document_file_size",    limit: 4
+    t.datetime "document_updated_at"
+    t.integer  "exam_id",               limit: 4
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
 
   create_table "events", force: :cascade do |t|
     t.string   "name",            limit: 255

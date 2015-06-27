@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get "/exam/:id/abesnt_student/:student_id/remove" =>  "exams#remove_exam_absent", as: "remove_exam_absent"
   get "/exam/:id/exam_result/:exam_catlog_id/remove" =>  "exams#remove_exam_result", as: "remove_exam_result"
   get "/exam/:id/exam_recover/:exam_catlog_id/recover" =>  "exams#recover_exam", as: "recover_exam"
+  post "/exam/:id/upload_paper" => "exams#upload_paper", as: "upload_exam_paper"
   get "/exam/follow_exam_absent_student/:exam_catlog_id" =>  "exams#follow_exam_absent_student", as: "follow_exam_absent_student"
   
   resources :exam_absents, only: [:destroy]

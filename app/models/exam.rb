@@ -8,6 +8,7 @@ class Exam < ActiveRecord::Base
   belongs_to :jkci_class
   has_many :exam_catlogs
   has_many :students, through: :exam_catlogs
+  has_many :documents
   
   
 

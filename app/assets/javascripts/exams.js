@@ -16,3 +16,26 @@ function jsonPagination(event){
     alert("asdasd");
   })
 }
+
+
+function addExamDocumant(self){
+  $a = self;
+  $('.seek_img_spinner').show();
+  var file_path = $(self).val()
+  var thsEle = $(self);
+  if(file_path != ''){
+    $('.batchRLoadingImg').removeClass('hide');
+    $(self).parent('form').ajaxSubmit(function(data){
+      if(data.success){
+	//$("#result_student_img").val(''+ data['url']);
+	//$('.batchRLoadingImg').addClass('hide');
+	$(".examDocument").append("<a href='"+data['url']+"' target='_blank'>"+data['name']+"</a>&nbsp;&nbsp;");
+	alert('asdasd');
+      }else{
+        brandiktivAlert(""+ data.msg);
+	$('.batchRLoadingImg').addClass('hide');
+      }
+    });
+  }
+  
+}
