@@ -3,7 +3,7 @@ class ExamCatlog < ActiveRecord::Base
   belongs_to :exam
   belongs_to :student
 
-  scope :only_absents, -> {where(is_present: [nil, false], is_recover: [nil, false])}
+  scope :only_absents, -> {where(is_present: false, is_recover: [nil, false])}
   scope :only_results, -> {where("marks is not ?", nil)}
   scope :completed, -> {where("is_present in (?)",  [true, false])}
 
