@@ -1,0 +1,27 @@
+<%- catlogs.each_with_index do |exam_catlog, index| %>
+  <tr class="<%= 'red' if exam_catlog.is_absent? %>">
+    <td>
+      <%= exam_catlog.exam.id%>
+    </td>
+    <td>
+      <a href="<%= exam_path(exam_catlog.exam) %>">
+	<%= exam_catlog.exam.name %>
+      </a>
+    </td>
+    <td>
+      <%= exam_catlog.exam.exam_type %>
+    </td>
+    <td>
+      <%= exam_catlog.exam.jkci_class.class_name %>
+    </td>
+    <td>
+      <%= exam_catlog.exam.exam_date.try(:to_date) %>
+    </td>
+    <td>
+      <%= exam_catlog.is_present.nil? ? 'Not Available' : exam_catlog.is_present  %>
+    </td>
+    <td>
+      <%= exam_catlog.marks %>
+    </td>
+  </tr>
+<%- end %>

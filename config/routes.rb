@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "/student/:id/enable_sms" => "students#enable_sms", as: "enable_student_sms"
   get "/student/:id/select_user" => "students#select_user", as: "select_login_user"
   get "/student/:id/disable_student" => "students#disable_student", as: "disable_student"
+  get "/student/:id/filter_student_data" => "students#filter_students_data", as: "filter_students_data"
   resources :parents
   resources :parents_meeting
   resources :promotional_mails

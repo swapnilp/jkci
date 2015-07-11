@@ -69,18 +69,42 @@
     </ul>
     <div class="tab-content">
       <div id="k-tab-exam_report" class="tab-pane fade active in">
-	<%- @exam_catlogs.each_with_index do |exam_catlog, index| %>
-	  <div>
-	    <%= index + 1 %>  :  <a class="<%= 'red' unless exam_catlog.is_present.present? %>" href="<%= exam_path(exam_catlog.exam) %>"><%= exam_catlog.exam_report %></a>
-	  </div>
-	<%- end %>
+	<table class="table table-hover table-striped examTable">
+	  <thead>
+	    <tr>
+	      <th>Exam Id</th>
+	      <th>Exam Name</th>
+	      <th>Type</th>
+	      <th>Class</th>
+	      <th>Date</th>
+	      <th>Is Present</th>
+	      <th>Marks</th>
+	    </tr>
+	  </thead>
+	  <%= render partial: 'students_exam', locals: {catlogs: @exam_catlogs} %>
+	</table>
+	<div class="paginationDiv">
+	  <%= render partial: 'filter_pagination', locals: {catlogs: @exam_catlogs, params: {data_type: 'exam'}} %>
+	</div>
+
       </div>
       <div id="k-tab-daily_report" class="tab-pane fade">
-	<%- @class_catlogs.each_with_index do |class_catlog, index| %>
-	  <div>
-	    <%= index + 1 %> <a class="<%= 'red' unless class_catlog.is_present.present? %>" href="<%= daily_teach_path(class_catlog.daily_teaching_point) %>"><%= class_catlog.class_report %></a>
-	  </div>
-	<%- end %>
+	<table class="table table-hover table-striped classTable">
+	  <thead>
+	    <tr>
+	      <th>Id</th>
+	      <th>Date</th>
+	      <th>Point</th>
+	      <th>Chapter</th>
+	      <th>Is Present</th>
+	      <th>Is Recover</th>
+	    </tr>
+	  </thead>
+	  <%= render partial: 'students_class', locals: {catlogs: @class_catlogs} %>
+	</table>
+	<div class="paginationDiv">
+	  <%= render partial: 'filter_pagination', locals: {catlogs: @class_catlogs, params: {data_type: 'class'}} %>
+	</div>
       </div>
     </div>
   </div>

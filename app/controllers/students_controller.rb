@@ -26,8 +26,18 @@ class StudentsController < ApplicationController
   
   def show
     @student = Student.where(id: params[:id]).first
-    @exam_catlogs = @student.exam_catlogs.includes([:exam])
-    @class_catlogs = @student.class_catlogs.includes([:jkci_class, :daily_teaching_point])
+    @exam_catlogs = @student.exam_catlogs.includes([:exam]).order('id desc').page(params[:page])
+    @class_catlogs = @student.class_catlogs.includes([:jkci_class, :daily_teaching_point]).order('id desc').page(params[:page])
+  end
+
+  def filter_students_data
+    student = Student.where(id: params[:id]).first
+    includes_tables = params[:data_type] == 'exam' ? [:exam] : [:jkci_class, :daily_teaching_point]
+    catlogs = student.send("#{params[:data_type].singularize}_catlogs".to_sym).includes(includes_tables).order('id desc').page(params[:page])
+    respond_to do |format|
+      format.html
+      format.json {render json: {success: true, html: render_to_string(:partial => "students_#{params[:data_type]}.html.erb", :layout => false, locals: {catlogs: catlogs}), pagination_html: render_to_string(partial: 'filter_pagination.html.erb', layout: false, locals: {catlogs: catlogs,  params: {data_type: params[:data_type]}}), css_holder: ".#{params[:data_type]}Table tbody"}}
+    end
   end
   
   def edit
@@ -88,6 +98,8 @@ class StudentsController < ApplicationController
       redirect_to students_path
     end
   end
+
+  
 
   private
   

@@ -1,0 +1,24 @@
+<%- catlogs.each_with_index do |class_catlog, index| %>
+  <tr class="<%= 'red' if class_catlog.is_absent? %>">
+    <td>
+      <%= class_catlog.daily_teaching_point.id%>
+    </td>
+    <td>
+      <a href="<%# exam_path(class_catlog.exam) %>">
+	<%= class_catlog.daily_teaching_point.date.try(:to_date) %>
+      </a>
+    </td>
+    <td>
+      <%= class_catlog.daily_teaching_point.points %>
+    </td>
+    <td>
+      <%= class_catlog.daily_teaching_point.chapter.name %>
+    </td>
+    <td>
+      <%= class_catlog.is_present.nil? ? 'Not Available' : class_catlog.is_present  %>
+    </td>
+    <td>
+      <%= class_catlog.is_recover unless class_catlog.is_present %>
+    </td>
+  </tr>
+<%- end %>

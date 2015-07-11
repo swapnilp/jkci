@@ -41,7 +41,7 @@ function adminPagination(event, self){
   href = $(self).attr('href');
   $.get(href, function(data){
     $(""+ data['css_holder']).html(data['html']);
-    $(".paginationDiv").html(data['pagination_html']);
+    $(self).parents(".paginationDiv").html(data['pagination_html']);
   }, function(
   ){}, "JSON");
 }

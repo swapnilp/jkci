@@ -18,4 +18,8 @@ class ExamCatlog < ActiveRecord::Base
     r_name
     
   end
+
+  def is_absent?
+    return self.is_present == false
+  end
 end
