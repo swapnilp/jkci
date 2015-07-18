@@ -7,7 +7,7 @@ class ExamResultSmsSend < Struct.new(:exam)
   def send_sms(exam)
     exam.exam_catlogs.includes([:student]).only_results.each_with_index do |exam_catlog, index|
       if exam_catlog.student.enable_sms
-        message = "#{exam_catlog.student.first_name} got #{exam_catlog.marks} out of #{exam.marks} in #{exam.name} exam. Please call us for further details. JKSai"
+        message = "#{exam_catlog.student.first_name} got #{exam_catlog.marks} out of #{exam.marks} in #{exam.name} exam held on #{exam.exam_date.strftime("%B-%d")}. JKSai"
         message = message.truncate(159)
         url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=JKSAIU&dmobile=#{exam_catlog.student.sms_mobile}&message=#{message}"
         deliver_sms(URI::encode(url))
