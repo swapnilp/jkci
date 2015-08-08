@@ -26,11 +26,13 @@ class StudentsController < ApplicationController
   
   def show
     @student = Student.where(id: params[:id]).first
+    
     @exam_catlogs = @student.exam_catlogs.includes([:exam]).order('id desc').page(params[:page])
     @class_catlogs = @student.class_catlogs.includes([:jkci_class, :daily_teaching_point]).order('id desc').page(params[:page])
   end
 
   def filter_students_data
+    authorize! :roll, :clark
     student = Student.where(id: params[:id]).first
     includes_tables = params[:data_type] == 'exam' ? [:exam] : [:jkci_class, :daily_teaching_point]
     catlogs = student.send("#{params[:data_type].singularize}_catlogs".to_sym).includes(includes_tables).order('id desc').page(params[:page])

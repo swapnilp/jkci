@@ -1,6 +1,6 @@
 class Student < ActiveRecord::Base
  # attr_accessible :first_name, :middle_name, :last_name, :email, :mobile, :parent_name, :p_mobile, :p_email, :address, :group, :rank
-
+  resourcify
   #has_many
   has_many :exam_absents
   has_many :exam_results

@@ -5,7 +5,7 @@ class AboutUsController < ApplicationController
   end
 
   def contact_us
-    authorize! :roll, :contact_us
+   # authorize! :roll, :contact_us
     
   end
   

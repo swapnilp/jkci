@@ -83,6 +83,7 @@ function dailyTeachingChapterSelect(event, self){
   
   $.get("/jkci_class/" + classId + "/daily_teaches?&chapters="+ selectedChapters, function(data){
     $(".dailyTeach").html(''+ data.html);
+    $('.dailyTeachChapters').parent().find('.pagination').html(''+ data.pagination_html);
     $('#k-tab-daily_teach .loadingImg').addClass('hide');
   }, function(){}, "JSON")
 }

@@ -80,6 +80,9 @@
 	    <div class="textLeft dailyTeach">
 	      <%= render partial: 'daily_teaching_point', locals: {daily_teaching_points: @daily_teaching_points}%>
 	    </div>
+	    <div class="paginationDiv">
+	      <%= render partial: 'daily_teach_pagination', locals: {class_daily_teach: @daily_teaching_points} %>
+	    </div>
 	    <div style="width:100%;" class="loadingImg center hide">
 	      <img src="/assets/fancybox_loading.gif">
 	    </div>

@@ -27,7 +27,6 @@ class JkciClassesController < ApplicationController
     @class_exams = @jkci_class.jk_exams.order("id desc").page(params[:page])
   end
 
-
   def create
     params.permit!
     @jkci_class = JkciClass.new(params[:jkci_class])
@@ -92,9 +91,10 @@ class JkciClassesController < ApplicationController
     if params[:chapters].present?
       @daily_teaching_points = @daily_teaching_points.where(chapter_id: params[:chapters].split(',').map(&:to_i))
     end
+    @daily_teaching_points = @daily_teaching_points.page(params[:page])
     respond_to do |format|
       format.html
-      format.json {render json: {success: true, html: render_to_string(:partial => "daily_teaching_point.html.erb", :layout => false, locals: {daily_teaching_points: @daily_teaching_points}),  css_holder: ".dailyTeach"}}
+      format.json {render json: {success: true, html: render_to_string(:partial => "daily_teaching_point.html.erb", :layout => false, locals: {daily_teaching_points: @daily_teaching_points}), pagination_html:  render_to_string(partial: 'daily_teach_pagination.html.erb', layout: false, locals: {class_daily_teach: @daily_teaching_points}),  css_holder: ".dailyTeach"}}
     end
   end
   
@@ -109,10 +109,14 @@ class JkciClassesController < ApplicationController
 
   def filter_daily_teach
     @jkci_class = JkciClass.where(id: params[:id]).first
-    @class_exams = @jkci_class.jk_exams.order("id desc").page(params[:page])
+    @daily_teaching_points = @jkci_class.daily_teaching_points.includes(:class_catlogs).chapters_points.order('id desc')
+    if params[:chapters].present?
+      @daily_teaching_points = @daily_teaching_points.where(chapter_id: params[:chapters].split(',').map(&:to_i))
+    end
+    @daily_teaching_points = @daily_teaching_points.page(params[:page])
     respond_to do |format|
       format.html
-      format.json {render json: {success: true, html: render_to_string(:partial => "/exams/exam.html.erb", :layout => false, locals: {exams: @class_exams, hide_edit: true}), pagination_html:  render_to_string(partial: 'exam_pagination.html.erb', layout: false, locals: {class_exams: @class_exams}), css_holder: ".examsTable tbody"}}
+      format.json {render json: {success: true, html: render_to_string(:partial => "daily_teaching_point.html.erb", :layout => false, locals: {daily_teaching_points: @daily_teaching_points, hide_edit: true}), pagination_html:  render_to_string(partial: 'daily_teach_pagination.html.erb', layout: false, locals: {class_daily_teach: @daily_teaching_points}), css_holder: ".dailyTeach"}}
     end
   end
 
