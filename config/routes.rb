@@ -68,7 +68,9 @@ Rails.application.routes.draw do
   get "/daily_teach/:class_catlog_id/recover" => "daily_teachs#recover_daily_teach", as: "recover_daily_teach"
   #get "/daily_teach/:class_catlog_id/recover" => 
   
-  resources :chapters
+  resources :chapters do
+    resources :chapters_points
+  end
   resources :subjects
   resources :albums do 
     get 'manage_albums', on: :collection, as: 'manage'
@@ -92,6 +94,7 @@ Rails.application.routes.draw do
   get '/batch2015/talents' => "talent#index", as: 'talent2015'
   get '/batch2015/talents/download' => "talent#download_talent_2015", as: 'talent2015_download' 
   get '/timetable' => "home#timetable", as: 'timetable'
+  get '/our_facilities' => "home#our_facilities", as: 'facilities'
   root 'home#index'
   #root 'welcome#index'
 

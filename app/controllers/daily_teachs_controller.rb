@@ -17,6 +17,7 @@ class DailyTeachsController < ApplicationController
       jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
       @daily_teaching_point = jkci_class.daily_teaching_points.new({teacher_id: jkci_class.teacher_id})
       @chapters = jkci_class.try(:subject).try(:chapters)
+      @chapters_points = jkci_class.current_chapter_id.present? ? jkci_class.current_chapter.chapters_points : @chapters.first.try(:chapters_points)
     else
       @daily_teaching_point = DailyTeachingPoint.new
       @chapters = Chapter.all
@@ -50,7 +51,7 @@ class DailyTeachsController < ApplicationController
     @jkci_classes = JkciClass.all
     @teachers = Teacher.all
     @chapters = @daily_teaching_point.jkci_class.subject.chapters
-    
+    @chapters_points = @daily_teaching_point.chapter.try(:chapters_points)
   end
 
   def update

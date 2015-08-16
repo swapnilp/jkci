@@ -77,11 +77,24 @@
 		<%= chapter.name %>
 	      <%- end %>
 	    </div>
-	    <div class="textLeft dailyTeach">
-	      <%= render partial: 'daily_teaching_point', locals: {daily_teaching_points: @daily_teaching_points}%>
-	    </div>
-	    <div class="paginationDiv">
-	      <%= render partial: 'daily_teach_pagination', locals: {class_daily_teach: @daily_teaching_points} %>
+	    <div class="textLeft">
+	      <table class="table table-hover examsTable table-striped dailyTeach">
+		<thead>
+		  <tr>
+		    <th>#</th>
+		    <th>Select</th>
+		    <th>Chapter</th>
+		    <th>Point</th>
+		    <th>Desc</th>
+		    <th>Date</th>
+		    <th>Absents</th>
+		  </tr>
+		</thead>
+		<%= render partial: 'daily_teaching_point', locals: {daily_teaching_points: @daily_teaching_points}%>
+	      </table>
+	      <div class="paginationDiv">
+		<%= render partial: 'daily_teach_pagination', locals: {class_daily_teach: @daily_teaching_points} %>
+	      </div>
 	    </div>
 	    <div style="width:100%;" class="loadingImg center hide">
 	      <img src="/assets/fancybox_loading.gif">

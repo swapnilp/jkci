@@ -1,0 +1,2 @@
+module ChaptersPointsHelper
+end

@@ -8,6 +8,9 @@ class JkciClass < ActiveRecord::Base
   has_many :class_catlogs
   belongs_to :batch
   belongs_to :subject
+  belongs_to :current_chapter, class_name: "Chapter", foreign_key: "current_chapter_id"
+
+  has_many :chapters, through: :subject
   
   default_scope  {where(is_active: true)} 
 

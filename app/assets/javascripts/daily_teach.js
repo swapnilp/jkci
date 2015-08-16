@@ -73,7 +73,7 @@ function unSelectAllCatlog(self, event){
 
 function dailyTeachingChapterSelect(event, self){
   //event.preventDefault();
-  $(".dailyTeach").html('');
+  $(".dailyTeach tbody").html('');
   selectedChapters = "";
   $(".dailyTeachChapters input[type=checkbox]:checked").each(function(){
     selectedChapters = selectedChapters + $(this).attr("data-id") + ",";
@@ -82,7 +82,7 @@ function dailyTeachingChapterSelect(event, self){
   $('#k-tab-daily_teach .loadingImg').removeClass('hide');
   
   $.get("/jkci_class/" + classId + "/daily_teaches?&chapters="+ selectedChapters, function(data){
-    $(".dailyTeach").html(''+ data.html);
+    $(".dailyTeach tbody").html(''+ data.html);
     $('.dailyTeachChapters').parent().find('.pagination').html(''+ data.pagination_html);
     $('#k-tab-daily_teach .loadingImg').addClass('hide');
   }, function(){}, "JSON")

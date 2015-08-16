@@ -28,6 +28,7 @@ class Ability
       can :filter_class, JkciClass
       can :manage, DailyTeachingPoint
       can :manage, Exam
+      can :manage, Chapter
       can :read, Student
       can :enable_sms, Student 
       can :filter_students, Student 

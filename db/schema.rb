@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150718064839) do
+ActiveRecord::Schema.define(version: 20150816024007) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 20150718064839) do
     t.datetime "updated_at"
   end
 
+  create_table "chapters_points", force: :cascade do |t|
+    t.integer  "chapter_id", limit: 4
+    t.string   "name",       limit: 255
+    t.string   "weight",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "class_catlogs", force: :cascade do |t|
     t.integer  "student_id",              limit: 4
     t.integer  "jkci_class_id",           limit: 4
@@ -73,14 +81,15 @@ ActiveRecord::Schema.define(version: 20150718064839) do
 
   create_table "daily_teaching_points", force: :cascade do |t|
     t.datetime "date"
-    t.text     "points",         limit: 65535
+    t.text     "points",            limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "jkci_class_id",  limit: 4
-    t.integer  "teacher_id",     limit: 4
-    t.boolean  "is_fill_catlog", limit: 1,     default: false
-    t.boolean  "is_sms_sent",    limit: 1,     default: false
-    t.integer  "chapter_id",     limit: 4
+    t.integer  "jkci_class_id",     limit: 4
+    t.integer  "teacher_id",        limit: 4
+    t.boolean  "is_fill_catlog",    limit: 1,     default: false
+    t.boolean  "is_sms_sent",       limit: 1,     default: false
+    t.integer  "chapter_id",        limit: 4
+    t.integer  "chapters_point_id", limit: 4
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -197,15 +206,16 @@ ActiveRecord::Schema.define(version: 20150718064839) do
   end
 
   create_table "jkci_classes", force: :cascade do |t|
-    t.string   "class_name",       limit: 255
+    t.string   "class_name",         limit: 255
     t.datetime "class_start_time"
     t.datetime "class_end_time"
-    t.integer  "teacher_id",       limit: 4
+    t.integer  "teacher_id",         limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "batch_id",         limit: 4
-    t.boolean  "is_active",        limit: 1,   default: true
-    t.integer  "subject_id",       limit: 4
+    t.integer  "batch_id",           limit: 4
+    t.boolean  "is_active",          limit: 1,   default: true
+    t.integer  "subject_id",         limit: 4
+    t.integer  "current_chapter_id", limit: 4
   end
 
   create_table "parents_meetings", force: :cascade do |t|

@@ -21,6 +21,10 @@ class ChaptersController < ApplicationController
   def edit
     @chapter = Chapter.where(id: params[:id]).first
   end
+  
+  def show
+    @chapter = Chapter.where(id: params[:id]).first
+  end
 
   def update
     params.permit!

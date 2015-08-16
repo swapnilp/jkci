@@ -1,0 +1,17 @@
+<%- chapters_points.each_with_index do |point, index| %>
+<tr>
+  <td>
+    <%= index+1 %>
+  </td>
+  <td>
+    <%= point.name %>
+  </td>
+  <td>
+    <%= point.weight %>
+  </td>
+  <td>
+    <%= link_to "Edit", edit_chapter_chapters_point_path(point.chapter_id, point) %>
+  </td>
+</tr>
+<%- end %>
+

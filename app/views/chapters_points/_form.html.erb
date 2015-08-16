@@ -1,0 +1,31 @@
+<div class="textLeft ">
+  <%= form_for [@chapter, @point], html:{role: 'form', class: 'form-horizontal'}  do |f| %>
+    <%= f.hidden_field :chapter_id %>
+    <div class="form-group">
+      <%= f.label :name, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :name, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :weight, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :weight, class: 'form-control col-sm-4', onkeypress:"return event.charCode >= 48 && event.charCode <= 57;"  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :chapter_id, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= @chapter.name %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+	<%= f.submit 'Save' , class: 'btn btn-default'%>
+	<%= link_to "Cancel", chapter_path(@chapter), class: 'btn btn-warning' %>
+      </div>
+    </div>
+  <%- end %>
+</div>
+
+

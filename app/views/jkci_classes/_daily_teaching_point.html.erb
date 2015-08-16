@@ -1,10 +1,31 @@
 <%- daily_teaching_points.each_with_index do |dtp, index| %>
-  <div>
-    <%= check_box_tag dtp.id, dtp.points, false, style: 'display:inline-block;margin:0;' %>
-    <a href="<%= daily_teach_path(dtp) %>" style="display:inline-block;">
-      <h4 style="<%= 'color:red;' if dtp.class_catlogs.blank? %>"><%= index + 1 %>  :  <%= dtp.date.to_date %> 
-        <span style="font-size:12px;">(<%= "#{dtp.points.truncate(10)}- #{dtp.absent_count}" %>)</span>
-      </h4>
-    </a>
-  </div>
+  <tr style="<%= 'color:red;' if dtp.class_catlogs.blank? %>">
+    <td>
+      <%= index + 1  %>
+    </td>
+    <td>
+      <%= check_box_tag dtp.id, dtp.points, false, style: 'display:inline-block;margin:0;' %>
+    </td>
+    <td>
+      <a href="<%= daily_teach_path(dtp) %>" style="display:inline-block;">
+	<%= dtp.chapter.try(:name) %>
+      </a>
+    </td>
+    <td>
+      <a href="<%= daily_teach_path(dtp) %>" style="display:inline-block;">
+	<%= dtp.chapters_point.try(:name) %>
+      </a>
+    </td>
+    <td>
+      <a href="<%= daily_teach_path(dtp) %>" style="display:inline-block;">
+	<%= dtp.points %>
+      </a>
+    </td>
+    <td>
+      <%= dtp.date.to_date %>
+    </td>
+    <td>
+      <%= dtp.absent_count %>
+    </td>
+  </tr>
 <%- end %>

@@ -1,0 +1,43 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <div class="col-sm-12 textLeft">
+      <h2><%= @chapter.subject.name.camelize %>'s Chapter</h2>
+      <div class="studentShow">
+	<p>&nbsp;</p>
+	<div class="col-sm-12">
+	  <h5>
+	    <small class="col-sm-4">Name :</small> 
+	    <span style="font-size:20px;"><%= @chapter.name %></span>
+	  </h5>
+	</div>
+      </div>
+      <div class="col-sm-12">
+	<%= link_to "Edit", edit_chapter_path(@chapter), class: "btn btn-primary" %>
+	<%= link_to "Back", subject_path(@chapter.subject), class: "btn btn-primary" %>
+	
+      </div>
+    </div>
+
+    <div class="col-sm-12 textLeft">
+      <h2>Topics</h2>
+      <%= link_to "New Chapter Point", new_chapter_chapters_point_path(@chapter), class: "btn btn-primary" %>
+      <div>
+	<table class="table table-hover studentsTable">
+	  <thead>
+	    <tr>
+	      <th>#</th>
+	      <th>Name</th>
+	      <th>Weight</th>
+	      <th>Actions</th>
+	    </tr>
+	  </thead>
+	  <%= render partial: 'chapters_points/points', locals: {chapters_points: @chapter.chapters_points}%>
+	</table>
+	<div class="paginationDiv">
+	  <%# render partial: 'chapters/pagination', locals: {chapters: @chapters} %>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+

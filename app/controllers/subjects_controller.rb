@@ -32,7 +32,7 @@ class SubjectsController < ApplicationController
   
   def my_sanitizer
     #params.permit!
-    params.require(:student).permit!
+    params.require(:subject).permit!
   end
 
 end

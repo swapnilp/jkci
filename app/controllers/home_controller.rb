@@ -13,6 +13,9 @@ class HomeController < ApplicationController
 #    @todays_exams = Exam.where("exam_date < ? && exam_date > ? ", Date.today + 1.day, Date.today - 1.day)
 #    @jkci_classes = JkciClass.all
   end
+  
+  def our_facilities
+  end
 
   def timetable
     

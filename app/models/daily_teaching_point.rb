@@ -4,12 +4,15 @@ class DailyTeachingPoint < ActiveRecord::Base
   belongs_to :teacher
   has_many :class_catlogs
   belongs_to :chapter
+  belongs_to :chapters_point
   
   scope :chapters_points, -> { where("chapter_id is not ?", nil) }
 
+  after_save :add_current_chapter
+
   def absent_count
     students_count = self.class_catlogs.where(is_present: false).count
-    students_count.zero? ? "" : "absents : #{students_count}"
+    students_count.zero? ? "" : " #{students_count}"
   end
   
   def exams
@@ -31,6 +34,10 @@ class DailyTeachingPoint < ActiveRecord::Base
         class_catlog.update_attributes({is_present: false, date: date})
       end
     end
+  end
+
+  def add_current_chapter
+    self.jkci_class.update_attributes({current_chapter_id: self.chapter_id})
   end
 
   def publish_absenty

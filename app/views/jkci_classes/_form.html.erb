@@ -10,7 +10,7 @@
   <div class="form-group">
     <span class="col-sm-2 control-label">Batch</span>
     <div class="col-sm-4">
-      <%= f.select :batch_id, options_from_collection_for_select(@batches, "id", "name") %>
+      <%= f.select :batch_id, options_from_collection_for_select(@batches, "id", "name", f.object.batch_id) %>
     </div>
   </div>
   
@@ -29,14 +29,14 @@
   <div class="form-group">
     <span class="col-sm-2 control-label">Teacher</span>
     <div class="col-sm-4">
-      <%= f.select :teacher_id, options_from_collection_for_select(@teachers, "id", "name"), prompt: "Select something" %>
+      <%= f.select :teacher_id, options_from_collection_for_select(@teachers, "id", "name", f.object.teacher_id), prompt: "Select something" %>
     </div>
   </div>
   
   <div class="form-group">
     <span class="col-sm-2 control-label">Subject</span>
     <div class="col-sm-4">
-      <%= f.select :subject_id, options_from_collection_for_select(@subjects, "id", "name"), prompt: "Select something" %>
+      <%= f.select :subject_id, options_from_collection_for_select(@subjects, "id", "name", f.object.subject_id), prompt: "Select something" %>
     </div>
   </div>
   
