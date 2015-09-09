@@ -3,7 +3,7 @@
   <div class="form-group">
     <span class="col-sm-2 control-label">Class Name : </span>
     <div class="col-sm-4">
-      <%= f.select :jkci_class_id, options_from_collection_for_select(@jkci_classes, "id", "class_name", @daily_teaching_point.jkci_class_id), prompt: "Select something" %>
+      <%= f.select :jkci_class_id, options_from_collection_for_select(@jkci_classes, "id", "class_name", @daily_teaching_point.jkci_class_id), {prompt: "Select something"}, onchange: "selectClassChapters(event, this);" %>
     </div>
   </div>
   <div class="form-group">
@@ -15,7 +15,7 @@
   <div class="form-group">
     <span class="col-sm-2 control-label">Chapter</span>
     <div class="col-sm-4">
-      <%= f.select :chapter_id, options_from_collection_for_select(@chapters, "id", "name", @daily_teaching_point.chapter_id || @chapters.first.try(:id)) %>
+      <%= f.select :chapter_id, options_from_collection_for_select(@chapters, "id", "name", @daily_teaching_point.chapter_id || @chapters.first.try(:id)), {}, onchange: "selectChaptersPoint(event, this);" %>
     </div>
   </div>
   <div class="form-group">

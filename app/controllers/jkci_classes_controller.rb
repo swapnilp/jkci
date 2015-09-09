@@ -71,6 +71,17 @@ class JkciClassesController < ApplicationController
       redirect_to jkci_classes_path
     end
   end
+
+  def chapters
+    @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+    @chapters = @jkci_class.chapters.select([:id, :name])
+    @points = @chapters.first.chapters_points.select([:id, :name]) rescue []
+    
+    respond_to do |format|
+      format.html
+      format.json {render json: {success: true, chapters: @chapters,  points: @points} }
+    end
+  end
   
   def filter_class
     jkci_classes = JkciClass.includes([:batch]).all.order("id desc").page(params[:page])

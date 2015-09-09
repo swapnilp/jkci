@@ -3,10 +3,16 @@ class ChaptersPointsController < ApplicationController
   load_and_authorize_resource param_method: :my_sanitizer
   
   def index
+    @chapter = Chapter.where(id: params[:chapter_id]).first
+    @points = @chapter.chapters_points.select([:id, :name])
+    respond_to do |format|
+      format.html
+      format.json {render json: {success: true,  points: @points} }
+    end
   end
 
   def new
-    @chapter = Chapter.where(params[:chapter_id]).first
+    @chapter = Chapter.where(id: params[:chapter_id]).first
     @point = @chapter.chapters_points.build
   end
 
@@ -20,7 +26,7 @@ class ChaptersPointsController < ApplicationController
   end
 
   def edit
-    @chapter = Chapter.where(params[:chapter_id]).first
+    @chapter = Chapter.where(id: params[:chapter_id]).first
     @point = @chapter.chapters_points.where(id: params[:id]).first
   end
 

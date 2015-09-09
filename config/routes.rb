@@ -55,9 +55,10 @@ Rails.application.routes.draw do
   get "/jkci_class/:id/daily_teaches" => "jkci_classes#class_daily_teaches", as: "class_daily_teaches"
   get "/jkci_class/:id/filter_class_exams" => "jkci_classes#filter_class_exams", as: "filter_class_exams"
   get "/jkci_class/:id/filter_daily_teach" => "jkci_classes#filter_daily_teach", as: "filter_daily_teach"
+  get "/jkci_class/:jkci_class_id/chapters" => "jkci_classes#chapters", as: "chapters"
   post "/class/:id/manage_students" => "jkci_classes#manage_students", as: "class_manage_students"
   get "/jkci_class/filter_class/batch" => "jkci_classes#filter_class", as: "filter_class"
-  
+
 
   resources :galleries
   resources :daily_teachs
