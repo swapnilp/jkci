@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150816024007) do
+ActiveRecord::Schema.define(version: 20150911055011) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150816024007) do
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_present",              limit: 1, default: false
+    t.boolean  "is_present",              limit: 1
     t.boolean  "is_recover",              limit: 1, default: false
     t.date     "recover_date"
     t.boolean  "sms_sent",                limit: 1, default: false

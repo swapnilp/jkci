@@ -14,10 +14,10 @@ class DailyTeachsController < ApplicationController
   
   def new
     if params[:jkci_class_id].present?
-      jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
-      @daily_teaching_point = jkci_class.daily_teaching_points.new({teacher_id: jkci_class.teacher_id})
-      @chapters = jkci_class.try(:subject).try(:chapters)
-      @chapters_points = jkci_class.current_chapter_id.present? ? jkci_class.current_chapter.chapters_points : @chapters.first.try(:chapters_points)
+      @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+      @daily_teaching_point = @jkci_class.daily_teaching_points.new({teacher_id: @jkci_class.teacher_id, chapter_id: @jkci_class.current_chapter_id})
+      @chapters = @jkci_class.try(:subject).try(:chapters)
+      @chapters_points = @jkci_class.current_chapter_id.present? ? @jkci_class.current_chapter.chapters_points : @chapters.first.try(:chapters_points)
     else
       @daily_teaching_point = DailyTeachingPoint.new
       @chapters = Chapter.all
@@ -77,7 +77,7 @@ class DailyTeachsController < ApplicationController
   def fill_catlog
     @daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
     @daily_teaching_point.fill_catlog(params[:students_list].split(','), params[:date])
-    @daily_teaching_point.publish_absenty
+    #@daily_teaching_point.publish_absenty
     redirect_to jkci_class_path(@daily_teaching_point.jkci_class)
   end
   

@@ -1,8 +1,7 @@
-<div class="col-sm-12 textLeft dailyTeachStudents hide alert-warning">
-  <h2 style="<%= 'color:red;' unless @daily_teaching_point.is_fill_catlog.present? %>">Student List</h2>
-  <%- @class_catlogs.each do |class_catlog| %>
+<div class="col-sm-12 textLeft dailyTeachAbsentStudents">
+  <h2 style="<%= 'color:red;' unless @daily_teaching_point.is_fill_catlog.present? %>">Absent Students</h2>
+  <%- @class_catlogs.where(is_present: false).each do |class_catlog| %>
     <div style="text-align:left;">
-      <%= check_box_tag class_catlog.student.id, class_catlog.student.name, class_catlog.is_present == false  , disabled: true %> 
       <label for="<%= class_catlog.student.id%>" style="display:inline-block;">
 	<%= "#{class_catlog.student.name} - #{class_catlog.student.group}  - #{class_catlog.student.std}" %>
       </label>

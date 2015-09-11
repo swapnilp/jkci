@@ -40,9 +40,8 @@ function editDailyCatlog(event, self){
   $(".saveDailyCatlog").removeClass('hide');
   $(".cancelSaveClassCatlog").removeClass("hide");
   $(".dailyTeachStudents input[type=checkbox]").attr('disabled', false);
-  
+  $(".dailyTeachStudents").removeClass('hide');
 }
-
 
 
 function cancelClassCatlog(event, self){
@@ -51,6 +50,7 @@ function cancelClassCatlog(event, self){
   $(".cancelSaveClassCatlog").addClass("hide");
   $(".editDailyCatlog").removeClass('hide');
   $(".dailyTeachStudents input[type=checkbox]").attr('disabled', 'disabled');
+  $(".dailyTeachStudents").addClass('hide');
 }
 
 function recoverDailyTeach(event, self){
@@ -59,17 +59,6 @@ function recoverDailyTeach(event, self){
     $(self).parent().remove();
   })
 }
-
-function selectAllCatlog(self, event){
-  event.preventDefault();
-  $(".dailyTeachStudents input[type=checkbox]").prop("checked", true);
-}
-
-function unSelectAllCatlog(self, event){
-  event.preventDefault();
-  $(".dailyTeachStudents input[type=checkbox]").prop("checked", false);
-}
-
 
 function dailyTeachingChapterSelect(event, self){
   //event.preventDefault();
