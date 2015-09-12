@@ -9,7 +9,10 @@ class ClassAbsentSms < Struct.new(:daily_teaching_point)
       if class_catlog.student.enable_sms
         message = "We regret to convey you that your son/daughter #{class_catlog.student.short_name} is absent for #{daily_teaching_point.jkci_class.class_name} lectures.Plz contact us. JKSai!!"
         url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=#{class_catlog.student.sms_mobile}&message=#{message}"
-        deliver_sms(URI::encode(url))
+        unless class_catlog.sms_sent
+          deliver_sms(URI::encode(url))
+          class_catlog.update_attributes({sms_sent: true})
+        end
       end
     end
   end

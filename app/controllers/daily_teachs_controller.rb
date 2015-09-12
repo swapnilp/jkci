@@ -106,8 +106,9 @@ class DailyTeachsController < ApplicationController
   end
 
   def send_class_absent_sms
-    class_catlog = ClassCatlog.where(id: params[:id]).first
-    class_catlog.update_attributes({sms_sent: true}) if class_catlog
+    daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
+    daily_teaching_point.publish_absenty
+    redirect_to jkci_class_path daily_teaching_point.jkci_class
   end
 
   private
