@@ -24,7 +24,7 @@ class JkciClassesController < ApplicationController
     @chapters = @jkci_class.subject.chapters
     @daily_teaching_points = @jkci_class.daily_teaching_points.includes(:class_catlogs).chapters_points.order('id desc').page(params[:page])
     @teached_chapters = @daily_teaching_points.map(&:chapter_id).uniq
-    @class_exams = @jkci_class.jk_exams.order("id desc").page(params[:page])
+    @class_exams = @jkci_class.jk_exams.order("updated_at desc").page(params[:page])
   end
 
   def create
@@ -111,7 +111,7 @@ class JkciClassesController < ApplicationController
   
   def filter_class_exams
     @jkci_class = JkciClass.where(id: params[:id]).first
-    @class_exams = @jkci_class.jk_exams.order("id desc").page(params[:page])
+    @class_exams = @jkci_class.jk_exams.order("updated_at desc").page(params[:page])
     respond_to do |format|
       format.html
       format.json {render json: {success: true, html: render_to_string(:partial => "/exams/exam.html.erb", :layout => false, locals: {exams: @class_exams, hide_edit: true}), pagination_html:  render_to_string(partial: 'exam_pagination.html.erb', layout: false, locals: {class_exams: @class_exams}), css_holder: ".examsTable tbody"}}
