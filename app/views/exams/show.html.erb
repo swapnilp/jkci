@@ -75,14 +75,16 @@
   </div>
   <div class="col-sm-12 textLeft" style="margin-top:20px;">
     <%- if @exam.is_completed %>
-    <%= link_to "Add Absent Student", exam_absent_students_path(@exam), class: 'btn btn-primary btn-sm' %>
-    <%= link_to "Add Exam Result" , exams_students_path(@exam), class: 'btn btn-primary btn-sm' %>
+      <%= link_to "Add Absent Student", exam_absent_students_path(@exam), class: 'btn btn-primary btn-sm' %>
+      <%= link_to "Add Exam Result" , exams_students_path(@exam), class: 'btn btn-primary btn-sm' %>
     <%- end %>
     <%- unless @exam.is_completed %>
-    <%= link_to "Exam Conducted", exam_completed_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+      <%= link_to "Exam Conducted", exam_completed_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
     <%- else %>
-    <%= link_to "Publish Absent catlog", publish_absent_exam_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
-    <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+      <%= link_to "Publish Absent catlog", publish_absent_exam_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+      <%- if @remaining_students.count == 0 %>
+        <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+      <%- end %>
     <%- end %>
   </div>
   <div class="col-sm-12 textLeft paddingTop10 hide">
@@ -104,7 +106,7 @@
       <%- @remaining_students.each_with_index do |exam_catlog, index| %>
       <tr class="<%= 'red' if exam_catlog.is_recover %> ">
 	<td>
-	  <%= index %>
+	  <%= index + 1 %>
 	</td>
 	<td>
 	  <%= link_to exam_catlog.student.name, student_path(exam_catlog.student) %>
@@ -138,7 +140,7 @@
       <%- @exam_absents.each_with_index do |exam_catlog, index| %>
       <tr>
 	<td>
-	  <%= index %>
+	  <%= index + 1 %>
 	</td>
 	<td>
 	  <%= link_to exam_catlog.student.name, student_path(exam_catlog.student) %>
@@ -153,7 +155,9 @@
 	  <%- end %>
 	</td>
 	<td>
-	  <%= link_to 'Remove', remove_exam_absent_path(exam_catlog.exam, exam_catlog.student)  %>
+	  <%- unless exam_catlog.absent_sms_sent %>
+	    <%= link_to 'Remove', remove_exam_absent_path(exam_catlog.exam, exam_catlog.student)  %>
+	  <%- end %>
 	</td>
       </tr>
       <%- end %>
@@ -177,7 +181,7 @@
       <%- @exam.exam_results.each_with_index do |result, index| %>
       <tr>
 	<td>
-	  <%= index %>
+	  <%= index + 1 %>
 	</td>
 	<td>
 	  <%= link_to result.student.name, student_path(result.student), class: "#{'orange' if result.is_recover}"%>

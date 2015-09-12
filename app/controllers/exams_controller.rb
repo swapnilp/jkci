@@ -95,7 +95,7 @@ class ExamsController < ApplicationController
   end
 
   def remove_exam_result
-    ExamCatlog.where(id: params[:exam_catlog_id]).first.update_attributes({marks: nil, is_present: false})
+    ExamCatlog.where(id: params[:exam_catlog_id]).first.update_attributes({marks: nil, is_present: nil})
     redirect_to exam_path(params[:id])
   end
 
