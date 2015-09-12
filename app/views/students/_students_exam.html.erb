@@ -21,7 +21,7 @@
       <%= exam_catlog.is_present.nil? ? 'Not Available' : exam_catlog.is_present  %>
     </td>
     <td>
-      <%= exam_catlog.marks %>
+      <%= exam_catlog.marks %> <%= " / #{exam_catlog.exam.marks}" if exam_catlog.marks.present? %>
     </td>
   </tr>
 <%- end %>

@@ -1,7 +1,7 @@
 <div id="k-body" class="k-body adminDesk">
   <div class="container">
 <div class="col-sm-12 textLeft">
-  <div class="studentShow">
+  <div class="studentShow col-sm-6">
     <p>&nbsp;</p>
     <div class="col-sm-12">
       <h5>
@@ -41,10 +41,10 @@
       </h5>
     </div>
   </div>
-  <div class="userLoginDiv">
+  <div class="userLoginDiv col-sm-6">
     
   </div>
-  <div class="col-sm-12">
+  <div class="col-sm-12 left">
     <%= link_to "Edit", edit_student_path(@student), class: "btn btn-primary" %>
     <%- unless @student.is_disabled %>
       <%= link_to "Disable Student", disable_student_path(@student), class: "btn btn btn-default", onclick: "return confirm('Are you sure?')"%>
@@ -53,7 +53,7 @@
   </div>
   <div class="col-sm-12" style="margin-top:15px;">
     <h5>
-      <span class="col-sm-4 paddingL0">Classes :</span> 
+      <span class="col-sm-2">Classes :</span> 
       <%- @student.jkci_classes.each do |jkci_class| %>
         <%= link_to jkci_class.class_name, jkci_class_path(jkci_class) %>  |  
       <%- end %>
@@ -62,10 +62,10 @@
   <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top:25px;">
     <ul class="nav nav-tabs nav-justified">
       <li class="active">
-	<a href="#k-tab-exam_report" data-toggle="tab">Exam Report</a>
+	<a href="#k-tab-exam_report" data-toggle="tab">Exam Report (<%= @student.exams.count %>)</a>
       </li>
       <li>
-	<a href="#k-tab-daily_report" data-toggle="tab">Daily Report</a>
+	<a href="#k-tab-daily_report" data-toggle="tab">Daily Report (<%= @student.class_catlogs.count%>)</a>
       </li>
     </ul>
     <div class="tab-content">

@@ -1,0 +1,31 @@
+<%- jkci_class.students.enable_students.each_with_index do |student, index| %>
+  <tr class="<%= 'red' if student.is_disabled %>">
+    <td>
+      <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+    </td>
+    <td>
+      <%= student.name %>
+    </td>
+    <td>
+      <%= student.gender %>
+    </td>
+    <td>
+      <%= student.group %>
+    </td>
+    <td>
+      <%= student.mobile %>
+    </td>
+    <td>
+      <%= student.p_mobile %>
+    </td>
+    <td>
+      <%- unless student.is_disabled %>
+      <%= link_to 'Show', student_path(student) %>
+      <%- if !student.enable_sms %>
+      
+       | <%= link_to "Enable Sms", enable_student_sms_path(student), onclick: "enableStudentSms(this, event);" %>
+      <%- end %>
+      <%- end %>
+    </td>
+  </tr>
+<%- end %>
