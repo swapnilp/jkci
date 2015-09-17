@@ -1,0 +1,33 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+<div class="col-lg-12 col-md-12">
+  <h1>Parent's List</h1>
+  <%= select_tag  :jkci_class_ids, options_from_collection_for_select(@jkci_classes, :id, :class_name, [] ), {:multiple => true, :size => 12, class: 'col-lg-6 col-md-6'}%>
+</div>
+
+<div class="col-lg-12 col-md-12 batchResultStudent">
+  <%= link_to 'Get List', new_parents_meeting_path, class: 'btn btn-primary', onClick: "getParentsList(event, this);" %>
+  <%= link_to 'Download', '#', class: 'btn btn-primary', onClick: "downloadParentsList(event, this);" %>
+</div>
+<div class="col-lg-12 col-md-12">
+  <div class="separator-zigzag"></div>
+  <table class="table table-hover parentsListTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Name</th>
+	<th>Mobile</th>
+	<th>Changed Number</th>
+	<th>Sign</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    
+  </table>
+</div>
+
+</div>
+</div>
+
+

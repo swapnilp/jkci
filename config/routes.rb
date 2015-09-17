@@ -14,8 +14,12 @@ Rails.application.routes.draw do
   get "/student/:id/filter_student_data" => "students#filter_students_data", as: "filter_students_data"
   resources :parents
   resources :parents_meeting
-  resources :promotional_mails
   get '/parents_meeting/:id/send_sms' => "parents_meeting#sms_send", as: "meeting_sms_send"
+  
+  resources :parents_list, only: [:index]
+  get '/parents_list/get_parent_list' => "parents_list#get_parent_list"
+  resources :promotional_mails
+
   resources :exams
   get 'exam/:id/absent_students' => "exams#absunts_students", as: 'exam_absent_students'
   get 'exam/:id/exam_students' => "exams#exams_students", as: 'exams_students'

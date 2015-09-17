@@ -32,6 +32,7 @@
 //= require parent_desk
 //= require students
 //= require parents_meeting
+//= require parents_list
 //= require ajax-submit
 // require theme
 // require_tree .
