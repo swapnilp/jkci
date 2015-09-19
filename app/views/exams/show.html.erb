@@ -101,6 +101,7 @@
 	  <th>Student Name</th>
 	  <th>Mobile</th>
 	  <th>Parent Name</th>
+	  <th>Ignore Student</th>
 	</tr>
       </thead>
       <%- @remaining_students.each_with_index do |exam_catlog, index| %>
@@ -116,6 +117,9 @@
 	</td>
 	<td>
 	  <%= exam_catlog.student.parent_name %>
+	</td>
+	<td>
+	  <%= link_to "Ignore it", ignore_exam_student_path(@exam, exam_catlog.student_id), onclick: "return confirm('Are you sure?')" %>
 	</td>
       </tr>
       <%- end %>
@@ -202,6 +206,38 @@
     </table>
   </div>
   <%- end %>
+  
+  <h2>Ignored Students</h2>
+  <div class="col-sm-12 textLeft">
+    <table class="table table-striped">
+      <thead>
+	<tr>
+	  <th>#</th>
+	  <th>Student Name</th>
+	  <th>Mobile</th>
+	  <th>Parent Name</th>
+	</tr>
+      </thead>
+      <%- @ignored_students.each_with_index do |exam_catlog, index| %>
+      <tr class="<%= 'red' if exam_catlog.is_recover %> ">
+	<td>
+	  <%= index + 1 %>
+	</td>
+	<td>
+	  <%= link_to exam_catlog.student.name, student_path(exam_catlog.student) %>
+	</td>
+	<td>
+	  <%= exam_catlog.student.p_mobile %>
+	</td>
+	<td>
+	  <%= exam_catlog.student.parent_name %>
+	</td>
+      </tr>
+      <%- end %>
+    </table>
+  </div>
+
+
   <%- if @exam.dtps.present? %>
   <h2>Related Points</h2>
   <div class="col-sm-12 textLeft" style="margin-bottom:20px;">

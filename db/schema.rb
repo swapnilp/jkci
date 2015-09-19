@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150911055011) do
+ActiveRecord::Schema.define(version: 20150917070123) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20150911055011) do
     t.datetime "updated_at"
     t.boolean  "is_followed",     limit: 1,     default: false
     t.boolean  "absent_sms_sent", limit: 1,     default: false
+    t.boolean  "is_ingored",      limit: 1
   end
 
   create_table "exam_results", force: :cascade do |t|

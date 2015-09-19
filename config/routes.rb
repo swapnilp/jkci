@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get 'exam/:id/exam_completed' => "exams#exam_completed", as: "exam_completed"
   get "/exams/filter_exam/exam" => "exams#filter_exam", as: "filter_exam"
   get "/exam/:id/abesnt_student/:student_id/remove" =>  "exams#remove_exam_absent", as: "remove_exam_absent"
+  get "/exam/:id/ignore_student/:student_id" =>  "exams#ignore_student", as: "ignore_exam_student"
   get "/exam/:id/exam_result/:exam_catlog_id/remove" =>  "exams#remove_exam_result", as: "remove_exam_result"
   get "/exam/:id/exam_recover/:exam_catlog_id/recover" =>  "exams#recover_exam", as: "recover_exam"
   post "/exam/:id/upload_paper" => "exams#upload_paper", as: "upload_exam_paper"
