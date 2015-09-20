@@ -61,7 +61,7 @@ class ExamsController < ApplicationController
     @exam = Exam.where(id: params[:id]).first
     #ids = [0] << @exam.exam_absents.map(&:student_id) 
     #ids << @exam.exam_results.map(&:student_id)
-    @students = @exam.students.where("exam_catlogs.is_present is ?", nil)
+    @students = @exam.students.where("exam_catlogs.is_present is ? && exam_catlogs.is_ingored is ?", nil, nil)
   end
 
   def remove_exam_absent
@@ -86,7 +86,7 @@ class ExamsController < ApplicationController
   def exams_students
     @exam = Exam.where(id: params[:id]).first
     @absent_students = @exam.absent_students
-    @students = @exam.students.where("(exam_catlogs.is_present is ? && exam_catlogs.marks is ? ) || (exam_catlogs.is_present = ? && exam_catlogs.marks is ? && exam_catlogs.is_recover = ?)", nil, nil, false, nil, true)
+    @students = @exam.students.where("(exam_catlogs.is_present is ? && exam_catlogs.marks is ? && exam_catlogs.is_ingored is ?) || (exam_catlogs.is_present = ? && exam_catlogs.marks is ? && exam_catlogs.is_recover = ? && exam_catlogs.is_ingored is ?)", nil, nil, nil, false, nil, true, nil)
   end
 
   def add_exam_results
