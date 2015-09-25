@@ -15,6 +15,7 @@ class ClassAbsentSms < Struct.new(:daily_teaching_point)
         end
       end
     end
+    daily_teaching_point.update_attributes({is_sms_sent: true})
   end
 end
 #Delayed::Job.enqueue ClassAbsentSms.new(DailyTeachingPoint.last)

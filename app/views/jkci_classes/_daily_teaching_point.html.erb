@@ -27,5 +27,10 @@
     <td>
       <%= dtp.absent_count %>
     </td>
+    <td>
+      <%- if dtp.is_fill_catlog.present? && dtp.is_sms_sent == false %>
+      <%= link_to "Send sms", class_absent_sms_path(dtp),  class: "btn btn-primary", onclick: "return confirm('Are you sure?')", :method=> :post %>
+      <%- end %>
+    </td>
   </tr>
 <%- end %>

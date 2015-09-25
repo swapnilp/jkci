@@ -23,8 +23,8 @@ class HomeController < ApplicationController
 
 
   def admin_desk
-    @class_absents = ClassCatlog.includes([:student, :daily_teaching_point]).where(is_present: [false], is_recover: false, is_followed: false).where("created_at >  ? ", Date.today - 2.week).order("class_catlogs.id desc")
-    @exam_absents = ExamCatlog.joins([:exam]).includes([:student, :exam]).order("exam_catlogs.id desc").where(is_present: [false], is_recover: [nil, false], is_followed: false).where("exams.exam_date >  ? ", Date.today - 3.week)
+    @class_absents = ClassCatlog.includes([:student, :daily_teaching_point]).where(is_present: [false], is_recover: false, is_followed: false).where("created_at >  ? ", Date.today - 3.day).order("class_catlogs.id desc")
+    @exam_absents = ExamCatlog.joins([:exam]).includes([:student, :exam]).order("exam_catlogs.id desc").where(is_present: [false], is_recover: [nil, false], is_followed: false).where("exams.exam_date >  ? ", Date.today - 3.day)
     
     @unconducted_exams = Exam.where(is_completed: [nil, false])
     @recent_exams = Exam.where(is_completed: true, is_result_decleared: [nil, false])
