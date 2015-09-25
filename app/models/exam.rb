@@ -26,6 +26,10 @@ class Exam < ActiveRecord::Base
     exam_catlogs.where("(is_present = ?  || is_recover= ? ) && marks is not  ?", true, true, nil)  
   end
 
+  def ignored_count
+    exam_catlogs.only_ignored.count
+  end
+
   def absent_students
     students.where("exam_catlogs.is_present = ? && exam_catlogs.is_recover = ?", false, false)  
   end

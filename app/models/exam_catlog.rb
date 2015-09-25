@@ -5,6 +5,7 @@ class ExamCatlog < ActiveRecord::Base
 
   scope :only_absents, -> {where(is_present: [nil, false], is_recover: [nil, false])}
   scope :only_results, -> {where("marks is not ?", nil)}
+  scope :only_ignored, -> {where("is_ingored is not ?", nil)}
   scope :completed, -> {where("is_present in (?)",  [true, false])}
 
   def exam_report
