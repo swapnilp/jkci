@@ -6,7 +6,7 @@ class ClassCatlog < ActiveRecord::Base
   validates :student_id, uniqueness: {scope: [:jkci_class_id, :daily_teaching_point_id, :date]}
 
   scope :absent, -> {where(is_present: [false, nil]) }
-  scope :only_absents, -> {where(is_present: false, is_recover: [nil, false])}
+  scope :only_absents, -> {where(is_present: false, is_recover: [false])}
 
   def class_report
     r_name = "#{jkci_class.class_name} "
