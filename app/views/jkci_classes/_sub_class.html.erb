@@ -1,0 +1,19 @@
+<%- sub_classes.each_with_index do |sub_class, index| %>
+  <tr>
+    <td>
+      <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+    </td>
+    <td>
+      <%= sub_class.name %>
+    </td>
+    <td>
+      <%= sub_class.destription %>
+    </td>
+    <td>
+      <%= sub_class.students.count %>
+    </td>
+    <td>
+      <%= link_to 'Show', jkci_class_sub_class_path(@jkci_class, sub_class) %>
+    </td>
+  </tr>
+<%- end %>

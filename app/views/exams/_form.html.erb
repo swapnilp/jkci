@@ -1,9 +1,21 @@
 <div class="textLeft ">
-<%= form_for @exam, html:{role: 'form', class: 'form-horizontal'} do |f| %>
+<%= form_for [@jkci_class, @exam], html:{role: 'form', class: 'form-horizontal'} do |f| %>
   <%- if f.object.daily_teaching_points.present? %>
    <%= f.hidden_field  :jkci_class_id, value: f.object.jkci_class_id %>
    <%= f.hidden_field  :daily_teaching_points, value: f.object.daily_teaching_points %>
   <%- end %>
+  <div class="form-group">
+    <%= f.label 'Class', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= @jkci_class.class_name %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :sub_classes, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.select(:sub_classes , options_from_collection_for_select(@sub_classes, "id", "name", f.object.sub_classes.present? ? f.object.sub_classes.split(',').reject(&:blank?).map(&:to_i) : []), {}, { multiple: true, :max_size =>6, class: 'form-control' }) %>
+    </div>
+  </div>
   <div class="form-group">
     <%= f.label :name, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
@@ -41,15 +53,10 @@
   <div class="form-group">
     <%= f.label :exam_type, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.select :exam_type , options_for_select([ "Subjective", "Objective" ], "Subjective"), class: 'form-control' %>
+      <%= f.select :exam_type , options_for_select([ "Subjective", "Objective" ], "Subjective"), {}, class: 'form-control' %>
     </div>
   </div>
-  <div class="form-group">
-    <%= f.label :jkci_class_id, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-      <%= f.select(:jkci_class_id , options_from_collection_for_select(@jkci_classes, "id", "class_name", f.object.jkci_class_id),{}, class: 'form-control', disabled:  f.object.daily_teaching_points.present?) %>
-    </div>
-  </div>
+  
   <%- unless true #f.object.daily_teaching_points.present? %>
     <div class="form-group">
       <%= f.label :class_ids, class: 'col-sm-2 control-label' %>

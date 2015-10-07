@@ -10,13 +10,15 @@ class Exam < ActiveRecord::Base
   has_many :students, through: :exam_catlogs
   has_many :documents
   
-  
+  default_scope { where(is_active: true) }  
 
   def exam_students
     #Student.where(std: std, is_active: true)
-    if class_ids.nil?
+    if sub_classes.present?
+      self.jkci_class.sub_classes_students(self.sub_classes.split(',').map(&:to_i)) rescue []
+    elsif class_ids.nil?
       self.jkci_class.students rescue []
-    else
+    else 
       #JkciClass.where(id: class_ids.split(',').reject(&:blank?)).map(&:students)#.flatten.uniq
       Student.joins(:class_students).where("class_students.jkci_class_id in (?)", class_ids.split(',').reject(&:blank?)).uniq
     end
@@ -85,6 +87,15 @@ class Exam < ActiveRecord::Base
       self.exam_catlogs.build({student_id: student.id, jkci_class_id: self.jkci_class_id}).save
     end
   end
+
+  def predict_name
+    "#{jkci_class.subject.std_name}-#{Exam.last.id + 1}"
+  end
+  
+  def status_count
+    
+  end
+    
 
   def dtps
     DailyTeachingPoint.where(id: daily_teaching_points.split(',').reject(&:blank?)) rescue []

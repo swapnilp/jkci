@@ -29,7 +29,7 @@
     <td>
       <%= link_to 'Show', exam_path(exam) %>  |  
       <%- unless defined?(hide_edit) || exam.is_completed %>
-      <%= link_to 'Edit', edit_exam_path(exam) %>
+      <%= link_to 'Edit', edit_jkci_class_exam_path(exam.jkci_class, exam) %>
       <%- end %>
     </td>
   </tr>

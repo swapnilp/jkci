@@ -24,7 +24,7 @@ function createClassExam(event, self){
     $(".dailyTeach input[type=checkbox]:checked").each(function(){
       selectedPoints.push($(this).attr("id"));
     })
-      window.location = "/exams/new?&jkci_class_id="+ id +"&dtp="+ selectedPoints;
+      window.location = "/jkci_classes/"+id+"/exams/new?&dtp="+ selectedPoints;
   }
 }
 

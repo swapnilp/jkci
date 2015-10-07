@@ -36,6 +36,7 @@ gem 'fancybox2-rails', '~> 0.2.8'
 gem 'cancancan', '~> 1.10'
 gem 'aws-sdk', '< 2.0'
 gem "rolify"
+gem "google_visualr", ">= 2.5"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.0.3'

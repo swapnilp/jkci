@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get '/parents_list/get_parent_list' => "parents_list#get_parent_list"
   resources :promotional_mails
 
-  resources :exams
+  resources :exams, except: [:new, :create, :edit, :update, :destroy]
   get 'exam/:id/absent_students' => "exams#absunts_students", as: 'exam_absent_students'
   get 'exam/:id/exam_students' => "exams#exams_students", as: 'exams_students'
   get 'exam/:id/add_absent_students' => "exams#add_absunt_students", as: 'add_exam_absent_students'
@@ -53,9 +53,16 @@ Rails.application.routes.draw do
   get 'parent_desk/student_info/:id/exam_info' => "parent_desk#exam_info", as: 'parent_exam_info'
   get 'parent_desk/student_info/:id/paginate_catlog' => "parent_desk#paginate_catlog", as: 'parent_paginate_catlog'
   
-
-
-  resources :jkci_classes
+  resources :jkci_classes do 
+    resources :sub_classes
+    get '/sub_class/:id/get_students' => 'sub_classes#get_students', as: "class_students"
+    get '/sub_class/:id/add_students' => 'sub_classes#add_students'
+    get '/sub_class/:id/remove_students' => 'sub_classes#remove_students'
+    
+    resources :exams, only: [:new, :create, :edit, :update, :destroy]
+    resources :daily_teachs, only: [:new, :create, :edit, :update, :destroy]
+  end
+  
   get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
   get "/jkci_class/:id/daily_teaches" => "jkci_classes#class_daily_teaches", as: "class_daily_teaches"
   get "/jkci_class/:id/filter_class_exams" => "jkci_classes#filter_class_exams", as: "filter_class_exams"
@@ -66,7 +73,7 @@ Rails.application.routes.draw do
 
 
   resources :galleries
-  resources :daily_teachs
+  resources :daily_teachs, except: [:new, :create, :edit, :update, :destroy]
   get "/daily_teach/:id/students" => "daily_teachs#get_class_students"
   post "/daily_teach/:id/fill_catlog" => "daily_teachs#fill_catlog"
   get "/daily_teach/filter_daily_teach/daily_teach" => "daily_teachs#filter_teach", as: "filter_teach"

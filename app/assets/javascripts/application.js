@@ -33,6 +33,7 @@
 //= require students
 //= require parents_meeting
 //= require parents_list
+//= require sub_classes
 //= require ajax-submit
 // require theme
 // require_tree .
@@ -49,3 +50,9 @@ function adminPagination(event, self){
 
 
 $('.fancybox').fancybox({ parent: "body"})
+
+function clearModalData(){
+  $("#myModal.modal .modal-header").html("");
+  $("#myModal.modal .modal-body").html("<div class='col-sm-12 center'><img src='/assets/fancybox_loading.gif'></div>");
+  $("#myModal.modal .modelAction").remove();
+}

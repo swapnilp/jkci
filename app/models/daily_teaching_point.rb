@@ -14,13 +14,22 @@ class DailyTeachingPoint < ActiveRecord::Base
     students_count = self.class_catlogs.where(is_present: false).count
     students_count.zero? ? "" : " #{students_count}"
   end
+
+  def class_students
+    #Student.where(std: std, is_active: true)
+    if sub_classes.present?
+      self.jkci_class.sub_classes_students(self.sub_classes.split(',').map(&:to_i)) rescue []
+    else 
+      self.jkci_class.students
+    end
+  end
   
   def exams
     Exam.where("daily_teaching_points like '%?%'", self.id)
   end
 
   def create_catlog
-    self.jkci_class.students.each do |student|
+    class_students.each do |student|
       self.class_catlogs.build({student_id: student.id, date: self.date, jkci_class_id: self.jkci_class_id}).save
     end
   end

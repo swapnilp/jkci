@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917070123) do
+ActiveRecord::Schema.define(version: 20151007100002) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150917070123) do
     t.integer  "student_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "sub_class",     limit: 255, default: ",0,"
   end
 
   create_table "daily_teaching_points", force: :cascade do |t|
@@ -90,6 +91,7 @@ ActiveRecord::Schema.define(version: 20150917070123) do
     t.boolean  "is_sms_sent",       limit: 1,     default: false
     t.integer  "chapter_id",        limit: 4
     t.integer  "chapters_point_id", limit: 4
+    t.string   "sub_classes",       limit: 255
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -189,6 +191,7 @@ ActiveRecord::Schema.define(version: 20150917070123) do
     t.integer  "jkci_class_id",         limit: 4
     t.string   "class_ids",             limit: 255
     t.string   "daily_teaching_points", limit: 255
+    t.string   "sub_classes",           limit: 255
   end
 
   create_table "galleries", force: :cascade do |t|
@@ -290,6 +293,13 @@ ActiveRecord::Schema.define(version: 20150917070123) do
     t.datetime "updated_at"
   end
 
+  create_table "standards", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "stream",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "students", force: :cascade do |t|
     t.string   "first_name",  limit: 255
     t.string   "last_name",   limit: 255
@@ -314,10 +324,19 @@ ActiveRecord::Schema.define(version: 20150917070123) do
     t.boolean  "is_disabled", limit: 1,     default: false
   end
 
+  create_table "sub_classes", force: :cascade do |t|
+    t.string   "name",          limit: 255
+    t.integer  "jkci_class_id", limit: 4
+    t.string   "destription",   limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "subjects", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "standard_id", limit: 4
   end
 
   create_table "talent2015s", force: :cascade do |t|

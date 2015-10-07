@@ -1,0 +1,24 @@
+<div class="textLeft ">
+  <%= form_for [@jkci_class, @sub_class], html:{role: 'form', class: 'form-horizontal'}  do |f| %>
+    <%= f.hidden_field :jkci_class_id %>
+    <div class="form-group">
+      <%= f.label :name, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :name, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :destription, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :destription, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2">
+	<%= f.submit 'Save' , class: 'btn btn-default'%>
+	<%= link_to "Cancel", subjects_path, class: 'btn btn-warning' %>
+      </div>
+    </div>
+  <%- end %>
+</div>
+

@@ -3,7 +3,6 @@
 <div>
   <h1>Exams</h1>
 </div>
-<%= link_to 'New Exam', new_exam_path, class: 'btn btn-primary' %>
 <div class="textLeft fullWidth">
   <h2 class="left">Filter By</h2>
   <%= select_tag :filter_exam_class, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select class", style:"margin:15px 20px;width:200px;", class: "filter_exam_class form-control left", onchange: "examFilterByClass(event, this)" %>

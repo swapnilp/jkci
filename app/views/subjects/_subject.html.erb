@@ -4,11 +4,12 @@
       <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
     </td>
     <td>
-      <%= subject.name %>
+      <%= subject.std_name %>
     </td>
     <td>
       <%= link_to 'Show', subject_path(subject) %>  | 
-      <%= link_to 'Edit', edit_subject_path(subject) %>
+      <%= link_to 'Edit', edit_subject_path(subject) %> | 
+      <%= link_to 'New class',  new_jkci_class_path({subject_id: subject.id}), class: '' %>
     </td>
   </tr>
 <%- end %>

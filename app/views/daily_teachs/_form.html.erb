@@ -1,27 +1,36 @@
 <div class="textLeft ">
-<%= form_for @daily_teaching_point, url: @daily_teaching_point.new_record? ? daily_teachs_path : daily_teach_path,  html:{role: 'form', class: 'form-horizontal'} do |f| %>
+<%= form_for([@jkci_class.id, @daily_teaching_point], url: @daily_teaching_point.new_record? ? jkci_class_daily_teachs_path(@jkci_class) : jkci_class_daily_teach_path(@jkci_class, @daily_teaching_point),  html:{role: 'form', class: 'form-horizontal'}) do |f| %>
+  <%= f.hidden_field :jkci_class_id %>
   <div class="form-group">
     <span class="col-sm-2 control-label">Class Name : </span>
     <div class="col-sm-4">
-      <%= f.select :jkci_class_id, options_from_collection_for_select(@jkci_classes, "id", "class_name", @daily_teaching_point.jkci_class_id), {prompt: "Select something"}, onchange: "selectClassChapters(event, this);" %>
+      <%= f.object.jkci_class.class_name %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :sub_classes, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.select(:sub_classes , options_from_collection_for_select(@sub_classes, "id", "name", f.object.sub_classes.present? ? f.object.sub_classes.split(',').reject(&:blank?).map(&:to_i) : []), {}, { multiple: true, :max_size =>6, class: 'form-control' }) %>
     </div>
   </div>
   <div class="form-group">
     <span class="col-sm-2 control-label">Date</span>
-    <div class="col-sm-4">
-      <%= f.text_field :date, value:  Time.now %>
+    <div class="col-sm-4 input-group date" id="datetimepicker1" data-date-format="YYYY-MM-DD HH:MM" style="padding-left:15px;">
+	<%= f.text_field :date , class: 'form-control', readonly: true, value: "#{ f.object.date.nil? ? (Time.now+ 1.day).strftime('%F %H:%M') : f.object.date.strftime('%F %H:%M')}" %>
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+        </span>
     </div>
   </div>
   <div class="form-group">
     <span class="col-sm-2 control-label">Chapter</span>
     <div class="col-sm-4">
-      <%= f.select :chapter_id, options_from_collection_for_select(@chapters, "id", "name", @daily_teaching_point.chapter_id || @chapters.first.try(:id)), {}, onchange: "selectChaptersPoint(event, this);" %>
+      <%= f.select :chapter_id, options_from_collection_for_select(@chapters, "id", "name", @daily_teaching_point.chapter_id || @chapters.first.try(:id)), {}, onchange: "selectChaptersPoint(event, this);", class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">
     <span class="col-sm-2 control-label">Chapter' Point</span>
     <div class="col-sm-4">
-      <%= f.select :chapters_point_id, options_from_collection_for_select(@chapters_points, "id", "name", @daily_teaching_point.chapters_point_id || @chapters_points.first.try(:id)) %>
+      <%= f.select :chapters_point_id, options_from_collection_for_select(@chapters_points, "id", "name", @daily_teaching_point.chapters_point_id || @chapters_points.first.try(:id)), {}, class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">
@@ -33,7 +42,7 @@
   <div class="form-group">
     <span class="col-sm-2 control-label">Teacher</span>
     <div class="col-sm-4">
-      <%= f.select :teacher_id, options_from_collection_for_select(@teachers, "id", "name", @daily_teaching_point.teacher_id), prompt: "Select something" %>
+      <%= f.select :teacher_id, options_from_collection_for_select(@teachers, "id", "name", @daily_teaching_point.teacher_id), {}, class: 'form-control', prompt: "Select something" %>
     </div>
   </div>
   
@@ -51,3 +60,11 @@
 
 </div>
 
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker1').datetimepicker({
+      minDate: "1/1/<%= Date.today.year %>",
+      maxDate: "31/12/<%= Date.today.year %>",
+    });
+  });
+</script>

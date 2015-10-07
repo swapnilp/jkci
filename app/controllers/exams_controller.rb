@@ -13,13 +13,10 @@ class ExamsController < ApplicationController
   end
   
   def new
-    if params[:jkci_class_id].present?
-      @exam = Exam.new({jkci_class_id: params[:jkci_class_id], daily_teaching_points: ",#{params[:dtp]},"})
-    else
-      @exam = Exam.new
-    end
-    @subjects = Subject.all
-    @jkci_classes = JkciClass.all
+    @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+    @exam = @jkci_class.exams.build({daily_teaching_points: ",#{params[:dtp]},"})
+    @sub_classes = @jkci_class.sub_classes.select([:id, :name])
+    @exam.name = @exam.predict_name
   end
 
   def show
@@ -32,6 +29,7 @@ class ExamsController < ApplicationController
   def create
     params.permit!
     params[:exam][:class_ids] = (params[:exam][:class_ids].present? && params[:exam][:class_ids].last.present?) ? ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','  : nil
+    params[:exam][:sub_classes] = (params[:exam][:sub_classes].map(&:to_i) - [0]).join(',') if params[:exam][:sub_classes].present? 
     exam = Exam.new(params[:exam])
     if exam.save
       redirect_to exams_path
@@ -39,15 +37,16 @@ class ExamsController < ApplicationController
   end
 
   def edit
-    @exam = Exam.where(id: params[:id]).first
+    @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+    @exam = @jkci_class.exams.where(id: params[:id]).first
+    @sub_classes = @jkci_class.sub_classes.select([:id, :name])
     redirect_to exams_path if @exam.is_completed
-    @subjects = Subject.all
-    @jkci_classes = JkciClass.all
   end
   
   def update
     params.permit!
     params[:exam][:class_ids] =  (params[:exam][:class_ids].present? && params[:exam][:class_ids].last.present?) ? ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','  : nil
+    params[:exam][:sub_classes] = (params[:exam][:sub_classes].map(&:to_i) - [0]).join(',') if params[:exam][:sub_classes].present? 
     exam = Exam.where(id: params[:id]).first
     if exam && exam.update(params[:exam])
       redirect_to exams_path
@@ -55,6 +54,10 @@ class ExamsController < ApplicationController
   end
 
   def destroy
+    jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+    exam = jkci_class.exams.where(id: params[:id]).first
+    exam.update_attributes({is_active: false})
+    redirect_to exams_path
   end
 
   def absunts_students

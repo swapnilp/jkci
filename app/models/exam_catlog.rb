@@ -4,9 +4,12 @@ class ExamCatlog < ActiveRecord::Base
   belongs_to :student
 
   scope :only_absents, -> {where(is_present: false)}
+  scope :only_presents, -> {where(is_present: true)}
+  scope :only_remaining, -> {where(is_present: nil)}
   scope :only_results, -> {where("marks is not ?", nil)}
   scope :only_ignored, -> {where("is_ingored is not ?", nil)}
   scope :completed, -> {where("is_present in (?)",  [true, false])}
+  
 
   def exam_report
     r_name = "#{exam.name} "

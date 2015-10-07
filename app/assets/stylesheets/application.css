@@ -215,3 +215,7 @@ figure.gallery-photo-thumb{
   display:inline-block;
   width:100%;
 }
+
+.modal-title {
+  color: grey;
+}

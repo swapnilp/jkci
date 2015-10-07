@@ -69,7 +69,7 @@
   <%- unless @exam.is_result_decleared %>
   <div class="col-sm-12 textLeft paddingTop10">
     <%- unless @exam.is_completed %>
-    <%= link_to "Edit", edit_exam_path(@exam),  class: 'btn btn-primary btn-sm' %>
+      <%= link_to "Edit", edit_jkci_class_exam_path(@exam.jkci_class, @exam),  class: 'btn btn-primary btn-sm' %>
     <%- end %>
     <%= link_to "Back", exams_path,  class: 'btn btn-default btn-sm' %>
   </div>
@@ -80,6 +80,7 @@
     <%- end %>
     <%- unless @exam.is_completed %>
       <%= link_to "Exam Conducted", exam_completed_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+      <%= link_to "Remove Exam", jkci_class_exam_path(@exam.jkci_class, @exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')", method: :delete %>
     <%- else %>
       <%= link_to "Publish Absent catlog", publish_absent_exam_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
       <%- if @remaining_students.count == 0 %>
@@ -205,7 +206,6 @@
       <%- end %>
     </table>
   </div>
-  <%- end %>
   
   <h2>Ignored Students</h2>
   <div class="col-sm-12 textLeft">
@@ -236,7 +236,7 @@
       <%- end %>
     </table>
   </div>
-
+  <%- end %>
 
   <%- if @exam.dtps.present? %>
   <h2>Related Points</h2>

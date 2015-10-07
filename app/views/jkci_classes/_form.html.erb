@@ -1,5 +1,6 @@
 <div class="textLeft ">
 <%= form_for @jkci_class, html:{role: 'form', class: 'form-horizontal'} do |f| %>
+  <%= f.hidden_field :subject_id %>
   <div class="form-group">
     <span class="col-sm-2 control-label">Class Name : </span>
     <div class="col-sm-4">
@@ -36,7 +37,7 @@
   <div class="form-group">
     <span class="col-sm-2 control-label">Subject</span>
     <div class="col-sm-4">
-      <%= f.select :subject_id, options_from_collection_for_select(@subjects, "id", "name", f.object.subject_id), prompt: "Select something" %>
+      <%= f.object.subject.name %>
     </div>
   </div>
   

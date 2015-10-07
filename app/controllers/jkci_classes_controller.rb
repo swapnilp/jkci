@@ -13,10 +13,15 @@ class JkciClassesController < ApplicationController
   end
   
   def new
-    @jkci_class = JkciClass.new
-    @teachers = Teacher.all
-    @batches = Batch.all
-    @subjects = Subject.all
+    subject = Subject.where(id: params[:subject_id]).first
+    if subject
+      @jkci_class = subject.jkci_classes.build
+      @teachers = Teacher.all
+      @batches = Batch.all
+      @subjects = Subject.all
+    else
+      redirect_to subjects_path
+    end
   end
 
   def show
@@ -114,7 +119,7 @@ class JkciClassesController < ApplicationController
     @class_exams = @jkci_class.jk_exams.order("updated_at desc").page(params[:page])
     respond_to do |format|
       format.html
-      format.json {render json: {success: true, html: render_to_string(:partial => "/exams/exam.html.erb", :layout => false, locals: {exams: @class_exams, hide_edit: true}), pagination_html:  render_to_string(partial: 'exam_pagination.html.erb', layout: false, locals: {class_exams: @class_exams}), css_holder: ".examsTable tbody"}}
+      format.json {render json: {success: true, html: render_to_string(:partial => "/exams/exam.html.erb", :layout => false, locals: {exams: @class_exams}), pagination_html:  render_to_string(partial: 'exam_pagination.html.erb', layout: false, locals: {class_exams: @class_exams}), css_holder: ".examsTable tbody"}}
     end
   end
 
@@ -130,7 +135,7 @@ class JkciClassesController < ApplicationController
       format.json {render json: {success: true, html: render_to_string(:partial => "daily_teaching_point.html.erb", :layout => false, locals: {daily_teaching_points: @daily_teaching_points, hide_edit: true}), pagination_html:  render_to_string(partial: 'daily_teach_pagination.html.erb', layout: false, locals: {class_daily_teach: @daily_teaching_points}), css_holder: ".dailyTeach tbody"}}
     end
   end
-
+  
   def my_sanitizer
     #params.permit!
     params.require(:jkci_class).permit!

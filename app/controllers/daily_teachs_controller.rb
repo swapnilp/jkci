@@ -13,22 +13,19 @@ class DailyTeachsController < ApplicationController
   end
   
   def new
-    if params[:jkci_class_id].present?
-      @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
-      @daily_teaching_point = @jkci_class.daily_teaching_points.new({teacher_id: @jkci_class.teacher_id, chapter_id: @jkci_class.current_chapter_id})
-      @chapters = @jkci_class.try(:subject).try(:chapters)
-      @chapters_points = @jkci_class.current_chapter_id.present? ? @jkci_class.current_chapter.chapters_points : @chapters.first.try(:chapters_points)
-    else
-      @daily_teaching_point = DailyTeachingPoint.new
-      @chapters = Chapter.all
-    end
-    @jkci_classes = JkciClass.all
+    @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+    @sub_classes = @jkci_class.sub_classes
+    @daily_teaching_point = @jkci_class.daily_teaching_points.new({teacher_id: @jkci_class.teacher_id, chapter_id: @jkci_class.current_chapter_id})
+    @chapters = @jkci_class.try(:subject).try(:chapters)
+    @chapters_points = @jkci_class.current_chapter_id.present? ? @jkci_class.current_chapter.chapters_points : @chapters.first.try(:chapters_points)
     @teachers = Teacher.all
   end
 
   def create
     params.permit!
-    @daily_teaching_point = DailyTeachingPoint.new(params[:daily_teaching_point])
+    @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+    params[:daily_teaching_point][:sub_classes] = (params[:daily_teaching_point][:sub_classes].map(&:to_i) - [0]).join(',') if params[:daily_teaching_point][:sub_classes].present? 
+    @daily_teaching_point = @jkci_class.daily_teaching_points.build(params[:daily_teaching_point])
     if @daily_teaching_point.save
       @daily_teaching_point.create_catlog
       redirect_to daily_teach_path(@daily_teaching_point)
@@ -47,8 +44,9 @@ class DailyTeachsController < ApplicationController
   end
   
   def edit
-    @daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
-    @jkci_classes = JkciClass.all
+    @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+    @daily_teaching_point = @jkci_class.daily_teaching_points.where(id: params[:id]).first
+    @sub_classes = @jkci_class.sub_classes
     @teachers = Teacher.all
     @chapters = @daily_teaching_point.jkci_class.subject.chapters
     @chapters_points = @daily_teaching_point.chapter.try(:chapters_points)

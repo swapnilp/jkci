@@ -21,9 +21,10 @@
 	<%= link_to "Edit" , edit_jkci_class_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
       </div>
       <div class="col-sm-12 textLeft paddingTop10">
-	<%= link_to "Daily Teach",  new_daily_teach_path({jkci_class_id: @jkci_class.id}), class: 'btn btn-primary btn-sm' %>
+	<%= link_to "Daily Teach",  new_jkci_class_daily_teach_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
 	<%= link_to "Create Exam",  "#", onclick: "createClassExam(event, this);" , class: 'btn btn-primary btn-sm', data: {id: @jkci_class.id} %>
 	<%= link_to "Assign Students",  class_assign_students_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
+	<%= link_to "Create Sub Class", new_jkci_class_sub_class_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
       </div>
       <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top:25px;">
 	<ul class="nav nav-tabs nav-justified">
@@ -35,6 +36,9 @@
 	  </li>
 	  <li class="active">
 	    <a href="#k-tab-daily_teach" data-toggle="tab">Daily Teach</a>
+	  </li>
+	  <li class="">
+	    <a href="#k-tab-sub_class" data-toggle="tab">Sub Class</a>
 	  </li>
 	</ul>
 	<div class="tab-content">
@@ -72,7 +76,7 @@
 		    <th>Actions</th>
 		  </tr>
 		</thead>
-		<%= render partial: '/exams/exam', locals: {exams: @class_exams, hide_edit: true}%>
+		<%= render partial: '/exams/exam', locals: {exams: @class_exams}%>
 	      </table>
 	      <div class="paginationDiv">
 		<%= render partial: 'exam_pagination', locals: {class_exams: @class_exams} %>
@@ -110,6 +114,20 @@
 	    <div style="width:100%;" class="loadingImg center hide">
 	      <img src="/assets/fancybox_loading.gif">
 	    </div>
+	  </div>
+	  <div id="k-tab-sub_class" class="tab-pane fade ">
+	    <table class="table table-hover examsTable table-striped subClass">
+	      <thead>
+		<tr>
+		  <th>#</th>
+		  <th>Name</th>
+		  <th>Description</th>
+		  <th>Students</th>
+		  <th>Action</th>
+		</tr>
+	      </thead>
+	      <%= render partial: 'sub_class', locals: {sub_classes: @jkci_class.sub_classes}%>
+	    </table>
 	  </div>
 	</div>
       </div>
