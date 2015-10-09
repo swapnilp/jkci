@@ -91,6 +91,25 @@
     </table>
   </div>
   <%- end %>
+  <%- if @unpublished_exams.present? %>
+  <div class="">
+    <h2>UnPublished Exams</h2>
+    <table class="table table-striped examsTable highlight">
+      <thead>
+	<tr>
+	  <th>#</th>
+	  <th style="width:40%;">Exam Name</th>
+	  <th>Class</th>
+	  <th>Type</th>
+	  <th>Mark</th>
+	  <th>Duration</th>
+	  <th>Date</th>
+	</tr>
+      </thead>
+      <%= render partial: "exam", locals:{exams:  @unpublished_exams, type: "recent"}%>
+    </table>
+  </div>
+  <%- end %>
   <%- if false%>
   <div class="col-sm-6">
     <h2>Class absents</h2>
