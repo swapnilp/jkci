@@ -1,41 +1,36 @@
 <div id="k-body" class="k-body adminDesk">
   <div class="container">
     <div class="col-sm-12 textLeft">
-      <h2>Subject</h2>
+      <h2>Standard</h2>
       <div class="col-sm-12">
 	<p>&nbsp;</p>
 	<div class="col-sm-12">
 	  <h5>
 	    <small class="col-sm-2">Name :</small> 
-	    <span style="font-size:20px;"><%= @subject.name %></span>
+	    <span class="col-sm-8" style="font-size:20px;"><%= @standard.name %></span>
 	  </h5>
 	</div>
       </div>
       <div class="col-sm-12">
-	<%= link_to "Back", subjects_path, class: "btn btn-primary" %>
+	<%= link_to "Back", standards_path, class: "btn btn-primary" %>
+	<%= link_to 'New Subject', new_subject_path(standard_id: @standard.id), class: 'btn btn-primary' %>
       </div>
     </div>
-
     <div class="col-sm-12 textLeft">
-      <h2>Chapters</h2>
-      <%= link_to 'New Chapter', new_chapter_path(subject_id: @subject.id), class: 'btn btn-primary' %>
+      <h2>Subjects</h2>
       <div>
 	<table class="table table-hover studentsTable">
 	  <thead>
 	    <tr>
 	      <th>#</th>
 	      <th>Name</th>
-	      <th>Subject</th>
-	      <th>Std</th>
 	      <th>Actions</th>
 	    </tr>
 	  </thead>
-	  <%= render partial: 'chapters/chapter', locals: {chapters: @chapters}%>
+	  <%= render partial: 'subjects/subject', locals: {subjects: @subjects}%>
 	</table>
-	<div class="paginationDiv">
-	  <%= render partial: 'chapters/pagination', locals: {chapters: @chapters} %>
-	</div>
       </div>
     </div>
   </div>
 </div>
+

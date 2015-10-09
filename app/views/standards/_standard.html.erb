@@ -1,0 +1,20 @@
+<%- standards.each_with_index do |standard, index| %>
+  <tr>
+    <td>
+      <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+    </td>
+    <td>
+      <%= standard.std_name %>
+    </td>
+    <td>
+      <%= standard.stream %>
+    </td>
+    <td>
+      <%= link_to 'Show', standard_path(standard) %>  | 
+      <%# link_to 'Edit', edit_standard_path(standard) %> 
+      <%= link_to 'New Subject',  new_subject_path({standard_id: standard.id}), class: '' %>
+    </td>
+  </tr>
+<%- end %>
+
+

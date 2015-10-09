@@ -1,5 +1,5 @@
 <div class="textLeft ">
-<%= form_for @jkci_class, html:{role: 'form', class: 'form-horizontal'} do |f| %>
+<%= form_for [@subject, @jkci_class], html:{role: 'form', class: 'form-horizontal'} do |f| %>
   <%= f.hidden_field :subject_id %>
   <div class="form-group">
     <span class="col-sm-2 control-label">Class Name : </span>
@@ -43,11 +43,7 @@
   
   <div class="col-sm-offset-2 ">
     <%= f.submit 'Save', class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
-    <%- if f.object.id.present? %>
-      <%= link_to 'Cancel', jkci_class_path(@jkci_class), class: 'btn btn-warning btn-sm'%>
-    <%- else %>
-      <%= link_to 'Cancel', jkci_classes_path, class: 'btn btn-warning btn-sm'%>
-    <%- end %>
+    <%= link_to 'Cancel', subjects_path, class: 'btn btn-warning btn-sm'%>
   </div>
 <%- end %>
 

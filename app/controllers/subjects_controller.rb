@@ -7,7 +7,7 @@ class SubjectsController < ApplicationController
   end
 
   def new
-    @subject = Subject.new
+    @subject = Subject.new({standard_id: params[:standard_id]})
   end
 
   def create

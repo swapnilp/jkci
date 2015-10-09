@@ -11,7 +11,12 @@ class Exam < ActiveRecord::Base
   has_many :documents
   
   default_scope { where(is_active: true) }  
-
+  
+  scope :upcomming_exams, -> { where("exam_date > ? && is_completed is ?", Date.tomorrow, nil) }
+  scope :unconducted_exams, -> { where("exam_date < ? && is_completed is ?", Date.today, nil) }
+  scope :todays_exams, -> { where("exam_date BETWEEN ? AND ? ", Date.today, Date.tomorrow)}
+  scope :unpublished_exams, -> { where(is_result_decleared: [nil, false], is_completed: true)}
+  
   def exam_students
     #Student.where(std: std, is_active: true)
     if sub_classes.present?

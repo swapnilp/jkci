@@ -53,7 +53,11 @@ Rails.application.routes.draw do
   get 'parent_desk/student_info/:id/exam_info' => "parent_desk#exam_info", as: 'parent_exam_info'
   get 'parent_desk/student_info/:id/paginate_catlog' => "parent_desk#paginate_catlog", as: 'parent_paginate_catlog'
   
-  resources :jkci_classes do 
+  resources :subjects do
+    resources :jkci_classes, only: [:new, :create, :edit, :update]
+  end
+
+  resources :jkci_classes, except: [:new, :create, :edit, :update] do 
     resources :sub_classes
     get '/sub_class/:id/get_students' => 'sub_classes#get_students', as: "class_students"
     get '/sub_class/:id/add_students' => 'sub_classes#add_students'
@@ -85,7 +89,8 @@ Rails.application.routes.draw do
   resources :chapters do
     resources :chapters_points
   end
-  resources :subjects
+  
+  resources :standards
   resources :albums do 
     get 'manage_albums', on: :collection, as: 'manage'
   end

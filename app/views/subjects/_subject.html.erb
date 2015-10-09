@@ -8,8 +8,7 @@
     </td>
     <td>
       <%= link_to 'Show', subject_path(subject) %>  | 
-      <%= link_to 'Edit', edit_subject_path(subject) %> | 
-      <%= link_to 'New class',  new_jkci_class_path({subject_id: subject.id}), class: '' %>
+      <%= link_to 'New class',  new_subject_jkci_class_path(subject), class: '' %>
     </td>
   </tr>
 <%- end %>

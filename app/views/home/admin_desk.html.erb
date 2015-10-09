@@ -53,6 +53,7 @@
     </table>
   </div>
   <%- end %>
+  <%- if @unconducted_exams.present? %>
   <div class="">
     <h2>Unconducted Exams</h2>
     <table class="table table-striped examsTable highlight">
@@ -70,9 +71,10 @@
       <%= render partial: "exam", locals:{exams: @unconducted_exams, type: "unconducted"}%>
     </table>
   </div>
-
+  <%- end %>
+  <%- if @upcomming_exams.present? %>
   <div class="">
-    <h2>Recent Exams</h2>
+    <h2>Upcomming Exams</h2>
     <table class="table table-striped examsTable highlight">
       <thead>
 	<tr>
@@ -85,10 +87,11 @@
 	  <th>Date</th>
 	</tr>
       </thead>
-      <%= render partial: "exam", locals:{exams:  @recent_exams, type: "recent"}%>
+      <%= render partial: "exam", locals:{exams:  @upcomming_exams, type: "recent"}%>
     </table>
   </div>
-
+  <%- end %>
+  <%- if false%>
   <div class="col-sm-6">
     <h2>Class absents</h2>
     <table class="table table-striped examsTable highlight">
@@ -162,6 +165,7 @@
       <%- end %>
     </table>
   </div>
+  <%- end %>
   </div>
 </div>
 <div id='chart'></div>

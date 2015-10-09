@@ -13,9 +13,9 @@ class JkciClassesController < ApplicationController
   end
   
   def new
-    subject = Subject.where(id: params[:subject_id]).first
-    if subject
-      @jkci_class = subject.jkci_classes.build
+    @subject = Subject.where(id: params[:subject_id]).first
+    if @subject
+      @jkci_class = @subject.jkci_classes.build
       @teachers = Teacher.all
       @batches = Batch.all
       @subjects = Subject.all
@@ -34,14 +34,16 @@ class JkciClassesController < ApplicationController
 
   def create
     params.permit!
-    @jkci_class = JkciClass.new(params[:jkci_class])
+    @subject = Subject.where(id: params[:subject_id]).first
+    @jkci_class = @subject.jkci_classes.build(params[:jkci_class])
     if @jkci_class.save
       redirect_to jkci_classes_path
     end
   end
 
   def edit
-    @jkci_class = JkciClass.where(id: params[:id]).first
+    @subject = Subject.where(id: params[:subject_id]).first
+    @jkci_class = @subject.jkci_classes.where(id: params[:id]).first
     @teachers = Teacher.all
     @batches = Batch.all
     @subjects = Subject.all
@@ -62,9 +64,10 @@ class JkciClassesController < ApplicationController
   
   def update
     params.permit!
-    jkci_class = JkciClass.where(id: params[:id]).first
-    if jkci_class
-      if jkci_class.update(params[:jkci_class])
+    @subject = Subject.where(id: params[:subject_id]).first
+    @jkci_class = @subject.jkci_classes.where(id: params[:id]).first
+    if @jkci_class
+      if @jkci_class.update(params[:jkci_class])
         redirect_to jkci_classes_path
       end
     end
