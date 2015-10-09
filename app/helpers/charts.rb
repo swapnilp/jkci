@@ -7,7 +7,7 @@ module Charts
 
     # Add Rows and Values
     data_table.add_rows(data_set)
-    option = { width: 400, height: 240, is3D: true}.merge(options)
+    option = { width: "100%", height: 240, is3D: true}.merge(options)
     @chart = GoogleVisualr::Interactive::PieChart.new(data_table, option)
   end
 end
