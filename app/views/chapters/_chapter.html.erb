@@ -7,10 +7,7 @@
     <%= chapter.name %>
   </td>
   <td>
-    <%= chapter.subject.try(:name) %>
-  </td>
-  <td>
-    <%= chapter.std %>
+    <%= chapter.subject.std_name %>
   </td>
   <td>
     <%= link_to "Show", chapter_path(chapter)%>
