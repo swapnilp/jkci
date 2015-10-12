@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   resources :promotional_mails
 
   resources :exams, except: [:new, :create, :edit, :update, :destroy]
+  get 'exam/:id/verify_create_exam' => "exams#verify_create_exam", as: 'verify_create_exam'
+  get 'exam/:id/verify_exam_absenty' => "exams#verify_exam_absenty", as: 'verify_exam_absenty'
+  get 'exam/:id/verify_exam_result' => "exams#verify_exam_result", as: 'verify_exam_result'
   get 'exam/:id/absent_students' => "exams#absunts_students", as: 'exam_absent_students'
   get 'exam/:id/exam_students' => "exams#exams_students", as: 'exams_students'
   get 'exam/:id/add_absent_students' => "exams#add_absunt_students", as: 'add_exam_absent_students'

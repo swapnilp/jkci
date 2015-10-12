@@ -32,6 +32,7 @@ class ExamsController < ApplicationController
     params[:exam][:sub_classes] = (params[:exam][:sub_classes].map(&:to_i) - [0]).join(',') if params[:exam][:sub_classes].present? 
     exam = Exam.new(params[:exam])
     if exam.save
+      Notification.add_create_exam(exam.id)
       redirect_to exams_path
     end
   end
@@ -60,6 +61,33 @@ class ExamsController < ApplicationController
     redirect_to exams_path
   end
 
+  def verify_create_exam
+    exam = Exam.where(id: params[:id]).first
+    if exam
+      exam.update_attributes({create_verification: true})
+      Notification.verified_exam(exam.id)
+    end
+    redirect_to exam_path(exam)
+  end
+  
+  def verify_exam_absenty
+    exam = Exam.where(id: params[:id]).first
+    if exam
+      exam.update_attributes({verify_absenty: true})
+      Notification.verify_exam_abesnty(exam.id)
+    end
+    redirect_to exam_path(exam)
+  end
+  
+  def verify_exam_result
+    exam = Exam.where(id: params[:id]).first
+    if exam
+      exam.update_attributes({verify_result: true})
+      Notification.verify_exam_result(exam.id)
+    end
+    redirect_to exam_path(exam)
+  end
+
   def absunts_students
     @exam = Exam.where(id: params[:id]).first
     #ids = [0] << @exam.exam_absents.map(&:student_id) 
@@ -68,8 +96,8 @@ class ExamsController < ApplicationController
   end
 
   def remove_exam_absent
-    exam_catlog = ExamCatlog.where(exam_id: params[:id], student_id: params[:student_id]).first
-    exam_catlog.update_attributes({is_present: nil, is_recover: nil})
+    exam = Exam.where(id: params[:id]).first
+    exam.remove_absent_student(params[:student_id])
     redirect_to exam_path(params[:id])
   end
 
@@ -99,8 +127,9 @@ class ExamsController < ApplicationController
   end
 
   def remove_exam_result
-    ExamCatlog.where(id: params[:exam_catlog_id]).first.update_attributes({marks: nil, is_present: nil})
-    redirect_to exam_path(params[:id])
+    exam = Exam.where(id: params[:id]).first
+    exam.remove_exam_result(params[:exam_catlog_id])
+    redirect_to exam_path(exam)
   end
 
 
@@ -108,7 +137,6 @@ class ExamsController < ApplicationController
     @exam = Exam.where(id: params[:id]).first
     if @exam
       @exam.publish_results
-      @exam.update({is_result_decleared: true, is_completed: true})
     end
     redirect_to exams_path
   end
@@ -124,7 +152,7 @@ class ExamsController < ApplicationController
   def exam_completed
     @exam = Exam.where(id: params[:id]).first
     if @exam
-      @exam.complete_exam
+      @exam.complete_exam unless @exam.is_completed
     end
     redirect_to exam_path(@exam)
   end

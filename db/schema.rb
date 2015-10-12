@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007100002) do
+ActiveRecord::Schema.define(version: 20151012052826) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -192,6 +192,9 @@ ActiveRecord::Schema.define(version: 20151007100002) do
     t.string   "class_ids",             limit: 255
     t.string   "daily_teaching_points", limit: 255
     t.string   "sub_classes",           limit: 255
+    t.boolean  "create_verification",   limit: 1,   default: false
+    t.boolean  "verify_absenty",        limit: 1,   default: false
+    t.boolean  "verify_result",         limit: 1,   default: false
   end
 
   create_table "galleries", force: :cascade do |t|
@@ -220,6 +223,18 @@ ActiveRecord::Schema.define(version: 20151007100002) do
     t.boolean  "is_active",          limit: 1,   default: true
     t.integer  "subject_id",         limit: 4
     t.integer  "current_chapter_id", limit: 4
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "message",      limit: 255
+    t.string   "object_type",  limit: 255
+    t.integer  "object_id",    limit: 4
+    t.string   "url",          limit: 255
+    t.string   "comment",      limit: 255
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "actions",      limit: 255
+    t.boolean  "is_completed", limit: 1,   default: false
   end
 
   create_table "parents_meetings", force: :cascade do |t|

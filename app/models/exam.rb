@@ -9,6 +9,7 @@ class Exam < ActiveRecord::Base
   has_many :exam_catlogs
   has_many :students, through: :exam_catlogs
   has_many :documents
+  has_many :notifications, -> {where("notifications.object_type like ?", 'Exam')}, :foreign_key => :object_id
   
   default_scope { where(is_active: true) }  
   
@@ -43,9 +44,17 @@ class Exam < ActiveRecord::Base
   
   def add_absunt_students(exam_absent_students)
     self.exam_catlogs.where(student_id: exam_absent_students).update_all({is_present: false})
+    Notification.add_exam_abesnty(self.id)
+    self.update_attributes({verify_absenty: false})
     #exam_students.each do |student|
       #ExamAbsent.new({student_id: student, exam_id: self.id, sms_sent: false, email_sent: false}).save
     #end
+  end
+
+  def remove_absent_student(student_id)
+    self.exam_catlogs.where(student_id: student_id).update_all({is_present: nil, is_recover: nil})
+    Notification.add_exam_abesnty(self.id)
+    self.update_attributes({verify_absenty: false})
   end
 
   def jkci_classes
@@ -65,12 +74,21 @@ class Exam < ActiveRecord::Base
         #self.send_result_email(self, exam_result.student)
       end
     end
+    Notification.add_exam_result(self.id)
+    self.update_attributes({verify_result: false})
+  end
+
+  def remove_exam_result(catlog_id)
+    self.exam_catlogs.where(id: catlog_id).update_all({marks: nil, is_present: nil})
+    Notification.add_exam_result(self.id)
+    self.update_attributes({verify_result: false})
   end
 
   def publish_results
-    
     Delayed::Job.enqueue ExamAbsentSmsSend.new(self)
     Delayed::Job.enqueue ExamResultSmsSend.new(self)
+    self.update_attributes({is_result_decleared: true, is_completed: true})
+    Notification.publish_exam(self.id)
   end
 
   def publish_absentee
@@ -91,6 +109,7 @@ class Exam < ActiveRecord::Base
     exam_students.each do |student|
       self.exam_catlogs.build({student_id: student.id, jkci_class_id: self.jkci_class_id}).save
     end
+    Notification.exam_conducted(self.id)
   end
 
   def predict_name
