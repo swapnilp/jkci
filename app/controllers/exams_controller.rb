@@ -21,7 +21,7 @@ class ExamsController < ApplicationController
 
   def show
     @exam = Exam.where(id: params[:id]).first
-    @remaining_students = @exam.exam_catlogs.includes([:student]).where("is_present is ? &&  marks is ? && is_ingored is ?", nil, nil, nil)
+    @remaining_students = @exam.exam_catlogs.includes([:student]).where(is_present: [nil], marks: nil, is_ingored: [nil, false])
     @exam_absents = @exam.exam_catlogs.includes([:student, :exam]).where(is_present: false)
     @ignored_students = @exam.exam_catlogs.includes([:student, :exam]).where(is_ingored: true)
   end
@@ -92,7 +92,8 @@ class ExamsController < ApplicationController
     @exam = Exam.where(id: params[:id]).first
     #ids = [0] << @exam.exam_absents.map(&:student_id) 
     #ids << @exam.exam_results.map(&:student_id)
-    @students = @exam.students.where("exam_catlogs.is_present is ? && exam_catlogs.is_ingored is ?", nil, nil)
+    students_ids = @exam.exam_catlogs.where(is_present: nil, is_ingored: [nil, false]).map(&:student_id)
+    @students = @exam.students.where(id: students_ids)
   end
 
   def remove_exam_absent
@@ -199,9 +200,19 @@ class ExamsController < ApplicationController
   end
 
   def ignore_student
-    exam_catlog = ExamCatlog.where(exam_id: params[:id], student_id: params[:student_id]).first
-    exam_catlog.update_attributes({is_ingored: true})
-    redirect_to exam_path(params[:id])
+    exam = Exam.where(id: params[:id]).first
+    if exam 
+      exam.add_ignore_student(params[:student_id])
+    end
+    redirect_to exam_path(exam)
+  end
+  
+  def remove_ignore_student
+    exam = Exam.where(id: params[:id]).first
+    if exam 
+      exam.remove_ignore_student(params[:student_id])
+    end
+    redirect_to exam_path(exam)
   end
 
   private

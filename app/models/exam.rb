@@ -66,9 +66,9 @@ class Exam < ActiveRecord::Base
   end
   
   def add_exam_results(results)
-    results.each do |id, marks|
+    results.each do |s_id, marks|
       if marks.present?
-        self.exam_catlogs.where(student_id: id).first.update_attributes({marks: marks, is_present: true})
+        self.exam_catlogs.where(student_id: s_id).first.update_attributes({marks: marks, is_present: true})
         #exam_result = ExamResult.new({exam_id: self.id, student_id: id, marks: marks, sms_sent: false, email_sent: false})
         #exam_result.save
         #self.send_result_email(self, exam_result.student)
@@ -82,6 +82,14 @@ class Exam < ActiveRecord::Base
     self.exam_catlogs.where(id: catlog_id).update_all({marks: nil, is_present: nil})
     Notification.add_exam_result(self.id)
     self.update_attributes({verify_result: false})
+  end
+
+  def add_ignore_student(student_id)
+    self.exam_catlogs.where(student_id: student_id).first.update_attributes({is_ingored: true})
+  end
+
+  def remove_ignore_student(student_id)
+    self.exam_catlogs.where(student_id: student_id).first.update_attributes({is_ingored: nil})
   end
 
   def publish_results

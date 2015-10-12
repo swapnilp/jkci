@@ -228,6 +228,7 @@
 	  <th>Student Name</th>
 	  <th>Mobile</th>
 	  <th>Parent Name</th>
+	  <th>Remove</th>
 	</tr>
       </thead>
       <%- @ignored_students.each_with_index do |exam_catlog, index| %>
@@ -243,6 +244,9 @@
 	</td>
 	<td>
 	  <%= exam_catlog.student.parent_name %>
+	</td>
+	<td>
+	  <%= link_to "remove", remove_ignore_exam_student_path(@exam, exam_catlog.student) %>
 	</td>
       </tr>
       <%- end %>
