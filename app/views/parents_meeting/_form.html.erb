@@ -10,8 +10,8 @@
     <%= f.label :date, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
       <div class='input-group date' id='datetimepicker1' data-date-format="YYYY-MM-DD HH:MM">
-	<%= f.text_field :date , class: 'form-control', readonly: true, value: "#{ f.object.date.nil? ? (Time.now+ 1.week).strftime('%F %H:%M') : f.object.date.strftime('%F %H:%M')}" %>
-        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+	<input class="form-control" type="text" name="parents_meeting[date]" id="datetimepicker_parentmeeting">
+	<%# f.text_field :date , class: 'form-control', readonly: true, value: "#{ f.object.date.nil? ? (Time.now+ 1.week).strftime('%F %H:%M') : f.object.date.strftime('%F %H:%M')}" %>
         </span>
       </div>
     </div>
@@ -39,7 +39,9 @@
 </div>
   <script type="text/javascript">
     $(function () {
-    $('#datetimepicker1').datetimepicker({
+    $("#datetimepicker_parentmeeting").datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+      defaultDate: "<%= @meeting.date.try(:to_time) || (Time.now + 1.day)  %>"
     });
     });
   </script>

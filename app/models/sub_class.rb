@@ -6,4 +6,8 @@ class SubClass < ActiveRecord::Base
     ids = class_students.where("sub_class like '%,?,%'", self.id).map(&:student_id)
     self.jkci_class.students.where("students.id in (?)", ids)
   end
+
+  def disp_name
+    "#{name}-#{self.students.count}"
+  end
 end

@@ -30,6 +30,13 @@ class Exam < ActiveRecord::Base
     end
   end
 
+  def role_notification(user)
+    user_roles = user.roles.select([:name]).map(&:name).map(&:to_sym)
+    notification_roles = NOTIFICATION_ROLES.slice(*user_roles).values.flatten
+    notifications.where(actions: notification_roles)
+    #self.notifications
+  end
+
   def exam_results
     exam_catlogs.where("(is_present = ?  || is_recover= ? ) && marks is not  ?", true, true, nil)  
   end
@@ -125,7 +132,6 @@ class Exam < ActiveRecord::Base
   end
   
   def status_count
-    
   end
     
 

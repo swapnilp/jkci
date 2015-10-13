@@ -1,0 +1,17 @@
+<%- notifications.each_with_index do |notification, index| %>
+  <tr>
+    <td>
+      <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+    </td>
+    <td>
+      <%= notification.message %>
+    </td>
+    <td>
+      <%= link_to notification.url, notification.url %>
+    </td>
+    <td>
+      action
+    </td>
+  </tr>
+<%- end %>
+

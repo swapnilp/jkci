@@ -10,6 +10,7 @@
 	<th>Teacher</th>
 	<th>Fill Daily Catlog</th>
 	<th>Create Exam</th>
+	<th>Notifications count</th>
       </tr>
     </thead>
     <%- @jkci_classes.each_with_index do |jkci_class, index| %>
@@ -27,7 +28,12 @@
 	<%= link_to "Fill Daily Catlog",  new_jkci_class_daily_teach_path(jkci_class) %>
       </td>
       <td>
-	<%= link_to "Create Exam",  new_jkci_class_exam_path(jkci_class) %>
+	<%- if current_user.has_role? :create_exam %>
+	  <%= link_to "Create Exam",  new_jkci_class_exam_path(jkci_class) %>
+	<%- end %>
+      </td>
+      <td>
+	<%= jkci_class.role_exam_notifications(current_user).count %>
       </td>
     </tr>
     <%- end %>

@@ -2,7 +2,10 @@
   <div class="container">
     <div class="col-sm-12 textLeft">
       <div class="col-sm-12 textLeft">
-	<span class="col-sm-2"><h5>Name</h5></span>
+	<h2>Class</h2>
+      </div>
+      <div class="col-sm-12 textLeft">
+	<span class="col-sm-2"><h5>Class Name</h5></span>
 	<span class="col-sm-6 paddingTop10"><%= @jkci_class.class_name %></span>
       </div>
       <div class="col-sm-12 textLeft">
@@ -22,7 +25,9 @@
       </div>
       <div class="col-sm-12 textLeft paddingTop10">
 	<%= link_to "Daily Teach",  new_jkci_class_daily_teach_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
-	<%= link_to "Create Exam",  "#", onclick: "createClassExam(event, this);" , class: 'btn btn-primary btn-sm', data: {id: @jkci_class.id} %>
+	<%- if current_user.has_role? :create_exam %>
+	  <%= link_to "Create Exam",  "#", onclick: "createClassExam(event, this);" , class: 'btn btn-primary btn-sm', data: {id: @jkci_class.id} %>
+	<%- end %>
 	<%= link_to "Assign Students",  class_assign_students_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
 	<%= link_to "Create Sub Class", new_jkci_class_sub_class_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
       </div>
@@ -38,7 +43,12 @@
 	    <a href="#k-tab-daily_teach" data-toggle="tab">Daily Teach</a>
 	  </li>
 	  <li class="">
-	    <a href="#k-tab-sub_class" data-toggle="tab">Sub Class</a>
+	    <a href="#k-tab-sub_class" data-toggle="tab">Sub Class(<%= @jkci_class.sub_classes.count %>)</a>
+	  </li>
+	  <li class="">
+	    <a href="#k-tab-notification" data-toggle="tab">
+	      Notifications(<%= @notifications.count %>)
+	    </a>
 	  </li>
 	</ul>
 	<div class="tab-content">
@@ -127,6 +137,19 @@
 		</tr>
 	      </thead>
 	      <%= render partial: 'sub_class', locals: {sub_classes: @jkci_class.sub_classes}%>
+	    </table>
+	  </div>
+	  <div id="k-tab-notification" class="tab-pane fade ">
+	    <table class="table table-hover examsTable table-striped subClass">
+	      <thead>
+		<tr>
+		  <th>#</th>
+		  <th>Message</th>
+		  <th>Link</th>
+		  <th>Action</th>
+		</tr>
+	      </thead>
+	      <%= render partial: 'notification/notification', locals: {notifications: @notifications}%>
 	    </table>
 	  </div>
 	</div>

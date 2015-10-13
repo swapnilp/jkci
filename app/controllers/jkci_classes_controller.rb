@@ -30,6 +30,7 @@ class JkciClassesController < ApplicationController
     @daily_teaching_points = @jkci_class.daily_teaching_points.includes(:class_catlogs).chapters_points.order('id desc').page(params[:page])
     @teached_chapters = @daily_teaching_points.map(&:chapter_id).uniq
     @class_exams = @jkci_class.jk_exams.order("updated_at desc").page(params[:page])
+    @notifications = @jkci_class.role_exam_notifications(current_user)
   end
 
   def create

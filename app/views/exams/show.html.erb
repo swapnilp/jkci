@@ -22,6 +22,8 @@
       <%- end %>
     </span>
   </div>
+
+  
   
   <div class="col-sm-12 textLeft">
     <span class="col-sm-2"><h5>Exam Date</h5></span>
@@ -68,35 +70,41 @@
   </div>
   <%- unless @exam.is_result_decleared %>
     <div class="col-sm-12 textLeft paddingTop10">
-      <%- unless @exam.is_completed || @exam.create_verification%>
+      <%- unless @exam.is_completed || @exam.create_verification %>
         <%= link_to "Edit", edit_jkci_class_exam_path(@exam.jkci_class, @exam),  class: 'btn btn-primary btn-sm' %>
       <%- end %>
       <%= link_to "Back", exams_path,  class: 'btn btn-default btn-sm' %>
     </div>
     <div class="col-sm-12 textLeft" style="margin-top:20px;">
       <%- if @exam.is_completed %>
-        <%= link_to "Add Absent Student", exam_absent_students_path(@exam), class: 'btn btn-primary btn-sm' %>
-	<%- unless @exam.verify_absenty %>
+        <%- if current_user.has_role? :add_exam_absenty  %>
+          <%= link_to "Add Absent Student", exam_absent_students_path(@exam), class: 'btn btn-primary btn-sm' %>
+	<%- end %>
+	<%- if !@exam.verify_absenty && current_user.has_role?(:verify_exam_absenty) %>
 	  <%= link_to "Verify Absenty", verify_exam_absenty_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
 	<%- end %>
-	<%= link_to "Add Exam Result" , exams_students_path(@exam), class: 'btn btn-primary btn-sm' %>
-	<%- unless @exam.verify_result %>
+	<%- if current_user.has_role? :add_exam_result %>
+	  <%= link_to "Add Exam Result" , exams_students_path(@exam), class: 'btn btn-primary btn-sm' %>
+	<%- end %>
+	<%- if !@exam.verify_result && current_user.has_role?(:verify_exam_result) %>
 	  <%= link_to "Verify Result", verify_exam_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
 	<%- end %>
       <%- end %>
       <%- if @exam.create_verification %>
         <%- unless @exam.is_completed %>
-          <%= link_to "Exam Conducted", exam_completed_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+	  <%- if current_user.has_role? :exam_conduct  %>
+            <%= link_to "Exam Conducted", exam_completed_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
+	  <%- end %>
           <%= link_to "Remove Exam", jkci_class_exam_path(@exam.jkci_class, @exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')", method: :delete %>
         <%- else %>
-	  <%- if @exam.verify_absenty%>
+	  <%- if @exam.verify_absenty %>
             <%= link_to "Publish Absent catlog", publish_absent_exam_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
 	  <%- end %>
-          <%- if @remaining_students.count == 0 && @exam.verify_absenty && @exam.verify_result %>
+          <%- if @remaining_students.count == 0 && @exam.verify_absenty && @exam.verify_result && current_user.has_role?(:publish_exam) %>
             <%= link_to "Publish Result", publish_result_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
         <%- end %>
       <%- end %>
-      <%- else %>
+      <%- elsif current_user.has_role? :verify_exam %>
         <%= link_to "Verify Exam", verify_create_exam_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
       <%- end %>
     </div>

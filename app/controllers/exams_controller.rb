@@ -15,7 +15,7 @@ class ExamsController < ApplicationController
   def new
     @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
     @exam = @jkci_class.exams.build({daily_teaching_points: ",#{params[:dtp]},"})
-    @sub_classes = @jkci_class.sub_classes.select([:id, :name])
+    @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
     @exam.name = @exam.predict_name
   end
 
@@ -40,7 +40,7 @@ class ExamsController < ApplicationController
   def edit
     @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
     @exam = @jkci_class.exams.where(id: params[:id]).first
-    @sub_classes = @jkci_class.sub_classes.select([:id, :name])
+    @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
     redirect_to exams_path if @exam.is_completed
   end
   
@@ -104,7 +104,9 @@ class ExamsController < ApplicationController
 
   def add_absunt_students
     @exam = Exam.where(id: params[:id]).first
-    @exam.add_absunt_students(params[:students_ids].keys)
+    if @exam.create_verification
+      @exam.add_absunt_students(params[:students_ids].keys)
+    end
     redirect_to exam_path(@exam)
   end
 
@@ -123,7 +125,9 @@ class ExamsController < ApplicationController
 
   def add_exam_results
     @exam = Exam.where(id: params[:id]).first
-    @exam.add_exam_results(params[:students_results])
+    if @exam.create_verification
+      @exam.add_exam_results(params[:students_results])
+    end
     redirect_to exam_path(@exam)
   end
 
@@ -136,7 +140,7 @@ class ExamsController < ApplicationController
 
   def publish_exam_result
     @exam = Exam.where(id: params[:id]).first
-    if @exam
+    if @exam && @exam.verify_absenty && @exam.verify_result
       @exam.publish_results
     end
     redirect_to exams_path
@@ -144,7 +148,7 @@ class ExamsController < ApplicationController
 
   def publish_absent_exam
     @exam = Exam.where(id: params[:id]).first
-    if @exam
+    if @exam && @exam.verify_absenty
       @exam.publish_absentee
     end
     redirect_to exam_path(@exam)
@@ -152,7 +156,7 @@ class ExamsController < ApplicationController
   
   def exam_completed
     @exam = Exam.where(id: params[:id]).first
-    if @exam
+    if @exam && @exam.create_verification
       @exam.complete_exam unless @exam.is_completed
     end
     redirect_to exam_path(@exam)
