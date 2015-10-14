@@ -11,7 +11,7 @@ class Notification < ActiveRecord::Base
     exam = Exam.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: "create_exam").first
-      pre_notification.update_attributes({is_completed: true})
+      pre_notification.update_attributes({is_completed: true}) if pre_notification
       Notification.new({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is verified. Please conduct exam ", url: "/exams/#{obj_id}?&notification=true", actions: "verify_exam"}).save
     end
   end
@@ -20,7 +20,7 @@ class Notification < ActiveRecord::Base
     exam = Exam.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: "verify_exam").first
-      pre_notification.update_attributes({is_completed: true})
+      pre_notification.update_attributes({is_completed: true}) if pre_notification
       Notification.new({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is conducted. Please add absenty & makrs", url: "/exams/#{obj_id}?&notification=true", actions: "exam_conduct"}).save
     end
   end
@@ -29,7 +29,7 @@ class Notification < ActiveRecord::Base
     exam = Exam.where(id: obj_id).first
     if exam
       pre_notification = exam.notifications.where(actions: "exam_conduct").first
-      pre_notification.update_attributes({is_completed: true})
+      pre_notification.update_attributes({is_completed: true}) if pre_notification
       notification = exam.notifications.where(actions: "add_exam_absenty").first
       exam.notifications.where(actions: "verify_exam_absenty").destroy_all
       if notification.present?
@@ -44,7 +44,7 @@ class Notification < ActiveRecord::Base
     exam = Exam.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: "add_exam_absenty").first
-      pre_notification.update_attributes({is_completed: true})
+      pre_notification.update_attributes({is_completed: true}) if pre_notification
       notification = exam.notifications.where(actions: "verify_exam_absenty").first
       if notification.present?
         notification.update_attributes({is_completed: false})
@@ -58,7 +58,7 @@ class Notification < ActiveRecord::Base
     exam = Exam.where(id: obj_id).first
     if exam
       pre_notification = exam.notifications.where(actions: "exam_conduct").first
-      pre_notification.update_attributes({is_completed: true})
+      pre_notification.update_attributes({is_completed: true}) if pre_notification
       exam.notifications.where(actions: "verify_exam_result").destroy_all
       notification = exam.notifications.where(actions: "add_exam_result").first
       if notification.present?
@@ -73,7 +73,7 @@ class Notification < ActiveRecord::Base
     exam = Exam.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: "add_exam_result").first
-      pre_notification.update_attributes({is_completed: true})
+      pre_notification.update_attributes({is_completed: true}) if pre_notification
       notification = exam.notifications.where(actions: "verify_exam_result").first
       if notification.present?
         notification.update_attributes({is_completed: false})
@@ -87,7 +87,7 @@ class Notification < ActiveRecord::Base
     exam = Exam.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: ["verify_exam_result", "verify_exam_absenty"])
-      pre_notification.update_all({is_completed: true})
+      pre_notification.update_all({is_completed: true}) if pre_notification.present?
       Notification.new({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is published", url: "/exams/#{obj_id}?&notification=true", actions: "publish_exam"}).save
     end
   end
