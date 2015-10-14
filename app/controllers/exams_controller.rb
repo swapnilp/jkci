@@ -25,6 +25,14 @@ class ExamsController < ApplicationController
     @exam_absents = @exam.exam_catlogs.includes([:student, :exam]).where(is_present: false)
     @ignored_students = @exam.exam_catlogs.includes([:student, :exam]).where(is_ingored: true)
   end
+  
+  def download_data
+    @exam = Exam.where(id: params[:id]).first
+    @students = @exam.exam_students
+    respond_to do |format|
+      format.xls
+    end
+  end
 
   def create
     params.permit!
