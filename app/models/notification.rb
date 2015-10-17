@@ -1,9 +1,11 @@
 class Notification < ActiveRecord::Base
 
+  scope :pending, -> { where(is_completed: [nil, false], verification_require: true )}
+
   def self.add_create_exam(obj_id)
     exam = Exam.where(id: obj_id).first
     if exam 
-      Notification.new({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is created. Please verify Exam", url: "/exams/#{obj_id}?&notification=true", actions: "create_exam"}).save
+      Notification.new({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is created. Please verify Exam", url: "/exams/#{obj_id}?&notification=true", actions: "create_exam", verification_require: true}).save
     end
   end
   
@@ -35,7 +37,7 @@ class Notification < ActiveRecord::Base
       if notification.present?
         notification.update_attributes({is_completed: false})
       else
-        Notification.new({object_type: "Exam", object_id: obj_id, message: "Absenty is added for exam #{exam.name}. Please verify absenty", url: "/exams/#{obj_id}?&notification=true", actions: "add_exam_absenty"}).save
+        Notification.new({object_type: "Exam", object_id: obj_id, message: "Absenty is added for exam #{exam.name}. Please verify absenty", url: "/exams/#{obj_id}?&notification=true", actions: "add_exam_absenty", verification_require: true}).save
       end
     end
   end
@@ -64,7 +66,7 @@ class Notification < ActiveRecord::Base
       if notification.present?
         notification.update_attributes({is_completed: false})
       else
-        Notification.new({object_type: "Exam", object_id: obj_id, message: "Result has been added for exam #{exam.name}. Please verify marks.", url: "/exams/#{obj_id}?&notification=true", actions: "add_exam_result"}).save
+        Notification.new({object_type: "Exam", object_id: obj_id, message: "Result has been added for exam #{exam.name}. Please verify marks.", url: "/exams/#{obj_id}?&notification=true", actions: "add_exam_result", verification_require: true}).save
       end
     end
   end
@@ -99,6 +101,12 @@ class Notification < ActiveRecord::Base
     end
   end
 
+  def self.create_daily_teaches(obj_id)
+    dtp = DailyTeachingPoint.where(id: obj_id).first
+    if dtp
+    end
+  end
+  
   def self.add_daily_teaches_adsenty(obj_id)
     dtp = DailyTeachingPoint.where(id: obj_id).first
     if dtp

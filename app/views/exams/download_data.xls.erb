@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+  <ss:Styles>
+    <ss:Style ss:ID="1">
+      <ss:Font ss:Bold="1"/>
+    </ss:Style>
+  </ss:Styles>
+  <ss:Worksheet ss:Name="Sheet1">
+    <ss:Table>
+      <ss:Column ss:Width="80"/>
+      <ss:Column ss:Width="120"/>
+      <ss:Column ss:Width="80"/>
+      <ss:Row ss:StyleID="1">
+	<ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String">Exam Id</ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String"><%= @exam.id %></ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String">Exam Date</ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String"><%= @exam.exam_date.to_date %></ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <ss:Row ss:StyleID="1">
+	<ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String">Exam Name</ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String"><%= @exam.name %></ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String">Exam marks</ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String"><%= @exam.marks%></ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <ss:Row ss:StyleID="1">
+	<ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String"></ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <ss:Row ss:StyleID="1">
+        <ss:Cell>
+          <ss:Data ss:Type="String">Index</ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String">Name</ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String">Parent Number</ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String">Is Present</ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String">Marks</ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String">Rank</ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <%- @exam_catlogs.each_with_index do |exam_catlog, index| %>
+      <ss:Row>
+        <ss:Cell>
+          <ss:Data ss:Type="Number"><%= index %></ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String"><%= exam_catlog.student.name %></ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String"><%= exam_catlog.student.p_mobile %></ss:Data>
+        </ss:Cell>
+	<ss:Cell>
+          <ss:Data ss:Type="String"> <%= exam_catlog.is_present %></ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String"><%= exam_catlog.marks %></ss:Data>
+        </ss:Cell>
+        <ss:Cell>
+          <ss:Data ss:Type="String"><%= exam_catlog.rank %></ss:Data>
+        </ss:Cell>
+      </ss:Row>
+      <%- end %>
+    </ss:Table>
+  </ss:Worksheet>
+</ss:Workbook>
+

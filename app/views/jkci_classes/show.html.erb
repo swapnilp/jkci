@@ -24,7 +24,9 @@
 	<%= link_to "Edit" , edit_subject_jkci_class_path(@jkci_class.subject, @jkci_class), class: 'btn btn-primary btn-sm' %>
       </div>
       <div class="col-sm-12 textLeft paddingTop10">
-	<%= link_to "Daily Teach",  new_jkci_class_daily_teach_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
+	<%- if current_user.has_role? :create_daily_teach %>
+	  <%= link_to "Daily Teach",  new_jkci_class_daily_teach_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
+	<%- end %>
 	<%- if current_user.has_role? :create_exam %>
 	  <%= link_to "Create Exam",  "#", onclick: "createClassExam(event, this);" , class: 'btn btn-primary btn-sm', data: {id: @jkci_class.id} %>
 	<%- end %>

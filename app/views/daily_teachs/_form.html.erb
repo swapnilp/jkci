@@ -30,7 +30,7 @@
   <div class="form-group">
     <span class="col-sm-2 control-label">Chapter' Point</span>
     <div class="col-sm-4">
-      <%= f.select :chapters_point_id, options_from_collection_for_select(@chapters_points, "id", "name", @daily_teaching_point.chapters_point_id || @chapters_points.first.try(:id)), {}, class: 'form-control' %>
+      <%= f.select :chapters_point_id, options_from_collection_for_select(@chapters_points, "id", "name", f.object.chapters_point_id.present? ? f.object.chapters_point_id.split(',').reject(&:blank?).map(&:to_i) : []), {}, { multiple: true, :max_size =>6, class: 'form-control'} %>
     </div>
   </div>
   <div class="form-group">

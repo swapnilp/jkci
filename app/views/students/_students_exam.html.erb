@@ -23,5 +23,8 @@
     <td>
       <%= exam_catlog.marks %> <%= " / #{exam_catlog.exam.marks}" if exam_catlog.marks.present? %>
     </td>
+    <td>
+      <%= exam_catlog.rank %>
+    </td>
   </tr>
 <%- end %>

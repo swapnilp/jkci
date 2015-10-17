@@ -25,7 +25,9 @@
 	<%= jkci_class.teacher.try(:name) %>
       </td>
       <td>
-	<%= link_to "Fill Daily Catlog",  new_jkci_class_daily_teach_path(jkci_class) %>
+	<%- if current_user.has_role? :create_daily_teach %>
+	  <%= link_to "Fill Daily Catlog",  new_jkci_class_daily_teach_path(jkci_class) %>
+	<%- end %>
       </td>
       <td>
 	<%- if current_user.has_role? :create_exam %>

@@ -13,6 +13,7 @@ class DailyTeachsController < ApplicationController
   end
   
   def new
+    raise ActionController::RoutingError.new('Not Found') unless current_user.has_role? :create_daily_teach 
     @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
     @sub_classes = @jkci_class.sub_classes
     @daily_teaching_point = @jkci_class.daily_teaching_points.new({teacher_id: @jkci_class.teacher_id, chapter_id: @jkci_class.current_chapter_id})
@@ -22,9 +23,11 @@ class DailyTeachsController < ApplicationController
   end
 
   def create
+    raise ActionController::RoutingError.new('Not Found') unless current_user.has_role? :create_daily_teach 
     params.permit!
     @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
     params[:daily_teaching_point][:sub_classes] = (params[:daily_teaching_point][:sub_classes].map(&:to_i) - [0]).join(',') if params[:daily_teaching_point][:sub_classes].present? 
+    params[:daily_teaching_point][:chapters_point_id] = (params[:daily_teaching_point][:chapters_point_id].map(&:to_i) - [0]).join(',') if params[:daily_teaching_point][:chapters_point_id].present? 
     @daily_teaching_point = @jkci_class.daily_teaching_points.build(params[:daily_teaching_point])
     if @daily_teaching_point.save
       @daily_teaching_point.create_catlog
@@ -73,10 +76,18 @@ class DailyTeachsController < ApplicationController
   
 
   def fill_catlog
+    raise ActionController::RoutingError.new('Not Found') unless current_user.has_role? :add_daily_teach_absenty
     @daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
     @daily_teaching_point.fill_catlog(params[:students_list].split(','), params[:date])
     #@daily_teaching_point.publish_absenty
-    redirect_to jkci_class_path(@daily_teaching_point.jkci_class)
+    redirect_to daily_teach_path(@daily_teaching_point)
+  end
+  
+  def class_absent_verification
+    raise ActionController::RoutingError.new('Not Found') unless current_user.has_role? :verify_daily_teach_absenty
+    daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
+    daily_teaching_point.update_attributes({verify_absenty: true})
+    redirect_to daily_teach_path(daily_teaching_point)
   end
   
   def filter_teach
@@ -104,6 +115,7 @@ class DailyTeachsController < ApplicationController
   end
 
   def send_class_absent_sms
+    raise ActionController::RoutingError.new('Not Found') unless current_user.has_role? :publish_daily_teach_absenty
     daily_teaching_point = DailyTeachingPoint.where(id: params[:id]).first
     daily_teaching_point.publish_absenty
     redirect_to jkci_class_path daily_teaching_point.jkci_class

@@ -5,7 +5,7 @@ class DailyTeachingPoint < ActiveRecord::Base
   has_many :class_catlogs
   belongs_to :chapter
   belongs_to :chapters_point
-  
+  has_many :notifications, -> {where("notifications.object_type like ?", 'DailyTeaching_point')}, :foreign_key => :object_id 
   scope :chapters_points, -> { where("chapter_id is not ?", nil) }
 
   after_save :add_current_chapter
@@ -13,6 +13,13 @@ class DailyTeachingPoint < ActiveRecord::Base
   def absent_count
     students_count = self.class_catlogs.where(is_present: false).count
     students_count.zero? ? "" : " #{students_count}"
+  end
+
+  def role_notification(user)
+    user_roles = user.roles.select([:name]).map(&:name).map(&:to_sym)
+    notification_roles = NOTIFICATION_ROLES.slice(*user_roles).values.flatten
+    notifications.where(actions: notification_roles)
+    #self.notifications
   end
 
   def class_students
@@ -35,7 +42,7 @@ class DailyTeachingPoint < ActiveRecord::Base
   end
 
   def fill_catlog(present_list,  date)
-    self.update_attributes({is_fill_catlog: true}) unless self.is_fill_catlog
+    self.update_attributes({is_fill_catlog: true, verify_absenty: false})
     class_catlogs.each do |class_catlog|
       if present_list.map(&:to_i).include?(class_catlog.student_id)
         class_catlog.update_attributes({is_present: false, date: date})

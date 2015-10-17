@@ -4,14 +4,14 @@ class Exam < ActiveRecord::Base
   #has_many :exam_absents
   #has_many :exam_results
   #has_many :absent_students, through: :exam_absents, source: :student
-  has_many :present_students, through: :exam_results, source: :student
+  #has_many :present_students, through: :exam_results, source: :student
   belongs_to :jkci_class
   has_many :exam_catlogs
   has_many :students, through: :exam_catlogs
   has_many :documents
   has_many :notifications, -> {where("notifications.object_type like ?", 'Exam')}, :foreign_key => :object_id
   
-  default_scope { where(is_active: true) }  
+  default_scope { where(is_active: true) }
   
   scope :upcomming_exams, -> { where("exam_date > ? && is_completed is ?", Date.tomorrow, nil) }
   scope :unconducted_exams, -> { where("exam_date < ? && is_completed is ?", Date.today, nil).order("id desc")}
@@ -84,6 +84,12 @@ class Exam < ActiveRecord::Base
     Notification.add_exam_result(self.id)
     self.update_attributes({verify_result: false})
   end
+  
+  def verify_exam_result
+    self.update_attributes({verify_result: true})
+    self.ranking
+    Notification.verify_exam_result(self.id)
+  end
 
   def remove_exam_result(catlog_id)
     self.exam_catlogs.where(id: catlog_id).update_all({marks: nil, is_present: nil})
@@ -133,8 +139,19 @@ class Exam < ActiveRecord::Base
   
   def status_count
   end
-    
+  
+  def ranking
+    results = self.exam_results.map(&:marks).uniq
+    results = results.sort { |x,y| y <=> x }
+    rank = 1
+    result_ranks = results.each_with_index.map{|value, i| results[i-1] == value ? {value => rank} : {value => (rank = i+1)}}
+    result_ranks = result_ranks.reduce Hash.new, :merge
+    self.exam_results.each do |exam_result|
+      exam_result.update_attributes({rank: result_ranks[exam_result.marks]})
+    end
+  end
 
+  
   def dtps
     DailyTeachingPoint.where(id: daily_teaching_points.split(',').reject(&:blank?)) rescue []
   end

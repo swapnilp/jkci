@@ -11,6 +11,7 @@ class JkciClass < ActiveRecord::Base
   belongs_to :current_chapter, class_name: "Chapter", foreign_key: "current_chapter_id"
   has_many :sub_classes
   has_many :exam_notifications, through: :exams, source: :notifications
+  has_many :dtp_notifications, through: :daily_teaching_points, source: :notifications
 
   has_many :chapters, through: :subject
   
@@ -26,6 +27,12 @@ class JkciClass < ActiveRecord::Base
   
   def jk_exams
     Exam.where("jkci_class_id = ? OR class_ids like '%,?,%'", self.id, self.id)
+  end
+
+  def role_exam_notifications(user)
+    user_roles = user.roles.select([:name]).map(&:name).map(&:to_sym)
+    notification_roles = NOTIFICATION_ROLES.slice(*user_roles).values.flatten
+    exam_notifications.where(actions: notification_roles, is_completed: false)
   end
 
   def role_exam_notifications(user)

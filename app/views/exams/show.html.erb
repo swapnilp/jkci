@@ -22,9 +22,6 @@
       <%- end %>
     </span>
   </div>
-
-  
-  
   <div class="col-sm-12 textLeft">
     <span class="col-sm-2"><h5>Exam Date</h5></span>
     <span class="col-sm-6 paddingTop10"><%= @exam.exam_date %></span>
@@ -68,12 +65,29 @@
       
     </div>
   </div>
+  <%- if @exam.is_completed %>
   <div class="col-sm-12 textLeft">
     <span class="col-sm-2"><h5>DownLoad Exam Data</h5></span>
     <div class="col-sm-6 paddingTop10 examDocument">
       <%= link_to "Download Excel", download_exam_data_path(@exam, format: "xls"), class: "btn btn-primary btn-sm" %>
     </div>
   </div>
+  <%- else %>
+  <div class="col-sm-12 textLeft ">
+    <div class="col-sm-6 textLeft alert alert-warning ">
+      For Download catlog you need to conduct Exam
+    </div>
+  </div>
+  <%- end %>
+  <%- if @pending_notifications.present? %>
+    <div class="col-sm-12 textLeft alert alert-danger">
+      <%- @pending_notifications.each do |notification| %>
+      <p>
+	<%= notification.message %> <strong>Is Pending </strong>
+      </p>
+      <%- end %>
+    </div>
+  <%- end %>
   <%- unless @exam.is_result_decleared %>
     <div class="col-sm-12 textLeft paddingTop10">
       <%- unless @exam.is_completed || @exam.create_verification %>
@@ -203,13 +217,14 @@
 	  <th>#</th>
 	  <th>Student Name</th>
 	  <th>Marks</th>
+	  <th>Ranks</th>
 	  <th>Parent Number</th>
 	  <%- unless @exam.is_result_decleared %>
 	    <th>Remove</th>
 	  <%- end %>
 	</tr>
       </thead>
-      <%- @exam.exam_results.each_with_index do |result, index| %>
+      <%- @exam.exam_results.order('rank asc').each_with_index do |result, index| %>
       <tr>
 	<td>
 	  <%= index + 1 %>
@@ -219,6 +234,9 @@
 	</td>
 	<td>
 	  <%= result.marks %>
+	</td>
+	<td>
+	  <%= result.rank %>
 	</td>
 	<td>
 	  <%= result.student.p_mobile %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151012052826) do
+ActiveRecord::Schema.define(version: 20151016051816) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -90,8 +90,9 @@ ActiveRecord::Schema.define(version: 20151012052826) do
     t.boolean  "is_fill_catlog",    limit: 1,     default: false
     t.boolean  "is_sms_sent",       limit: 1,     default: false
     t.integer  "chapter_id",        limit: 4
-    t.integer  "chapters_point_id", limit: 4
+    t.string   "chapters_point_id", limit: 255
     t.string   "sub_classes",       limit: 255
+    t.boolean  "verify_absenty",    limit: 1,     default: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -160,6 +161,7 @@ ActiveRecord::Schema.define(version: 20151012052826) do
     t.boolean  "is_followed",     limit: 1,     default: false
     t.boolean  "absent_sms_sent", limit: 1,     default: false
     t.boolean  "is_ingored",      limit: 1
+    t.integer  "rank",            limit: 4
   end
 
   create_table "exam_results", force: :cascade do |t|
@@ -226,15 +228,16 @@ ActiveRecord::Schema.define(version: 20151012052826) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.string   "message",      limit: 255
-    t.string   "object_type",  limit: 255
-    t.integer  "object_id",    limit: 4
-    t.string   "url",          limit: 255
-    t.string   "comment",      limit: 255
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.string   "actions",      limit: 255
-    t.boolean  "is_completed", limit: 1,   default: false
+    t.string   "message",              limit: 255
+    t.string   "object_type",          limit: 255
+    t.integer  "object_id",            limit: 4
+    t.string   "url",                  limit: 255
+    t.string   "comment",              limit: 255
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.string   "actions",              limit: 255
+    t.boolean  "is_completed",         limit: 1,   default: false
+    t.boolean  "verification_require", limit: 1,   default: false
   end
 
   create_table "parents_meetings", force: :cascade do |t|

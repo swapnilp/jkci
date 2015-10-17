@@ -24,13 +24,15 @@ class ExamsController < ApplicationController
     @remaining_students = @exam.exam_catlogs.includes([:student]).where(is_present: [nil], marks: nil, is_ingored: [nil, false])
     @exam_absents = @exam.exam_catlogs.includes([:student, :exam]).where(is_present: false)
     @ignored_students = @exam.exam_catlogs.includes([:student, :exam]).where(is_ingored: true)
+    @pending_notifications = @exam.notifications.pending
   end
   
   def download_data
     @exam = Exam.where(id: params[:id]).first
-    @students = @exam.exam_students
+    @exam_catlogs = @exam.exam_catlogs
+    filename = "#{@exam.name}.xls"
     respond_to do |format|
-      format.xls
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" }
     end
   end
 
@@ -90,8 +92,7 @@ class ExamsController < ApplicationController
   def verify_exam_result
     exam = Exam.where(id: params[:id]).first
     if exam
-      exam.update_attributes({verify_result: true})
-      Notification.verify_exam_result(exam.id)
+      exam.verify_exam_result
     end
     redirect_to exam_path(exam)
   end
@@ -112,7 +113,7 @@ class ExamsController < ApplicationController
 
   def add_absunt_students
     @exam = Exam.where(id: params[:id]).first
-    if @exam.create_verification
+    if @exam.create_verification && params[:students_ids].present?
       @exam.add_absunt_students(params[:students_ids].keys)
     end
     redirect_to exam_path(@exam)
@@ -133,7 +134,7 @@ class ExamsController < ApplicationController
 
   def add_exam_results
     @exam = Exam.where(id: params[:id]).first
-    if @exam.create_verification
+    if @exam.create_verification && params[:students_results].present?
       @exam.add_exam_results(params[:students_results])
     end
     redirect_to exam_path(@exam)
