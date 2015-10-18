@@ -1,5 +1,6 @@
 <%- exams.each_with_index do |exam, index| %>
-  <tr class="<%# checkExam(exam)  %>">
+ <%- if exam%>
+  <tr class="<%= checkExam(exam)  %>">
     <td>
       cx<%= exam.id %>
     </td>
@@ -33,4 +34,5 @@
       <%- end %>
     </td>
   </tr>
+  <%- end %>
 <%- end %>
