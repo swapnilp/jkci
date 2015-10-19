@@ -41,83 +41,104 @@
     <%- end %>
   </table>
   
-  <%- if @todays_exams.present? %>
-  <div class="">
-    <h2>Today's Exams</h2>
+
+
+  <div class="" style="margin-top:25px;">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="active">
+	<a href="#k-tab-todays-exams" data-toggle="tab">Today's Exams(<%= @todays_exams.count %>)</a>
+      </li>
+      <li class="">
+	<a href="#k-tab-unconducted-exams" data-toggle="tab">Unconducted Exams(<%= @unconducted_exams.count %>)</a>
+      </li>
+      <li class="">
+	<a href="#k-tab-upcomming-exams" data-toggle="tab">Upcomming Exams(<%= @upcomming_exams.count %>)</a>
+      </li>
+      <li class="">
+	<a href="#k-tab-unpublished-exams" data-toggle="tab">UnPublished Exams(<%= @unpublished_exams.count %>)</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="k-tab-todays-exams" class="tab-pane fade active in">
+	<div class="textLeft">
+	  <table class="table table-striped examsTable highlight">
+	    <thead>
+	      <tr>
+		<th>#</th>
+		<th>Exam Name</th>
+		<th>Class</th>
+		<th>Type</th>
+		<th>Mark</th>
+		<th>Duration</th>
+		<th>Date</th>
+	      </tr>
+	    </thead>
+	    <%= render partial: "exam", locals:{exams: @todays_exams, type: "todays"}%>
+	  </table>
+	</div>
+      </div>
+      <div id="k-tab-unconducted-exams" class="tab-pane fade">
+	<div class="textLeft">
+	  <table class="table table-striped examsTable highlight">
+	    <thead>
+	      <tr>
+		<th>#</th>
+		<th>Exam Name</th>
+		<th>Class</th>
+		<th>Type</th>
+		<th>Mark</th>
+		<th>Duration</th>
+		<th>Date</th>
+	      </tr>
+	    </thead>
+	    <%= render partial: "exam", locals:{exams: @unconducted_exams, type: "unconducted"}%>
+	  </table>
+	</div>
+      </div>
+      <div id="k-tab-upcomming-exams" class="tab-pane fade">
+	<div class="textLeft">
+	  <table class="table table-striped examsTable highlight">
+	    <thead>
+	      <tr>
+		<th>#</th>
+		<th style="width:40%;">Exam Name</th>
+		<th>Class</th>
+		<th>Type</th>
+		<th>Mark</th>
+		<th>Duration</th>
+		<th>Date</th>
+	      </tr>
+	    </thead>
+	    <%= render partial: "exam", locals:{exams:  @upcomming_exams, type: "recent"}%>
+	  </table>
+	</div>
+      </div>
+      <div id="k-tab-unpublished-exams" class="tab-pane fade">
+	<div class="textLeft">
+	  <table class="table table-striped examsTable highlight">
+	    <thead>
+	      <tr>
+		<th>#</th>
+		<th style="width:40%;">Exam Name</th>
+		<th>Class</th>
+		<th>Type</th>
+		<th>Mark</th>
+		<th>Duration</th>
+		<th>Date</th>
+	      </tr>
+	    </thead>
+	    <%= render partial: "exam", locals:{exams:  @unpublished_exams, type: "recent"}%>
+	  </table>
+	</div>
+      </div>
+    </div>
+  </div>
     
-    <table class="table table-striped examsTable highlight">
-      <thead>
-	<tr>
-	  <th>#</th>
-	  <th>Exam Name</th>
-	  <th>Class</th>
-	  <th>Type</th>
-	  <th>Mark</th>
-	  <th>Duration</th>
-	  <th>Date</th>
-	</tr>
-      </thead>
-      <%= render partial: "exam", locals:{exams: @todays_exams, type: "todays"}%>
-    </table>
-  </div>
-  <%- end %>
-  <%- if @unconducted_exams.present? %>
-  <div class="">
-    <h2>Unconducted Exams</h2>
-    <table class="table table-striped examsTable highlight">
-      <thead>
-	<tr>
-	  <th>#</th>
-	  <th>Exam Name</th>
-	  <th>Class</th>
-	  <th>Type</th>
-	  <th>Mark</th>
-	  <th>Duration</th>
-	  <th>Date</th>
-	</tr>
-      </thead>
-      <%= render partial: "exam", locals:{exams: @unconducted_exams, type: "unconducted"}%>
-    </table>
-  </div>
-  <%- end %>
-  <%- if @upcomming_exams.present? %>
-  <div class="">
-    <h2>Upcomming Exams</h2>
-    <table class="table table-striped examsTable highlight">
-      <thead>
-	<tr>
-	  <th>#</th>
-	  <th style="width:40%;">Exam Name</th>
-	  <th>Class</th>
-	  <th>Type</th>
-	  <th>Mark</th>
-	  <th>Duration</th>
-	  <th>Date</th>
-	</tr>
-      </thead>
-      <%= render partial: "exam", locals:{exams:  @upcomming_exams, type: "recent"}%>
-    </table>
-  </div>
-  <%- end %>
-  <%- if @unpublished_exams.present? %>
-  <div class="">
-    <h2>UnPublished Exams</h2>
-    <table class="table table-striped examsTable highlight">
-      <thead>
-	<tr>
-	  <th>#</th>
-	  <th style="width:40%;">Exam Name</th>
-	  <th>Class</th>
-	  <th>Type</th>
-	  <th>Mark</th>
-	  <th>Duration</th>
-	  <th>Date</th>
-	</tr>
-      </thead>
-      <%= render partial: "exam", locals:{exams:  @unpublished_exams, type: "recent"}%>
-    </table>
-  </div>
-  <%- end %>
+
+
+
+
+
   <%- if false%>
   <div class="col-sm-6">
     <h2>Class absents</h2>
