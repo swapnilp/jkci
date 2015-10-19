@@ -7,6 +7,7 @@
   <%= form_tag add_exam_absent_students_path(@exam), method: :get, html:{role: 'form', class: 'form-horizontal left'} do %>
     <%- @students.each  do  |student| %>
       <div class="form-group">
+	<%= student.id %>
         <%= check_box_tag "students_ids[#{student.id}]", student.id %>
         <%= h student.name %>
       </div>

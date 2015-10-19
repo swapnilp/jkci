@@ -94,7 +94,7 @@
       <%- @exam_catlogs.each_with_index do |exam_catlog, index| %>
       <ss:Row>
         <ss:Cell>
-          <ss:Data ss:Type="Number"><%= index %></ss:Data>
+          <ss:Data ss:Type="Number"><%= exam_catlog.student.id %></ss:Data>
         </ss:Cell>
         <ss:Cell>
           <ss:Data ss:Type="String"><%= exam_catlog.student.name %></ss:Data>
