@@ -40,10 +40,14 @@ class ExamsController < ApplicationController
     params.permit!
     params[:exam][:class_ids] = (params[:exam][:class_ids].present? && params[:exam][:class_ids].last.present?) ? ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','  : nil
     params[:exam][:sub_classes] = (params[:exam][:sub_classes].map(&:to_i) - [0]).join(',') if params[:exam][:sub_classes].present? 
-    exam = Exam.new(params[:exam])
-    if exam.save
-      Notification.add_create_exam(exam.id)
+    @exam = Exam.new(params[:exam])
+    if @exam.save
+      Notification.add_create_exam(@exam.id)
       redirect_to exams_path
+    else
+      @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+      @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
+      render :new
     end
   end
 

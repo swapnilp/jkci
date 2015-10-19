@@ -219,3 +219,11 @@ figure.gallery-photo-thumb{
 .modal-title {
   color: grey;
 }
+
+.field_with_errors input {
+  border: 2px solid #ea5644;
+}
+
+.field_with_errors label {
+  color: #ea5644;
+}
