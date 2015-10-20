@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/student/:id/select_user" => "students#select_user", as: "select_login_user"
   get "/student/:id/disable_student" => "students#disable_student", as: "disable_student"
   get "/student/:id/filter_student_data" => "students#filter_students_data", as: "filter_students_data"
+  get "/student/:id/download_report" => "students#download_report", as: "download_progress_report"
   resources :parents
   resources :parents_meeting
   get '/parents_meeting/:id/send_sms' => "parents_meeting#sms_send", as: "meeting_sms_send"

@@ -57,6 +57,17 @@ class StudentsController < ApplicationController
 
   def destroy
   end
+
+  def download_report
+    @student = Student.where(id: params[:id]).first
+    @exam_catlogs = @student.exam_catlogs.only_absents
+    @dtps = @student.class_catlogs.absent
+    filename = "#{@student.name}.xls"
+    respond_to do |format|
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" }
+    end
+    
+  end
   
   def enable_sms
     student = Student.select([:id, :enable_sms, ]).where(id: params[:id]).first

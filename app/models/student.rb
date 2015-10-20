@@ -7,6 +7,7 @@ class Student < ActiveRecord::Base
   has_many :class_students
   has_many :jkci_classes, through: :class_students
   has_many :class_catlogs
+  has_many :daily_teaching_points, through: :class_catlogs 
   has_many :exam_catlogs
   has_many :exams, through: :exam_catlogs 
   belongs_to :batch
@@ -47,7 +48,7 @@ class Student < ActiveRecord::Base
     jkci_classes.select([:id, :class_name, :class_start_time, :teacher_id]).includes([:teacher])
   end
 
-  def learned_point(class_id= nil, min_date_filter = nil, max_date_filter = nil)
+  def learned_point(class_id= nil, min_date_filter = nil, max_date_filter = nil, only_presents= nil, only_absents= nil)
     jk_catlogs = class_catlogs.order('id desc')#.includes([:daily_teaching_points])
 
     if class_id.present?
@@ -60,6 +61,10 @@ class Student < ActiveRecord::Base
 
     if max_date_filter.present?
       jk_catlogs = jk_catlogs.where("date <= ?", max_date_filter)
+    end
+    
+    if only_absents.present?
+      jk_catlogs = jk_catlogs.where(is_present: false)
     end
     return jk_catlogs
   end

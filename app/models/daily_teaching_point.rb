@@ -22,6 +22,14 @@ class DailyTeachingPoint < ActiveRecord::Base
     #self.notifications
   end
 
+  def chapter_points
+    if self.chapter.present? && self.chapters_point_id.present?
+      self.chapter.chapters_points.where(id: chapters_point_id.split(',').map(&:to_i)).map(&:name).join(', ')
+    else
+      return ""
+    end
+  end
+
   def class_students
     #Student.where(std: std, is_active: true)
     if sub_classes.present?

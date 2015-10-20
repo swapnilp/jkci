@@ -33,6 +33,7 @@ class Ability
       can :enable_sms, Student 
       can :filter_students, Student 
       can :disable_student, Student 
+      can :download_report, Student
     else
       can :read, Gallery
       can :read, Event

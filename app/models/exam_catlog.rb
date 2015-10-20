@@ -2,6 +2,7 @@ class ExamCatlog < ActiveRecord::Base
 
   belongs_to :exam
   belongs_to :student
+  belongs_to :jkci_class
 
   scope :only_absents, -> {where(is_present: false)}
   scope :only_presents, -> {where(is_present: true)}
