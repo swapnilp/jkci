@@ -66,7 +66,6 @@ class StudentsController < ApplicationController
     respond_to do |format|
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" }
     end
-    
   end
   
   def enable_sms
