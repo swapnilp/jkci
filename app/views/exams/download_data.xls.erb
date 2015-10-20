@@ -4,117 +4,145 @@
     <ss:Style ss:ID="1">
       <ss:Font ss:Bold="1"/>
     </ss:Style>
+    <ss:Style ss:ID="2">
+      <ss:Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
+      <ss:Font ss:Bold="1"/>
+    </ss:Style>
+    <ss:Style ss:ID="s4">
+      <ss:Borders>
+	<ss:Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </ss:Borders>
+      <ss:Font  ss:Bold="1"/>
+      <ss:Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
+      <ss:Interior ss:Color="#CCFFFF" ss:Pattern="Solid"/>
+    </ss:Style>
+    <ss:Style ss:ID="s5">
+      <ss:Borders>
+	<ss:Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </ss:Borders>
+      <ss:Font  ss:Bold="1"/>
+      <ss:Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
+    </ss:Style>
+    <ss:Style ss:ID="s6">
+      <ss:Borders>
+	<ss:Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </ss:Borders>
+      <ss:Font  ss:Bold="1"/>
+      <ss:Alignment ss:Vertical="Bottom" ss:WrapText="1"/>
+      <ss:Interior ss:Color="#DDDDDD" ss:Pattern="Solid"/>
+    </ss:Style>
+    <ss:Style ss:ID="s8">
+      <ss:Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <ss:Borders>
+	<ss:Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </ss:Borders>
+      <ss:Font ss:Size="24" ss:Bold="1"/>
+    </ss:Style>
+    <ss:Style ss:ID="s9">
+      <ss:Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      <ss:Font ss:Bold="1"/>
+      <ss:Borders>
+	<ss:Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+	<ss:Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </ss:Borders>
+    </ss:Style>
   </ss:Styles>
   <ss:Worksheet ss:Name="Sheet1">
     <ss:Table>
-      <ss:Column ss:Width="80"/>
-      <ss:Column ss:Width="120"/>
-      <ss:Column ss:Width="80"/>
+      <ss:Column ss:Width="35"/>
+      <ss:Column ss:Width="160"/>
+      <ss:Column ss:Width="100"/>
+      <ss:Column ss:Width="60"/>
+      <ss:Column ss:Width="70"/>
+      <ss:Column ss:Width="50"/>
       <ss:Row ss:StyleID="1">
       </ss:Row>
-      <ss:Row ss:StyleID="1">
-	<ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String">Exam Id</ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String"><%= @exam.id %></ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String">Exam Date</ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String"><%= @exam.exam_date.to_date %></ss:Data>
-        </ss:Cell>
+      <ss:Row ss:Height="30">
+	<ss:Cell ss:MergeAcross="5" ss:StyleID="s8">
+	  <ss:Data ss:Type="String"><%= @exam.id %>- <%= @exam.name %></ss:Data>
+	</ss:Cell>
       </ss:Row>
-      <ss:Row ss:StyleID="1">
-	<ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String">Exam Name</ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String"><%= @exam.name %></ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String">Exam marks</ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String"><%= @exam.marks%></ss:Data>
-        </ss:Cell>
+      <ss:Row>
+	<ss:Cell ss:MergeAcross="2"  ss:StyleID="s9">
+	  <ss:Data ss:Type="String">Date - <%= @exam.exam_date.to_date %></ss:Data>
+	</ss:Cell>
+	<ss:Cell ss:MergeAcross="2" ss:StyleID="s9">
+	  <ss:Data ss:Type="String">Marks - <%= @exam.marks %></ss:Data>
+	</ss:Cell>
       </ss:Row>
-      <ss:Row ss:StyleID="1">
-	<ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String"></ss:Data>
-        </ss:Cell>
+      <ss:Row>
+	<ss:Cell ss:MergeAcross="2"  ss:StyleID="s9">
+	  <ss:Data ss:Type="String">Class - <%= @exam.jkci_class.class_name %></ss:Data>
+	</ss:Cell>
+	<ss:Cell ss:MergeAcross="2" ss:StyleID="s9">
+	  <ss:Data ss:Type="String">Exam Type - <%= @exam.exam_type %></ss:Data>
+	</ss:Cell>
       </ss:Row>
-      <ss:Row ss:StyleID="1">
-        <ss:Cell>
-          <ss:Data ss:Type="String">Index</ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String">Name</ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String">Parent Number</ss:Data>
-        </ss:Cell>
+      <ss:Row>
+      </ss:Row>
+      <ss:Row ss:StyleID="s4">
 	<ss:Cell>
-          <ss:Data ss:Type="String">Is Present</ss:Data>
-        </ss:Cell>
+	  <ss:Data ss:Type="String">Index</ss:Data>
+	</ss:Cell>
 	<ss:Cell>
-          <ss:Data ss:Type="String">Marks</ss:Data>
-        </ss:Cell>
+	  <ss:Data ss:Type="String">Name</ss:Data>
+	</ss:Cell>
 	<ss:Cell>
-          <ss:Data ss:Type="String">Rank</ss:Data>
-        </ss:Cell>
+	  <ss:Data ss:Type="String">Parent Mobile</ss:Data>
+	</ss:Cell>
+	<ss:Cell>
+	  <ss:Data ss:Type="String">Is Present</ss:Data>
+	</ss:Cell>
+	<ss:Cell>
+	  <ss:Data ss:Type="String">Marks</ss:Data>
+	</ss:Cell>
+	<ss:Cell>
+	  <ss:Data ss:Type="String">Rank</ss:Data>
+	</ss:Cell>
       </ss:Row>
       <%- @exam_catlogs.each_with_index do |exam_catlog, index| %>
-      <ss:Row>
-        <ss:Cell>
-          <ss:Data ss:Type="Number"><%= exam_catlog.student.id %></ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String"><%= exam_catlog.student.name %></ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String"><%= exam_catlog.student.p_mobile %></ss:Data>
-        </ss:Cell>
-	<ss:Cell>
-          <ss:Data ss:Type="String"> <%= exam_catlog.is_present %></ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String"><%= exam_catlog.marks %></ss:Data>
-        </ss:Cell>
-        <ss:Cell>
-          <ss:Data ss:Type="String"><%= exam_catlog.rank %></ss:Data>
-        </ss:Cell>
-      </ss:Row>
+        <ss:Row ss:StyleID="<%= exam_catlog.is_present == false ? 's6' : 's5' %>" ss:Height="20">
+	  <ss:Cell>
+	    <ss:Data ss:Type="Number"><%= index  + 1 %></ss:Data>
+	  </ss:Cell>
+	  <ss:Cell>
+	    <ss:Data ss:Type="String"><%= exam_catlog.student.name %></ss:Data>
+	  </ss:Cell>
+	  <ss:Cell>
+	    <ss:Data ss:Type="String"><%= exam_catlog.student.p_mobile %></ss:Data>
+	  </ss:Cell>
+	  <ss:Cell>
+	    <ss:Data ss:Type="String"><%= exam_catlog.is_present %></ss:Data>
+	  </ss:Cell>
+	  <ss:Cell>
+	    <ss:Data ss:Type="String"><%= exam_catlog.marks %></ss:Data>
+	  </ss:Cell>
+	  <ss:Cell>
+	    <ss:Data ss:Type="String"><%= exam_catlog.rank %></ss:Data>
+	  </ss:Cell>
+	</ss:Row>
       <%- end %>
     </ss:Table>
   </ss:Worksheet>
 </ss:Workbook>
+
+
+
+
+
+
 
