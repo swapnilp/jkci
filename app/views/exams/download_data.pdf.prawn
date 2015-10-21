@@ -1,7 +1,7 @@
 prawn_document do |pdf|
 
   pdf.formatted_text [ 
-    { text: "#{@exam.id} - #{@exam.name}", :styles => [:bold], :size => 18 }
+    { text: "#{@exam.id} - #{@exam.name}", :styles => [:bold], :size => 16 }
   ], align: :center
 
   pdf.define_grid(:columns => 2, :rows => 30, :gutter => 0)
@@ -19,14 +19,7 @@ prawn_document do |pdf|
  
 
  pdf.move_down 5
- pdf.stroke_horizontal_rule
-
-  pdf.move_down 10
-  pdf.formatted_text [ 
-    { text: "Catlog", :styles => [:bold], :size => 18 }
-  ], align: :left
-
-  pdf.table(@exam_catlogs, :column_widths => [35, 185, 80, 80, 60, 55],  :cell_style => { :overflow => :shrink_to_fit, :min_font_size => 6, :height => 19}) do
+ pdf.table(@exam_catlogs, :column_widths => [35, 185, 80, 80, 60, 55],  :cell_style => { :overflow => :shrink_to_fit, :min_font_size => 6, :height => 17}) do
     row(0).font_style = :bold
     row(0).font_size = 10
 
