@@ -10,7 +10,7 @@ prawn_document do |pdf|
     pdf.text "Students count -  #{@jkci_class.students.count}", align: :left
   end
   pdf.grid(1, 1).bounding_box do
-    pdf.text "Teacher -  #{@jkci_class.teacher.try(:name)}", align: :right
+    pdf.text "Teacher -  #{@jkci_class.teacher.try(:name) || '____________________'}", align: :right
   end
   pdf.move_down(10)
   pdf.stroke_horizontal_line 0, 525
