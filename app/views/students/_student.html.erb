@@ -31,5 +31,8 @@
       <%- end %>
       <%- end %>
     </td>
+    <td>
+      <%= link_to "Report", download_progress_report_path(student, format: "pdf"), class: "btn btn-primary btn-sm", target: "_blank" %>
+    </td>
   </tr>
 <%- end %>
