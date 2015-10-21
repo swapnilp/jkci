@@ -21,9 +21,9 @@
 	<span class="col-sm-6 paddingTop10"><%= @jkci_class.teacher.try(:name) %></span>
       </div>
       <div class="col-sm-12 textLeft">
-	<span class="col-sm-2"><h5>Download Catlog</h5></span>
+	<span class="col-sm-2"><h5>Download Syllabus</h5></span>
 	<span class="col-sm-6 paddingTop10">
-	  <%= link_to "Download catlog" , download_class_catlog_path(@jkci_class, {format: :pdf}), class: 'btn btn-primary btn-sm', target: "_blank" %>
+	  <%= link_to "Download Syllabus" , download_class_syllabus_path(@jkci_class, {format: :pdf}), class: 'btn btn-primary btn-sm', target: "_blank" %>
 	</span>
       </div>
       <div class="col-sm-12 textLeft paddingTop10">
