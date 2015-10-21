@@ -25,6 +25,7 @@ class Ability
       can :filter_class_exams, JkciClass
       can :class_daily_teaches, JkciClass
       can :filter_daily_teach, JkciClass
+      can :download_class_catlog, JkciClass
       can :filter_class, JkciClass
       can :manage, DailyTeachingPoint
       can :manage, Exam

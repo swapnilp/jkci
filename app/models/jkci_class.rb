@@ -79,4 +79,14 @@ class JkciClass < ActiveRecord::Base
     student_ids = self.class_students.where(sc_string).map(&:student_id)
     students.where("students.id in (?)", student_ids)
   end
+
+  def chapters_table_format
+    table = [["Chapters", "Points"]]
+    chapters = self.subject.chapters
+    chapters.each_with_index do |chapter, index|
+      table << ["#{chapter.name}", "#{chapter.points_name}"]
+    end
+    table
+  end
+  
 end

@@ -74,6 +74,7 @@ Rails.application.routes.draw do
   end
   
   get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
+  get "/class/:id/download_class_catlog" => "jkci_classes#download_class_catlog", as: "download_class_catlog"
   get "/jkci_class/:id/daily_teaches" => "jkci_classes#class_daily_teaches", as: "class_daily_teaches"
   get "/jkci_class/:id/filter_class_exams" => "jkci_classes#filter_class_exams", as: "filter_class_exams"
   get "/jkci_class/:id/filter_daily_teach" => "jkci_classes#filter_daily_teach", as: "filter_daily_teach"

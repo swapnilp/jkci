@@ -139,6 +139,14 @@ class JkciClassesController < ApplicationController
       format.json {render json: {success: true, html: render_to_string(:partial => "daily_teaching_point.html.erb", :layout => false, locals: {daily_teaching_points: @daily_teaching_points, hide_edit: true}), pagination_html:  render_to_string(partial: 'daily_teach_pagination.html.erb', layout: false, locals: {class_daily_teach: @daily_teaching_points}), css_holder: ".dailyTeach tbody"}}
     end
   end
+
+  def download_class_catlog
+    @jkci_class = JkciClass.where(id: params[:id]).first
+    @chapters_table = @jkci_class.chapters_table_format
+    respond_to do |format|
+      format.pdf { render :layout => false }
+    end
+  end
   
   def my_sanitizer
     #params.permit!
