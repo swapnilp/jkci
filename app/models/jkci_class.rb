@@ -88,5 +88,22 @@ class JkciClass < ActiveRecord::Base
     end
     table
   end
+
+  def students_table_format
+    table = [["Id", "Name", "Parent Mobile", "Is Present", "", "Id", "Name", "Parent Mobile", "Is Present", ""]]
+    students = self.students
+    students.in_groups_of(2).each do |student_groups|
+      table_group = []
+      student_groups.each do |student|
+        if student
+          table_group << ["#{student.id}", "#{student.name}", "#{student.p_mobile}", "", ""] 
+        else
+          table_group << ["", "", "", "", ""] 
+        end
+      end
+      table << table_group.flatten
+    end
+    table
+  end
   
 end

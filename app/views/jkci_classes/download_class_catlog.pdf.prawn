@@ -11,12 +11,13 @@ prawn_document do |pdf|
   end
   pdf.grid(1, 1).bounding_box do
     pdf.text "Teacher -  #{@jkci_class.teacher.try(:name) || '____________________'}", align: :right
+    pdf.text "Date -  ____________________", align: :right
   end
   pdf.move_down(10)
   pdf.stroke_horizontal_line 0, 525
   
   pdf.move_down(20)
-  pdf.table(@chapters_table, :column_widths => [100, 420],  :cell_style => { :overflow => :shrink_to_fit, :size => 10}) do
+  pdf.table(@catlogs, :column_widths => [20, 120, 65, 50, 5, 20, 120, 65, 50, 5],  :cell_style => { :overflow => :shrink_to_fit, :min_font_size => 6, :height => 17}) do
     row(0).font_style = :bold
     row(0).size = 12
   end			       
