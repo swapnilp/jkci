@@ -29,10 +29,11 @@ class ExamsController < ApplicationController
   
   def download_data
     @exam = Exam.where(id: params[:id]).first
-    @exam_catlogs = @exam.exam_catlogs
+    @exam_catlogs = @exam.exam_table_format
     filename = "#{@exam.name}.xls"
     respond_to do |format|
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" }
+      format.pdf { render :layout => false }
     end
   end
 

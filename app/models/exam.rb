@@ -153,6 +153,13 @@ class Exam < ActiveRecord::Base
     end
   end
 
+  def exam_table_format
+    table = [["Index", "Name", "Parent Mobile", "Is Present", "Marks", "Rank"]]
+    self.exam_catlogs.each_with_index do |exam_catlog, index|
+      table << ["#{index+1}", "#{exam_catlog.exam.name}", "#{exam_catlog.student.p_mobile}", "#{exam_catlog.is_present}", "#{exam_catlog.marks}", "#{exam_catlog.rank}"]
+    end
+    table
+  end
   
   def dtps
     DailyTeachingPoint.where(id: daily_teaching_points.split(',').reject(&:blank?)) rescue []

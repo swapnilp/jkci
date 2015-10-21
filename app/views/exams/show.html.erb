@@ -69,7 +69,7 @@
   <div class="col-sm-12 textLeft">
     <span class="col-sm-2"><h5>DownLoad Exam Data</h5></span>
     <div class="col-sm-6 paddingTop10 examDocument">
-      <%= link_to "Download Excel", download_exam_data_path(@exam, format: "xls"), class: "btn btn-primary btn-sm" %>
+      <%= link_to "Download Excel", download_exam_data_path(@exam, format: "pdf"), class: "btn btn-primary btn-sm", target: '_blank' %>
     </div>
   </div>
   <%- else %>
