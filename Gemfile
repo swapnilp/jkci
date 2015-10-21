@@ -38,6 +38,9 @@ gem 'cancancan', '~> 1.10'
 gem 'aws-sdk', '< 2.0'
 gem "rolify"
 gem "google_visualr", ">= 2.5"
+#gem "prawn", '~>2.0.2'
+#gem "prawn-table", '~>0.2.2'
+gem 'prawn-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.0.3'

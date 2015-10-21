@@ -27,4 +27,5 @@ class ExamCatlog < ActiveRecord::Base
   def is_absent?
     return self.is_present == false
   end
+
 end
