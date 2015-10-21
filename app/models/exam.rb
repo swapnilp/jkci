@@ -155,7 +155,12 @@ class Exam < ActiveRecord::Base
 
   def exam_table_format
     table = [["Index", "Name", "Parent Mobile", "Is Present", "Marks", "Rank"]]
-    self.exam_catlogs.each_with_index do |exam_catlog, index|
+    if self.is_result_decleared
+      catlogs =  self.exam_catlogs.order("rank asc")
+    else
+      catlogs =  self.exam_catlogs
+    end
+    catlogs.each_with_index do |exam_catlog, index|
       table << ["#{index+1}", "#{exam_catlog.student.name}", "#{exam_catlog.student.p_mobile}", "#{exam_catlog.is_present}", "#{exam_catlog.marks}", "#{exam_catlog.rank}"]
     end
     table
