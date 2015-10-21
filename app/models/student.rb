@@ -44,6 +44,10 @@ class Student < ActiveRecord::Base
     query
   end
 
+  def classes_names
+    self.jkci_classes.map(&:class_name).join(', ')
+  end
+
   def class_info
     jkci_classes.select([:id, :class_name, :class_start_time, :teacher_id]).includes([:teacher])
   end

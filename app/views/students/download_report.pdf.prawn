@@ -3,7 +3,9 @@ prawn_document do |pdf|
   pdf.formatted_text [ 
     { text: "#{@student.id} - #{@student.name}", :styles => [:bold], :size => 18 }
   ], align: :center
-  pdf.pad_bottom(10) { pdf.text "Parent Mobile -  #{@student.p_mobile}", align: :right }
+
+  pdf.text "Classes -  #{@student.classes_names}", align: :left
+  pdf.text "Parent Mobile -  #{@student.p_mobile}", align: :right
   pdf.stroke_horizontal_rule
 
   pdf.move_down 10
