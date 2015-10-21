@@ -11,8 +11,9 @@ prawn_document do |pdf|
     { text: "Exams", :styles => [:bold], :size => 18 }
   ], align: :left
 
-  pdf.table(@exam_catlogs, :column_widths => [35, 160, 55, 80, 60, 50, 45, 35],  :cell_style => { :overflow => :shrink_to_fit, :min_font_size => 8, :height => 18 }) do
+  pdf.table(@exam_catlogs, :column_widths => [35, 155, 55, 80, 60, 55, 45, 35],  :cell_style => { :overflow => :shrink_to_fit, :min_font_size => 6, :height => 18}) do
     row(0).font_style = :bold
+    row(0).font_size = 10
 
     values = cells.columns(1..-1).rows(1..-1)
     
