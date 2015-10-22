@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022055747) do
+ActiveRecord::Schema.define(version: 20151022123704) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -239,6 +239,16 @@ ActiveRecord::Schema.define(version: 20151022055747) do
     t.string   "actions",              limit: 255
     t.boolean  "is_completed",         limit: 1,   default: false
     t.boolean  "verification_require", limit: 1,   default: false
+  end
+
+  create_table "organisations", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "email",       limit: 255
+    t.string   "mobile",      limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "email_code",  limit: 255
+    t.string   "mobile_code", limit: 255
   end
 
   create_table "parents_meetings", force: :cascade do |t|

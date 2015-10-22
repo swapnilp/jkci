@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "/student/:id/download_report" => "students#download_report", as: "download_progress_report"
   resources :parents
   resources :parents_meeting
+  resources :organisations
   get '/parents_meeting/:id/send_sms' => "parents_meeting#sms_send", as: "meeting_sms_send"
   
   resources :parents_list, only: [:index]

@@ -43,7 +43,7 @@ class Ability
       can :read, Album
       can :read, BatchResult
       can :read, Result
-      
+      can :create, Organisation
             
       
       #can :roll, :clark
