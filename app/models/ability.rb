@@ -21,6 +21,7 @@ class Ability
 
       can :roll, :clark
       can :read, Subject
+      can :read, SubClass
       can :read, JkciClass
       can :filter_class_exams, JkciClass
       can :class_daily_teaches, JkciClass

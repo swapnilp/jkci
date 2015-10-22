@@ -141,10 +141,12 @@
 	    </div>
 	  </div>
 	  <div id="k-tab-sub_class" class="tab-pane fade ">
+	    <%= link_to "Download SubClass Catlog" , download_class_catlog_path(@jkci_class, {format: :pdf}), class: 'btn btn-primary btn-sm', onclick: "downloadSubClassCatlog(event, this);" %>
 	    <table class="table table-hover examsTable table-striped subClass">
 	      <thead>
 		<tr>
-		  <th>#</th>
+		  <th>Select</th>
+		  <th>#<th>
 		  <th>Name</th>
 		  <th>Description</th>
 		  <th>Students</th>

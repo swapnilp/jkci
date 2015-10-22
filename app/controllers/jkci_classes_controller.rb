@@ -142,7 +142,7 @@ class JkciClassesController < ApplicationController
 
   def download_class_catlog
     @jkci_class = JkciClass.where(id: params[:id]).first
-    @catlogs = @jkci_class.students_table_format
+    @catlogs = @jkci_class.students_table_format(params[:subclass])
     respond_to do |format|
       format.pdf { render :layout => false }
     end

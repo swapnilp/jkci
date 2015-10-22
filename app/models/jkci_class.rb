@@ -70,13 +70,14 @@ class JkciClass < ActiveRecord::Base
 
   def sub_classes_students(s_c_ids)
     # s_c_ids is array of sub classes
-    sub_classes_ids = sub_classes.where("id in (?)", s_c_ids).map(&:id)
-    sc_string = ""
+    sub_classes_ids = self.sub_classes.where("id in (?)", s_c_ids).map(&:id)
+    sc_string = "sub_class like '%,00,%'"
     sub_classes_ids.each do |sc_id|
-      sc_string << " || " unless sub_classes_ids.first == sc_id
+      sc_string << " || "# unless sub_classes_ids.first == sc_id
       sc_string << "sub_class like '%,#{sc_id},%'"
     end
     student_ids = self.class_students.where(sc_string).map(&:student_id)
+    p student_ids 
     students.where("students.id in (?)", student_ids)
   end
 
@@ -89,10 +90,14 @@ class JkciClass < ActiveRecord::Base
     table
   end
 
-  def students_table_format
+  def students_table_format(sub_class_ids)
     table = [["Id", "Name", "Parent Mobile", "Is Present", "", "Id", "Name", "Parent Mobile", "Is Present", ""]]
-    students = self.students
-    students.in_groups_of(2).each do |student_groups|
+    if sub_class_ids.present?
+      c_students = self.sub_classes_students(sub_class_ids.split(','))
+    else
+      c_students = self.students
+    end
+    c_students.in_groups_of(2).each do |student_groups|
       table_group = []
       student_groups.each do |student|
         if student

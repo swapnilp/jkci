@@ -1,6 +1,9 @@
 <%- sub_classes.each_with_index do |sub_class, index| %>
   <tr>
     <td>
+      <%= check_box_tag sub_class.id, sub_class.name, false, style: 'display:inline-block;margin:0;' %>
+    </td>
+    <td>
       <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
     </td>
     <td>

@@ -37,3 +37,13 @@ function classFilterByBatch(event, self){
     $(".paginationDiv").html(data['pagination_html']);
   });
 }
+
+
+function downloadSubClassCatlog(event, self){
+  event.preventDefault();
+  selectedSubClass = [];
+  $(".subClass input[type=checkbox]:checked").each(function(){
+    selectedSubClass.push($(this).attr("id"));
+  });
+  window.open(''+ $(self).attr("href")+'?&subclass='+selectedSubClass);
+}
