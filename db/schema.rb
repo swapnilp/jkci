@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016051816) do
+ActiveRecord::Schema.define(version: 20151022055747) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20151016051816) do
     t.string   "weight",     limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "point_id",   limit: 255
   end
 
   create_table "class_catlogs", force: :cascade do |t|

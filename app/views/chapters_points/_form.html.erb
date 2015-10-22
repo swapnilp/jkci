@@ -2,6 +2,12 @@
   <%= form_for [@chapter, @point], html:{role: 'form', class: 'form-horizontal'}  do |f| %>
     <%= f.hidden_field :chapter_id %>
     <div class="form-group">
+      <%= f.label 'Point Id', class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.text_field :point_id, class: 'form-control col-sm-4' %>
+      </div>
+    </div>
+    <div class="form-group">
       <%= f.label :name, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">
 	<%= f.text_field :name, class: 'form-control col-sm-4' %>
