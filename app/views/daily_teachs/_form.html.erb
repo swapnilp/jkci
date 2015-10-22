@@ -64,7 +64,7 @@
   $(function () {
     $('#datetimepicker_dailyteach').datetimepicker({
       format: 'DD/MM/YYYY HH:mm',
-      defaultDate: "<%= @daily_teaching_point.date.try(:to_time) || (Time.now)  %>"
+      defaultDate: "<%= @daily_teaching_point.date.try(:to_time).try(:strftime, '%Y-%m-%dT%H:%M') || (Time.now).strftime('%Y-%m-%dT%H:%M')  %>"
     });
   });
 </script>

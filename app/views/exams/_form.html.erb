@@ -107,7 +107,7 @@
   $(function () {
     $('#datetimepicker_examdate').datetimepicker({
       format: 'DD/MM/YYYY HH:mm',
-      defaultDate: "<%= @exam.exam_date.try(:to_time) || (Time.now + 1.day)  %>"
+      defaultDate: "<%= @exam.exam_date.try(:to_time).try(:strftime, '%Y-%m-%dT%H:%M') || (Time.now + 1.day).strftime('%Y-%m-%dT%H:%M')  %>"
     });
   });
 </script>
