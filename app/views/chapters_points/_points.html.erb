@@ -10,7 +10,9 @@
     <%= point.weight %>
   </td>
   <td>
-    <%= link_to "Edit", edit_chapter_chapters_point_path(point.chapter_id, point) %>
+    <%- if current_user.has_role? :admin%>
+      <%= link_to "Edit", edit_chapter_chapters_point_path(point.chapter_id, point) %>
+    <%- end %>
   </td>
 </tr>
 <%- end %>

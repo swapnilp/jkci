@@ -227,3 +227,7 @@ figure.gallery-photo-thumb{
 .field_with_errors label {
   color: #ea5644;
 }
+
+table th.center {
+  text-align:center;
+}

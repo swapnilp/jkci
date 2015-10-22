@@ -18,7 +18,9 @@
 
     <div class="col-sm-12 textLeft">
       <h2>Chapters</h2>
-      <%= link_to 'New Chapter', new_chapter_path(subject_id: @subject.id), class: 'btn btn-primary' %>
+      <%- if current_user.has_role? :admin%>
+        <%= link_to 'New Chapter', new_chapter_path(subject_id: @subject.id), class: 'btn btn-primary' %>
+      <%- end %>
       <div>
 	<table class="table table-hover studentsTable">
 	  <thead>

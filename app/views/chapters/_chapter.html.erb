@@ -10,8 +10,11 @@
     <%= chapter.subject.std_name %>
   </td>
   <td>
-    <%= link_to "Show", chapter_path(chapter)%> | 
+    <%= link_to "Show", chapter_path(chapter)%> 
+    <%- if current_user.has_role? :admin%>
+    | 
     <%= link_to "Edit", edit_chapter_path(chapter) %>
+    <%- end %>
   </td>
 </tr>
 <%- end %>
