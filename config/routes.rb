@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {sessions: 'sessions'}
+  devise_for :users, :controllers => {sessions: 'user/sessions', :registrations => "user/registrations"}
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :parents
   resources :parents_meeting
   resources :organisations
+  get 'organisation/:id/regenerate_mobile_code' => "organisations#regenerate_organisation_code", as: 'regenerate_organisation_code'
+  
   get '/parents_meeting/:id/send_sms' => "parents_meeting#sms_send", as: "meeting_sms_send"
   
   resources :parents_list, only: [:index]

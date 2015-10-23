@@ -33,6 +33,7 @@
 //= require students
 //= require parents_meeting
 //= require parents_list
+//= require organisations
 //= require sub_classes
 //= require ajax-submit
 // require theme

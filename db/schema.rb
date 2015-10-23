@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022123704) do
+ActiveRecord::Schema.define(version: 20151023040057) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -71,14 +71,16 @@ ActiveRecord::Schema.define(version: 20151022123704) do
     t.date     "recover_date"
     t.boolean  "sms_sent",                limit: 1, default: false
     t.boolean  "is_followed",             limit: 1, default: false
+    t.integer  "organisation_id",         limit: 4
   end
 
   create_table "class_students", force: :cascade do |t|
-    t.integer  "jkci_class_id", limit: 4
-    t.integer  "student_id",    limit: 4
+    t.integer  "jkci_class_id",   limit: 4
+    t.integer  "student_id",      limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "sub_class",     limit: 255, default: ",0,"
+    t.string   "sub_class",       limit: 255, default: ",0,"
+    t.integer  "organisation_id", limit: 4
   end
 
   create_table "daily_teaching_points", force: :cascade do |t|
@@ -94,6 +96,7 @@ ActiveRecord::Schema.define(version: 20151022123704) do
     t.string   "chapters_point_id", limit: 255
     t.string   "sub_classes",       limit: 255
     t.boolean  "verify_absenty",    limit: 1,     default: false
+    t.integer  "organisation_id",   limit: 4
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -120,6 +123,7 @@ ActiveRecord::Schema.define(version: 20151022123704) do
     t.integer  "exam_id",               limit: 4
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.integer  "organisation_id",       limit: 4
   end
 
   create_table "events", force: :cascade do |t|
@@ -138,14 +142,15 @@ ActiveRecord::Schema.define(version: 20151022123704) do
   end
 
   create_table "exam_absents", force: :cascade do |t|
-    t.integer  "student_id",  limit: 4
-    t.integer  "exam_id",     limit: 4
-    t.boolean  "sms_sent",    limit: 1
-    t.boolean  "email_sent",  limit: 1
-    t.boolean  "reattend",    limit: 1
+    t.integer  "student_id",      limit: 4
+    t.integer  "exam_id",         limit: 4
+    t.boolean  "sms_sent",        limit: 1
+    t.boolean  "email_sent",      limit: 1
+    t.boolean  "reattend",        limit: 1
     t.datetime "attend_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organisation_id", limit: 4
   end
 
   create_table "exam_catlogs", force: :cascade do |t|
@@ -163,17 +168,19 @@ ActiveRecord::Schema.define(version: 20151022123704) do
     t.boolean  "absent_sms_sent", limit: 1,     default: false
     t.boolean  "is_ingored",      limit: 1
     t.integer  "rank",            limit: 4
+    t.integer  "organisation_id", limit: 4
   end
 
   create_table "exam_results", force: :cascade do |t|
-    t.integer  "student_id",  limit: 4
-    t.integer  "exam_id",     limit: 4
-    t.float    "marks",       limit: 24
-    t.boolean  "sms_sent",    limit: 1
-    t.boolean  "email_sent",  limit: 1
-    t.boolean  "late_attend", limit: 1
+    t.integer  "student_id",      limit: 4
+    t.integer  "exam_id",         limit: 4
+    t.float    "marks",           limit: 24
+    t.boolean  "sms_sent",        limit: 1
+    t.boolean  "email_sent",      limit: 1
+    t.boolean  "late_attend",     limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organisation_id", limit: 4
   end
 
   create_table "exams", force: :cascade do |t|
@@ -198,6 +205,7 @@ ActiveRecord::Schema.define(version: 20151022123704) do
     t.boolean  "create_verification",   limit: 1,   default: false
     t.boolean  "verify_absenty",        limit: 1,   default: false
     t.boolean  "verify_result",         limit: 1,   default: false
+    t.integer  "organisation_id",       limit: 4
   end
 
   create_table "galleries", force: :cascade do |t|
@@ -226,6 +234,7 @@ ActiveRecord::Schema.define(version: 20151022123704) do
     t.boolean  "is_active",          limit: 1,   default: true
     t.integer  "subject_id",         limit: 4
     t.integer  "current_chapter_id", limit: 4
+    t.integer  "organisation_id",    limit: 4
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -239,6 +248,7 @@ ActiveRecord::Schema.define(version: 20151022123704) do
     t.string   "actions",              limit: 255
     t.boolean  "is_completed",         limit: 1,   default: false
     t.boolean  "verification_require", limit: 1,   default: false
+    t.integer  "organisation_id",      limit: 4
   end
 
   create_table "organisations", force: :cascade do |t|
@@ -249,16 +259,18 @@ ActiveRecord::Schema.define(version: 20151022123704) do
     t.datetime "updated_at",              null: false
     t.string   "email_code",  limit: 255
     t.string   "mobile_code", limit: 255
+    t.datetime "last_sent"
   end
 
   create_table "parents_meetings", force: :cascade do |t|
-    t.string   "agenda",         limit: 255
+    t.string   "agenda",          limit: 255
     t.datetime "date"
-    t.string   "contact_person", limit: 255
-    t.integer  "batch_id",       limit: 4
-    t.boolean  "sms_sent",       limit: 1,   default: false
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.string   "contact_person",  limit: 255
+    t.integer  "batch_id",        limit: 4
+    t.boolean  "sms_sent",        limit: 1,   default: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.integer  "organisation_id", limit: 4
   end
 
   create_table "promotional_mails", force: :cascade do |t|
@@ -313,13 +325,14 @@ ActiveRecord::Schema.define(version: 20151022123704) do
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "sms_sents", force: :cascade do |t|
-    t.text     "number",     limit: 65535
-    t.string   "obj_type",   limit: 255
-    t.integer  "obj_id",     limit: 4
-    t.text     "message",    limit: 65535
-    t.boolean  "is_parent",  limit: 1
+    t.text     "number",          limit: 65535
+    t.string   "obj_type",        limit: 255
+    t.integer  "obj_id",          limit: 4
+    t.text     "message",         limit: 65535
+    t.boolean  "is_parent",       limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organisation_id", limit: 4
   end
 
   create_table "standards", force: :cascade do |t|
@@ -330,35 +343,37 @@ ActiveRecord::Schema.define(version: 20151022123704) do
   end
 
   create_table "students", force: :cascade do |t|
-    t.string   "first_name",  limit: 255
-    t.string   "last_name",   limit: 255
-    t.string   "email",       limit: 255
-    t.string   "mobile",      limit: 255
-    t.string   "parent_name", limit: 255
-    t.string   "p_mobile",    limit: 255
-    t.string   "p_email",     limit: 255
-    t.text     "address",     limit: 65535
-    t.string   "group",       limit: 255
-    t.string   "rank",        limit: 255
+    t.string   "first_name",      limit: 255
+    t.string   "last_name",       limit: 255
+    t.string   "email",           limit: 255
+    t.string   "mobile",          limit: 255
+    t.string   "parent_name",     limit: 255
+    t.string   "p_mobile",        limit: 255
+    t.string   "p_email",         limit: 255
+    t.text     "address",         limit: 65535
+    t.string   "group",           limit: 255
+    t.string   "rank",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "std",         limit: 4
-    t.boolean  "is_active",   limit: 1,     default: true
-    t.string   "middle_name", limit: 255
-    t.integer  "batch_id",    limit: 4
-    t.boolean  "enable_sms",  limit: 1,     default: false
-    t.integer  "user_id",     limit: 4
-    t.string   "gender",      limit: 255
-    t.string   "initl",       limit: 255
-    t.boolean  "is_disabled", limit: 1,     default: false
+    t.integer  "std",             limit: 4
+    t.boolean  "is_active",       limit: 1,     default: true
+    t.string   "middle_name",     limit: 255
+    t.integer  "batch_id",        limit: 4
+    t.boolean  "enable_sms",      limit: 1,     default: false
+    t.integer  "user_id",         limit: 4
+    t.string   "gender",          limit: 255
+    t.string   "initl",           limit: 255
+    t.boolean  "is_disabled",     limit: 1,     default: false
+    t.integer  "organisation_id", limit: 4
   end
 
   create_table "sub_classes", force: :cascade do |t|
-    t.string   "name",          limit: 255
-    t.integer  "jkci_class_id", limit: 4
-    t.string   "destription",   limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "name",            limit: 255
+    t.integer  "jkci_class_id",   limit: 4
+    t.string   "destription",     limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "organisation_id", limit: 4
   end
 
   create_table "subjects", force: :cascade do |t|
@@ -382,14 +397,15 @@ ActiveRecord::Schema.define(version: 20151022123704) do
   end
 
   create_table "teachers", force: :cascade do |t|
-    t.integer  "subject_id", limit: 4
-    t.string   "first_name", limit: 255
-    t.string   "last_name",  limit: 255
-    t.string   "mobile",     limit: 255
-    t.string   "email",      limit: 255
-    t.text     "address",    limit: 65535
+    t.integer  "subject_id",      limit: 4
+    t.string   "first_name",      limit: 255
+    t.string   "last_name",       limit: 255
+    t.string   "mobile",          limit: 255
+    t.string   "email",           limit: 255
+    t.text     "address",         limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "organisation_id", limit: 4
   end
 
   create_table "users", force: :cascade do |t|
@@ -408,6 +424,7 @@ ActiveRecord::Schema.define(version: 20151022123704) do
     t.string   "role",                   limit: 255, default: "parent"
     t.string   "student_id",             limit: 255
     t.string   "username",               limit: 255
+    t.integer  "organisation_id",        limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

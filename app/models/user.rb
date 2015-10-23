@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,# :registerable, :recoverable,
+  devise :database_authenticatable, :registerable,# :recoverable,
           :rememberable, :trackable, :validatable, :authentication_keys => [:login]
   attr_accessor :login
 
@@ -18,8 +18,18 @@ class User < ActiveRecord::Base
     end
   end
   
+  def add_organiser_roles
+    ["admin", "clark", "verify_exam", "exam_conduct", "verify_exam_absenty", "add_exam_result", "verify_exam_result", "publish_exam", "create_exam", "add_exam_absenty", "create_daily_teach", "add_daily_teach_absenty", "verify_daily_teach_absenty", "publish_daily_teach_absenty"].each do |u_role|
+      self.add_role u_role.to_sym 
+    end
+  end
+
   def admin?
     return role == 'admin'
+  end
+
+  def organiser?
+    return role == 'organisation'
   end
 
   def staff?

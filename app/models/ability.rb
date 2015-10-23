@@ -44,7 +44,7 @@ class Ability
       can :read, BatchResult
       can :read, Result
       can :create, Organisation
-            
+      can :regenerate_organisation_code, Organisation      
       
       #can :roll, :clark
       #can :create_update, Chapter 

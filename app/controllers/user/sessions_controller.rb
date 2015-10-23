@@ -1,4 +1,4 @@
-class SessionsController < Devise::SessionsController
+class User::SessionsController < Devise::SessionsController
   skip_before_filter :verify_authenticity_token, only: [:create, :destroy]  
   #after_filter :set_csrf_headers, only: [:create, :destroy]
 

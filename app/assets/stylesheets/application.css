@@ -231,3 +231,19 @@ figure.gallery-photo-thumb{
 table th.center {
   text-align:center;
 }
+
+.whiteColor {
+  color: #FFF;
+}
+
+.loginContainer #error_explanation {
+  color: #F5F5F5;
+}
+
+.loginContainer #error_explanation h2 {
+  color: #F5F5F5;
+ }
+
+.redBorder {
+  border: 2px solid red;
+}
