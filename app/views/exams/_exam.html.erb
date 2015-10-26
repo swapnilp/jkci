@@ -19,9 +19,7 @@
       <%= exam.exam_type %>
     </td>
     <td>
-      <%- exam.jkci_classes.each do |jkci_class| %>
-      <%= link_to jkci_class.class_name, jkci_class_path(jkci_class) %>  | 
-      <%- end %>
+      <%= exam.published_date.try(&:to_date) %>
     </td>
     <td>
       <%= exam.ignored_count %>

@@ -4,6 +4,9 @@ class Subject < ActiveRecord::Base
   has_many :jkci_classes
   has_many :chapters
   belongs_to :standard
+
+  scope :compulsory, -> { where(is_compulsory: true) }
+  scope :optional, -> { where(is_compulsory: false) }
   
   def std_name
     "#{name}-#{standard.std_name}"

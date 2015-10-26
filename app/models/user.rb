@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   has_many :students
+  
+  belongs_to :organisation
 
 
   def self.find_for_database_authentication(warden_conditions)

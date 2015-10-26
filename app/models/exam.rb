@@ -53,7 +53,7 @@ class Exam < ActiveRecord::Base
   
   def add_absunt_students(exam_absent_students)
     self.exam_catlogs.where(student_id: exam_absent_students).update_all({is_present: false})
-    Notification.add_exam_abesnty(self.id)
+    Notification.add_exam_abesnty(self.id, self.organisation)
     self.update_attributes({verify_absenty: false})
     #exam_students.each do |student|
       #ExamAbsent.new({student_id: student, exam_id: self.id, sms_sent: false, email_sent: false}).save
@@ -62,7 +62,7 @@ class Exam < ActiveRecord::Base
 
   def remove_absent_student(student_id)
     self.exam_catlogs.where(student_id: student_id).update_all({is_present: nil, is_recover: nil})
-    Notification.add_exam_abesnty(self.id)
+    Notification.add_exam_abesnty(self.id, self.organisation)
     self.update_attributes({verify_absenty: false})
   end
 
@@ -83,19 +83,19 @@ class Exam < ActiveRecord::Base
         #self.send_result_email(self, exam_result.student)
       end
     end
-    Notification.add_exam_result(self.id)
+    Notification.add_exam_result(self.id, self.organisation)
     self.update_attributes({verify_result: false})
   end
   
   def verify_exam_result
     self.update_attributes({verify_result: true})
     self.ranking
-    Notification.verify_exam_result(self.id)
+    Notification.verify_exam_result(self.id, self.organisation)
   end
 
   def remove_exam_result(catlog_id)
     self.exam_catlogs.where(id: catlog_id).update_all({marks: nil, is_present: nil})
-    Notification.add_exam_result(self.id)
+    Notification.add_exam_result(self.id, self.organisation)
     self.update_attributes({verify_result: false})
   end
 
@@ -110,8 +110,8 @@ class Exam < ActiveRecord::Base
   def publish_results
     Delayed::Job.enqueue ExamAbsentSmsSend.new(self)
     Delayed::Job.enqueue ExamResultSmsSend.new(self)
-    self.update_attributes({is_result_decleared: true, is_completed: true})
-    Notification.publish_exam(self.id)
+    self.update_attributes({is_result_decleared: true, is_completed: true, published_date: Time.now})
+    Notification.publish_exam(self.id, self.organisation)
   end
 
   def publish_absentee
@@ -130,9 +130,9 @@ class Exam < ActiveRecord::Base
   def complete_exam
     self.update_attributes({is_completed: true})
     exam_students.each do |student|
-      self.exam_catlogs.build({student_id: student.id, jkci_class_id: self.jkci_class_id}).save
+      self.exam_catlogs.build({student_id: student.id, jkci_class_id: self.jkci_class_id, organisation_id: self.organisation_id}).save
     end
-    Notification.exam_conducted(self.id)
+    Notification.exam_conducted(self.id, self.organisation)
   end
 
   def predict_name

@@ -45,7 +45,7 @@ class DailyTeachingPoint < ActiveRecord::Base
 
   def create_catlog
     class_students.each do |student|
-      self.class_catlogs.build({student_id: student.id, date: self.date, jkci_class_id: self.jkci_class_id}).save
+      self.class_catlogs.build({student_id: student.id, date: self.date, jkci_class_id: self.jkci_class_id, organisation_id: self.organisation_id}).save
     end
   end
 

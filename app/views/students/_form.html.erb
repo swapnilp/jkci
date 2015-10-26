@@ -37,11 +37,19 @@
       </div>
     </div>
     <div class="form-group">
-      <%= f.label :std, class: 'col-sm-2 control-label' %>
+      <%= f.label :standard, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">
-	<%= f.select :std , options_for_select([ "11", "12" ], "11"),{},  class:"form-control" %>
+	<%= f.select :standard_id, options_from_collection_for_select(@standards, "id", "std_name", f.object.standard_id),{},  class:"form-control" %>
       </div>
     </div>
+
+    <div class="form-group">
+      <%= f.label :optional_subject, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= select_tag 'o_subjects', options_from_collection_for_select(@subjects, "id", "name", f.object.subjects.present? ? f.object.subjects.map(&:id).map(&:to_i) : []), { multiple: true, :max_size =>6, class: 'form-control'} %>
+      </div>
+    </div>
+
     <div class="form-group">
       <%= f.label :email, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">

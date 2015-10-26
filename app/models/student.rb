@@ -10,8 +10,12 @@ class Student < ActiveRecord::Base
   has_many :daily_teaching_points, through: :class_catlogs 
   has_many :exam_catlogs
   has_many :exams, through: :exam_catlogs 
+  has_many :student_subjects
+  has_many :subjects, through: :student_subjects
   belongs_to :batch
   belongs_to :user
+  belongs_to :standard
+  
   
   scope :enable_students, -> { where(is_disabled: false) }
   
@@ -30,6 +34,13 @@ class Student < ActiveRecord::Base
 
   def sms_mobile
     return p_mobile.present? ?  "91" << p_mobile : nil
+  end
+
+  def add_students_subjects(o_subjects)
+    self.subjects.delete(self.subjects)
+    self.subjects << standard.subjects.compulsory
+    self.subjects << standard.subjects.where(id: o_subjects.map(&:to_i)) if o_subjects.present?
+      
   end
   
   def exam_query

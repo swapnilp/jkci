@@ -3,7 +3,7 @@ class JkciClassesController < ApplicationController
   load_and_authorize_resource param_method: :my_sanitizer
 
   def index
-    @jkci_classes = JkciClass.includes([:batch]).all.order("id desc").page(params[:page])
+    @jkci_classes = @organisation.jkci_classes.includes([:batch]).all.order("id desc").page(params[:page])
     @batches = Batch.all
     @subjects = Subject.all
     respond_to do |format|
@@ -16,7 +16,7 @@ class JkciClassesController < ApplicationController
     @subject = Subject.where(id: params[:subject_id]).first
     if @subject
       @jkci_class = @subject.jkci_classes.build
-      @teachers = Teacher.all
+      @teachers = @organisation.teachers
       @batches = Batch.all
       @subjects = Subject.all
     else
@@ -25,7 +25,7 @@ class JkciClassesController < ApplicationController
   end
 
   def show
-    @jkci_class = JkciClass.where(id: params[:id]).first
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @chapters = @jkci_class.subject.chapters
     @daily_teaching_points = @jkci_class.daily_teaching_points.includes(:class_catlogs).chapters_points.order('id desc').page(params[:page])
     @teached_chapters = @daily_teaching_points.map(&:chapter_id).uniq
@@ -36,7 +36,7 @@ class JkciClassesController < ApplicationController
   def create
     params.permit!
     @subject = Subject.where(id: params[:subject_id]).first
-    @jkci_class = @subject.jkci_classes.build(params[:jkci_class])
+    @jkci_class = @subject.jkci_classes.build(params[:jkci_class].merge({organisation_id: @organisation.id}))
     if @jkci_class.save
       redirect_to jkci_classes_path
     end
@@ -45,21 +45,21 @@ class JkciClassesController < ApplicationController
   def edit
     @subject = Subject.where(id: params[:subject_id]).first
     @jkci_class = @subject.jkci_classes.where(id: params[:id]).first
-    @teachers = Teacher.all
+    @teachers = @organisation.teachers
     @batches = Batch.all
     @subjects = Subject.all
   end
 
   def assign_students
-    @jkci_class = JkciClass.where(id: params[:id]).first
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @students = Student.enable_students
     @selected_students = @jkci_class.students.map(&:id)
   end
 
   def manage_students
-    jkci_class = JkciClass.where(id: params[:id]).first
+    jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     sutdents = params[:students_ids].map(&:to_i)  rescue []
-    jkci_class.manage_students(sutdents) if jkci_class
+    jkci_class.manage_students(sutdents, @organisation) if jkci_class
     render json: {success: true, id: jkci_class.id}
   end
   
@@ -75,14 +75,14 @@ class JkciClassesController < ApplicationController
   end
   
   def destroy
-    jkci_class = JkciClass.where(id: params[:id]).first
+    jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     if jkci_class.destroy
       redirect_to jkci_classes_path
     end
   end
 
   def chapters
-    @jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
+    @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
     @chapters = @jkci_class.chapters.select([:id, :name])
     @points = @chapters.first.chapters_points.select([:id, :name]) rescue []
     
@@ -93,7 +93,7 @@ class JkciClassesController < ApplicationController
   end
   
   def filter_class
-    jkci_classes = JkciClass.includes([:batch]).all.order("id desc").page(params[:page])
+    jkci_classes = @organisation.jkci_classes.includes([:batch]).all.order("id desc").page(params[:page])
     if params[:batch_id].present?
       jkci_classes = jkci_classes.where(batch_id: params[:batch_id])
     end
@@ -106,7 +106,7 @@ class JkciClassesController < ApplicationController
 
 
   def class_daily_teaches
-    jkci_class = JkciClass.includes([:daily_teaching_points, :class_catlogs]).where(id: params[:id]).first
+    jkci_class = @organisation.jkci_classes.includes([:daily_teaching_points, :class_catlogs]).where(id: params[:id]).first
     @daily_teaching_points = jkci_class.daily_teaching_points.order('id desc')
     if params[:chapters].present?
       @daily_teaching_points = @daily_teaching_points.where(chapter_id: params[:chapters].split(',').map(&:to_i))
@@ -119,7 +119,7 @@ class JkciClassesController < ApplicationController
   end
   
   def filter_class_exams
-    @jkci_class = JkciClass.where(id: params[:id]).first
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @class_exams = @jkci_class.jk_exams.order("updated_at desc").page(params[:page])
     respond_to do |format|
       format.html
@@ -128,7 +128,7 @@ class JkciClassesController < ApplicationController
   end
 
   def filter_daily_teach
-    @jkci_class = JkciClass.where(id: params[:id]).first
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @daily_teaching_points = @jkci_class.daily_teaching_points.includes(:class_catlogs).chapters_points.order('id desc')
     if params[:chapters].present?
       @daily_teaching_points = @daily_teaching_points.where(chapter_id: params[:chapters].split(',').map(&:to_i))
@@ -141,7 +141,7 @@ class JkciClassesController < ApplicationController
   end
 
   def download_class_catlog
-    @jkci_class = JkciClass.where(id: params[:id]).first
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @catlogs = @jkci_class.students_table_format(params[:subclass])
     respond_to do |format|
       format.pdf { render :layout => false }
@@ -149,7 +149,7 @@ class JkciClassesController < ApplicationController
   end
 
   def download_class_syllabus
-    @jkci_class = JkciClass.where(id: params[:id]).first
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @chapters_table = @jkci_class.chapters_table_format
     respond_to do |format|
       format.pdf { render :layout => false }

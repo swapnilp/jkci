@@ -1,13 +1,14 @@
 
 
 function examFilterByClass(event, self){
-    class_id = $(".filter_exam_class").val();
-    type= $("#filter_exam_type").val();
-    status = $("#filter_exam_status").val();
-    $.get("/exams/filter_exam/exam?&class_id="+class_id+"&type="+type+"&status="+status, function(data){
-	$(".examsTable tbody").html(data['html']);
-	$(".paginationDiv").html(data['pagination_html']);
-    });
+  class_id = $(".filter_exam_class").val();
+  type= $("#filter_exam_type").val();
+  status = $("#filter_exam_status").val();
+  $.get("/exams/filter_exam/exam?&class_id="+class_id+"&type="+type+"&status="+status, function(data){
+    $(".examsTable tbody").html(data['html']);
+    $('.dataCounts').html(''+data['count']);
+    $(".paginationDiv").html(data['pagination_html']);
+  });
 }
 
 
@@ -38,5 +39,12 @@ function addExamDocumant(self){
       }
     });
   }
-  
+}
+
+function download_exams_report(event, self) {
+  event.preventDefault();
+  class_id = $(".filter_exam_class").val();
+  type= $("#filter_exam_type").val();
+  status = $("#filter_exam_status").val();
+  window.open(''+ $(self).attr('href')+".pdf?&class_id="+class_id+"&type="+type+"&status="+status);
 }

@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
   load_and_authorize_resource param_method: :my_sanitizer
 
   def index
-    @students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :gender, :is_disabled]).order("id desc").page(params[:page])
+    @students = @organisation.students.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :gender, :is_disabled]).order("id desc").page(params[:page])
     @batches = Batch.active
     respond_to do |format|
       format.html
@@ -12,20 +12,28 @@ class StudentsController < ApplicationController
   end
 
   def new
-    @student = Student.new
+    @student = @organisation.students.build
     @batches = Batch.active
+    @standards = Standard.active
+    @subjects = @standards.first.subjects.optional
   end
   
   def create
     params.permit!
-    student = Student.new(params[:student])
-    if student.save
+    @student = @organisation.students.build(params[:student])
+    if @student.save
+      @student.add_students_subjects(params[:o_subjects])
       redirect_to students_path
+    else
+      @batches = Batch.active
+      @standards = Standard.active
+      @subjects = @standards.first.subjects.optional
+      render :new
     end
   end
   
   def show
-    @student = Student.where(id: params[:id]).first
+    @student = @organisation.students.where(id: params[:id]).first
     
     @exam_catlogs = @student.exam_catlogs.includes([:exam]).order('id desc').page(params[:page])
     @class_catlogs = @student.class_catlogs.includes([:jkci_class, :daily_teaching_point]).order('id desc').page(params[:page])
@@ -33,7 +41,7 @@ class StudentsController < ApplicationController
 
   def filter_students_data
     authorize! :roll, :clark
-    student = Student.where(id: params[:id]).first
+    student = @organisation.students.where(id: params[:id]).first
     includes_tables = params[:data_type] == 'exam' ? [:exam] : [:jkci_class, :daily_teaching_point]
     catlogs = student.send("#{params[:data_type].singularize}_catlogs".to_sym).includes(includes_tables).order('id desc').page(params[:page])
     respond_to do |format|
@@ -43,14 +51,17 @@ class StudentsController < ApplicationController
   end
   
   def edit
-    @student = Student.where(id: params[:id]).first
+    @student = @organisation.students.where(id: params[:id]).first
     @batches = Batch.active
+    @standards = Standard.active
+    @subjects = (@student.standard.try(:subjects) || @standards.first.subjects).optional
   end
 
   def update
     params.permit!
-    @student = Student.where(id: params[:id]).first
+    @student = @organisation.students.where(id: params[:id]).first
     if @student && @student.update(params[:student])
+      @student.add_students_subjects(params[:o_subjects])
       redirect_to students_path
     end
   end
@@ -59,7 +70,7 @@ class StudentsController < ApplicationController
   end
 
   def download_report
-    @student = Student.where(id: params[:id]).first
+    @student = @organisation.students.where(id: params[:id]).first
     @exam_catlogs = @student.exam_table_format
     @dtps = @student.class_catlogs.absent
     filename = "#{@student.name}.xls"
@@ -70,14 +81,14 @@ class StudentsController < ApplicationController
   end
   
   def enable_sms
-    student = Student.select([:id, :enable_sms, ]).where(id: params[:id]).first
+    student = @organisation.students.select([:id, :enable_sms, ]).where(id: params[:id]).first
     student.update_attributes({enable_sms: true})
     Delayed::Job.enqueue ActivationSms.new(student)
     render json: {success: true}
   end
 
   def filter_students
-    students = Student.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :batch_id, :gender, :is_disabled])
+    students = @organisation.students.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :batch_id, :gender, :is_disabled])
     if params[:batch_id].present?
       students = students.where(batch_id: params[:batch_id])
     end
@@ -102,7 +113,7 @@ class StudentsController < ApplicationController
   end
   
   def disable_student
-    student = Student.where(id: params[:id]).first
+    student = @organisation.students.where(id: params[:id]).first
     if student
       student.update_attributes({is_disabled: true, enable_sms: false})
       student.jkci_classes.clear

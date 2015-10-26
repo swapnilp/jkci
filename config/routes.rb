@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get 'exam/:id/publish_absent_exam' => "exams#publish_absent_exam", as: "publish_absent_exam"
   get 'exam/:id/exam_completed' => "exams#exam_completed", as: "exam_completed"
   get "/exams/filter_exam/exam" => "exams#filter_exam", as: "filter_exam"
+  get '/exams/download_exams_report/exam' => "exams#download_exams_report", as: "download_exams_report"
   get "/exam/:id/abesnt_student/:student_id/remove" =>  "exams#remove_exam_absent", as: "remove_exam_absent"
   get "/exam/:id/ignore_student/:student_id" =>  "exams#ignore_student", as: "ignore_exam_student"
   get "/exam/:id/remove_ignore_student/:student_id" =>  "exams#remove_ignore_student", as: "remove_ignore_exam_student"

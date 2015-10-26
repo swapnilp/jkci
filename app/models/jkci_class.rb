@@ -17,16 +17,16 @@ class JkciClass < ActiveRecord::Base
   
   default_scope  {where(is_active: true)} 
 
-  def manage_students(associate_students)
+  def manage_students(associate_students, organisation)
     curr_students = self.students.map(&:id)
     removed_students = curr_students - associate_students
     new_std = associate_students -  (curr_students & associate_students)
-    self.students.delete(Student.where(id: removed_students))
-    self.students << Student.where(id: new_std)
+    self.students.delete(organisation.students.where(id: removed_students))
+    self.students << organisation.students.where(id: new_std)
   end
   
   def jk_exams
-    Exam.where("jkci_class_id = ? OR class_ids like '%,?,%'", self.id, self.id)
+    Exam.where("(jkci_class_id = ? OR class_ids like '%,?,%') AND organisation_id = ?", self.id, self.id, self.organisation_id)
   end
 
   def role_exam_notifications(user)

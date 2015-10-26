@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023040057) do
+ActiveRecord::Schema.define(version: 20151026164405) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 20151023040057) do
     t.boolean  "verify_absenty",        limit: 1,   default: false
     t.boolean  "verify_result",         limit: 1,   default: false
     t.integer  "organisation_id",       limit: 4
+    t.datetime "published_date"
   end
 
   create_table "galleries", force: :cascade do |t|
@@ -338,8 +339,17 @@ ActiveRecord::Schema.define(version: 20151023040057) do
   create_table "standards", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "stream",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "is_active",  limit: 1,   default: true
+  end
+
+  create_table "student_subjects", force: :cascade do |t|
+    t.integer  "student_id", limit: 4
+    t.integer  "subject_id", limit: 4
+    t.integer  "batch_id",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "students", force: :cascade do |t|
@@ -365,6 +375,7 @@ ActiveRecord::Schema.define(version: 20151023040057) do
     t.string   "initl",           limit: 255
     t.boolean  "is_disabled",     limit: 1,     default: false
     t.integer  "organisation_id", limit: 4
+    t.integer  "standard_id",     limit: 4
   end
 
   create_table "sub_classes", force: :cascade do |t|
@@ -377,10 +388,11 @@ ActiveRecord::Schema.define(version: 20151023040057) do
   end
 
   create_table "subjects", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "standard_id", limit: 4
+    t.integer  "standard_id",   limit: 4
+    t.boolean  "is_compulsory", limit: 1,   default: true
   end
 
   create_table "talent2015s", force: :cascade do |t|

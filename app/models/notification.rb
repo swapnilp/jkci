@@ -2,33 +2,33 @@ class Notification < ActiveRecord::Base
 
   scope :pending, -> { where(is_completed: [nil, false], verification_require: true )}
 
-  def self.add_create_exam(obj_id)
-    exam = Exam.where(id: obj_id).first
+  def self.add_create_exam(obj_id, org)
+    exam = org.exams.where(id: obj_id).first
     if exam 
-      Notification.new({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is created. Please verify Exam", url: "/exams/#{obj_id}?&notification=true", actions: "create_exam", verification_require: true}).save
+      org.notifications.build({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is created. Please verify Exam", url: "/exams/#{obj_id}?&notification=true", actions: "create_exam", verification_require: true}).save
     end
   end
   
-  def self.verified_exam(obj_id)
-    exam = Exam.where(id: obj_id).first
+  def self.verified_exam(obj_id, org)
+    exam = org.exams.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: "create_exam").first
       pre_notification.update_attributes({is_completed: true}) if pre_notification
-      Notification.new({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is verified. Please conduct exam ", url: "/exams/#{obj_id}?&notification=true", actions: "verify_exam"}).save
+      org.notifications.build({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is verified. Please conduct exam ", url: "/exams/#{obj_id}?&notification=true", actions: "verify_exam"}).save
     end
   end
 
-  def self.exam_conducted(obj_id)
-    exam = Exam.where(id: obj_id).first
+  def self.exam_conducted(obj_id, org)
+    exam = org.exams.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: "verify_exam").first
       pre_notification.update_attributes({is_completed: true}) if pre_notification
-      Notification.new({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is conducted. Please add absenty & makrs", url: "/exams/#{obj_id}?&notification=true", actions: "exam_conduct"}).save
+      org.notifications.build({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is conducted. Please add absenty & makrs", url: "/exams/#{obj_id}?&notification=true", actions: "exam_conduct"}).save
     end
   end
   
-  def self.add_exam_abesnty(obj_id)
-    exam = Exam.where(id: obj_id).first
+  def self.add_exam_abesnty(obj_id, org)
+    exam = org.exams.where(id: obj_id).first
     if exam
       pre_notification = exam.notifications.where(actions: "exam_conduct").first
       pre_notification.update_attributes({is_completed: true}) if pre_notification
@@ -37,13 +37,13 @@ class Notification < ActiveRecord::Base
       if notification.present?
         notification.update_attributes({is_completed: false})
       else
-        Notification.new({object_type: "Exam", object_id: obj_id, message: "Absenty is added for exam #{exam.name}. Please verify absenty", url: "/exams/#{obj_id}?&notification=true", actions: "add_exam_absenty", verification_require: true}).save
+        org.notifications.build({object_type: "Exam", object_id: obj_id, message: "Absenty is added for exam #{exam.name}. Please verify absenty", url: "/exams/#{obj_id}?&notification=true", actions: "add_exam_absenty", verification_require: true}).save
       end
     end
   end
 
-  def self.verify_exam_abesnty(obj_id)
-    exam = Exam.where(id: obj_id).first
+  def self.verify_exam_abesnty(obj_id, org)
+    exam = org.exams.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: "add_exam_absenty").first
       pre_notification.update_attributes({is_completed: true}) if pre_notification
@@ -51,13 +51,13 @@ class Notification < ActiveRecord::Base
       if notification.present?
         notification.update_attributes({is_completed: false})
       else
-        Notification.new({object_type: "Exam", object_id: obj_id, message: "Absenty is verified for exam #{exam.name}. Exam might be in publish mode.", url: "/exams/#{obj_id}?&notification=true", actions: "verify_exam_absenty"}).save
+        org.notifications.build({object_type: "Exam", object_id: obj_id, message: "Absenty is verified for exam #{exam.name}. Exam might be in publish mode.", url: "/exams/#{obj_id}?&notification=true", actions: "verify_exam_absenty"}).save
       end
     end
   end
   
-  def self.add_exam_result(obj_id)
-    exam = Exam.where(id: obj_id).first
+  def self.add_exam_result(obj_id, org)
+    exam = org.exams.where(id: obj_id).first
     if exam
       pre_notification = exam.notifications.where(actions: "exam_conduct").first
       pre_notification.update_attributes({is_completed: true}) if pre_notification
@@ -66,13 +66,13 @@ class Notification < ActiveRecord::Base
       if notification.present?
         notification.update_attributes({is_completed: false})
       else
-        Notification.new({object_type: "Exam", object_id: obj_id, message: "Result has been added for exam #{exam.name}. Please verify marks.", url: "/exams/#{obj_id}?&notification=true", actions: "add_exam_result", verification_require: true}).save
+        org.notifications.build({object_type: "Exam", object_id: obj_id, message: "Result has been added for exam #{exam.name}. Please verify marks.", url: "/exams/#{obj_id}?&notification=true", actions: "add_exam_result", verification_require: true}).save
       end
     end
   end
 
-  def self.verify_exam_result(obj_id)
-    exam = Exam.where(id: obj_id).first
+  def self.verify_exam_result(obj_id, org)
+    exam = org.exams.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: "add_exam_result").first
       pre_notification.update_attributes({is_completed: true}) if pre_notification
@@ -80,44 +80,44 @@ class Notification < ActiveRecord::Base
       if notification.present?
         notification.update_attributes({is_completed: false})
       else
-        Notification.new({object_type: "Exam", object_id: obj_id, message: "Result has been verified for exam #{exam.name}. Please Publish Exam", url: "/exams/#{obj_id}?&notification=true", actions: "verify_exam_result"}).save
+        org.notifications.build({object_type: "Exam", object_id: obj_id, message: "Result has been verified for exam #{exam.name}. Please Publish Exam", url: "/exams/#{obj_id}?&notification=true", actions: "verify_exam_result"}).save
       end
     end
   end
 
-  def self.publish_exam(obj_id)
-    exam = Exam.where(id: obj_id).first
+  def self.publish_exam(obj_id, org)
+    exam = org.exams.where(id: obj_id).first
     if exam 
       pre_notification = exam.notifications.where(actions: ["verify_exam_result", "verify_exam_absenty"])
       pre_notification.update_all({is_completed: true}) if pre_notification.present?
-      Notification.new({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is published", url: "/exams/#{obj_id}?&notification=true", actions: "publish_exam"}).save
+      org.notifications.build({object_type: "Exam", object_id: obj_id, message: "Exam #{exam.name} is published", url: "/exams/#{obj_id}?&notification=true", actions: "publish_exam"}).save
     end
   end
 
-  def self.add_daily_teaches(obj_id)
+  def self.add_daily_teaches(obj_id, org)
     dtp = DailyTeachingPoint.where(id: obj_id).first
     if dtp
-      Notification.new({object_type: "DailyTeaching_point", object_id: obj_id, message: "Daily Teaches is created for #{dtp.jkci_class.class_name}", url: "/daily_teachs/#{obj_id}?&notification=true"}).save
+      org.notifications.build({object_type: "DailyTeaching_point", object_id: obj_id, message: "Daily Teaches is created for #{dtp.jkci_class.class_name}", url: "/daily_teachs/#{obj_id}?&notification=true"}).save
     end
   end
 
-  def self.create_daily_teaches(obj_id)
+  def self.create_daily_teaches(obj_id, org)
     dtp = DailyTeachingPoint.where(id: obj_id).first
     if dtp
     end
   end
   
-  def self.add_daily_teaches_adsenty(obj_id)
+  def self.add_daily_teaches_adsenty(obj_id, org)
     dtp = DailyTeachingPoint.where(id: obj_id).first
     if dtp
-      Notification.new({object_type: "DailyTeaching_point", object_id: obj_id, message: "Added absenty for  #{dtp.jkci_class.class_name}", url: "/daily_teachs/#{obj_id}?&notification=true"}).save
+      org.notifications.build({object_type: "DailyTeaching_point", object_id: obj_id, message: "Added absenty for  #{dtp.jkci_class.class_name}", url: "/daily_teachs/#{obj_id}?&notification=true"}).save
     end
   end
 
-  def self.publish_daily_teaches_absenty(obj_id)
+  def self.publish_daily_teaches_absenty(obj_id, org)
     dtp = DailyTeachingPoint.where(id: obj_id).first
     if dtp
-      Notification.new({object_type: "DailyTeaching_point", object_id: obj_id, message: "Publish absenty for  #{dtp.jkci_class.class_name}", url: "/daily_teachs/#{obj_id}?&notification=true"}).save
+      org.notifications.build({object_type: "DailyTeaching_point", object_id: obj_id, message: "Publish absenty for  #{dtp.jkci_class.class_name}", url: "/daily_teachs/#{obj_id}?&notification=true"}).save
     end
   end
 end

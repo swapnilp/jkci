@@ -6,24 +6,16 @@
 <div class="textLeft fullWidth">
   <h2 class="left">Filter By</h2>
   <%= select_tag :filter_exam_class, options_from_collection_for_select(@jkci_classes, "id", "class_name"), prompt: "Select class", style:"margin:15px 20px;width:200px;", class: "filter_exam_class form-control left", onchange: "examFilterByClass(event, this)" %>
-  <%= select_tag :filter_exam_type,  options_for_select([ "Subjective", "Objective" ]), prompt: "Select type", style:"width:200px;margin:15px 20px;", onchange: "examFilterByClass(event, this)", class: 'form-control left'  %>
-  <%= select_tag :filter_exam_status,  options_for_select([ "Created", "Conducted", "Published"]), prompt: "Select type", style:"width:200px;margin:15px 20px;", onchange: "examFilterByClass(event, this)", class: "form-control left"  %>
+  <%= select_tag :filter_exam_type,  options_for_select([ "Subjective", "Objective" ]), prompt: "Subjective / Objective", style:"width:200px;margin:15px 20px;", onchange: "examFilterByClass(event, this)", class: 'form-control left'  %>
+  <%= select_tag :filter_exam_status,  options_for_select([ "Created", "Conducted", "Published"]), prompt: "Select status", style:"width:200px;margin:15px 20px;", onchange: "examFilterByClass(event, this)", class: "form-control left"  %>
+</div>
+<div class="alert alert-warning">
+  <strong><span class="dataCounts red"><%= @exams.total_count %></span>   Exams Present</strong>
+  <%= link_to 'Download exams', download_exams_report_path, onclick: "download_exams_report(event, this);" %>
 </div>
 <div>
   <table class="table table-hover examsTable">
-    <thead>
-      <tr>
-	<th>#</th>
-	<th>Name</th>
-	<th>Conducted By</th>
-	<th>Marks</th>
-	<th>Date</th>
-	<th>Type</th>
-	<th>Class</th>
-	<th>Ignored</th>
-	<th>Actions</th>
-      </tr>
-    </thead>
+    <%= render partial: '/exams/exam_table_head' %>
     <%= render partial: 'exam', locals: {exams: @exams}%>
   </table>
   <div class="paginationDiv">

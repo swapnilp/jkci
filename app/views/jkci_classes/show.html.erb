@@ -88,19 +88,7 @@
 	  <div id="k-tab-exams" class="tab-pane fade ">
 	    <div class="textLeft">
 	      <table class="table table-hover examsTable table-striped">
-		<thead>
-		  <tr>
-		    <th>#</th>
-		    <th>Name</th>
-		    <th>Conducted By</th>
-		    <th>Marks</th>
-		    <th>Date</th>
-		    <th>Type</th>
-		    <th>Class</th>
-		    <th>Ignored</th>
-		    <th>Actions</th>
-		  </tr>
-		</thead>
+		<%= render partial: '/exams/exam_table_head' %>
 		<%= render partial: '/exams/exam', locals: {exams: @class_exams}%>
 	      </table>
 	      <div class="paginationDiv">
@@ -146,7 +134,7 @@
 	      <thead>
 		<tr>
 		  <th>Select</th>
-		  <th>#<th>
+		  <th>#</th>
 		  <th>Name</th>
 		  <th>Description</th>
 		  <th>Students</th>
