@@ -1,13 +1,13 @@
-<% if @organisation.errors.any? %>
+<% if @org.errors.any? %>
   <p class="alert alert-error red" style="padding:0;margin:0;">Ooops!</p>
   <ul>
-    <% @organisation.errors.each do |key, msg| %>
+    <% @org.errors.each do |key, msg| %>
       <li class="error red"><%= key %> <%=  msg %></li>
     <% end %>
   </ul> 
 <% end %>
 <div class="textLeft ">
-  <%= form_for @organisation, html:{role: 'form', class: 'form-horizontal'}  do |f| %>
+  <%= form_for @org, html:{role: 'form', class: 'form-horizontal'}  do |f| %>
     <div class="form-group">
       <%= f.label :name, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">

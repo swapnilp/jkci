@@ -8,4 +8,19 @@ class Standard < ActiveRecord::Base
   def std_name
     "#{name}-#{stream}"
   end
+
+  def to_json(options= {})
+    options.merge({
+                    id: self.id,
+                    name: std_name
+                  })
+  end
+
+
+  def as_json(options= {})
+    options.merge({
+                    id: self.id,
+                    name: std_name
+                  })
+  end
 end

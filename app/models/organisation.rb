@@ -23,6 +23,8 @@ class Organisation < ActiveRecord::Base
   has_many :sub_classes
   has_many :teachers
   has_many :users
+  has_many :organisation_standards
+  has_many :standards,-> {uniq},  through: :organisation_standards
 
   def generate_email_code
     e_code = (0...50).map { ('a'..'z').to_a[rand(26)] }.join

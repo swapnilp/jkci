@@ -15,7 +15,19 @@ Rails.application.routes.draw do
   get "/student/:id/download_report" => "students#download_report", as: "download_progress_report"
   resources :parents
   resources :parents_meeting
-  resources :organisations
+  
+  resources :organisations do
+    member do
+      get "manage_organisation", as: "manage"
+      get 'manage_courses', as: 'manage_courses'
+      get 'manage_users', as: 'manage_users'
+      get 'remaining_cources', as: 'remaining_cources'
+      post 'add_remaining_cources', as: 'add_remaining_cources'
+      get 'new_users', as: 'new_users'
+      post 'create_users', as: 'create_users'
+    end
+  end
+  
   get 'organisation/:id/regenerate_mobile_code' => "organisations#regenerate_organisation_code", as: 'regenerate_organisation_code'
   
   get '/parents_meeting/:id/send_sms' => "parents_meeting#sms_send", as: "meeting_sms_send"

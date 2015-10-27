@@ -4,14 +4,21 @@ class ApplicationController < ActionController::Base
   #before_action :authenticate_user!
   #before_filter :authentication_check
 
-  before_filter :flicker_photos
+  before_filter :flicker_photos, :get_organiser
   before_action :configure_permitted_parameters, if: :devise_controller?
+  
 
   #before_filter :get_organisation, if: current_user.present?
   
   def authenticate_user!
     super
-    @organisation = current_user.organisation
+    @organisation ||= current_user.organisation
+  end
+
+  def get_organiser
+    if current_user 
+      @organisation ||= current_user.organisation 
+    end
   end
   
   # Prevent CSRF attacks by raising an exception.
