@@ -6,6 +6,7 @@ class Exam < ActiveRecord::Base
   #has_many :absent_students, through: :exam_absents, source: :student
   #has_many :present_students, through: :exam_results, source: :student
   belongs_to :jkci_class
+  belongs_to :organisation
   has_many :exam_catlogs
   has_many :students, through: :exam_catlogs
   has_many :documents

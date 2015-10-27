@@ -34,9 +34,9 @@ class DailyTeachingPoint < ActiveRecord::Base
   def class_students
     #Student.where(std: std, is_active: true)
     if sub_classes.present?
-      self.jkci_class.sub_classes_students(self.sub_classes.split(',').map(&:to_i)) rescue []
+      self.jkci_class.sub_classes_students(self.sub_classes.split(',').map(&:to_i), self.subject) rescue []
     else 
-      self.jkci_class.students
+      self.subject.students.joins(:class_students).where("class_students.jkci_class_id = ?", self.jkci_class_id) rescue []
     end
   end
   

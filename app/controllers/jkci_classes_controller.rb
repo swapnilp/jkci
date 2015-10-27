@@ -13,14 +13,13 @@ class JkciClassesController < ApplicationController
   end
   
   def new
-    @subject = Subject.where(id: params[:subject_id]).first
-    if @subject
+    @standard = Standard.where(id: params[:standard_id]).first
+    if @standard
       @jkci_class = @subject.jkci_classes.build
       @teachers = @organisation.teachers
       @batches = Batch.all
-      @subjects = Subject.all
     else
-      redirect_to subjects_path
+      redirect_to standards_path
     end
   end
 

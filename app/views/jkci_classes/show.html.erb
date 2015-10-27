@@ -33,7 +33,7 @@
 	</span>
       </div>
       <div class="col-sm-12 textLeft paddingTop10">
-	<%= link_to "Edit" , edit_subject_jkci_class_path(@jkci_class.subject, @jkci_class), class: 'btn btn-primary btn-sm' %>
+	<%= link_to "Edit" , edit_standard_jkci_class_path(@jkci_class.standard, @jkci_class), class: 'btn btn-primary btn-sm' %>
       </div>
       <div class="col-sm-12 textLeft paddingTop10">
 	<%- if current_user.has_role? :create_daily_teach %>

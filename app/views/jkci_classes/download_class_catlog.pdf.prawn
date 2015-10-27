@@ -6,7 +6,6 @@ prawn_document do |pdf|
 
   pdf.define_grid(:columns => 2, :rows => 30, :gutter => 0)
   pdf.grid(1, 0).bounding_box do
-    pdf.text "Subject -  #{@jkci_class.subject.std_name}", align: :left  
     pdf.text "Students count -  #{@jkci_class.students.count}", align: :left
   end
   pdf.grid(1, 1).bounding_box do

@@ -63,7 +63,8 @@ Rails.application.routes.draw do
   get 'parent_desk/student_info/:id/exam_info' => "parent_desk#exam_info", as: 'parent_exam_info'
   get 'parent_desk/student_info/:id/paginate_catlog' => "parent_desk#paginate_catlog", as: 'parent_paginate_catlog'
   
-  resources :subjects do
+  resources :subjects
+  resources :standards do
     resources :jkci_classes, only: [:new, :create, :edit, :update]
   end
   get "/subject/:id/chapters" => "subjects#chapters", as: "subject_chapters"
@@ -104,7 +105,6 @@ Rails.application.routes.draw do
     resources :chapters_points
   end
   
-  resources :standards
   resources :albums do 
     get 'manage_albums', on: :collection, as: 'manage'
   end
