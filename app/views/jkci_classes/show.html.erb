@@ -53,10 +53,10 @@
 	  <li class="">
 	    <a href="#k-tab-exams" data-toggle="tab">Exams (<%= @jkci_class.exams.count %>)</a>
 	  </li>
-	  <li class="">
+	  <li class="<%= 'active' unless (params[:divisions].present? || params[:notifications].present?) %>">
 	    <a href="#k-tab-daily_teach" data-toggle="tab">Daily Teach</a>
 	  </li>
-	  <li class="<%= 'active' unless params[:notifications].present? %>">
+	  <li class="<%= 'active' if params[:divisions].present? %>">
 	    <a href="#k-tab-sub_class" data-toggle="tab">Divisions(<%= @jkci_class.sub_classes.count %>)</a>
 	  </li>
 	  <li class="<%= 'active' if params[:notifications].present? %>">
@@ -96,7 +96,7 @@
 	      </div>
 	    </div>
 	  </div>
-	  <div id="k-tab-daily_teach" class="tab-pane fade">
+	  <div id="k-tab-daily_teach" class="tab-pane fade <%= 'active in' unless (params[:divisions].present? || params[:notifications].present?) %>">
 	    <div class="left dailyTeachChapters alert alert-success" style="width:100%;" data-class-id="<%= @jkci_class.id %>">
 	      <strong>Chapters</strong>
 	      <%- @chapters.each do |chapter| %>
@@ -128,7 +128,7 @@
 	      <img src="/assets/fancybox_loading.gif">
 	    </div>
 	  </div>
-	  <div id="k-tab-sub_class" class="tab-pane fade <%= 'active in' unless params[:notifications].present? %>">
+	  <div id="k-tab-sub_class" class="tab-pane fade <%= 'active in' if params[:divisions].present? %>">
 	    <%= link_to "Download Division Catlog" , download_class_catlog_path(@jkci_class, {format: :pdf}), class: 'btn btn-primary btn-sm', onclick: "downloadSubClassCatlog(event, this);" %>
 	    <table class="table table-hover examsTable table-striped subClass">
 	      <thead>

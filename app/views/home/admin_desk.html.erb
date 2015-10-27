@@ -7,7 +7,7 @@
       <tr>
 	<th>#</th>
 	<th>Name</th>
-	<th>Teacher</th>
+	<th>Divisions</th>
 	<th>Fill Daily Catlog</th>
 	<th>Create Exam</th>
 	<th class="center">Remaining Activities</th>
@@ -22,7 +22,7 @@
 	<%= link_to  jkci_class.class_name, jkci_class_path(jkci_class) %>
       </td>
       <td>
-	<%= jkci_class.teacher.try(:name) %>
+	<strong><%= link_to  jkci_class.sub_classes.count, jkci_class_path(jkci_class, {divisions: true}) %></strong>
       </td>
       <td>
 	<%- if current_user.has_role? :create_daily_teach %>
