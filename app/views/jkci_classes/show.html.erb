@@ -57,7 +57,7 @@
 	    <a href="#k-tab-daily_teach" data-toggle="tab">Daily Teach</a>
 	  </li>
 	  <li class="">
-	    <a href="#k-tab-sub_class" data-toggle="tab">Sub Class(<%= @jkci_class.sub_classes.count %>)</a>
+	    <a href="#k-tab-sub_class" data-toggle="tab">Divisions(<%= @jkci_class.sub_classes.count %>)</a>
 	  </li>
 	  <li class="">
 	    <a href="#k-tab-notification" data-toggle="tab">
@@ -129,7 +129,7 @@
 	    </div>
 	  </div>
 	  <div id="k-tab-sub_class" class="tab-pane fade ">
-	    <%= link_to "Download SubClass Catlog" , download_class_catlog_path(@jkci_class, {format: :pdf}), class: 'btn btn-primary btn-sm', onclick: "downloadSubClassCatlog(event, this);" %>
+	    <%= link_to "Download Division Catlog" , download_class_catlog_path(@jkci_class, {format: :pdf}), class: 'btn btn-primary btn-sm', onclick: "downloadSubClassCatlog(event, this);" %>
 	    <table class="table table-hover examsTable table-striped subClass">
 	      <thead>
 		<tr>

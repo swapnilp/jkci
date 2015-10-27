@@ -18,6 +18,7 @@ class ExamsController < ApplicationController
     @exam = @jkci_class.exams.build({daily_teaching_points: ",#{params[:dtp]},"})
     @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
     @exam.name = @exam.predict_name
+    @subjects = @jkci_class.standard.subjects
   end
 
   def show
@@ -49,6 +50,7 @@ class ExamsController < ApplicationController
     else
       @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
       @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
+      @subjects = @jkci_class.standard.subjects
       render :new
     end
   end
@@ -57,6 +59,7 @@ class ExamsController < ApplicationController
     @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
     @exam = @jkci_class.exams.where(id: params[:id]).first
     @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
+    @subjects = @jkci_class.standard.subjects
     redirect_to exams_path if @exam.is_completed
   end
   
@@ -67,6 +70,11 @@ class ExamsController < ApplicationController
     exam = @organisation.exams.where(id: params[:id]).first
     if exam && exam.update(params[:exam])
       redirect_to exams_path
+    else
+      @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
+      @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
+      @subjects = @jkci_class.standard.subjects
+      render :edit
     end
   end
 

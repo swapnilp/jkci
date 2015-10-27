@@ -23,12 +23,12 @@ class Exam < ActiveRecord::Base
   def exam_students
     #Student.where(std: std, is_active: true)
     if sub_classes.present?
-      self.jkci_class.sub_classes_students(self.sub_classes.split(',').map(&:to_i)) rescue []
+      self.jkci_class.sub_classes_students(self.sub_classes.split(',').map(&:to_i), self.subject) rescue []
     elsif class_ids.nil?
-      self.jkci_class.students rescue []
+      self.subject.students.joins(:class_students).where("class_students.jkci_class_id = ?", self.jkci_class_id) rescue []
     else 
       #JkciClass.where(id: class_ids.split(',').reject(&:blank?)).map(&:students)#.flatten.uniq
-      Student.joins(:class_students).where("class_students.jkci_class_id in (?)", class_ids.split(',').reject(&:blank?)).uniq
+      self.subject.students.joins(:class_students).where("class_students.jkci_class_id in (?)", class_ids.split(',').reject(&:blank?)).uniq
     end
   end
 
@@ -136,7 +136,7 @@ class Exam < ActiveRecord::Base
   end
 
   def predict_name
-    "#{jkci_class.subject.std_name}-#{Exam.last.id + 1}"
+    "#{jkci_class.standard.std_name}-#{Exam.last.id + 1}"
   end
   
   def status_count

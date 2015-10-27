@@ -8,6 +8,7 @@ class JkciClass < ActiveRecord::Base
   has_many :class_catlogs
   belongs_to :batch
   belongs_to :subject
+  belongs_to :standard
   belongs_to :current_chapter, class_name: "Chapter", foreign_key: "current_chapter_id"
   has_many :sub_classes
   has_many :exam_notifications, through: :exams, source: :notifications
@@ -68,7 +69,7 @@ class JkciClass < ActiveRecord::Base
     class_catlog.update_attributes({is_present: is_present})
   end
 
-  def sub_classes_students(s_c_ids)
+  def sub_classes_students(s_c_ids, ex_subject=nil)
     # s_c_ids is array of sub classes
     sub_classes_ids = self.sub_classes.where("id in (?)", s_c_ids).map(&:id)
     sc_string = "sub_class like '%,00,%'"
@@ -76,9 +77,12 @@ class JkciClass < ActiveRecord::Base
       sc_string << " || "# unless sub_classes_ids.first == sc_id
       sc_string << "sub_class like '%,#{sc_id},%'"
     end
-    student_ids = self.class_students.where(sc_string).map(&:student_id)
-    p student_ids 
-    students.where("students.id in (?)", student_ids)
+    if ex_subject.present? 
+      ex_subject.students.joins(:class_students).where(" #{sc_string} and class_students.jkci_class_id = ?", self.id)
+    else
+      student_ids = self.class_students.where(sc_string).map(&:student_id)
+      students.where("students.id in (?)", student_ids)
+    end
   end
 
   def chapters_table_format

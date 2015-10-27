@@ -1,6 +1,7 @@
 class Standard < ActiveRecord::Base
   has_many :subjects
   has_many :students
+  has_many :jkci_classes
   
   scope :active, -> {where(is_active: true).order("id DESC")}
 
