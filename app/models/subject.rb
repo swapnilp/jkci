@@ -3,6 +3,7 @@ class Subject < ActiveRecord::Base
   has_many :teachers
   has_many :jkci_classes
   has_many :chapters
+  has_many :daily_teaching_points
   has_many :student_subjects
   has_many :students, through: :student_subjects
   belongs_to :standard

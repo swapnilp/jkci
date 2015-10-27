@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   resources :subjects do
     resources :jkci_classes, only: [:new, :create, :edit, :update]
   end
+  get "/subject/:id/chapters" => "subjects#chapters", as: "subject_chapters"
 
   resources :jkci_classes, except: [:new, :create, :edit, :update] do 
     resources :sub_classes

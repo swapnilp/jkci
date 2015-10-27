@@ -28,6 +28,15 @@ class SubjectsController < ApplicationController
     end
   end
 
+  def chapters
+    subject = Subject.includes([:chapters]).where(id: params[:id]).first
+    chapters = subject.chapters
+    chapters_points = chapters.first.try(:chapters_points) || []
+    respond_to do |format|
+      format.json {render json: {success: true, chapters: chapters, chapters_points: chapters_points}}
+    end
+  end
+
   private
   
   def my_sanitizer

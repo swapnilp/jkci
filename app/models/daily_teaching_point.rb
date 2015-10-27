@@ -3,6 +3,7 @@ class DailyTeachingPoint < ActiveRecord::Base
   belongs_to :jkci_class
   belongs_to :teacher
   has_many :class_catlogs
+  belongs_to :subject
   belongs_to :chapter
   belongs_to :chapters_point
   has_many :notifications, -> {where("notifications.object_type like ?", 'DailyTeaching_point')}, :foreign_key => :object_id 

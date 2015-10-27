@@ -77,6 +77,27 @@ function dailyTeachingChapterSelect(event, self){
   }, function(){}, "JSON")
 }
 
+function selectSubjectChapters(event, self){
+  subject_id  = $(self).prop('value');
+  $.get("/subject/" + subject_id + "/chapters", function(data){
+    $('#daily_teaching_point_chapters_point_id').empty();
+    $("#daily_teaching_point_chapter_id").empty();
+    $.each(data.chapters, function(value, key){
+      $('#daily_teaching_point_chapter_id')
+	.append($("<option></option>")
+	   .attr("value", key.id)
+	   .text(key.name));
+    });
+    $.each(data.chapters_points, function(value, key){
+      $('#daily_teaching_point_chapters_point_id')
+	.append($("<option></option>")
+	   .attr("value", key.id)
+	   .text(key.name));
+    });
+  }, function(){
+  }, 'JSON'); 
+}
+
 function selectChaptersPoint(event, self){
   chapter_id  = $(self).prop('value');
   $.get("/chapters/" + chapter_id + "/chapters_points", function(data){

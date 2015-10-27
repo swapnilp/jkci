@@ -17,8 +17,10 @@ class DailyTeachsController < ApplicationController
     @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
     @sub_classes = @jkci_class.sub_classes
     @daily_teaching_point = @jkci_class.daily_teaching_points.new({teacher_id: @jkci_class.teacher_id, chapter_id: @jkci_class.current_chapter_id})
-    @chapters = @jkci_class.try(:subject).try(:chapters)
-    @chapters_points = @jkci_class.current_chapter_id.present? ? @jkci_class.current_chapter.chapters_points : @chapters.first.try(:chapters_points)
+    @subjects = @jkci_class.standard.subjects
+    #@chapters = @jkci_class.try(:subject).try(:chapters)
+    @chapters = @subjects.first.try(:chapters)
+    @chapters_points = @chapters.first.try(:chapters_points)
     @teachers = @organisation.teachers
   end
 
@@ -51,7 +53,8 @@ class DailyTeachsController < ApplicationController
     @daily_teaching_point = @jkci_class.daily_teaching_points.where(id: params[:id]).first
     @sub_classes = @jkci_class.sub_classes
     @teachers = @organisation.teachers.all
-    @chapters = @daily_teaching_point.jkci_class.subject.chapters
+    @subjects = @jkci_class.standard.subjects
+    @chapters = @daily_teaching_point.subject.chapters
     @chapters_points = @daily_teaching_point.chapter.try(:chapters_points)
   end
 

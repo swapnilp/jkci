@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026182227) do
+ActiveRecord::Schema.define(version: 20151027030509) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20151026182227) do
     t.string   "sub_classes",       limit: 255
     t.boolean  "verify_absenty",    limit: 1,     default: false
     t.integer  "organisation_id",   limit: 4
+    t.integer  "subject_id",        limit: 4
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
