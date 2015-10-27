@@ -65,7 +65,7 @@ Rails.application.routes.draw do
   
   resources :subjects
   resources :standards do
-    resources :jkci_classes, only: [:new, :create, :edit, :update]
+    #resources :jkci_classes, only: [:new, :create, :edit, :update]
   end
   get "/subject/:id/chapters" => "subjects#chapters", as: "subject_chapters"
 

@@ -27,6 +27,9 @@ class OrganisationsController < ApplicationController
       format.json {render json: {success: true}}
     end
   end
+  
+  def manage_organisation
+  end
 
   private
   

@@ -33,7 +33,7 @@
 	</span>
       </div>
       <div class="col-sm-12 textLeft paddingTop10">
-	<%= link_to "Edit" , edit_standard_jkci_class_path(@jkci_class.standard, @jkci_class), class: 'btn btn-primary btn-sm' %>
+	<%# link_to "Edit" , edit_standard_jkci_class_path(@jkci_class.standard, @jkci_class), class: 'btn btn-primary btn-sm' %>
       </div>
       <div class="col-sm-12 textLeft paddingTop10">
 	<%- if current_user.has_role? :create_daily_teach %>
@@ -53,13 +53,13 @@
 	  <li class="">
 	    <a href="#k-tab-exams" data-toggle="tab">Exams (<%= @jkci_class.exams.count %>)</a>
 	  </li>
-	  <li class="active">
+	  <li class="">
 	    <a href="#k-tab-daily_teach" data-toggle="tab">Daily Teach</a>
 	  </li>
-	  <li class="">
+	  <li class="<%= 'active' unless params[:notifications].present? %>">
 	    <a href="#k-tab-sub_class" data-toggle="tab">Divisions(<%= @jkci_class.sub_classes.count %>)</a>
 	  </li>
-	  <li class="">
+	  <li class="<%= 'active' if params[:notifications].present? %>">
 	    <a href="#k-tab-notification" data-toggle="tab">
 	      Notifications(<%= @notifications.count %>)
 	    </a>
@@ -96,7 +96,7 @@
 	      </div>
 	    </div>
 	  </div>
-	  <div id="k-tab-daily_teach" class="tab-pane fade active in">
+	  <div id="k-tab-daily_teach" class="tab-pane fade">
 	    <div class="left dailyTeachChapters alert alert-success" style="width:100%;" data-class-id="<%= @jkci_class.id %>">
 	      <strong>Chapters</strong>
 	      <%- @chapters.each do |chapter| %>
@@ -128,7 +128,7 @@
 	      <img src="/assets/fancybox_loading.gif">
 	    </div>
 	  </div>
-	  <div id="k-tab-sub_class" class="tab-pane fade ">
+	  <div id="k-tab-sub_class" class="tab-pane fade <%= 'active in' unless params[:notifications].present? %>">
 	    <%= link_to "Download Division Catlog" , download_class_catlog_path(@jkci_class, {format: :pdf}), class: 'btn btn-primary btn-sm', onclick: "downloadSubClassCatlog(event, this);" %>
 	    <table class="table table-hover examsTable table-striped subClass">
 	      <thead>
@@ -144,7 +144,7 @@
 	      <%= render partial: 'sub_class', locals: {sub_classes: @jkci_class.sub_classes}%>
 	    </table>
 	  </div>
-	  <div id="k-tab-notification" class="tab-pane fade ">
+	  <div id="k-tab-notification" class="tab-pane fade <%= 'active in' if params[:notifications].present? %> ">
 	    <table class="table table-hover examsTable table-striped subClass">
 	      <thead>
 		<tr>

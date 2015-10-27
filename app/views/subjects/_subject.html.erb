@@ -8,10 +8,6 @@
     </td>
     <td>
       <%= link_to 'Show', subject_path(subject) %>  
-      <%- if current_user.has_role? :admin%>
-      | 
-      <%= link_to 'New class',  new_subject_jkci_class_path(subject), class: '' %>
-      <%- end %>
     </td>
   </tr>
 <%- end %>
