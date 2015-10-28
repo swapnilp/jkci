@@ -64,7 +64,7 @@
 		<%- if current_user.email == "swapnil.patil04@gmail.com" %>
 		  <li><a href="<%= promotional_mails_path %>">Promotional Mail</a></li>
 		<%- end %>
-		<%- if current_user.role == "organisation" || current_user.has_role? :organisation %>
+		<%- if (current_user.role == "organisation") || (current_user.has_role? :organisation) %>
 		  <li><a href="<%= manage_organisation_path(current_user.organisation) %>">Setting</a></li>
 		<%- end %>
               </ul>
