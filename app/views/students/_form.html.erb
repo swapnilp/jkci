@@ -89,7 +89,7 @@
     <div class="form-group">
       <%= f.label :group, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">
-	<%= f.select :group, options_for_select([ "PCB", "PCM", "PCMB" ], "PCMB"), {}, class: "form-control" %>
+	<%= f.select :group, options_for_select([ "PCB", "PCM", "PCMB" ], f.object.group), {}, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">

@@ -35,6 +35,12 @@
     </div>
     <div class="col-sm-12">
       <h5>
+	<small class="col-sm-4">Subjects :</small> 
+	<span style="font-size:20px;"><%= @student.subjects.map(&:name).join('  |  ') %></span>
+      </h5>
+    </div>
+    <div class="col-sm-12">
+      <h5>
 	<small class="col-sm-4">Progress Report :</small> 
 	<span style="font-size:20px;">
 	  <%= link_to "Download Report", download_progress_report_path(@student, format: "pdf"), class: "btn btn-primary btn-sm", target: "_blank" %>
