@@ -58,3 +58,19 @@ function enableStudentSms(self, event){
     }
   }, function(){}, "JSON");
 }
+
+function selectStandardOSubjects(event, self) {
+  event.preventDefault();
+  var id = $(self).val();
+  $("#o_subjects").empty();
+  $.get("/standards/"+id+"/optional_subjects", function(data){
+    $.each(data.subjects, function(value, key){
+      $('#o_subjects')
+	.append($("<option></option>")
+	   .attr("value", key.id)
+	   .text(key.name));
+    });
+  }, function(){}, "JSON");
+  
+  
+}

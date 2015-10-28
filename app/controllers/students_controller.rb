@@ -14,8 +14,8 @@ class StudentsController < ApplicationController
   def new
     @student = @organisation.students.build
     @batches = Batch.active
-    @standards = Standard.active
-    @subjects = @standards.first.subjects.optional
+    @standards = @organisation.standards.active
+    @subjects = @standards.first.try(:subjects).try(:optional)
   end
   
   def create
@@ -26,8 +26,8 @@ class StudentsController < ApplicationController
       redirect_to students_path
     else
       @batches = Batch.active
-      @standards = Standard.active
-      @subjects = @standards.first.subjects.optional
+      @standards = @organisation.standards.active
+      @subjects = @standards.first.try(:subjects).try(:optional)
       render :new
     end
   end
@@ -53,8 +53,8 @@ class StudentsController < ApplicationController
   def edit
     @student = @organisation.students.where(id: params[:id]).first
     @batches = Batch.active
-    @standards = Standard.active
-    @subjects = (@student.standard.try(:subjects) || @standards.first.subjects).optional
+    @standards = @organisation.standards.active
+    @subjects = (@student.standard.try(:subjects) || @standards.first.try(:subjects)).try(:optional)
   end
 
   def update

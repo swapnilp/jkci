@@ -33,4 +33,12 @@ class StandardsController < ApplicationController
       render :edit
     end
   end
+
+  def optional_subjects
+    standard = @organisation.standards.where(id: params[:id]).first
+    subjects = standard.try(:subjects).try(:optional)
+    respond_to do |format|
+      format.json {render json: {success: true, subjects: subjects.as_json}}
+    end
+  end
 end

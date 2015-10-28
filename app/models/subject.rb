@@ -14,4 +14,11 @@ class Subject < ActiveRecord::Base
   def std_name
     "#{name}-#{standard.std_name}"
   end
+
+  def as_json(options= {})
+    options.merge({
+                    id: self.id,
+                    name: std_name
+                  })
+  end
 end
