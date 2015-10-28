@@ -23,7 +23,11 @@
       <div class="col-sm-12 textLeft">
 	<span class="col-sm-2"><h5>Download Syllabus</h5></span>
 	<span class="col-sm-6 paddingTop10">
-	  <%= link_to "Download Syllabus" , download_class_syllabus_path(@jkci_class, {format: :pdf}), class: 'btn btn-primary btn-sm', target: "_blank" %>
+	  <%- @jkci_class.standard.subjects.each do |subject| %>
+	    <div class="left" style="padding:0px 10px 10px 10px;">
+	      <%= link_to "Download #{subject.name } Syllabus" , download_class_syllabus_path(@jkci_class, {format: :pdf, subject: subject.id}), class: 'btn btn-primary btn-sm', target: "_blank" %> &nbsp;&nbsp;&nbsp;
+	    </div>
+	  <%- end %>
 	</span>
       </div>
       <div class="col-sm-12 textLeft">

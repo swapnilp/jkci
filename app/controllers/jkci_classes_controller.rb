@@ -141,7 +141,8 @@ class JkciClassesController < ApplicationController
 
   def download_class_syllabus
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
-    #@chapters_table = @jkci_class.chapters_table_format
+    @subject = @jkci_class.standard.subjects.where(id: params[:subject]).first
+    @chapters_table = @jkci_class.chapters_table_format(@subject)
     respond_to do |format|
       format.pdf { render :layout => false }
     end
