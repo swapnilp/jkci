@@ -86,9 +86,9 @@ class JkciClass < ActiveRecord::Base
     end
   end
 
-  def chapters_table_format
+  def chapters_table_format(subject)
     table = [["Chapters", "Points"]]
-    chapters = self.subject.chapters
+    chapters = subject.chapters
     chapters.each_with_index do |chapter, index|
       table << ["#{chapter.name}", "#{chapter.points_name}"]
     end

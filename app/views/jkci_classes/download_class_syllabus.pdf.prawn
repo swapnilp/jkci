@@ -14,10 +14,14 @@ prawn_document do |pdf|
   end
   pdf.move_down(10)
   pdf.stroke_horizontal_line 0, 525
-  
   pdf.move_down(20)
-  pdf.table(@chapters_table, :column_widths => [100, 420],  :cell_style => { :overflow => :shrink_to_fit, :size => 10}) do
+  @jkci_class.standard.subjects.each do |subject|
+  pdf.text "#{subject.std_name}"
+  pdf.move_down(20)
+  pdf.table(@jkci_class.chapters_table_format(subject), :column_widths => [100, 420],  :cell_style => { :overflow => :shrink_to_fit, :size => 10}) do
     row(0).font_style = :bold
     row(0).size = 12
-  end			       
+  end
+  pdf.start_new_page			       
+  end 
 end

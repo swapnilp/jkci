@@ -14,7 +14,7 @@ class JkciClassesController < ApplicationController
   def new
     @standard = Standard.where(id: params[:standard_id]).first
     if @standard
-      @jkci_class = @subject.jkci_classes.build
+      @jkci_class = @organisation.jkci_classes.build
       @teachers = @organisation.teachers
       @batches = Batch.all
     else
@@ -24,7 +24,7 @@ class JkciClassesController < ApplicationController
 
   def show
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
-    @chapters = []#@jkci_class.standard.subject.chapters
+    @chapters = []
     @daily_teaching_points = @jkci_class.daily_teaching_points.includes(:class_catlogs).chapters_points.order('id desc').page(params[:page])
     @teached_chapters = @daily_teaching_points.map(&:chapter_id).uniq
     @class_exams = @jkci_class.jk_exams.order("updated_at desc").page(params[:page])
@@ -33,19 +33,16 @@ class JkciClassesController < ApplicationController
 
   def create
     params.permit!
-    @subject = Subject.where(id: params[:subject_id]).first
-    @jkci_class = @subject.jkci_classes.build(params[:jkci_class].merge({organisation_id: @organisation.id}))
+    @jkci_class = @organisation.jkci_classes.build(params[:jkci_class])
     if @jkci_class.save
       redirect_to jkci_classes_path
     end
   end
 
   def edit
-    @subject = Subject.where(id: params[:subject_id]).first
-    @jkci_class = @subject.jkci_classes.where(id: params[:id]).first
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @teachers = @organisation.teachers
     @batches = Batch.all
-    @subjects = Subject.all
   end
 
   def assign_students
@@ -63,8 +60,7 @@ class JkciClassesController < ApplicationController
   
   def update
     params.permit!
-    @subject = Subject.where(id: params[:subject_id]).first
-    @jkci_class = @subject.jkci_classes.where(id: params[:id]).first
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     if @jkci_class
       if @jkci_class.update(params[:jkci_class])
         redirect_to jkci_classes_path
@@ -94,9 +90,6 @@ class JkciClassesController < ApplicationController
     jkci_classes = @organisation.jkci_classes.includes([:batch]).all.order("id desc").page(params[:page])
     if params[:batch_id].present?
       jkci_classes = jkci_classes.where(batch_id: params[:batch_id])
-    end
-    if params[:subject_id].present?
-      jkci_classes = jkci_classes.where(subject_id: params[:subject_id])
     end
     
     render json: {success: true, html: render_to_string(:partial => "jkci_class.html.erb", :layout => false, locals: {jkci_classes: jkci_classes}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {jkci_classes: jkci_classes}), css_holder: ".jkciClassTable tbody"}
@@ -148,7 +141,7 @@ class JkciClassesController < ApplicationController
 
   def download_class_syllabus
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
-    @chapters_table = @jkci_class.chapters_table_format
+    #@chapters_table = @jkci_class.chapters_table_format
     respond_to do |format|
       format.pdf { render :layout => false }
     end
