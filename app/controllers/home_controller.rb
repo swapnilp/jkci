@@ -32,6 +32,6 @@ class HomeController < ApplicationController
     @todays_exams = @organisation.exams.todays_exams
     @jkci_classes = @organisation.jkci_classes.active
     @unpublished_exams = @organisation.exams.unpublished_exams
-    @chart = Charts.pie_chart([['string', 'Class Name'], ['number', 'Exams']], @organisation.jkci_classes.map(&:exams_count), {title: 'Class Exams'})
+    @chart = Charts.pie_chart([['string', 'Class Name'], ['number', 'Exams']], @organisation.jkci_classes.active.map(&:exams_count), {title: 'Class Exams'})
   end
 end
