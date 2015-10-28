@@ -93,6 +93,15 @@ class JkciClass < ActiveRecord::Base
     end
     table
   end
+  
+  def class_students_table_format
+    table = [["Id", "Name", "Parent Mobile", "Subjects"]]
+
+    self.students.each_with_index do |student, index|
+      table << ["#{index+ 1 }", "#{student.name}", "#{student.p_mobile}", "#{student.subjects.map(&:name).join('  |  ')}"]
+    end
+    table
+  end
 
   def students_table_format(sub_class_ids)
     table = [["Id", "Name", "Parent Mobile", "Is Present", "", "Id", "Name", "Parent Mobile", "Is Present", ""]]

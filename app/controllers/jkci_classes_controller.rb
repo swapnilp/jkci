@@ -154,6 +154,14 @@ class JkciClassesController < ApplicationController
       format.pdf { render :layout => false }
     end
   end
+
+  def download_class_student_list
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    @students_table_format = @jkci_class.class_students_table_format
+    respond_to do |format|
+      format.pdf { render :layout => false }
+    end
+  end
   
   def my_sanitizer
     #params.permit!
