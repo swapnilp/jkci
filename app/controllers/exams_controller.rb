@@ -82,6 +82,7 @@ class ExamsController < ApplicationController
     jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
     exam = jkci_class.exams.where(id: params[:id]).first
     exam.update_attributes({is_active: false})
+    exam.delete_notification
     redirect_to exams_path
   end
 

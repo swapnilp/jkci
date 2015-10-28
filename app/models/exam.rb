@@ -142,6 +142,10 @@ class Exam < ActiveRecord::Base
   
   def status_count
   end
+
+  def delete_notification
+    self.notifications.destroy_all
+  end
   
   def ranking
     results = self.exam_results.map(&:marks).uniq
