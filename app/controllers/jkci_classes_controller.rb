@@ -25,7 +25,7 @@ class JkciClassesController < ApplicationController
 
   def show
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
-    @chapters = @jkci_class.standard.subject.chapters
+    @chapters = []#@jkci_class.standard.subject.chapters
     @daily_teaching_points = @jkci_class.daily_teaching_points.includes(:class_catlogs).chapters_points.order('id desc').page(params[:page])
     @teached_chapters = @daily_teaching_points.map(&:chapter_id).uniq
     @class_exams = @jkci_class.jk_exams.order("updated_at desc").page(params[:page])
