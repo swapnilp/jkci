@@ -5,7 +5,6 @@ class JkciClassesController < ApplicationController
   def index
     @jkci_classes = @organisation.jkci_classes.includes([:batch]).active.all.order("id desc").page(params[:page])
     @batches = Batch.all
-    @subjects = Subject.all
     respond_to do |format|
       format.html
       format.json {render json: {success: true, html: render_to_string(:partial => "jkci_class.html.erb", :layout => false, locals: {jkci_classes: @jkci_classes}), pagination_html:  render_to_string(partial: 'pagination.html.erb', layout: false, locals: {jkci_classes: @jkci_classes}), css_holder: ".jkciClassTable tbody"}}

@@ -31,8 +31,7 @@ function createClassExam(event, self){
 function classFilterByBatch(event, self){
   event.preventDefault();
   batch_id = $("#filter_batch_class").val();
-  subject_id = $("#filter_subject_class").val();
-  $.get("/jkci_class/filter_class/batch?&btch_id="+batch_id +"&subject_id="+ subject_id , function(data){
+  $.get("/jkci_class/filter_class/batch?&batch_id="+batch_id , function(data){
     $(".jkciClassTable tbody").html(data['html']);
     $(".paginationDiv").html(data['pagination_html']);
   });
