@@ -98,7 +98,7 @@ class JkciClass < ActiveRecord::Base
     table = [["Id", "Name", "Parent Mobile", "Subjects"]]
 
     self.students.each_with_index do |student, index|
-      table << ["#{index+ 1 }", "#{student.name}", "#{student.p_mobile}", "#{student.subjects.map(&:name).join('  |  ')}"]
+      table << ["#{index+ 1 }", "#{student.name}", "#{student.p_mobile}", "#{student.subjects.map(&:std_name).join('  |  ')}"]
     end
     table
   end
