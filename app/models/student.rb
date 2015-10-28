@@ -56,7 +56,7 @@ class Student < ActiveRecord::Base
   end
 
   def classes_names
-    self.jkci_classes.map(&:class_name).join(', ')
+    self.jkci_classes.active.map(&:class_name).join(', ')
   end
 
   def class_info
