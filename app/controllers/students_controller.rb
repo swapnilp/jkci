@@ -15,7 +15,7 @@ class StudentsController < ApplicationController
     @student = @organisation.students.build
     @batches = Batch.active
     @standards = @organisation.standards.active
-    @subjects = @standards.first.try(:subjects).try(:optional)
+    @subjects = @standards.first.try(:subjects).try(:optional) || []
   end
   
   def create
@@ -27,7 +27,7 @@ class StudentsController < ApplicationController
     else
       @batches = Batch.active
       @standards = @organisation.standards.active
-      @subjects = @standards.first.try(:subjects).try(:optional)
+      @subjects = @standards.first.try(:subjects).try(:optional) || []
       render :new
     end
   end
@@ -54,7 +54,7 @@ class StudentsController < ApplicationController
     @student = @organisation.students.where(id: params[:id]).first
     @batches = Batch.active
     @standards = @organisation.standards.active
-    @subjects = (@student.standard.try(:subjects) || @standards.first.try(:subjects)).try(:optional)
+    @subjects = (@student.standard.try(:subjects) || @standards.first.try(:subjects)).try(:optional) || []
   end
 
   def update
