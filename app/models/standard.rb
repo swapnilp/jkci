@@ -3,7 +3,7 @@ class Standard < ActiveRecord::Base
   has_many :students
   has_many :jkci_classes
   
-  scope :active, -> {where(is_active: true).order("id DESC")}
+  scope :active, -> {where(is_active: true)}
 
   def std_name
     "#{name}-#{stream}"
