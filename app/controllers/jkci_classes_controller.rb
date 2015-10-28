@@ -3,7 +3,7 @@ class JkciClassesController < ApplicationController
   load_and_authorize_resource param_method: :my_sanitizer
 
   def index
-    @jkci_classes = @organisation.jkci_classes.includes([:batch]).all.order("id desc").page(params[:page])
+    @jkci_classes = @organisation.jkci_classes.includes([:batch]).active.all.order("id desc").page(params[:page])
     @batches = Batch.all
     @subjects = Subject.all
     respond_to do |format|

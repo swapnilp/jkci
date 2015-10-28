@@ -30,7 +30,7 @@ class HomeController < ApplicationController
     #@recent_exams = Exam.where(is_completed: true, is_result_decleared: [nil, false])
     @upcomming_exams = @organisation.exams.upcomming_exams
     @todays_exams = @organisation.exams.todays_exams
-    @jkci_classes = @organisation.jkci_classes
+    @jkci_classes = @organisation.jkci_classes.active
     @unpublished_exams = @organisation.exams.unpublished_exams
     @chart = Charts.pie_chart([['string', 'Class Name'], ['number', 'Exams']], @organisation.jkci_classes.map(&:exams_count), {title: 'Class Exams'})
   end
