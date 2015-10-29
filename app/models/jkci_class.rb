@@ -21,10 +21,16 @@ class JkciClass < ActiveRecord::Base
 
   def manage_students(associate_students, organisation)
     curr_students = self.students.map(&:id)
-    removed_students = curr_students - associate_students
-    new_std = associate_students -  (curr_students & associate_students)
-    self.students.delete(organisation.students.where(id: removed_students))
-    self.students << organisation.students.where(id: new_std)
+    #removed_students = curr_students - associate_students
+    #new_std = associate_students -  (curr_students & associate_students)
+    #self.students.delete(organisation.students.where(id: removed_students))
+    new_students = organisation.students.where(id: associate_students)
+    new_students = new_students.where("id not in (?)", ([0]+ curr_students))
+    self.students << new_students
+  end
+
+  def remove_student_from_class(associate_student, organisation)
+    self.students.delete(organisation.students.where(id: associate_student))
   end
   
   def jk_exams

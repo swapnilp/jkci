@@ -108,6 +108,7 @@ Rails.application.routes.draw do
   get "/class/:id/manage_roll_number" => "jkci_classes#manage_roll_number", as: "manage_class_roll_number"
   post "/class/:id/save_roll_number" => "jkci_classes#save_roll_number", as: "save_class_roll_number"
   post "/class/:id/manage_students" => "jkci_classes#manage_students", as: "class_manage_students"
+  delete "/class/:id/remove_student_from_class/:student_id" => "jkci_classes#remove_student_from_class", as: "remove_student_from_class"
   get "/jkci_class/filter_class/batch" => "jkci_classes#filter_class", as: "filter_class"
 
 

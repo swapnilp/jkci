@@ -7,13 +7,7 @@
       <%= student.first_name + ' ' + student.last_name %>
     </td>
     <td>
-      <%= student.gender %>
-    </td>
-    <td>
       <%= student.group %>
-    </td>
-    <td>
-      <%= student.mobile %>
     </td>
     <td>
       <%= student.p_mobile %>
@@ -29,6 +23,9 @@
     </td>
     <td>
       <%= link_to "Report", download_progress_report_path(student, format: "pdf"), class: "btn btn-primary btn-sm", target: "_blank" %>
+    </td>
+    <td>
+      <%= link_to "Delete", remove_student_from_class_path(@jkci_class, student), onclick: "removeClassStudent(event, this);" %>
     </td>
   </tr>
 <%- end %>

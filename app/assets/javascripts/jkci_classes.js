@@ -76,3 +76,18 @@ function classSmsToggle(self) {
   $.get(url+"?&value="+value, function(data) {
   }, function(){}, "JSON");
 }
+
+function removeClassStudent(event, self) {
+  event.preventDefault();
+  if(confirm("Are you sure?")) {
+    $.ajax({
+      url: ''+$(self).attr('href'),
+      type: 'DELETE',
+      dataType: "JSON",
+      success: function(result) {
+	$(self).parent().parent().remove();
+      }
+    });
+  }
+  
+}

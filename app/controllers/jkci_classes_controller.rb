@@ -48,8 +48,8 @@ class JkciClassesController < ApplicationController
 
   def assign_students
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
-    @students = @organisation.students.enable_students
     @selected_students = @jkci_class.students.map(&:id)
+    @students = @organisation.students.enable_students.where("id not in (?)", ([0] + @selected_students))
   end
 
   def manage_roll_number
@@ -83,6 +83,12 @@ class JkciClassesController < ApplicationController
     jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     sutdents = params[:students_ids].map(&:to_i)  rescue []
     jkci_class.manage_students(sutdents, @organisation) if jkci_class
+    render json: {success: true, id: jkci_class.id}
+  end
+
+  def remove_student_from_class
+    jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    jkci_class.remove_student_from_class(params[:student_id], @organisation) if jkci_class
     render json: {success: true, id: jkci_class.id}
   end
   
