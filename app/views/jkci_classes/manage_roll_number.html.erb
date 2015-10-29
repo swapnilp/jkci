@@ -1,0 +1,22 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <div class="col-sm-12 textLeft">
+      <div class="col-sm-12 textLeft">
+	<h2>Class</h2>
+      </div>
+      <%= form_tag(save_class_roll_number_path(@jkci_class), :method => :post, id: "classRollNumberForm") do %>
+        <%- @students.each do |student| %>
+        	<div class="col-sm-12 textLeft">
+        	  <span class="col-sm-2"><%= student.first_name %>&nbsp;<%= student.last_name %></span>
+        	  <span class="col-sm-6 paddingTop10"><%= text_field_tag  "roll_number[#{student.id}]", student.roll_number, onkeypress: "return isNumber(event)", class: "uniq" %></span>
+        	</div>
+        <%- end %>
+	<div class="col-sm-12 col-sm-offset-2" style="margin-top:20px;">
+	  <%= submit_tag 'Save', :onclick => "checkUinqRollnumber(event);", class: "btn btn-default" %>
+	  <%= link_to "cancel", jkci_class_path(@jkci_class), class: "btn btn-warning" %>
+	</div>
+	
+      <%- end %>
+    </div>
+  </div>
+</div>

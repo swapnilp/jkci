@@ -86,6 +86,12 @@ class JkciClass < ActiveRecord::Base
     end
   end
 
+  def save_class_roll_number(roll_numbers)
+    roll_numbers.each do |key, value|
+      self.class_students.where(id: key).first.update_attributes({roll_number: value.present? ? value : nil})
+    end
+  end
+  
   def chapters_table_format(subject)
     table = [["Chapters", "Points"]]
     chapters = subject.chapters

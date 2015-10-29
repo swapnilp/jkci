@@ -103,6 +103,8 @@ Rails.application.routes.draw do
   get "/jkci_class/:id/filter_class_exams" => "jkci_classes#filter_class_exams", as: "filter_class_exams"
   get "/jkci_class/:id/filter_daily_teach" => "jkci_classes#filter_daily_teach", as: "filter_daily_teach"
   get "/jkci_class/:jkci_class_id/chapters" => "jkci_classes#chapters", as: "chapters"
+  get "/class/:id/manage_roll_number" => "jkci_classes#manage_roll_number", as: "manage_class_roll_number"
+  post "/class/:id/save_roll_number" => "jkci_classes#save_roll_number", as: "save_class_roll_number"
   post "/class/:id/manage_students" => "jkci_classes#manage_students", as: "class_manage_students"
   get "/jkci_class/filter_class/batch" => "jkci_classes#filter_class", as: "filter_class"
 

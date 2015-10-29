@@ -24,6 +24,7 @@ class JkciClassesController < ApplicationController
 
   def show
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    @students = @jkci_class.class_students.joins(:student).select("class_students.roll_number, students.*").where("students.is_disabled = false").order("students.first_name asc, class_students.roll_number asc")
     @chapters = []
     @daily_teaching_points = @jkci_class.daily_teaching_points.includes(:class_catlogs).chapters_points.order('id desc').page(params[:page])
     @teached_chapters = @daily_teaching_points.map(&:chapter_id).uniq
@@ -49,6 +50,17 @@ class JkciClassesController < ApplicationController
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @students = Student.enable_students
     @selected_students = @jkci_class.students.map(&:id)
+  end
+
+  def manage_roll_number
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    @students = @jkci_class.class_students.joins(:student).select("class_students.id, students.first_name, students.last_name, class_students.roll_number").order("students.first_name asc, class_students.roll_number asc")
+  end
+  
+  def save_roll_number
+    jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    jkci_class.save_class_roll_number(params[:roll_number])
+    redirect_to jkci_class_path(jkci_class)
   end
 
   def manage_students

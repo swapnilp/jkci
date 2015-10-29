@@ -46,3 +46,25 @@ function downloadSubClassCatlog(event, self){
   });
   window.open(''+ $(self).attr("href")+'?&subclass='+selectedSubClass);
 }
+
+
+function checkUinqRollnumber(event, self){
+  event.preventDefault();
+  var values = [];
+  var isSubmit = true;
+  $('input[class^=uniq]').each(function() {
+    if ( this.value!= "" && $.inArray(this.value, values) >= 0 ) {
+      isSubmit = false;
+      return false; // <-- stops the loop
+    } else {
+      if(this.value!= ""){
+	values.push( this.value );
+      }
+    }
+  });
+  if(isSubmit){
+    $("#classRollNumberForm").submit();
+  }else {
+    alert("Roll number must be uniq");
+  }
+}
