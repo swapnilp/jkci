@@ -48,7 +48,7 @@ class JkciClassesController < ApplicationController
 
   def assign_students
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
-    @students = Student.enable_students
+    @students = @organisation.students.enable_students
     @selected_students = @jkci_class.students.map(&:id)
   end
 
