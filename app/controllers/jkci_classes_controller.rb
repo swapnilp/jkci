@@ -24,7 +24,7 @@ class JkciClassesController < ApplicationController
 
   def show
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
-    @students = @jkci_class.class_students.joins(:student).select("class_students.roll_number, students.*").where("students.is_disabled = false").order("students.first_name asc, class_students.roll_number asc")
+    @students = @jkci_class.class_students.joins(:student).select("class_students.roll_number, students.*").where("students.is_disabled = false").order("class_students.roll_number asc, students.first_name asc")
     @chapters = []
     @daily_teaching_points = @jkci_class.daily_teaching_points.includes(:class_catlogs).chapters_points.order('id desc').page(params[:page])
     @teached_chapters = @daily_teaching_points.map(&:chapter_id).uniq
@@ -54,7 +54,7 @@ class JkciClassesController < ApplicationController
 
   def manage_roll_number
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
-    @students = @jkci_class.class_students.joins(:student).select("class_students.id, students.first_name, students.last_name, class_students.roll_number").order("students.first_name asc, class_students.roll_number asc")
+    @students = @jkci_class.class_students.joins(:student).select("class_students.id, students.first_name, students.last_name, class_students.roll_number").order("class_students.roll_number asc, students.first_name asc")
   end
   
   def save_roll_number
