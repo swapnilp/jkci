@@ -109,8 +109,10 @@ class Exam < ActiveRecord::Base
   end
 
   def publish_results
-    Delayed::Job.enqueue ExamAbsentSmsSend.new(self)
-    Delayed::Job.enqueue ExamResultSmsSend.new(self)
+    if self.jkci_class.enable_exam_sms
+      Delayed::Job.enqueue ExamAbsentSmsSend.new(self)
+      Delayed::Job.enqueue ExamResultSmsSend.new(self)
+    end
     self.update_attributes({is_result_decleared: true, is_completed: true, published_date: Time.now})
     Notification.publish_exam(self.id, self.organisation)
   end

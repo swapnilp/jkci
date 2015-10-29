@@ -17,6 +17,7 @@
 // require turbolinks
 //= require moment
 //= require bootstrap-datetimepicker
+//= require bootstrap-toggle-buttons
 //= require dropdown-menu/dropdown-menu
 //= require jquery.easy-pie-chart
 // require fancybox/jquery.fancybox.pack
@@ -57,3 +58,7 @@ function clearModalData(){
   $("#myModal.modal .modal-body").html("<div class='col-sm-12 center'><img src='/assets/fancybox_loading.gif'></div>");
   $("#myModal.modal .modelAction").remove();
 }
+
+$( document ).ready(function() {
+  $('.switch').toggleButtons();
+})

@@ -96,6 +96,8 @@ Rails.application.routes.draw do
   end
   
   get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
+  get "/class/:id/toggle_class_sms" => "jkci_classes#toggle_class_sms", as: "toggle_class_sms"
+  get "/class/:id/toggle_exam_sms" => "jkci_classes#toggle_exam_sms", as: "toggle_class_exam_sms"
   get "/class/:id/download_class_catlog" => "jkci_classes#download_class_catlog", as: "download_class_catlog"
   get "/class/:id/download_class_student_list" => "jkci_classes#download_class_student_list", as: "download_class_student_list"
   get "/class/:id/download_class_syllabus" => "jkci_classes#download_class_syllabus", as: "download_class_syllabus"

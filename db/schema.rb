@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028174915) do
+ActiveRecord::Schema.define(version: 20151029062736) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -239,6 +239,8 @@ ActiveRecord::Schema.define(version: 20151028174915) do
     t.integer  "current_chapter_id", limit: 4
     t.integer  "organisation_id",    limit: 4
     t.integer  "standard_id",        limit: 4
+    t.boolean  "enable_class_sms",   limit: 1,   default: false
+    t.boolean  "enable_exam_sms",    limit: 1,   default: false
   end
 
   create_table "notifications", force: :cascade do |t|

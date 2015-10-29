@@ -20,6 +20,20 @@
 	<span class="col-sm-2"><h5>Teacher</h5></span>
 	<span class="col-sm-6 paddingTop10"><%= @jkci_class.teacher.try(:name) %></span>
       </div>
+      <%- if current_user.has_role? :manage_class_sms %>
+        <div class="col-sm-12 textLeft">
+          <span class="col-sm-2"><h5>Daily Absenty Sms Enable</h5></span>
+          <div class="col-sm-6 paddingTop10 switch" data-on="primary" data-off="info">
+            <input class="dailySmsSwitch" type="checkbox" data-url="<%= toggle_class_sms_path(@jkci_class) %>" onchange="classSmsToggle(this);" <%= 'checked' if @jkci_class.enable_class_sms %> />
+          </div>
+        </div>
+        <div class="col-sm-12 textLeft">
+          <span class="col-sm-2"><h5>Exam Sms Enable</h5></span>
+          <div class="col-sm-6 paddingTop10 switch" data-on="primary" data-off="info">
+            <input class="dailySmsSwitch" type="checkbox" data-url="<%= toggle_class_exam_sms_path(@jkci_class) %>" onchange="classSmsToggle(this);" <%= 'checked' if @jkci_class.enable_exam_sms %> />
+          </div>
+        </div>
+      <%- end %>
       <div class="col-sm-12 textLeft">
 	<span class="col-sm-2"><h5>Download Syllabus</h5></span>
 	<span class="col-sm-6 paddingTop10">

@@ -66,6 +66,6 @@ class DailyTeachingPoint < ActiveRecord::Base
   end
 
   def publish_absenty
-    Delayed::Job.enqueue ClassAbsentSms.new(self)
+    Delayed::Job.enqueue ClassAbsentSms.new(self) if self.jkci_class.enable_class_sms
   end
 end

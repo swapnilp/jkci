@@ -56,6 +56,22 @@ class JkciClassesController < ApplicationController
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @students = @jkci_class.class_students.joins(:student).select("class_students.id, students.first_name, students.last_name, class_students.roll_number").order("class_students.roll_number asc, students.first_name asc")
   end
+
+  def toggle_class_sms
+    jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    if current_user.has_role? :manage_class_sms
+      jkci_class.update_attributes({enable_class_sms: params[:value]})
+    end
+    render json: {success: true, id: jkci_class.id}
+  end
+
+  def toggle_exam_sms
+    jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    if current_user.has_role? :manage_class_sms
+      jkci_class.update_attributes({enable_exam_sms: params[:value]})
+    end
+    render json: {success: true, id: jkci_class.id}
+  end
   
   def save_roll_number
     jkci_class = @organisation.jkci_classes.where(id: params[:id]).first

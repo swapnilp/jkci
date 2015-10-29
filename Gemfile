@@ -24,6 +24,7 @@ gem "delayed_job_web"
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 #gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0.1'
+gem 'rails-bootstrap-toggle-buttons'
 #gem 'will_paginate', '~> 3.0'
 gem 'kaminari'
 gem "font-awesome-rails"

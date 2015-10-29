@@ -68,3 +68,11 @@ function checkUinqRollnumber(event, self){
     alert("Roll number must be uniq");
   }
 }
+
+function classSmsToggle(self) {
+  url = $(self).data('url');
+  value = $(self).prop('checked');
+  
+  $.get(url+"?&value="+value, function(data) {
+  }, function(){}, "JSON");
+}

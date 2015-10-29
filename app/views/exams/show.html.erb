@@ -117,7 +117,7 @@
 	  <%- end %>
           <%= link_to "Remove Exam", jkci_class_exam_path(@exam.jkci_class, @exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')", method: :delete %>
         <%- else %>
-	  <%- if @exam.verify_absenty %>
+	  <%- if @exam.verify_absenty && @exam.jkci_class.enable_exam_sms %>
             <%= link_to "Publish Absent catlog", publish_absent_exam_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
 	  <%- end %>
           <%- if @remaining_students.count == 0 && @exam.verify_absenty && @exam.verify_result && current_user.has_role?(:publish_exam) %>

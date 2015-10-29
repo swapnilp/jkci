@@ -28,8 +28,10 @@
       <%= dtp.absent_count %>
     </td>
     <td>
-      <%- if dtp.is_fill_catlog.present? && dtp.is_sms_sent == false && dtp.verify_absenty && current_user.has_role?(:publish_daily_teach_absenty) %>
-      <%= link_to "Send sms", class_absent_sms_path(dtp),  class: "btn btn-primary", onclick: "return confirm('Are you sure?')", :method=> :post %>
+      <%- if dtp.is_fill_catlog.present? && dtp.is_sms_sent == false && dtp.verify_absenty && current_user.has_role?(:publish_daily_teach_absenty) && @jkci_class.enable_class_sms %>
+        <%= link_to "Send sms", class_absent_sms_path(dtp),  class: "btn btn-primary", onclick: "return confirm('Are you sure?')", :method=> :post %>
+      <%- elsif dtp.is_fill_catlog.present? && dtp.is_sms_sent == false && !dtp.verify_absenty && current_user.has_role?(:verify_daily_teach_absenty)%>
+        <%= link_to "Verify Absenty", daily_teach_path(dtp),  class: "btn btn-primary" %>
       <%- end %>
     </td>
   </tr>
