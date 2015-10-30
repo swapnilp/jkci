@@ -12,7 +12,8 @@ class Exam < ActiveRecord::Base
   has_many :documents
   has_many :notifications, -> {where("notifications.object_type like ?", 'Exam')}, :foreign_key => :object_id
   
-  default_scope { where(is_active: true) }
+  default_scope { where(is_active: true, organisation_id: Organisation.current_id) }
+  
   
   scope :upcomming_exams, -> { where("exam_date > ? && is_completed is ?", Date.tomorrow, nil) }
   scope :unconducted_exams, -> { where("exam_date < ? && is_completed is ?", Date.today, nil).order("id desc")}
@@ -110,15 +111,15 @@ class Exam < ActiveRecord::Base
 
   def publish_results
     if self.jkci_class.enable_exam_sms
-      Delayed::Job.enqueue ExamAbsentSmsSend.new(self)
-      Delayed::Job.enqueue ExamResultSmsSend.new(self)
+      Delayed::Job.enqueue ExamAbsentSmsSend.new(self.absenty_message_send)
+      Delayed::Job.enqueue ExamResultSmsSend.new(self.result_message_send)
     end
     self.update_attributes({is_result_decleared: true, is_completed: true, published_date: Time.now})
     Notification.publish_exam(self.id, self.organisation)
   end
 
   def publish_absentee
-    Delayed::Job.enqueue ExamAbsentSmsSend.new(self)
+    Delayed::Job.enqueue ExamAbsentSmsSend.new(self.absenty_message_send)
   end
   
   def send_result_email(exam, student)
@@ -175,6 +176,34 @@ class Exam < ActiveRecord::Base
   
   def dtps
     DailyTeachingPoint.where(id: daily_teaching_points.split(',').reject(&:blank?)) rescue []
+  end
+
+  def absenty_message_send
+    url_arry = []
+    self.exam_catlogs.includes([:student]).only_absents.each_with_index do |exam_catlog, index|
+      if exam_catlog.student.enable_sms && !exam_catlog.absent_sms_sent.present?
+        message = "#{exam_catlog.student.short_name} is absent for 'cx-#{self.id}' exam.Plz contact us. JKSai!!"
+        url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=JKSaiu&dmobile=#{exam_catlog.student.sms_mobile}&message=#{message}"
+        if exam_catlog.student.sms_mobile.present? && exam_catlog.absent_sms_sent != true
+          url_arry << [url, message, exam_catlog.id, self.organisation_id]
+          #exam_catlog.update_attributes({absent_sms_sent: true})
+        end
+      end
+    end
+    return url_arry
+  end
+
+  def result_message_send
+    url_arry = []
+    self.exam_catlogs.includes([:student]).only_results.each_with_index do |exam_catlog, index|
+      if exam_catlog.student.enable_sms
+        message = "#{exam_catlog.student.short_name} got #{exam_catlog.marks.to_i}/#{self.marks} in cx-#{self.id} exam held on #{self.exam_date.strftime("%B-%d")}. JKSai"
+        message = message.truncate(159)
+        url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=JKSAIU&dmobile=#{exam_catlog.student.sms_mobile}&message=#{message}"
+        url_arry << [url, message, exam_catlog.id, self.organisation_id]
+      end
+    end
+    url_arry
   end
 
   handle_asynchronously :send_result_email, :priority => 20

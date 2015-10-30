@@ -17,6 +17,7 @@ class JkciClass < ActiveRecord::Base
   has_many :chapters, through: :subject
   
   #default_scope  {where(is_active: true)} 
+  default_scope { where(organisation_id: Organisation.current_id) }
   scope :active, -> { where(is_active: true) }
 
   def manage_students(associate_students, organisation)

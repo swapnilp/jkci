@@ -1,5 +1,6 @@
 class Notification < ActiveRecord::Base
-
+  
+  default_scope { where(organisation_id: Organisation.current_id) }  
   scope :pending, -> { where(is_completed: [nil, false], verification_require: true )}
 
   def self.add_create_exam(obj_id, org)

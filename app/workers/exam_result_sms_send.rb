@@ -1,19 +1,20 @@
-class ExamResultSmsSend < Struct.new(:exam)
+class ExamResultSmsSend < Struct.new(:exam_arry)
   include SendingSms
   def perform
-    send_sms(exam)
+    send_sms(exam_arry)
   end
 
-  def send_sms(exam)
-    exam.exam_catlogs.includes([:student]).only_results.each_with_index do |exam_catlog, index|
-      if exam_catlog.student.enable_sms
-        message = "#{exam_catlog.student.short_name} got #{exam_catlog.marks.to_i}/#{exam.marks} in cx-#{exam.id} exam held on #{exam.exam_date.strftime("%B-%d")}. JKSai"
-        message = message.truncate(159)
-        url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=JKSAIU&dmobile=#{exam_catlog.student.sms_mobile}&message=#{message}"
-        deliver_sms(URI::encode(url))
-        SmsSent.new({number: exam_catlog.student.p_mobile, obj_type: "exam result", obj_id: exam_catlog.id, message: message, is_parent: true}).save
-      end
+  def send_sms(exam_arry)
+    exam_arry.each do |exam| 
+      url = exam[0]
+      message = exam[1]
+      obj_id = exam[2]
+      org_id = exam[3]
+      
+      deliver_sms(URI::encode(url))
+      SmsSent.new({obj_type: "exam_result", obj_id: obj_id, message: message, is_parent: true, organisation_id: org_id}).save
     end
+
   end
 end
 #Delayed::Job.enqueue ExamResultSmsSend.new(Exam.last)

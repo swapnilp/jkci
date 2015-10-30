@@ -12,6 +12,7 @@ class ClassAbsentSms < Struct.new(:daily_teaching_point)
         unless class_catlog.sms_sent
           deliver_sms(URI::encode(url))
           class_catlog.update_attributes({sms_sent: true})
+          SmsSent.new({obj_type: "daily_teach_sms", obj_id: daily_teaching_point.id, message: message, is_parent: true, organisation_id: organisation.id}).save
         end
       end
     end

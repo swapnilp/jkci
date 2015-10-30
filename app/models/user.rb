@@ -3,18 +3,28 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,# :recoverable,
-          :rememberable, :trackable, :validatable, :authentication_keys => [:login, :organisation_id]
+          :rememberable, :trackable, :authentication_keys => [:login, :organisation_id]#, request_keys: [:organisation_id]
   attr_accessor :login
 
   has_many :students
   
   belongs_to :organisation
+  
+  validates :organisation_id, :presence => true#, :email => true, scope: :organisation_id
+
+  
+  validates_uniqueness_of :email, :scope => :organisation_id, :case_sensitive => false, :allow_blank => true#, :if => true
+  validates_format_of :email, :with => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
+  validates_presence_of :password, :on=>:create
+  validates_confirmation_of :password, :on=>:create
+  validates_length_of :password, :within => Devise.password_length, :allow_blank => true
+
 
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
-    if login = conditions.delete(:login)
-      where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    if (login = conditions.delete(:login)) && (org = conditions.delete(:organisation_id)) 
+      where(conditions.to_h).where(["(lower(username) = :value OR lower(email) = :value) AND organisation_id = :org", { :value => login.downcase, org: org }]).first
     else
       where(conditions.to_h).first
     end

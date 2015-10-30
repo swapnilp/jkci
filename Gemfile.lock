@@ -224,8 +224,8 @@ DEPENDENCIES
   chagol
   coffee-rails (~> 4.0.0)
   daemons
-  delayed_job_active_record
-  delayed_job_web
+  delayed_job_active_record (~> 4.0.1)
+  delayed_job_web (~> 1.2.9)
   devise (~> 3.4.1)
   fancybox2-rails (~> 0.2.8)
   font-awesome-rails

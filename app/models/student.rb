@@ -16,8 +16,9 @@ class Student < ActiveRecord::Base
   belongs_to :user
   belongs_to :standard
   
-  
+  default_scope { where(organisation_id: Organisation.current_id) }  
   scope :enable_students, -> { where(is_disabled: false) }
+
   
   def all_exams
     #Exam.where(std: std, is_active: true)

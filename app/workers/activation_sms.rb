@@ -10,7 +10,7 @@ class ActivationSms < Struct.new(:student)
     url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=91#{student.p_mobile}&message=#{message}"
     if student.sms_mobile.present?
       deliver_sms(URI::encode(url))
-      SmsSent.new({obj_type: "Activation", obj_id: student.id, message: message, is_parent: true}).save
+      SmsSent.new({obj_type: "activation_sms", obj_id: student.id, message: message, is_parent: true, organisation_id: student.organisation_id}).save
     end
     #end
   end

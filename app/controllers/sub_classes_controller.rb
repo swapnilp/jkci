@@ -20,7 +20,7 @@ class SubClassesController < ApplicationController
   def create 
     jkci_class = JkciClass.where(id: params[:jkci_class_id]).first
     if jkci_class
-      sub_class = jkci_class.sub_classes.new(params[:sub_class])
+      sub_class = jkci_class.sub_classes.new(params[:sub_class].merge({organisation_id: @organisation.id}))
       if sub_class.save
         redirect_to jkci_class_path(jkci_class)
       else

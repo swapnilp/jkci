@@ -1,21 +1,18 @@
-class ExamAbsentSmsSend < Struct.new(:exam)
+class ExamAbsentSmsSend < Struct.new(:exam_arry)
   include SendingSms
   def perform
-    send_sms(exam)
+    send_sms(exam_arry)
   end
   
-  def send_sms(exam)
-    exam.exam_catlogs.includes([:student]).only_absents.each_with_index do |exam_catlog, index|
-      if exam_catlog.student.enable_sms && !exam_catlog.absent_sms_sent.present?
-        #message = "#{exam_catlog.student.first_name} is not attended #{exam.name} exam held on #{exam.exam_date.strftime("%B-%d")}. Please contact with us.JKSAI !!!"
-        message = "#{exam_catlog.student.short_name} is absent for 'cx-#{exam.id}' exam.Plz contact us. JKSai!!"
-        url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=JKSaiu&dmobile=#{exam_catlog.student.sms_mobile}&message=#{message}"
-        if exam_catlog.student.sms_mobile.present? && exam_catlog.absent_sms_sent != true
-          deliver_sms(URI::encode(url))
-          SmsSent.new({number: index, obj_type: "absent_exam", obj_id: exam.id, message: message, is_parent: true}).save
-          exam_catlog.update_attributes({absent_sms_sent: true})
-        end
-      end
+  def send_sms(exam_arry)
+    exam_arry.each do |exam| 
+      url = exam[0]
+      message = exam[1]
+      obj_id = exam[2]
+      org_id = exam[3]
+      
+      deliver_sms(URI::encode(url))
+      SmsSent.new({obj_type: "absent_exam", obj_id: obj_id, message: message, is_parent: true, organisation_id: org_id}).save
     end
   end
 end

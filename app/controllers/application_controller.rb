@@ -13,11 +13,13 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     super
     @organisation ||= current_user.organisation
+    Organisation.current_id = @organisation.present? ? @organisation.id : nil
   end
 
   def get_organiser
     if current_user 
       @organisation ||= current_user.organisation 
+      Organisation.current_id = @organisation.present? ? @organisation.id : nil
     end
   end
   

@@ -11,7 +11,7 @@ class MeetingSmsSend < Struct.new(:meeting)
         message = "Parent's meeting  will be conducted on #{meeting.date.strftime('%d/%m/%Y %H:%M')}.Please contact #{meeting.contact_person}. JKSai !!!"
         url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=JKSaiu&dmobile=#{student.sms_mobile}&message=#{message}"
         deliver_sms(URI::encode(url))
-        SmsSent.new({number: index, obj_type: "parent_meeting", obj_id: meeting.id, message: message, is_parent: true}).save
+        SmsSent.new({number: index, obj_type: "parent_meeting", obj_id: meeting.id, message: message, is_parent: true, organisation_id: student.organisation_id}).save
       end
     end
   end

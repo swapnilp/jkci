@@ -7,9 +7,11 @@ class DailyTeachingPoint < ActiveRecord::Base
   belongs_to :chapter
   belongs_to :chapters_point
   has_many :notifications, -> {where("notifications.object_type like ?", 'DailyTeaching_point')}, :foreign_key => :object_id 
+  
+  default_scope { where(organisation_id: Organisation.current_id) }
   scope :chapters_points, -> { where("chapter_id is not ?", nil) }
-
   after_save :add_current_chapter
+  
 
   def absent_count
     students_count = self.class_catlogs.where(is_present: false).count

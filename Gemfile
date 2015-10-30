@@ -18,9 +18,9 @@ gem 'coffee-rails', '~> 4.0.0'
 #gem "twitter-bootstrap-rails"
 gem "chagol"
 #gem "resque", "~> 2.0.0.pre.1", github: "resque/resque"
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', "~> 4.0.1"
 gem "daemons"
-gem "delayed_job_web"
+gem "delayed_job_web", "~> 1.2.9"
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 #gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0.1'

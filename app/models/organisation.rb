@@ -26,6 +26,8 @@ class Organisation < ActiveRecord::Base
   has_many :organisation_standards
   has_many :standards,-> {uniq},  through: :organisation_standards
 
+  cattr_accessor :current_id
+
   def generate_email_code
     e_code = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
     m_code = (0...7).map { ('a'..'z').to_a[rand(26)] }.join

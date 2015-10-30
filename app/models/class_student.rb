@@ -1,8 +1,9 @@
 class ClassStudent < ActiveRecord::Base
   belongs_to :jkci_class
   belongs_to :student
-
-
+  
+  default_scope { where(organisation_id: Organisation.current_id) }
+  
   def add_sub_class(sub_class_id)
     sub_classes = self.sub_class.split(',').map(&:to_i)
     sub_classes << sub_class_id
