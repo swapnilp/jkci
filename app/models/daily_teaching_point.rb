@@ -68,6 +68,26 @@ class DailyTeachingPoint < ActiveRecord::Base
   end
 
   def publish_absenty
-    Delayed::Job.enqueue ClassAbsentSms.new(self) if self.jkci_class.enable_class_sms
+    if self.jkci_class.enable_class_sms
+      Delayed::Job.enqueue ClassAbsentSms.new(self.absenty_message_send) 
+      self.update_attributes({is_sms_sent: true}) 
+    end
   end
+
+  def absenty_message_send
+    url_arry = []
+    self.class_catlogs.includes([:jkci_class, :student]).only_absents.each_with_index do |class_catlog, index|
+      if class_catlog.student.enable_sms
+        message = "We regret to convey you that your son/daughter #{class_catlog.student.short_name} is absent for #{self.jkci_class.class_name} lectures.Plz contact us. JKSai!!"
+        url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=#{class_catlog.student.sms_mobile}&message=#{message}"
+        unless class_catlog.sms_sent
+          url_arry << [url, message, class_catlog.id, self.organisation_id]
+          #class_catlog.update_attributes({sms_sent: true})
+        end
+      end
+    end
+    url_arry
+  end
+
+  
 end

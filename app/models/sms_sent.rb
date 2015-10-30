@@ -13,6 +13,10 @@ class SmsSent < ActiveRecord::Base
       exam_catlog = ExamCatlog.unscoped.where(id: obj_id).first
       exam_catlog.update_attributes({absent_sms_sent: true})
     end
+    if self.obj_type == "daily_teach_sms"
+      class_catlog = ClassCatlog.unscoped.where(id: obj_id).first
+      class_catlog.update_attributes({sms_sent: true})
+    end
   end
   
 end
