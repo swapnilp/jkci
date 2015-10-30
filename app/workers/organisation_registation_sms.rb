@@ -5,10 +5,15 @@ class OrganisationRegistationSms < Struct.new(:organisation)
   end
 
   def send_sms(organisation)
-    message = "One time password is #{organisation.mobile_code}  for #{organisation.name} registation on EraCord. Please do not share OTP to any one for securiety reason."
-    url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=91#{organisation.mobile}&message=#{message}"
-    deliver_sms(URI::encode(url))
-    SmsSent.new({obj_type: "organisation_reg", obj_id: organisation.id, message: message, is_parent: true, organisation_id: organisation.id}).save
+    if organisation.present?
+      url = organisation[0]
+      message = organisation[1]
+      obj_id = organisation[2]
+      org_id = organisation[3]
+      
+      deliver_sms(URI::encode(url))
+      SmsSent.new({obj_type: "organisation_reg", obj_id: obj_id, message: message, is_parent: true, organisation_id: org_id}).save
+    end
   end
 end
 #Delayed::Job.enqueue OrganisationRegistationSms.new(DailyTeachingPoint.last)

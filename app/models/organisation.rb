@@ -49,6 +49,13 @@ class Organisation < ActiveRecord::Base
   def regenerate_organisation_code(mobile_number)
     m_code = (0...7).map { ('a'..'z').to_a[rand(26)] }.join
     update_attributes({mobile_code: m_code, mobile: mobile_number})
-    Delayed::Job.enqueue OrganisationRegistationSms.new(self)
+    Delayed::Job.enqueue OrganisationRegistationSms.new(organisation_sms_message)
+  end
+
+  def organisation_sms_message
+    message = "One time password is #{self.mobile_code}  for #{self.name} registation on EraCord. Please do not share OTP to any one for securiety reason."
+    url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=91#{self.mobile}&message=#{message}"
+    url_arry = [url, message, self.id, self.id]
+    
   end
 end
