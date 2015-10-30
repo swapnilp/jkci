@@ -43,6 +43,11 @@ class Student < ActiveRecord::Base
     self.subjects << standard.subjects.where(id: o_subjects.map(&:to_i)) if o_subjects.present?
       
   end
+
+  def activate_sms
+    self.update_attributes({enable_sms: true})
+    Delayed::Job.enqueue ActivationSms.new(activate_sms_message)
+  end
   
   def exam_query
     query = " "
@@ -108,5 +113,15 @@ class Student < ActiveRecord::Base
       table << ["#{index+1}", "#{exam_catlog.exam.name}", "#{exam_catlog.exam.exam_type}", "#{exam_catlog.jkci_class.class_name}", "#{exam_catlog.exam.exam_date.to_date}", "#{exam_catlog.is_present}", "#{exam_catlog.marks.to_i}/#{exam_catlog.exam.marks}", "#{exam_catlog.rank}"]
     end
     table
+  end
+
+  def activate_sms_message
+    url_arry = []
+    message = "#{self.short_name}'s notification updates has been activaed by JKSAi. JKSai!!"
+    url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=91#{self.p_mobile}&message=#{message}"
+    if self.sms_mobile.present?
+      url_arry = [url, message, self.id, self.organisation_id]
+    end
+    url_arry
   end
 end
