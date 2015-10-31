@@ -181,7 +181,6 @@
 	  <th>Student Name</th>
 	  <th>Parent Number</th>
 	  <%- unless @exam.is_result_decleared %>
-	    <th>Recover</th>
 	    <th>Remove</th>
 	  <%- end %>
 	</tr>
@@ -198,11 +197,6 @@
 	  <%= exam_catlog.student.p_mobile %>
 	</td>
 	<%- unless @exam.is_result_decleared %>
-	<td>
-	  <%- unless exam_catlog.is_recover %>
-	  <%= link_to 'Recover', recover_exam_path(exam_catlog.exam, exam_catlog) %>
-	  <%- end %>
-	</td>
 	<td>
 	  <%- unless exam_catlog.absent_sms_sent %>
 	    <%= link_to 'Remove', remove_exam_absent_path(exam_catlog.exam, exam_catlog.student)  %>
