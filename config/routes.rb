@@ -22,6 +22,11 @@ Rails.application.routes.draw do
       get 'manage_courses', as: 'manage_courses'
       get 'manage_users', as: 'manage_users'
       get 'remaining_cources', as: 'remaining_cources'
+      get "delete_users/:user_id" => "organisations#delete_users", as: "delete_user"
+      get "disable_users/:user_id" => "organisations#disable_users", as: "disable_user"
+      get "edit_password/:user_id" => "organisations#edit_password", as: "edit_password"
+      put "update_password/:user_id" => "organisations#update_password", as: "update_password"
+      get "enable_users/:user_id" => "organisations#enable_users", as: "enable_user"
       post 'add_remaining_cources', as: 'add_remaining_cources'
       get 'new_users', as: 'new_users'
       post 'create_users', as: 'create_users'

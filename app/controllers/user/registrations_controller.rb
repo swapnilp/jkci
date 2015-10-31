@@ -1,5 +1,7 @@
 class User::RegistrationsController < Devise::RegistrationsController
   before_filter :configure_permitted_parameters
+
+  before_action :authenticate_user!, only: [:edit, :update]
   
   def new
     if params[:email_code].present?
@@ -42,6 +44,10 @@ class User::RegistrationsController < Devise::RegistrationsController
     end
   end
   
+  def edit
+    super
+  end
+  
   def update
     super
   end
@@ -50,5 +56,9 @@ class User::RegistrationsController < Devise::RegistrationsController
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up).push(:email, :role, :password, :password_confirmation)
+  end
+
+  def account_update_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)
   end
 end 

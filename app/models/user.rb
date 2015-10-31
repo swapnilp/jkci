@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :on=>:create
   validates_length_of :password, :within => Devise.password_length, :allow_blank => true
 
-
+  scope :clarks, -> {where(role: 'clark')}
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
@@ -29,7 +29,11 @@ class User < ActiveRecord::Base
       where(conditions.to_h).first
     end
   end
-  
+
+  def active_for_authentication?
+    super && is_enable
+  end
+
   def add_organiser_roles
     ["admin", "clark", "verify_exam", "exam_conduct", "verify_exam_absenty", "add_exam_result", "verify_exam_result", "publish_exam", "create_exam", "add_exam_absenty", "create_daily_teach", "add_daily_teach_absenty", "verify_daily_teach_absenty", "publish_daily_teach_absenty", "manage_class_sms"].each do |u_role|
       self.add_role u_role.to_sym 

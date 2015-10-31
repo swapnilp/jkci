@@ -1,0 +1,33 @@
+<%= link_to "New Clark", new_users_organisation_path(@organisation), class: "btn btn-primary" %>
+
+<div>
+  <table class="table table-hover standardsTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Email</th>
+	<th>Actions</th>
+      </tr>
+    </thead>
+    <%- @users.each_with_index do |user, index| %>
+    <tr>
+      <td>
+	<%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+      </td>
+      <td>
+	<%= user.email %>
+      </td>
+      <td>
+	<%= link_to "Change password", edit_password_organisation_path(@organisation, user), class: "btn btn-primary" %>
+	<%- if user.is_enable %>
+	<%= link_to "Disable User", disable_user_organisation_path(@organisation, user), data: {confirm: "Are you sure? "}, class: "btn btn-primary" %>
+	<%- else %>
+	<%= link_to "Enable User", enable_user_organisation_path(@organisation, user), data: { confirm: "Are you sure?" }, class: "btn btn-primary" %>
+
+	<%- end %>
+	<%= link_to "Delete User", delete_user_organisation_path(@organisation, user), data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
+      </td>
+    </tr>
+    <%- end %>
+  </table>  
+</div>

@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
 
   #before_filter :get_organisation, if: current_user.present?
   
-  def authenticate_user!
-    super
+  def authenticate_user!(options={})
+    super(options)
     @organisation ||= current_user.organisation
     Organisation.current_id = @organisation.present? ? @organisation.id : nil
   end

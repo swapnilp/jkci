@@ -51,7 +51,7 @@
           </li>
           <li>
 	    <%- if user_signed_in? %>
-	      <%- if current_user.admin? || current_user.organiser? %>
+	      <%- if current_user.admin? || current_user.organiser? ||current_user.clark? %>
 	      <a href="/admin_desk" title="Manage Your Desk">Admin Desk</a>
               <ul class="sub-menu">
 		<li><a href="<%= subjects_path %>">Subject</a></li>
@@ -67,6 +67,7 @@
 		<%- if (current_user.role == "organisation") || (current_user.has_role? :organisation) %>
 		  <li><a href="<%= manage_organisation_path(current_user.organisation) %>">Setting</a></li>
 		<%- end %>
+		<li><a href="<%= edit_user_registration_path %>">Change Password</a></li>
               </ul>
 	      <%- elsif current_user.parent? %>
 	        <a href="/parent_desk" title="Manage Your Desk">Parent's Desk</a>

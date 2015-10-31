@@ -1,0 +1,58 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <div class="loginContainer" style="height:370px;">
+      <div class="pull-left col-lg-4 col-md-4">
+	<h2 style="color:#fff;">Login Tips</h2>
+	<% if @user.errors.any? %>
+	  <p class="alert alert-error red" style="padding:0;margin:0;">Ooops!</p>
+	  <ul>
+	    <% @user.errors.each do |key, msg| %>
+	    <li class="error red"><%= key %> <%=  msg %></li>
+	    <% end %>
+	  </ul> 
+	<% end %>
+      </div>
+      <div class="pull-right col-lg-5 col-md-5">
+	<h2 style="color:#fff;">Sign Up For <%= @organisation.try(:name) %></h2>
+	
+	<%= form_for(@user , url: create_users_organisation_path(@organisation), method: :post) do |f| %>
+	<%= f.hidden_field :role, value: 'clark' %>
+	<div class="field">
+	  <div>
+	    <%= f.label :email %>
+	  </div>
+	  <%= f.email_field :email, autofocus: true, autocomplete: "off" %>
+	</div>
+	
+	<div class="field">
+	  <div>
+	    <%= f.label :password %>
+	    <% if @validatable %>
+	    <em>(<%= @minimum_password_length %> characters minimum)</em>
+	    <% end %>
+	  </div>
+	  <%= f.password_field :password, autocomplete: "off" %>
+	</div>
+	
+	<div class="field">
+	  <div>
+	    <%= f.label :password_confirmation %>
+	  </div>
+	  <%= f.password_field :password_confirmation, autocomplete: "off" %>
+	</div>
+	
+	<div class="actions paddingTop10">
+	  <%= f.submit "Sign up" %>
+	  <%= link_to "Cancel", manage_organisation_path(@organisation), class: "btn btn-primary" %>
+	</div>
+	<% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

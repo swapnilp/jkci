@@ -1,6 +1,9 @@
 class OrganisationsController < ApplicationController
-  load_and_authorize_resource param_method: :my_sanitizer
-  before_action :authenticate_user!, only: [:manage_organisation, :add_cources, :add_remaining_cources]
+  load_and_authorize_resource param_method: :my_sanitizer, except: [:new_user]
+  before_action :authenticate_user!, only: [:manage_organisation, 
+                                            :add_cources, :add_remaining_cources, :new_user, 
+                                            :remaining_cources, :add_remaining_cources, :delete_users, 
+                                            :edit_password, :update_password]
 
   def new
     @org  = Organisation.new
@@ -21,6 +24,57 @@ class OrganisationsController < ApplicationController
     end
   end
 
+  def new_users
+    @user = @organisation.users.clarks.build
+  end
+
+  def create_users
+    @user = @organisation.users.clarks.build(user_params)
+    if @user.save
+      @user.add_role :clark
+      redirect_to manage_organisation_path(@organisation)
+    else
+      render :new_users
+    end
+  end
+
+  def edit_password
+    @user = @organisation.users.clarks.where(id: params[:user_id]).first
+  end
+
+  def update_password
+    @user = @organisation.users.clarks.where(id: params[:user_id]).first
+    unless @user.nil?
+      @user.errors.add(:password_confirmation, "password must match.") if update_password_params[:password] != update_password_params[:password_confirmation]
+      
+      if !@user.errors.any? && @user.update_attributes(update_password_params)
+        redirect_to manage_organisation_path(@organisation)
+      else
+        render :edit_password
+      end
+    else
+      redirect_to manage_organisation_path(@organisation)
+    end
+  end
+  
+  def delete_users
+    user = @organisation.users.clarks.where(id: params[:user_id]).first
+    user.destroy if user
+    redirect_to manage_organisation_path(@organisation)
+  end
+  
+  def disable_users
+    user = @organisation.users.clarks.where(id: params[:user_id]).first
+    user.update_attributes({is_enable: false})
+    redirect_to manage_organisation_path(@organisation)
+  end
+
+  def enable_users
+    user = @organisation.users.clarks.where(id: params[:user_id]).first
+    user.update_attributes({is_enable: true})
+    redirect_to manage_organisation_path(@organisation)
+  end
+
   def regenerate_organisation_code
     organisation  = Organisation.where(id: params[:id]).first
     organisation.regenerate_organisation_code(params[:mobile])
@@ -31,6 +85,7 @@ class OrganisationsController < ApplicationController
 
   def manage_organisation
     @standards = @organisation.standards
+    @users = @organisation.users.clarks.select([:id, :email, :organisation_id, :is_enable])
   end
   
   def manage_courses
@@ -63,5 +118,13 @@ class OrganisationsController < ApplicationController
   def my_sanitizer
     #params.permit!
     params.require(:organisation).permit!
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :salt, :encrypted_password)
+  end
+
+  def update_password_params
+    params.require(:user).permit(:password, :password_confirmation, :salt, :encrypted_password)
   end
 end
