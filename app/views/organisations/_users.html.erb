@@ -18,6 +18,7 @@
 	<%= user.email %>
       </td>
       <td>
+	<%= link_to "Manage Roles", manage_roles_organisation_path(@organisation, user), class: "btn btn-primary" %>
 	<%= link_to "Change password", edit_password_organisation_path(@organisation, user), class: "btn btn-primary" %>
 	<%- if user.is_enable %>
 	<%= link_to "Disable User", disable_user_organisation_path(@organisation, user), data: {confirm: "Are you sure? "}, class: "btn btn-primary" %>

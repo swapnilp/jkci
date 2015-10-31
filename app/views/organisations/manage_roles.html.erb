@@ -1,0 +1,21 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <h2>Manage Role</h2>
+    <%=  form_tag update_roles_organisation_path(@organisation, @user), class: "position-form manageRoleForm", method: :put  do %>
+      <%= hidden_field_tag 'role', '', class: "userRolesField" %>
+    <%- end %>
+    <div class="col-sm-12 textLeft userRoles">
+      <%- CLARK_ROLES.each do |role| %>
+    
+        <div class="left input-group col-sm-4 padding10 " style="float:left;padding:10px;" onclick="toggleUserRole(this);">
+	  <span class="input-group-addon">
+            <input type="checkbox" aria-label="<%= role %>" value="<%= role %>" <%= 'checked' if @user.roles.map(&:name).include?(role) %>>
+	  </span>
+	  <input type="text" class="form-control" aria-label="asdasd" disabled value="<%= role.to_s.humanize %>">
+	</div><!-- /input-group -->
+      <%- end %>
+    </div>
+    <%= link_to "Save", "", class: "btn btn-primary", onclick: "saveUserRole(event, this);" %>
+    <%= link_to "Back", manage_organisation_path(@organisation), class: "btn btn-default" %>
+  </div>
+</div>

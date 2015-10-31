@@ -25,7 +25,7 @@
 	
 	<div class="col-sm-12 textLeft">
 	  <%= link_to "Edit", edit_batch_result_path(@batch_result), class: "btn btn-primary" %>
-	  <%= link_to "Back", batch_results_path, class: "btn btn-primary" %>
+	  <%= link_to "Back", batch_results_path, class: "btn btn-default" %>
 	  <%= link_to "Add Result", new_result_path({batch_id: @batch_result.id}), class: "btn btn-primary", data: {batch_id: @batch_result.id}, onClick: "addBatchResult(event, this);" %>
 	</div>
       </div>

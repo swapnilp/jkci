@@ -47,6 +47,10 @@
   padding-top:10px;
 }
 
+.padding10{
+  padding:10px;
+}
+
 .examComplete{
   color:green;
 }
@@ -247,4 +251,15 @@ table th.center {
 
 .redBorder {
   border: 2px solid red;
+}
+
+.userRoles input[type='text']{
+  cursor: pointer;
+  -webkit-user-select: text;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none; // locks fields on Safari
+  -khtml-user-select: none; // locks fields on Safari
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;   
 }

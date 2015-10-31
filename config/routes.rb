@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       get "edit_password/:user_id" => "organisations#edit_password", as: "edit_password"
       put "update_password/:user_id" => "organisations#update_password", as: "update_password"
       get "enable_users/:user_id" => "organisations#enable_users", as: "enable_user"
+      get "manage_roles/:user_id" => "organisations#manage_roles", as: "manage_roles"
+      put "update_roles/:user_id" => "organisations#update_roles", as: "update_roles"
       post 'add_remaining_cources', as: 'add_remaining_cources'
       get 'new_users', as: 'new_users'
       post 'create_users', as: 'create_users'

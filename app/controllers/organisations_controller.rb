@@ -59,7 +59,10 @@ class OrganisationsController < ApplicationController
   
   def delete_users
     user = @organisation.users.clarks.where(id: params[:user_id]).first
-    user.destroy if user
+    if user
+      user.roles = []
+      user.destroy 
+    end
     redirect_to manage_organisation_path(@organisation)
   end
   
@@ -72,6 +75,16 @@ class OrganisationsController < ApplicationController
   def enable_users
     user = @organisation.users.clarks.where(id: params[:user_id]).first
     user.update_attributes({is_enable: true})
+    redirect_to manage_organisation_path(@organisation)
+  end
+
+  def manage_roles
+    @user = @organisation.users.clarks.where(id: params[:user_id]).first
+  end
+
+  def update_roles
+    user = @organisation.users.clarks.where(id: params[:user_id]).first
+    user.manage_clark_roles(params[:role])
     redirect_to manage_organisation_path(@organisation)
   end
 

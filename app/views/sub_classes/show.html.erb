@@ -13,7 +13,7 @@
       </div>
       <div class="col-sm-12">
 	<%# link_to "Edit", edit_subject_path(@subject), class: "btn btn-primary" %>
-	<%=  link_to "Back", jkci_class_path(@jkci_class), class: "btn btn-primary" %>
+	<%=  link_to "Back", jkci_class_path(@jkci_class), class: "btn btn-default" %>
 	<%= link_to 'Assign Students', '#', onclick: "modalOpen('Student Box', '/jkci_classes/#{@jkci_class.id}/sub_class/#{@sub_class.id}/get_students', '#{@jkci_class.id}', '#{@sub_class.id}');", class: 'btn btn-primary' %>
       </div>
     </div>

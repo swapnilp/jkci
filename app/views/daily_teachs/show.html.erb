@@ -21,7 +21,7 @@
     <%- unless @daily_teaching_point.verify_absenty %>
       <%= link_to "Edit", edit_jkci_class_daily_teach_path(@daily_teaching_point.jkci_class, @daily_teaching_point),  class: "btn btn-primary" %>
     <%- end %>
-    <%= link_to "Back", jkci_class_path(@daily_teaching_point.jkci_class),  class: "btn btn-primary" %>
+    <%= link_to "Back", jkci_class_path(@daily_teaching_point.jkci_class),  class: "btn btn-default" %>
   </div>
   <%- if @daily_teaching_point.is_fill_catlog.present? && @daily_teaching_point.is_sms_sent == false && @daily_teaching_point.verify_absenty && current_user.has_role?(:publish_daily_teach_absenty) && @daily_teaching_point.jkci_class.enable_class_sms %>
   <div class="textLeft" style="margin-top:20px;">

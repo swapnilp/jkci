@@ -40,6 +40,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def manage_clark_roles(new_roles)
+    self.roles = []
+    new_roles = new_roles.split(',') + ["clark"]
+    new_roles.each do |u_role| 
+      self.add_role u_role.to_sym
+    end
+  end
+  
   def admin?
     return role == 'admin'
   end

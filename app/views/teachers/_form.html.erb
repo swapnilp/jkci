@@ -20,7 +20,7 @@
     <%= f.text_area :address %>
   </div>
   <div>
-    <%= f.submit 'Save' %>
-    <%= link_to 'Cancel', teachers_path %>
+    <%= f.submit 'Save', class: "btn btn-primary" %>
+    <%= link_to 'Cancel', teachers_path, class: "btn btn-default" %>
   </div>
 <%- end %>

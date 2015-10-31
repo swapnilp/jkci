@@ -72,3 +72,18 @@ function saveOrganisationCourses(self) {
       }
     }, function(){alert('something went wrong');}, "JSON");
 }
+
+function saveUserRole(event, self) {
+  event.preventDefault();
+  var allVals = [];
+  $(".userRoles input:checkbox:checked").each(function(){
+    allVals.push($(this).val());
+  });
+  $(".userRolesField").val(allVals);
+  $(".manageRoleForm").submit();
+}
+
+function toggleUserRole(self) {
+  var checkBoxes = $(self).find('input:checkbox');
+  checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+}
