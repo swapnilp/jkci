@@ -135,7 +135,7 @@
     </div>
   </div>
     
-
+  <%- if @default_students.present? %>
   <div class="col-sm-12">
     <h2 class="red">Default's Students from more than <%= @organisation.absent_days %> Days</h2>
     <table class="table table-striped examsTable highlight">
@@ -169,7 +169,7 @@
       <%- end %>
     </table>
   </div>
-
+  <%- end %>
 
 
 
