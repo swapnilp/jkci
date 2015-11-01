@@ -89,7 +89,10 @@ class DailyTeachsController < ApplicationController
   def class_absent_verification
     raise ActionController::RoutingError.new('Not Found') unless current_user.has_role? :verify_daily_teach_absenty
     daily_teaching_point = @organisation.daily_teaching_points.where(id: params[:id]).first
-    daily_teaching_point.update_attributes({verify_absenty: true})
+    if daily_teaching_point
+      daily_teaching_point.verify_presenty
+    end
+
     redirect_to daily_teach_path(daily_teaching_point)
   end
   

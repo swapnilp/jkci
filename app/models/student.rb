@@ -109,6 +109,10 @@ class Student < ActiveRecord::Base
     return ex_catlogs
   end
 
+  def update_presnty
+    self.update_attributes({last_present: Time.now})
+  end
+
   def exam_table_format
     table = [["Index", "Exam Name", "Exam Type", "Class", "Date", "Is Present", "Marks", "Rank"]]
     self.exam_catlogs.each_with_index do |exam_catlog, index|

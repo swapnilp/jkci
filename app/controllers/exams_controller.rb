@@ -98,8 +98,7 @@ class ExamsController < ApplicationController
   def verify_exam_absenty
     exam = @organisation.exams.where(id: params[:id]).first
     if exam
-      exam.update_attributes({verify_absenty: true})
-      Notification.verify_exam_abesnty(exam.id, @organisation)
+      exam.verify_presenty(@organisation)
     end
     redirect_to exam_path(exam)
   end

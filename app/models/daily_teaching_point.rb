@@ -3,6 +3,7 @@ class DailyTeachingPoint < ActiveRecord::Base
   belongs_to :jkci_class
   belongs_to :teacher
   has_many :class_catlogs
+  has_many :students, through: :class_catlogs
   belongs_to :subject
   belongs_to :chapter
   belongs_to :chapters_point
@@ -40,6 +41,15 @@ class DailyTeachingPoint < ActiveRecord::Base
     else 
       self.subject.students.joins(:class_students).where("class_students.jkci_class_id = ?", self.jkci_class_id) rescue []
     end
+  end
+
+  def present_students
+    self.students.where("class_catlogs.is_present is not false")
+  end
+
+  def verify_presenty
+    self.update_attributes({verify_absenty: true})
+    self.present_students.map(&:update_presnty)
   end
   
   def exams

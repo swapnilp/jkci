@@ -34,6 +34,10 @@ class Exam < ActiveRecord::Base
     end
   end
 
+  def present_students
+    self.students.where("exam_catlogs.is_present is not false")
+  end
+
   def role_notification(user)
     user_roles = user.roles.select([:name]).map(&:name).map(&:to_sym)
     notification_roles = NOTIFICATION_ROLES.slice(*user_roles).values.flatten
@@ -60,6 +64,12 @@ class Exam < ActiveRecord::Base
     #exam_students.each do |student|
       #ExamAbsent.new({student_id: student, exam_id: self.id, sms_sent: false, email_sent: false}).save
     #end
+  end
+
+  def verify_presenty(organisation)
+    self.present_students.map(&:update_presnty)
+    self.update_attributes({verify_absenty: true})
+    Notification.verify_exam_abesnty(self.id, organisation)
   end
 
   def remove_absent_student(student_id)

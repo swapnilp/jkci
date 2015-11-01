@@ -40,8 +40,8 @@
       <div style="margin-top:20px;">
 	<%- if current_user.has_role? :add_daily_teach_absenty %>
 	  <%= link_to "Add Absentee", "#", onclick: "editDailyCatlog(event, this);", class:"btn btn-primary editDailyCatlog" %>
-	  <%= link_to "Save Save", "#", onclick: "saveDailyCatlog(event, this);", class:"btn btn-primary hide saveDailyCatlog" %>
-	  <%= link_to "Cancel", "#", onclick: "cancelClassCatlog(event, this);", class:"btn btn-primary hide cancelSaveClassCatlog" %>
+	  <%= link_to "Save Absenty", "#", onclick: "saveDailyCatlog(event, this);", class:"btn btn-primary hide saveDailyCatlog" %>
+	  <%= link_to "Cancel", "#", onclick: "cancelClassCatlog(event, this);", class:"btn btn-default hide cancelSaveClassCatlog" %>
 	<%- end %>
       </div>
     <%- end %>
