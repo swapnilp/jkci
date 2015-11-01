@@ -126,10 +126,10 @@
       <%- end %>
       
       <%- else  %>
-        <%= link_to "Remove Exam", jkci_class_exam_path(@exam.jkci_class, @exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')", method: :delete %>
-	<%- if current_user.has_role? :verify_exam%>
+        <%- if current_user.has_role? :verify_exam%>
           <%= link_to "Verify Exam", verify_create_exam_path(@exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
 	<%- end %>
+        <%= link_to "Remove Exam", jkci_class_exam_path(@exam.jkci_class, @exam), class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')", method: :delete %>
       <%- end %>
     </div>
     <div class="col-sm-12 textLeft paddingTop10 hide">
