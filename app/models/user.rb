@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
     self.roles = []
     new_roles = new_roles.split(',') + ["clark"]
     new_roles.each do |u_role| 
-      self.add_role u_role.to_sym
+      self.add_role u_role.to_sym if CLARK_ROLES.include?(u_role) 
     end
   end
   

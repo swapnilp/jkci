@@ -54,11 +54,11 @@
   <div class="col-sm-offset-2 ">
     <%= f.submit 'Save', class: 'btn btn-primary btn-sm', onclick: "return confirm('Are you sure?')" %>
     <%- if params[:jkci_class_id].present? %>
-      <%= link_to 'Cancel', jkci_class_path(params[:jkci_class_id]), class: 'btn btn-warning btn-sm'%>
+      <%= link_to 'Cancel', jkci_class_path(params[:jkci_class_id]), class: 'btn btn-default btn-sm'%>
     <%- elsif f.object.id.present? %>
-      <%= link_to 'Cancel', daily_teach_path(@daily_teaching_point), class: 'btn btn-warning btn-sm'%>
+      <%= link_to 'Cancel', daily_teach_path(@daily_teaching_point), class: 'btn btn-default btn-sm'%>
     <%- else %>
-      <%= link_to 'Cancel', daily_teachs_path, class: 'btn btn-warning btn-sm'%>
+      <%= link_to 'Cancel', daily_teachs_path, class: 'btn btn-default btn-sm'%>
     <%- end %>
   </div>
 <%- end %>

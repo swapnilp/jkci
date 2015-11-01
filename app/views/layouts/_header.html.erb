@@ -54,17 +54,21 @@
 	      <%- if current_user.admin? || current_user.organiser? ||current_user.clark? %>
 	      <a href="/admin_desk" title="Manage Your Desk">Admin Desk</a>
               <ul class="sub-menu">
-		<li><a href="<%= subjects_path %>">Subject</a></li>
-		<li><a href="<%= exams_path%>">Exam</a></li>
+		<%- if current_user.has_role?(:admin_clark) ||  current_user.has_role?(:super_admin) %>
+		  <li><a href="<%= subjects_path %>">Subject</a></li>
+		<%- end %>
 		<li><a href="<%= students_path %>">Student</a></li>
+		<li><a href="<%= exams_path%>">Exam</a></li>
 		<li><a href="<%= jkci_classes_path %>">Classes</a></li>
+		<%- if current_user.has_role?(:admin_clark) %>
 		<li><a href="<%= manage_albums_path %>">Albums</a></li>
 		<li><a href="<%= batch_results_path %>">Batch Results</a></li>
+		<%- end %>
 		<li><a href="<%= parents_meeting_index_path %>">Parents Meeting</a></li>
 		<%- if current_user.email == "swapnil.patil04@gmail.com" %>
 		  <li><a href="<%= promotional_mails_path %>">Promotional Mail</a></li>
 		<%- end %>
-		<%- if (current_user.role == "organisation") || (current_user.has_role? :organisation) %>
+		<%- if (current_user.role == "organisation") || (current_user.has_role?(:organisation)) %>
 		  <li><a href="<%= manage_organisation_path(current_user.organisation) %>">Setting</a></li>
 		<%- end %>
 		<li><a href="<%= edit_user_registration_path %>">Change Password</a></li>

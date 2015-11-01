@@ -1,6 +1,7 @@
 class SubjectsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource param_method: :my_sanitizer
+  before_action :check_role, only: [:index, :new, :create, :show]
   
   def index
     @subjects = Subject.all
@@ -42,6 +43,10 @@ class SubjectsController < ApplicationController
   def my_sanitizer
     #params.permit!
     params.require(:subject).permit!
+  end
+
+  def check_role
+    raise ActionController::RoutingError.new('Not Found') unless (current_user.has_role?(:admin_clark) ||  current_user.has_role?(:super_admin))
   end
 
 end

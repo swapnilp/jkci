@@ -30,13 +30,13 @@
   </div>
   <div class="form-group" style="margin-top:10px;">
     <div class="col-sm-offset-2">
-      <%= f.submit 'Save' , class: 'btn btn-default'%>
+      <%= f.submit 'Save' , class: 'btn btn-primary'%>
       <%- if params[:jkci_class_id].present? %>
-      <%= link_to "Cancel", jkci_class_path(params[:jkci_class_id]), class: 'btn btn-warning' %>
+      <%= link_to "Cancel", jkci_class_path(params[:jkci_class_id]), class: 'btn btn-default' %>
       <%- elsif f.object.id.present? %>
-        <%= link_to "Cancel", album_path(@album), class: 'btn btn-warning' %>
+        <%= link_to "Cancel", album_path(@album), class: 'btn btn-default' %>
       <%- else %>
-      <%= link_to "Cancel", albums_path, class: 'btn btn-warning' %>
+      <%= link_to "Cancel", albums_path, class: 'btn btn-default' %>
       <%- end %>
     </div>
   </div>
