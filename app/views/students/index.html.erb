@@ -13,7 +13,7 @@
   <%= select_tag :filter_student_gender, options_for_select([ "Male", "Female" ], ''), prompt: "Select Gender", style:"margin:15px 20px;width:200px;", class: "filter_student_gender form-control left", onchange: "studentFilter(event, this)" %>
 </div>
 <div>
-  <table class="table table-hover studentsTable">
+  <table class="table table-hover studentsTable table-condensed">
     <thead>
       <tr>
 	<th>#</th>

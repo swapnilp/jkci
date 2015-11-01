@@ -57,6 +57,9 @@
 .examComplete a{
     color:red !important;
 }
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{
+  background: #FCF8E3;
+}
 
 tr.examComplete:hover > td{
   background:green !important;
