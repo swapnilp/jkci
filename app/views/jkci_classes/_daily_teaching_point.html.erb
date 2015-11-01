@@ -4,9 +4,6 @@
       <%= index + 1  %>
     </td>
     <td>
-      <%= check_box_tag dtp.id, dtp.points, false, style: 'display:inline-block;margin:0;' %>
-    </td>
-    <td>
       <a href="<%= daily_teach_path(dtp) %>" style="display:inline-block;">
 	<%= dtp.chapter.try(:name) %>
       </a>

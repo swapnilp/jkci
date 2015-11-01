@@ -60,7 +60,7 @@
 	  <%= link_to "Daily Teach",  new_jkci_class_daily_teach_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
 	<%- end %>
 	<%- if current_user.has_role? :create_exam %>
-	  <%= link_to "Create Exam",  "#", onclick: "createClassExam(event, this);" , class: 'btn btn-primary btn-sm', data: {id: @jkci_class.id} %>
+	  <%= link_to "Create Exam",  new_jkci_class_exam_path(@jkci_class), class: 'btn btn-primary btn-sm', data: {id: @jkci_class.id} %>
 	<%- end %>
 	<%= link_to "Assign Students",  class_assign_students_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
 	<%= link_to "Manage Roll Number",  manage_class_roll_number_path(@jkci_class), class: 'btn btn-primary btn-sm' %>
@@ -130,7 +130,6 @@
 		<thead>
 		  <tr>
 		    <th>#</th>
-		    <th>Select</th>
 		    <th>Chapter</th>
 		    <th>Point</th>
 		    <th>Desc</th>

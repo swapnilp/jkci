@@ -16,18 +16,6 @@ function assignClassStudents(event, self){
   }
 }
 
-function createClassExam(event, self){
-  event.preventDefault();
-  selectedPoints = [];
-  if (window.confirm("Are you sure?")) {
-    id = $(self).data("id");
-    $(".dailyTeach input[type=checkbox]:checked").each(function(){
-      selectedPoints.push($(this).attr("id"));
-    })
-      window.location = "/jkci_classes/"+id+"/exams/new?&dtp="+ selectedPoints;
-  }
-}
-
 function classFilterByBatch(event, self){
   event.preventDefault();
   batch_id = $("#filter_batch_class").val();

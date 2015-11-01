@@ -10,7 +10,7 @@
       <%= student.gender %>
     </td>
     <td>
-      <%= student.std %>
+      <%= student.standard.try(:name) %>
     </td>
     <td>
       <%= student.group %>
