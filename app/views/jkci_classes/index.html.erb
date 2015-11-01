@@ -5,7 +5,7 @@
 </div>
 <div class="textLeft fullWidth">
   <h2 class="left">Filter By</h2>
-  <%= select_tag :filter_batch_class, options_from_collection_for_select(@batches, "id", "name"), prompt: "Select class", style:"margin:15px 20px;", class: "filter_batch_class", onchange: "classFilterByBatch(event, this);" %>
+  <%= select_tag :filter_batch_class, options_from_collection_for_select(@batches, "id", "name"), prompt: "Select class", style:"margin:15px 20px;", class: "filter_batch_class form-control left", onchange: "classFilterByBatch(event, this);", style: "margin:15px 20px;width:200px;" %>
 </div>
 
 <div style="width:100%;">
