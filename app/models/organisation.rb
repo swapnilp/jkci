@@ -41,7 +41,7 @@ class Organisation < ActiveRecord::Base
     else
       org.update_attributes({last_sent: Time.now})
       Delayed::Job.enqueue OrganisationMailQueue.new(self)
-      Delayed::Job.enqueue OrganisationRegistationSms.new(self)
+      Delayed::Job.enqueue OrganisationRegistationSms.new(organisation_sms_message)
       
     end
   end
@@ -57,5 +57,20 @@ class Organisation < ActiveRecord::Base
     url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=91#{self.mobile}&message=#{message}"
     url_arry = [url, message, self.id, self.id]
     
+  end
+
+  def manage_standards(standard_ids)
+    new_standards = Standard.select([:id, :name, :stream]).where("id in (?)", (standard_ids.split(',').map(&:to_i) + [0]))
+    new_standards = new_standards.where("id not in (?)", (self.standards.map(&:id) + [0]) )
+    new_standards.each do |std|
+      self.standards << std
+      self.create_class(std)
+    end
+  end
+
+  def create_class(standard)
+    batch = Batch.active.last
+    jkci_class = self.jkci_classes.find_or_create_by({standard_id: standard.id, batch_id: batch.id, class_name: "#{standard.std_name}-#{batch.name}"})
+    jkci_class.update_attributes({is_active: true})
   end
 end

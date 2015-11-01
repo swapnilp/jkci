@@ -140,7 +140,7 @@ class Exam < ActiveRecord::Base
   end
 
   def predict_name
-    "#{jkci_class.standard.std_name}-#{Exam.last.id + 1}"
+    "#{jkci_class.standard.std_name}-#{Exam.last.try(:id)||0 + 1}"
   end
   
   def status_count

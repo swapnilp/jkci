@@ -1,5 +1,8 @@
 <div class="textLeft ">
   <%= form_for @student, html:{role: 'form', class: 'form-horizontal'}  do |f| %>
+    <%- if @standard.present? %>
+    <%= f.hidden_field :standard_id, value: @standard.id %>
+    <%- end %>
     <div class="form-group">
       <%= f.label :initl, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">
@@ -36,12 +39,14 @@
 	<%= f.select :batch_id, options_from_collection_for_select(@batches, "id", "name"),{},  class:"form-control" %>
       </div>
     </div>
+    <%- unless @standard.present? %>
     <div class="form-group">
       <%= f.label :standard, class: 'col-sm-2 control-label' %>
       <div class="col-sm-4">
 	<%= f.select :standard_id, options_from_collection_for_select(@standards, "id", "std_name", f.object.standard_id),{}, onchange: "selectStandardOSubjects(event, this);",  class:"form-control" %>
       </div>
     </div>
+    <%- end %>
 
     <div class="form-group">
       <%= f.label :optional_subject, class: 'col-sm-2 control-label' %>

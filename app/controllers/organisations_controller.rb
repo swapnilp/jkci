@@ -118,9 +118,8 @@ class OrganisationsController < ApplicationController
 
   def add_remaining_cources
     raise ActionController::RoutingError.new('Not Found') unless @organisation.id == params[:id].to_i
-    standards = Standard.select([:id, :name, :stream]).where("id in (?)", (params[:courses].split(',').map(&:to_i) + [0]))
-    standards = standards.where("id not in (?)", (@organisation.standards.map(&:id) + [0]) )
-    @organisation.standards << standards
+    @organisation.manage_standards(params[:courses])
+    
     respond_to do |format|
       format.json {render json: {success: true}}
     end

@@ -49,7 +49,7 @@ class JkciClassesController < ApplicationController
   def assign_students
     @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
     @selected_students = @jkci_class.students.map(&:id)
-    @students = @organisation.students.enable_students.where("id not in (?)", ([0] + @selected_students))
+    @students = @jkci_class.standard.students.enable_students.where("id not in (?)", ([0] + @selected_students))
   end
 
   def manage_roll_number

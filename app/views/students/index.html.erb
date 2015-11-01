@@ -7,9 +7,10 @@
 <div class="textLeft fullWidth">
   <h2 class="left">Filter By</h2>
   <%= text_field_tag :filter_student, nil ,  placeholder: "Filter Student", style:"margin:15px 20px;width:200px;", class: "filter_student form-control left", onkeyup: "searchStudentByFilter(event);" %>
-  <%= select_tag :filter_student_batch, options_from_collection_for_select(@batches, "id", "name"), prompt: "Select Batch", style:"margin:15px 20px;width:200px;", class: "filter_student_batch form-control left", onchange: "studentFilterByBatch(event, this)" %>
+  <%= select_tag :filter_student_batch, options_from_collection_for_select(@batches, "id", "name"), prompt: "Select Batch", style:"margin:15px 20px;width:200px;", class: "filter_student_batch form-control left", onchange: "studentFilter(event, this)" %>
+  <%= select_tag :filter_student_standard, options_from_collection_for_select(@standards, "id", "name"), prompt: "Select Standard", style:"margin:15px 20px;width:200px;", class: "filter_student_standard form-control left", onchange: "studentFilter(event, this)" %>
   
-  <%= select_tag :filter_student_gender, options_for_select([ "Male", "Female" ], ''), prompt: "Select Gender", style:"margin:15px 20px;width:200px;", class: "filter_student_gender form-control left", onchange: "studentFilterByGender(event, this)" %>
+  <%= select_tag :filter_student_gender, options_for_select([ "Male", "Female" ], ''), prompt: "Select Gender", style:"margin:15px 20px;width:200px;", class: "filter_student_gender form-control left", onchange: "studentFilter(event, this)" %>
 </div>
 <div>
   <table class="table table-hover studentsTable">

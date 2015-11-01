@@ -22,8 +22,9 @@
       <%= student.p_mobile %>
     </td>
     <td>
-      <%- unless student.is_disabled %>
-      <%= link_to 'Show', student_path(student) %>  | 
+
+      <%= link_to 'Show', student_path(student) %> 
+      <%- unless student.is_disabled %>| 
       <%= link_to 'Edit', edit_student_path(student) %>
       <%- if !student.enable_sms %>
       

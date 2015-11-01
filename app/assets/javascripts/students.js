@@ -5,23 +5,25 @@ function searchStudentByFilter(event){
     batch_id = $(".filter_student_batch").val();
     filter = $(".filter_student").val();
     genderFilter = $(".filter_student_gender").val();
+    standard = $(".filter_student_standard").val();
     
     //status = $("#filter_exam_status").val();
-    $.get("/students/filter_student/student?&batch_id="+batch_id+"&filter="+filter+"&gender="+ genderFilter, function(data){
+    $.get("/students/filter_student/student?&batch_id="+batch_id+"&filter="+filter+"&gender="+ genderFilter+"&standard="+standard, function(data){
       $(".studentsTable tbody").html(data['html']);
       $(".paginationDiv").html(data['pagination_html']);
     });
   }
 }
 
-function studentFilterByBatch(event, self){
+function studentFilter(event, self){
 
   batch_id = $(".filter_student_batch").val();
   filter = $(".filter_student").val();
   genderFilter = $(".filter_student_gender").val();
+  standard = $(".filter_student_standard").val();
 
   //status = $("#filter_exam_status").val();
-  $.get("/students/filter_student/student?&batch_id="+batch_id+"&filter="+filter+"&gender="+ genderFilter, function(data){
+  $.get("/students/filter_student/student?&batch_id="+batch_id+"&filter="+filter+"&gender="+ genderFilter+"&standard="+standard, function(data){
     $(".studentsTable tbody").html(data['html']);
     $(".paginationDiv").html(data['pagination_html']);
   });
@@ -32,21 +34,6 @@ function getUsersForStudent(event, self){
   $.get($(self).attr('href'), function(data){
     $('.userLoginDiv').html( data['html']);
   }, function(){}, 'JSON');
-}
-
-function studentFilterByGender(event, self){
-  event.preventDefault();
-  
-  batch_id = $(".filter_student_batch").val();
-  filter = $(".filter_student").val();
-  genderFilter = $(".filter_student_gender").val();
-
-  //status = $("#filter_exam_status").val();
-  $.get("/students/filter_student/student?&batch_id="+batch_id+"&filter="+filter+"&gender="+ genderFilter, function(data){
-    $(".studentsTable tbody").html(data['html']);
-    $(".paginationDiv").html(data['pagination_html']);
-  });
-  
 }
 
 function enableStudentSms(self, event){

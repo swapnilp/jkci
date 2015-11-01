@@ -5,6 +5,7 @@ class StudentsController < ApplicationController
   def index
     @students = @organisation.students.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :gender, :is_disabled]).order("id desc").page(params[:page])
     @batches = Batch.active
+    @standards = @organisation.standards
     respond_to do |format|
       format.html
       format.json {render json: {success: true, html: render_to_string(:partial => "student.html.erb", :layout => false, locals: {students: @students}), pagination_html: render_to_string(partial: 'pagination.html.erb', layout: false, locals: {students: @students}), css_holder: ".studentsTable tbody"}}
@@ -13,9 +14,15 @@ class StudentsController < ApplicationController
 
   def new
     @student = @organisation.students.build
+    if params[:standard_id]
+      @standard = @organisation.standards.where(id: params[:standard_id]).first
+      @subjects = @standard.try(:subjects).try(:optional) || []  
+    else
+      @standards = @organisation.standards.active
+      @subjects = @standards.first.try(:subjects).try(:optional) || []  
+    end
     @batches = Batch.active
-    @standards = @organisation.standards.active
-    @subjects = @standards.first.try(:subjects).try(:optional) || []
+    
   end
   
   def create
@@ -91,6 +98,9 @@ class StudentsController < ApplicationController
     if params[:batch_id].present?
       students = students.where(batch_id: params[:batch_id])
     end
+    if params[:standard].present?
+      students = students.where(standard_id: params[:standard])
+    end
 
     if params[:filter].present?
       students = students.where("first_name like ? OR last_name like ? OR mobile like ? OR p_mobile like ?", "%#{params[:filter]}%", "%#{params[:filter]}%", "%#{params[:filter]}%", "%#{params[:filter]}%")
@@ -116,6 +126,16 @@ class StudentsController < ApplicationController
     if student
       student.update_attributes({is_disabled: true, enable_sms: false})
       student.jkci_classes.clear
+      redirect_to student_path(student)
+    else
+      redirect_to students_path
+    end
+  end
+  
+  def enable_student
+    student = @organisation.students.where(id: params[:id]).first
+    if student
+      student.update_attributes({is_disabled: false})
       redirect_to student_path(student)
     else
       redirect_to students_path
