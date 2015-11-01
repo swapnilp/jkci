@@ -18,7 +18,7 @@
     </h5>
   </div>
   <div class="textLeft" style="margin-top:20px;">
-    <%- unless @daily_teaching_point.verify_absenty %>
+    <%- unless @daily_teaching_point.is_fill_catlog %>
       <%= link_to "Edit", edit_jkci_class_daily_teach_path(@daily_teaching_point.jkci_class, @daily_teaching_point),  class: "btn btn-primary" %>
     <%- end %>
     <%= link_to "Back", jkci_class_path(@daily_teaching_point.jkci_class),  class: "btn btn-default" %>

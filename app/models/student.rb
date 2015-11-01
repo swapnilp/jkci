@@ -20,6 +20,8 @@ class Student < ActiveRecord::Base
   
   default_scope { where(organisation_id: Organisation.current_id) }  
   scope :enable_students, -> { where(is_disabled: false) }
+  
+  scope :default_students, -> (days) { where("last_present is not ? && last_present < ?", nil, Time.now - days.days) }
 
   
   def all_exams

@@ -136,6 +136,39 @@
   </div>
     
 
+  <div class="col-sm-12">
+    <h2 class="red">Default's Students from more than <%= @organisation.absent_days %> Days</h2>
+    <table class="table table-striped examsTable highlight">
+      <thead>
+	<tr>
+	  <th>#</th>
+	  <th>Student Name</th>
+	  <th>Standard</th>
+	  <th>Parent Mobile</th>
+	  <th>Default from</th>
+	</tr>
+      </thead>
+      <%- @default_students.each_with_index do |student, index| %>
+      <tr>
+	<td>
+          <%= index + 1 %>
+	</td>
+	<td>
+          <%= link_to student.name, student_path(student) %>
+	</td>
+	<td>
+          <%= student.standard.std_name %>
+	</td>
+	<td>
+	  <%= student.p_mobile %>
+	</td>
+	<td>
+          From <%= distance_of_time_in_words(student.last_present, Time.now) %>
+	</td>
+      </tr>
+      <%- end %>
+    </table>
+  </div>
 
 
 
