@@ -4,7 +4,9 @@
       <%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
     </td>
     <td>
-      <%= student.name %>
+      <a href="<%= student_path(student) %>">
+	<%= student.name %>
+      </a>
     </td>
     <td>
       <%= student.gender %>
