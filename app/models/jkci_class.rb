@@ -13,6 +13,9 @@ class JkciClass < ActiveRecord::Base
   has_many :sub_classes
   has_many :exam_notifications, through: :exams, source: :notifications
   has_many :dtp_notifications, through: :daily_teaching_points, source: :notifications
+  has_many :exam_catlogs
+  has_many :notifications
+  
 
   has_many :chapters, through: :subject
   

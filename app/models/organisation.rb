@@ -42,7 +42,6 @@ class Organisation < ActiveRecord::Base
       org.update_attributes({last_sent: Time.now})
       Delayed::Job.enqueue OrganisationMailQueue.new(self)
       Delayed::Job.enqueue OrganisationRegistationSms.new(organisation_sms_message)
-      
     end
   end
 
@@ -50,6 +49,24 @@ class Organisation < ActiveRecord::Base
     m_code = (0...7).map { ('a'..'z').to_a[rand(26)] }.join
     update_attributes({mobile_code: m_code, mobile: mobile_number})
     Delayed::Job.enqueue OrganisationRegistationSms.new(organisation_sms_message)
+  end
+
+
+  def switch_organisation(new_organisation_id)
+    
+  end
+
+  def switch_class_to_organisation(new_organisation_id, std)
+    std.jkci_classes.first.exams.update_all({organisation_id: new_organisation_id})
+    std.jkci_classes.first.exam_catlogs.update_all({organisation_id: new_organisation_id})
+    std.jkci_classes.first.daily_teaching_points.update_all({organisation_id: new_organisation_id})
+    std.jkci_classes.first.class_catlogs.update_all({organisation_id: new_organisation_id})
+    std.jkci_classes.first.sub_classes.update_all({organisation_id: new_organisation_id})
+    std.jkci_classes.first.students.update_all({organisation_id: new_organisation_id})
+    std.jkci_classes.first.class_students.update_all({organisation_id: new_organisation_id})
+    std.jkci_classes.first.notifications.update_all({organisation_id: new_organisation_id})
+    std.jkci_classes.update_all({organisation_id: new_organisation_id})
+    std.organisation_standards.update_all({organisation_id: new_organisation_id})
   end
 
   def organisation_sms_message

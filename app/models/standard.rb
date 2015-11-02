@@ -2,6 +2,7 @@ class Standard < ActiveRecord::Base
   has_many :subjects
   has_many :students
   has_many :jkci_classes
+  has_many :organisation_standards
   
   scope :active, -> {where(is_active: true)}
 

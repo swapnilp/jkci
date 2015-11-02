@@ -7,9 +7,22 @@
       </div>
     </div>
     <div class="form-group">
+      <%= f.label :standard, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.select :standard_id, options_from_collection_for_select(@standards, "id", "std_name", f.object.standard_id),{}, class:"form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :is_compulsory, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-4">
+	<%= f.check_box :is_compulsory, class: 'form-control' %>
+      </div>
+    </div>
+    
+    <div class="form-group">
       <div class="col-sm-offset-2">
 	<%= f.submit 'Save' , class: 'btn btn-primary'%>
-	<%= link_to "Cancel", standard_path(@subject.standard), class: 'btn btn-default' %>
+	<%= link_to "Cancel", subjects_path, class: 'btn btn-default' %>
       </div>
     </div>
   <%- end %>

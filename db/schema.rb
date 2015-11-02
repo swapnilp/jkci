@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151101145044) do
+ActiveRecord::Schema.define(version: 20151101182929) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -255,6 +255,7 @@ ActiveRecord::Schema.define(version: 20151101145044) do
     t.boolean  "is_completed",         limit: 1,   default: false
     t.boolean  "verification_require", limit: 1,   default: false
     t.integer  "organisation_id",      limit: 4
+    t.integer  "jkci_class_id",        limit: 4
   end
 
   create_table "organisation_standards", force: :cascade do |t|

@@ -9,6 +9,7 @@ class SubjectsController < ApplicationController
 
   def new
     @subject = Subject.new({standard_id: params[:standard_id]})
+    @standards = Standard.all
   end
 
   def create
