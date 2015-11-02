@@ -1,5 +1,10 @@
 class Organisation < ActiveRecord::Base
 
+  belongs_to :master_organisation,   :class_name => "Organisation", :foreign_key => "master_organisation_id", :counter_cache => true
+  has_many   :sub_organisations,    :class_name => "Organisation", :foreign_key => "master_organisation_id", :dependent => :destroy
+
+  scope :master_organisations, lambda{ where(master_organisation: nil) }
+  
   validates :email, presence: true, uniqueness: {
     message: " allready registered. Please check email" }, format: { with: /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/}
   validates :name, presence: true
@@ -57,6 +62,7 @@ class Organisation < ActiveRecord::Base
   end
 
   def switch_class_to_organisation(new_organisation_id, std)
+    if std.jkci_classes.present?
     std.jkci_classes.first.exams.update_all({organisation_id: new_organisation_id})
     std.jkci_classes.first.exam_catlogs.update_all({organisation_id: new_organisation_id})
     std.jkci_classes.first.daily_teaching_points.update_all({organisation_id: new_organisation_id})
@@ -65,6 +71,7 @@ class Organisation < ActiveRecord::Base
     std.jkci_classes.first.students.update_all({organisation_id: new_organisation_id})
     std.jkci_classes.first.class_students.update_all({organisation_id: new_organisation_id})
     std.jkci_classes.first.notifications.update_all({organisation_id: new_organisation_id})
+    end
     std.jkci_classes.update_all({organisation_id: new_organisation_id})
     std.organisation_standards.update_all({organisation_id: new_organisation_id})
   end

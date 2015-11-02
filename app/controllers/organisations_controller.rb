@@ -125,6 +125,10 @@ class OrganisationsController < ApplicationController
     end
   end
 
+  def launch_sub_organisation
+    
+  end
+
   private
   
   def my_sanitizer
