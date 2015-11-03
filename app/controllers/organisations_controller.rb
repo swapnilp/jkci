@@ -137,6 +137,11 @@ class OrganisationsController < ApplicationController
   def create_sub_organisation
     @org  = Organisation.new(organisation_params)
     if @org.save 
+      standard_ids = params[:standards].split(',').map(&:to_i)
+      standards = Standard.where(id: standard_ids)
+      standards.each do |standard|
+        @organisation.launch_sub_organisation(@org.id, standard)
+      end
       redirect_to root_path, flash: {success: true, notice: "Sub Organisation has been created."} 
     else
       @standard_ids = params[:standards]

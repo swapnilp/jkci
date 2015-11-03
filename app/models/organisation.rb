@@ -103,7 +103,7 @@ class Organisation < ActiveRecord::Base
         std.jkci_classes.map(&:students).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
         std.jkci_classes.map(&:class_students).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
         std.jkci_classes.map(&:notifications).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
-        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.ancestor_ids).update_attributes({assigned_organisation_id: new_sub_organisation_id})
+        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.ancestor_ids).update_all({assigned_organisation_id: new_sub_organisation_id})
       end
       std.jkci_classes.update_all({organisation_id: new_sub_organisation_id})
       
