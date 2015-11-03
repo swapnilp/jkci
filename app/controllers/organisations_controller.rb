@@ -14,7 +14,7 @@ class OrganisationsController < ApplicationController
   def create
     @org  = Organisation.new(organisation_params)
     users = User.where(email: @org.try(:email))
-    if users.present? && users.map(&:organisation).map(&:master_organisation?).include?(true)
+    if users.present? && users.map(&:organisation).map(&:root?).include?(true)
       redirect_to new_organisation_path , flash: {success: false, notice: "Email Already used for organisation Please try with another email."} 
       return
     end
@@ -112,7 +112,7 @@ class OrganisationsController < ApplicationController
   end
 
   def remaining_cources
-    raise ActionController::RoutingError.new('Not Found') if @organisation.id != params[:id].to_i && !@organisation.master_organisation?
+    raise ActionController::RoutingError.new('Not Found') if @organisation.id != params[:id].to_i && !@organisation.root?
     standards = Standard.select([:id, :name, :stream]).where("id not in (?)", ([0] + @organisation.standards.map(&:id)))
     respond_to do |format|
       format.json {render json: {success: true, standards: standards.as_json}}
@@ -120,7 +120,7 @@ class OrganisationsController < ApplicationController
   end
 
   def add_remaining_cources
-    raise ActionController::RoutingError.new('Not Found') if @organisation.id != params[:id].to_i && !@organisation.master_organisation?
+    raise ActionController::RoutingError.new('Not Found') if @organisation.id != params[:id].to_i && !@organisation.root?
     @organisation.manage_standards(params[:courses])
     
     respond_to do |format|
@@ -154,7 +154,7 @@ class OrganisationsController < ApplicationController
   end
 
   def organisation_params
-    params.require(:organisation).permit(:master_organisation_id, :name, :email, :mobile)
+    params.require(:organisation).permit(:parent_id, :name, :email, :mobile)
   end
 
   def user_params

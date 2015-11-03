@@ -1,12 +1,14 @@
 class Organisation < ActiveRecord::Base
 
-  belongs_to :master_organisation,   :class_name => "Organisation", :foreign_key => "master_organisation_id"#, :counter_cache => true
-  has_many   :sub_organisations,    :class_name => "Organisation", :foreign_key => "master_organisation_id", :dependent => :destroy
+  has_ancestry
+
+  belongs_to :master_organisation,   :class_name => "Organisation", :foreign_key => "parent_id"
+  has_many   :sub_organisations,    :class_name => "Organisation", :foreign_key => "parent_id", :dependent => :destroy
 
   scope :master_organisations, lambda{ where(master_organisation: nil) }
   
   validates :email, presence: true, format: { with: /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/}
-  validates :email, uniqueness: { message: " allready registered. Please check email" }, if: Proc.new { |org| org.master_organisation_id.nil? }
+  validates :email, uniqueness: { message: " allready registered. Please check email" }, if: Proc.new { |org| org.parent_id.nil? }
   validates :name, presence: true
   validates :mobile, presence: true, format: { with: /\d{10}/, message: "should be 10 digit"}
 
@@ -39,15 +41,12 @@ class Organisation < ActiveRecord::Base
     m_code = (0...7).map { ('a'..'z').to_a[rand(26)] }.join
     update_attributes({email_code: e_code, mobile_code: m_code})
     self.send_generated_code
-    if self.master_organisation_id.nil?
-      self.update_attributes({super_organisation_id: self.id})
-    else
-      self.update_attributes({super_organisation_id: self.master_organisation.super_organisation_id})
-    end
+    self.update_attributes({super_organisation_id: self.root_id})
+   
   end
 
   def master_organisation?
-    master_organisation_id == nil
+    parent_id == nil
   end
 
   def assigned_standards
@@ -78,14 +77,13 @@ class Organisation < ActiveRecord::Base
     Delayed::Job.enqueue OrganisationRegistationSms.new(organisation_sms_message)
   end
 
-
   def switch_organisation(new_organisation_id)
     
   end
 
   def pull_back_organisation(old_organisation_id)
     old_org = Organisation.where(id: old_organisation_id).first
-    #old_org.sub_organisations.update_all({master_organisation_id: self.id})
+    #old_org.sub_organisations.update_all({parent_id: self.id})
     
   end
 
@@ -110,11 +108,11 @@ class Organisation < ActiveRecord::Base
     #std.organisation_standards.update_all({organisation_id: new_sub_organisation_id})
   end
 
-  def pull_back_standard(old_organisation_id, std)
-    # pull back organisaiton standards classes from sub organisation
+  def pull_back_standard_to_master_organisation(old_organisation_id, std)
+    # pull back organisaiton standards classes from sub organisation to master organisation
 
     old_organisation = Organisation.where(id: old_organisation_id).first
-    unless old_organisation.master_organisation?
+    unless old_organisation.root?
       class_ids = JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).map(&:id)
       
       if class_ids.present?
@@ -127,16 +125,10 @@ class Organisation < ActiveRecord::Base
         ClassStudent.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
         Notification.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
         JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).destroy_all
-        
+        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: self.descendant_ids).destroy_all
         self.organisation_standards.where(standard_id: std.id).update_all({is_assigned_to_other: false})
       end
     end
-  end
-
-  def find_all_sub_organisaitons
-
-
   end
 
   def organisation_sms_message
