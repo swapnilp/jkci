@@ -5,8 +5,8 @@ class Organisation < ActiveRecord::Base
 
   scope :master_organisations, lambda{ where(master_organisation: nil) }
   
-  validates :email, presence: true, uniqueness: {
-    message: " allready registered. Please check email" }, format: { with: /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/}
+  validates :email, presence: true, format: { with: /\b[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/}
+  validates :email, uniqueness: { message: " allready registered. Please check email" }, if: Proc.new { |org| org.master_organisation_id.nil? }
   validates :name, presence: true
   validates :mobile, presence: true, format: { with: /\d{10}/, message: "should be 10 digit"}
 

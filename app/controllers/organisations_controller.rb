@@ -13,9 +13,9 @@ class OrganisationsController < ApplicationController
 
   def create
     @org  = Organisation.new(organisation_params)
-    user = User.where(email: @org.try(:email)).first
-    if user
-      redirect_to new_user_session_path 
+    users = User.where(email: @org.try(:email))
+    if users.present? && users.map(&:organisation).map(&:master_organisation?).include?(true)
+      redirect_to new_organisation_path , flash: {success: false, notice: "Email Already used for organisation Please try with another email."} 
       return
     end
     if @org.save 
@@ -136,11 +136,6 @@ class OrganisationsController < ApplicationController
 
   def create_sub_organisation
     @org  = Organisation.new(organisation_params)
-    user = User.where(email: @org.try(:email)).first
-    if user
-      redirect_to root_path, flash: {success: false, notice: "Email Already used for organisaton Please Use another Email."} 
-      return
-    end
     if @org.save 
       redirect_to root_path, flash: {success: true, notice: "Sub Organisation has been created."} 
     else
