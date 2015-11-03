@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       get 'manage_courses', as: 'manage_courses'
       get 'manage_users', as: 'manage_users'
       get 'remaining_cources', as: 'remaining_cources'
+      get "launch_sub_organisation", as: "launch_sub"
+      post "create_sub_organisation", as: "create_sub"
       get "delete_users/:user_id" => "organisations#delete_users", as: "delete_user"
       get "disable_users/:user_id" => "organisations#disable_users", as: "disable_user"
       get "edit_password/:user_id" => "organisations#edit_password", as: "edit_password"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102053851) do
+ActiveRecord::Schema.define(version: 20151103042440) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -259,11 +259,12 @@ ActiveRecord::Schema.define(version: 20151102053851) do
   end
 
   create_table "organisation_standards", force: :cascade do |t|
-    t.integer  "organisation_id", limit: 4
-    t.integer  "standard_id",     limit: 4
-    t.boolean  "is_active",       limit: 1, default: true
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.integer  "organisation_id",      limit: 4
+    t.integer  "standard_id",          limit: 4
+    t.boolean  "is_active",            limit: 1, default: true
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.boolean  "is_assigned_to_other", limit: 1, default: false
   end
 
   create_table "organisations", force: :cascade do |t|
@@ -278,6 +279,7 @@ ActiveRecord::Schema.define(version: 20151102053851) do
     t.integer  "absent_days",             limit: 4,   default: 20
     t.integer  "master_organisation_id",  limit: 4
     t.integer  "sub_organisations_count", limit: 4,   default: 0
+    t.integer  "super_organisation_id",   limit: 4
   end
 
   create_table "parents_meetings", force: :cascade do |t|

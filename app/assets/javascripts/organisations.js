@@ -87,3 +87,17 @@ function toggleUserRole(self) {
   var checkBoxes = $(self).find('input:checkbox');
   checkBoxes.prop("checked", !checkBoxes.prop("checked"));
 }
+
+function launchSubOrganisation(event, self) {
+  event.preventDefault();
+  var allVals = [];
+  $(".standardsTable input:checkbox:checked").each(function(){
+    allVals.push($(this).val());
+  });
+
+  if(allVals.length === 0){
+    alert("Please Select Standards");
+  } else {
+    window.location = $(self).attr("href") + "?&standards=" + allVals;
+  }
+}

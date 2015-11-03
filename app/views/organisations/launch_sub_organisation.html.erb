@@ -1,0 +1,9 @@
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <h2>New Sub Organisation for <%= @standards.map(&:std_name).join(' , ')%> Standards</h2>
+    <%= render partial: 'form', locals: {url: create_sub_organisation_path(@organisation)} %>
+  </div>
+</div>
+
+
+

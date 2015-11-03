@@ -94,7 +94,7 @@ class StudentsController < ApplicationController
   end
 
   def filter_students
-    students = @organisation.students.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :batch_id, :gender, :is_disabled])
+    students = @organisation.students.select([:id, :first_name, :last_name, :std, :group, :mobile, :p_mobile, :enable_sms, :batch_id, :gender, :is_disabled, :standard_id])
     if params[:batch_id].present?
       students = students.where(batch_id: params[:batch_id])
     end

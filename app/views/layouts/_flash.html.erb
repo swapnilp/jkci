@@ -1,6 +1,6 @@
 <% if flash[:notice] %>
   <div style="width:100%;text-align:center;position:absolute;">
-    <div class="alert alert-success alert-dismissable" style="text-align:center;width:50%;  margin-left: auto;margin-right: auto;z-index:1;">
+    <div class="alert <%= flash[:success]==false ? 'alert-danger' : 'alert-success' %> alert-dismissable" style="text-align:center;width:50%;  margin-left: auto;margin-right: auto;z-index:1;">
       <button type="button" class="close-me" data-dismiss="alert" aria-hidden="true">×</button>
       <div class="notice"><%= flash[:notice] %></div>
     </div>

@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
+    redirect_to root_url, flash: {success: false, notice: "Thank you for registation. We'll get back to you as soon as possible."}
   end
   
   def flicker_photos

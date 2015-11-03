@@ -1,4 +1,6 @@
-<%= link_to 'Add Course', remaining_cources_organisation_path(@organisation), onclick: "openOrganisationCoursesModal(event, 'Remaining Courses', this, '#{add_remaining_cources_organisation_path(@organisation)}');", class: 'btn btn-primary' %>
+<%- if @organisation.master_organisation? %>
+  <%= link_to 'Add Course', remaining_cources_organisation_path(@organisation), onclick: "openOrganisationCoursesModal(event, 'Remaining Courses', this, '#{add_remaining_cources_organisation_path(@organisation)}');", class: 'btn btn-primary' %>
+<%- end %>
 <div>
   <table class="table table-hover standardsTable">
     <thead>
@@ -15,15 +17,22 @@
 	<%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
       </td>
       <td>
+	<%- if standard.is_assigned_to_other == 0 %>
 	<input type="checkbox" name="standard" value="<%= standard.id %>">
+	<%- end %>
       </td>
       <td>
 	<%= standard.std_name %>
       </td>
       <td>
+	<%- unless standard.is_assigned_to_other == 0 %>
+	Assigned To sub Organisaiton
+	<%- end %>
 	<%# link_to 'Show', subject_path(subject) %>  
       </td>
     </tr>
     <%- end %>
   </table>  
+  <%= link_to 'Launch Sub Organisation', launch_sub_organisation_path(@organisation), class: 'btn btn-primary', onclick: "launchSubOrganisation(event, this);" %>
+  
 </div>

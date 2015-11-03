@@ -1,0 +1,28 @@
+<div>
+  <table class="table table-hover standardsTable">
+    <thead>
+      <tr>
+	<th>#</th>
+	<th>Name</th>
+	<th>Standards</th>
+	<th>Actions</th>
+      </tr>
+    </thead>
+    <%- @sub_organisations.each_with_index do |sub_organisations, index| %>
+    <tr>
+      <td>
+	<%= (((params[:page] || 1).to_i - 1) * 10) + index + 1 %>
+      </td>
+      <td>
+	<%= sub_organisations.email %>
+      </td>
+      <td>
+	<%= sub_organisations.standards_name %>
+      </td>
+      <td>
+	Pull Back
+      </td>
+    </tr>
+    <%- end %>
+  </table>  
+</div>
