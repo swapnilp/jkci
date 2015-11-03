@@ -88,6 +88,8 @@ class Organisation < ActiveRecord::Base
   end
 
   def launch_sub_organisation(new_sub_organisation_id, std)
+    # assign standard to new organisation when launch sub organisation
+ 
     new_organisation = Organisation.where(id: new_sub_organisation_id).first
     if new_organisation
       self.organisation_standards.where(standard_id: std.id).first.update_attributes({is_assigned_to_other: true})
@@ -101,11 +103,11 @@ class Organisation < ActiveRecord::Base
         std.jkci_classes.map(&:students).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
         std.jkci_classes.map(&:class_students).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
         std.jkci_classes.map(&:notifications).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
+        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.ancestor_ids).update_attributes({assigned_organisation_id: new_sub_organisation_id})
       end
       std.jkci_classes.update_all({organisation_id: new_sub_organisation_id})
       
     end
-    #std.organisation_standards.update_all({organisation_id: new_sub_organisation_id})
   end
 
   def pull_back_standard_to_master_organisation(old_organisation_id, std)
