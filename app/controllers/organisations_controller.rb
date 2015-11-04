@@ -34,6 +34,7 @@ class OrganisationsController < ApplicationController
     @user = @organisation.users.clarks.build(user_params)
     if @user.save
       @user.add_role :clark
+      @user.add_clark_roles
       redirect_to manage_organisation_path(@organisation)
     else
       render :new_users

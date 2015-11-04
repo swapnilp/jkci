@@ -43,6 +43,15 @@ class User < ActiveRecord::Base
       self.add_role u_role.to_sym 
     end
   end
+  
+  def add_clark_roles
+    ["create_exam", "verify_exam", "exam_conduct", "add_exam_absenty", 
+     "add_exam_result", "publish_exam", "create_daily_teach", "add_daily_teach_absenty", 
+     "verify_daily_teach_absenty"].each do |u_role|
+      self.add_role u_role.to_sym 
+    end
+    
+  end
 
   def manage_clark_roles(new_roles)
     self.roles = []
