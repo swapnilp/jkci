@@ -20,7 +20,7 @@
 	<%= sub_organisations.standards_name %>
       </td>
       <td>
-	Pull Back
+	<%= link_to "Pull Back Organisation", pull_back_organisation_organisation_path(@organisation, sub_organisations), confirm: "Are you sure?" %>
       </td>
     </tr>
     <%- end %>

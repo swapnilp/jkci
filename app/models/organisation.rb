@@ -81,10 +81,20 @@ class Organisation < ActiveRecord::Base
     
   end
 
-  def pull_back_organisation(old_organisation_id)
-    old_org = Organisation.where(id: old_organisation_id).first
+  def pull_back_organisation(old_org)
+
+    if old_org && !old_org.root?
+      org_standards = Standard.where(id: OrganisationStandard.unscoped.where(organisation_id: old_org.id).map(&:standard_id))
+      org_standards.each do |standard|
+       self.pull_back_standard(standard)
+      end
+      org_standards = Standard.where(id: OrganisationStandard.unscoped.where(organisation_id: old_org.id).map(&:standard_id))
+      if org_standards.blank? 
+        old_org.users.destroy_all
+        old_org.destroy
+      end
+    end
     #old_org.sub_organisations.update_all({parent_id: self.id})
-    
   end
 
   def launch_sub_organisation(new_sub_organisation_id, std)
@@ -106,10 +116,15 @@ class Organisation < ActiveRecord::Base
         OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.ancestor_ids).update_all({assigned_organisation_id: new_sub_organisation_id})
       end
       std.jkci_classes.update_all({organisation_id: new_sub_organisation_id})
-      
     end
   end
 
+  
+  def pull_back_standard(standard)
+    old_organisation_id = OrganisationStandard.unscoped.where(standard_id: standard.id, organisation_id: self.subtree_ids, is_assigned_to_other: false).first.organisation_id
+    self.pull_back_standard_to_parent_organisation(old_organisation_id, standard)
+  end
+  
   def pull_back_standard_to_parent_organisation(old_organisation_id, std)
     # pull back organisaiton standards classes from sub organisation to master organisation
 
@@ -137,7 +152,6 @@ class Organisation < ActiveRecord::Base
     message = "One time password is #{self.mobile_code}  for #{self.name} registation on EraCord. Please do not share OTP to any one for securiety reason."
     url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=91#{self.mobile}&message=#{message}"
     url_arry = [url, message, self.id, self.id]
-    
   end
 
   def manage_standards(standard_ids)

@@ -9,6 +9,7 @@
 	<th>Select For Sub Organisation</th>
 	<th>Courses Name</th>
 	<th>Assign To</th>
+	<th>Action</th>
 	<th>Last Login</th>
       </tr>
     </thead>
@@ -30,6 +31,11 @@
 	  <%= standard.assigned_organisation.name %>
 	<%- end %>
 	<%# link_to 'Show', subject_path(subject) %>  
+      </td>
+      <td>
+	<%- if standard.is_assigned_to_other == 1 %>
+	  <%= link_to "Assign to me", pull_back_standard_organisation_path(@organisation, standard), confirm: "Are you sure?" %>
+	<%- end %>
       </td>
       <td>
 	<%- if standard.is_assigned_to_other == 1 &&  standard.assigned_organisation.try(:last_signed_in).present? %>

@@ -150,17 +150,28 @@ class OrganisationsController < ApplicationController
       render :launch_sub_organisation
     end
   end
-
+  
   def pull_back_standard
     standard = @organisation.standards.where(id: params[:standard_id]).first
     if standard
-      @organisaiton.pull_back_standard_to_parent_organisation(params[:old_organisation_id], standard)
+      @organisation.pull_back_standard(standard)
       redirect_to manage_organisation_path(@organisation) , flash: {success: true, notice: "course pull back successfully."} 
     else
       redirect_to manage_organisation_path(@organisation), flash: {success: false, notice: "Ops! Something went wrong."} 
     end
-    
   end 
+
+  def pull_back_organisation
+    if @organisation.descendant_ids.include?(params[:old_organisation].to_i)
+      old_org = Organisation.where(id: params[:old_organisation]).first 
+    end
+    if old_org
+      @organisation.pull_back_organisation(old_org)
+      redirect_to manage_organisation_path(@organisation) , flash: {success: true, notice: "course pull back successfully."} 
+    else
+      redirect_to manage_organisation_path(@organisation), flash: {success: false, notice: "Ops! Something went wrong."} 
+    end
+  end
 
   private
   
