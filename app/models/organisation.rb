@@ -110,7 +110,7 @@ class Organisation < ActiveRecord::Base
     end
   end
 
-  def pull_back_standard_to_master_organisation(old_organisation_id, std)
+  def pull_back_standard_to_parent_organisation(old_organisation_id, std)
     # pull back organisaiton standards classes from sub organisation to master organisation
 
     old_organisation = Organisation.where(id: old_organisation_id).first

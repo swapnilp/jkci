@@ -99,9 +99,9 @@ class OrganisationsController < ApplicationController
   end
 
   def manage_organisation
-    @standards = @organisation.standards.select("standards.*, organisation_standards.is_assigned_to_other")
+    @standards = @organisation.standards.select("standards.*, organisation_standards.is_assigned_to_other, organisation_standards.assigned_organisation_id")
     @users = @organisation.users.clarks.select([:id, :email, :organisation_id, :is_enable])
-    @sub_organisations = @organisation.sub_organisations
+    @sub_organisations = @organisation.descendants
   end
   
   def manage_courses
@@ -150,6 +150,17 @@ class OrganisationsController < ApplicationController
       render :launch_sub_organisation
     end
   end
+
+  def pull_back_standard
+    standard = @organisation.standards.where(id: params[:standard_id]).first
+    if standard
+      @organisaiton.pull_back_standard_to_parent_organisation(params[:old_organisation_id], standard)
+      redirect_to manage_organisation_path(@organisation) , flash: {success: true, notice: "course pull back successfully."} 
+    else
+      redirect_to manage_organisation_path(@organisation), flash: {success: false, notice: "Ops! Something went wrong."} 
+    end
+    
+  end 
 
   private
   

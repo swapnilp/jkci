@@ -8,7 +8,8 @@
 	<th>#</th>
 	<th>Select For Sub Organisation</th>
 	<th>Courses Name</th>
-	<th>Actions</th>
+	<th>Assign To</th>
+	<th>Last Login</th>
       </tr>
     </thead>
     <%- @standards.each_with_index do |standard, index| %>
@@ -26,9 +27,16 @@
       </td>
       <td>
 	<%- unless standard.is_assigned_to_other == 0 %>
-	Assigned To sub Organisaiton
+	  <%= standard.assigned_organisation.name %>
 	<%- end %>
 	<%# link_to 'Show', subject_path(subject) %>  
+      </td>
+      <td>
+	<%- if standard.is_assigned_to_other == 1 &&  standard.assigned_organisation.try(:last_signed_in).present? %>
+	  <%= distance_of_time_in_words(standard.assigned_organisation.try(:last_signed_in), Time.now) %> Ago
+	<%- elsif standard.is_assigned_to_other ==1 && standard.assigned_organisation.try(:last_signed_in).nil? %>
+	    Never
+	<%- end %>
       </td>
     </tr>
     <%- end %>

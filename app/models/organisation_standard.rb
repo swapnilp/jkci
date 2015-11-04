@@ -6,4 +6,6 @@ class OrganisationStandard < ActiveRecord::Base
   belongs_to :organisation
   belongs_to :standard
 
+  belongs_to :assigned_organisation, class_name: "Organisation", foreign_key: "assigned_organisation_id"
+
 end

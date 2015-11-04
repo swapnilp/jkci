@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
       where(conditions.to_h).first
     end
   end
+  
+  def after_database_authentication
+    self.organisation.update_attributes({last_signed_in: Time.now}) if self.organisation.present?
+  end 
 
   def active_for_authentication?
     super && is_enable
