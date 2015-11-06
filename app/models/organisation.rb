@@ -96,7 +96,7 @@ class Organisation < ActiveRecord::Base
         JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
         OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.descendant_ids).each do |org_standard|
           if org_standard.root?
-            org_standard.update_attributes({{is_assigned_to_other: true, assigned_organisation_id: new_organisation.id}})
+            org_standard.update_attributes({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id})
           else
             org_standard.destroy
           end
