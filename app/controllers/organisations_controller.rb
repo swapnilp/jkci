@@ -174,6 +174,18 @@ class OrganisationsController < ApplicationController
     end
   end
 
+  def organisation_descendants
+    organisations = @organisation.descendants.select([:id, :name, :email, :mobile])
+    respond_to do |format|
+      format.json {render json: {success: true, organisations: organisations.as_json}}
+    end
+  end
+  
+  def standard_assign_to_organisation
+    
+    
+  end
+
   private
   
   def my_sanitizer

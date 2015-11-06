@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       get 'remaining_cources', as: 'remaining_cources'
       get "launch_sub_organisation", as: "launch_sub"
       post "create_sub_organisation", as: "create_sub"
+      get "organisation_descendants", as: "descendants"
       get "pull_back_standard/:standard_id" => "organisations#pull_back_standard", as: "pull_back_standard"
       get "pull_back_organisation/:old_organisation" => "organisations#pull_back_organisation", as: "pull_back_organisation"
       get "delete_users/:user_id" => "organisations#delete_users", as: "delete_user"

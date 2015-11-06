@@ -77,10 +77,40 @@ class Organisation < ActiveRecord::Base
     Delayed::Job.enqueue OrganisationRegistationSms.new(organisation_sms_message)
   end
 
-  def switch_organisation(new_organisation_id)
-    
+  def self.switch_organisation(old_organisation_id, new_organisation_id, standard_id)
+    # pull back organisaiton standards classes from sub organisation to master organisation
+    std = Standard.where(id: standard_id)
+    old_organisation = Organisation.where(id: old_organisation_id).first
+    new_organisation = Organisation.where(id: new_organisation_id).first
+    if old_organisation.present? && new_organisation.present? && std.present? && !new_organisation.root?
+      class_ids = JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).map(&:id)
+      if class_ids.present?
+        Exam.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        ExamCatlog.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        DailyTeachingPoint.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        ClassCatlog.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        SubClass.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        Student.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        ClassStudent.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        Notification.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.descendant_ids).each do |org_standard|
+          if org_standard.root?
+            org_standard.update_attributes({{is_assigned_to_other: true, assigned_organisation_id: new_organisation.id}})
+          else
+            org_standard.destroy
+          end
+        end
+        new_organisation.standards << std
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
   end
-
+  
   def pull_back_organisation(old_org)
 
     if old_org && !old_org.root?
@@ -142,8 +172,10 @@ class Organisation < ActiveRecord::Base
         ClassStudent.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
         Notification.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
         JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: self.descendant_ids).destroy_all
-        self.organisation_standards.where(standard_id: std.id).update_all({is_assigned_to_other: false})
+        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: self.descendant_ids).each do |org_standard|
+          org_standard.destroy unless org_standard.root?
+        end
+        self.organisation_standards.where(standard_id: std.id).update_all({is_assigned_to_other: false, assigned_organisation_id: nil})
       end
     end
   end
