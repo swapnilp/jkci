@@ -115,8 +115,7 @@ class Organisation < ActiveRecord::Base
 
     if old_org && !old_org.root?
       old_organisation_id = old_org.id
-      old_org_standards_ids = OrganisationStandard.unscoped.where(organisation_id: old_organisation_id, is_assigned_to_other: true).map(&:standard_id)
-      
+      old_org_standards_ids = OrganisationStandard.unscoped.where(organisation_id: old_organisation_id, is_assigned_to_other: false).map(&:standard_id)
       Exam.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
       ExamCatlog.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
       DailyTeachingPoint.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
@@ -128,7 +127,7 @@ class Organisation < ActiveRecord::Base
       JkciClass.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
       
       unless self.root?
-          OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.path_ids).update_all({is_assigned_to_other: true, assigned_organisation_id: self.id})
+        OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.path_ids).update_all({is_assigned_to_other: true, assigned_organisation_id: self.id})
       end
       
       OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.id).update_all({is_assigned_to_other: false, assigned_organisation_id: nil})
