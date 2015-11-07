@@ -28,7 +28,7 @@
       </td>
       <td>
 	<%- unless standard.is_assigned_to_other == 0 %>
-	  <%= standard.assigned_organisation.name %>
+	  <%= standard.assigned_organisation.try(:name) || 'Not defined' %>
 	<%- end %>
 	<%# link_to 'Show', subject_path(subject) %>  
       </td>

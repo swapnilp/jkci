@@ -55,10 +55,11 @@ class User < ActiveRecord::Base
 
   def manage_clark_roles(new_roles)
     self.roles = []
-    new_roles = new_roles.split(',') + ["clark"]
+    new_roles = new_roles.split(',')
     new_roles.each do |u_role| 
       self.add_role u_role.to_sym if CLARK_ROLES.include?(u_role) 
     end
+    self.add_role :clark
   end
   
   def admin?

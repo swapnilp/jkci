@@ -3,7 +3,7 @@ class Organisation < ActiveRecord::Base
   has_ancestry
 
   belongs_to :master_organisation,   :class_name => "Organisation", :foreign_key => "parent_id"
-  has_many   :sub_organisations,    :class_name => "Organisation", :foreign_key => "parent_id", :dependent => :destroy
+  has_many   :sub_organisations,    :class_name => "Organisation", :foreign_key => "parent_id"#, :dependent => :destroy
 
   scope :master_organisations, lambda{ where(master_organisation: nil) }
   
@@ -77,11 +77,11 @@ class Organisation < ActiveRecord::Base
     Delayed::Job.enqueue OrganisationRegistationSms.new(organisation_sms_message)
   end
 
-  def self.switch_organisation(old_organisation_id, new_organisation_id, standard_id)
+  def switch_organisation(old_organisation_id, new_organisation_id, standard_id)
     # pull back organisaiton standards classes from sub organisation to master organisation
-    std = Standard.where(id: standard_id)
-    old_organisation = Organisation.where(id: old_organisation_id).first
-    new_organisation = Organisation.where(id: new_organisation_id).first
+    std = self.standards.where(id: standard_id).first
+    old_organisation = self.subtree.where(id: old_organisation_id).first
+    new_organisation = self.descendants.where(id: new_organisation_id).first
     if old_organisation.present? && new_organisation.present? && std.present? && !new_organisation.root?
       class_ids = JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).map(&:id)
       if class_ids.present?
@@ -95,7 +95,7 @@ class Organisation < ActiveRecord::Base
         Notification.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
         JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
         OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.descendant_ids).each do |org_standard|
-          if org_standard.root?
+          if org_standard.organisation.root?
             org_standard.update_attributes({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id})
           else
             org_standard.destroy
@@ -114,13 +114,41 @@ class Organisation < ActiveRecord::Base
   def pull_back_organisation(old_org)
 
     if old_org && !old_org.root?
-      org_standards = Standard.where(id: OrganisationStandard.unscoped.where(organisation_id: old_org.id).map(&:standard_id))
-      org_standards.each do |standard|
-       self.pull_back_standard(standard)
+      old_organisation_id = old_org.id
+      old_org_standards_ids = OrganisationStandard.unscoped.where(organisation_id: old_organisation_id, is_assigned_to_other: true).map(&:standard_id)
+      
+      Exam.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      ExamCatlog.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      DailyTeachingPoint.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      ClassCatlog.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      SubClass.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      Student.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      ClassStudent.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      Notification.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      JkciClass.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      
+      unless self.root?
+          OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.path_ids).update_all({is_assigned_to_other: true, assigned_organisation_id: self.id})
       end
-      org_standards = Standard.where(id: OrganisationStandard.unscoped.where(organisation_id: old_org.id).map(&:standard_id))
-      if org_standards.blank? 
-        old_org.users.destroy_all
+      
+      OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.id).update_all({is_assigned_to_other: false, assigned_organisation_id: nil})
+      
+      
+      OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.descendant_ids).each do |org_standard|
+        org_standard.destroy unless org_standard.organisation.root?
+      end
+      
+      old_org.users.destroy_all
+      if old_org.has_children?
+        #.destroy
+        old_org.children.update_all({parent_id: self.id})
+        old_org.descendants.each do |old_org_desc|
+          tree_ids = old_org_desc.ancestry.split('/')
+          tree_ids.delete(old_org.id.to_s)
+          old_org_desc.update_attributes(ancestry: tree_ids.join('/'))
+        end
+        old_org.destroy
+      else
         old_org.destroy
       end
     end
@@ -129,23 +157,27 @@ class Organisation < ActiveRecord::Base
 
   def launch_sub_organisation(new_sub_organisation_id, std)
     # assign standard to new organisation when launch sub organisation
- 
+    
     new_organisation = Organisation.where(id: new_sub_organisation_id).first
-    if new_organisation
-      self.organisation_standards.where(standard_id: std.id).first.update_attributes({is_assigned_to_other: true})
-      new_organisation.standards << std rescue nil
-      if std.jkci_classes.present?
-        std.jkci_classes.map(&:exams).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id}) }
-        std.jkci_classes.map(&:exam_catlogs).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
-        std.jkci_classes.map(&:daily_teaching_points).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
-        std.jkci_classes.map(&:class_catlogs).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
-        std.jkci_classes.map(&:sub_classes).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
-        std.jkci_classes.map(&:students).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
-        std.jkci_classes.map(&:class_students).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
-        std.jkci_classes.map(&:notifications).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
-        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.ancestor_ids).update_all({assigned_organisation_id: new_sub_organisation_id})
+    transaction do
+      if new_organisation
+        self.organisation_standards.where(standard_id: std.id).first.update_attributes({is_assigned_to_other: true})
+        new_organisation.standards << std rescue nil
+        if std.jkci_classes.present?
+          std.jkci_classes.map(&:exams).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id}) }
+          std.jkci_classes.map(&:exam_catlogs).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
+          std.jkci_classes.map(&:daily_teaching_points).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
+          std.jkci_classes.map(&:class_catlogs).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
+          std.jkci_classes.map(&:sub_classes).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
+          std.jkci_classes.map(&:students).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
+          std.jkci_classes.map(&:class_students).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
+          std.jkci_classes.map(&:notifications).flatten.each{ |record| record.update_attributes({organisation_id: new_sub_organisation_id})}
+          OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.ancestor_ids)
+            .update_all({assigned_organisation_id: new_sub_organisation_id})
+        end
+        std.jkci_classes.update_all({organisation_id: new_sub_organisation_id})
       end
-      std.jkci_classes.update_all({organisation_id: new_sub_organisation_id})
+      save!
     end
   end
 
@@ -173,7 +205,7 @@ class Organisation < ActiveRecord::Base
         Notification.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
         JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
         OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: self.descendant_ids).each do |org_standard|
-          org_standard.destroy unless org_standard.root?
+          org_standard.destroy unless org_standard.organisation.root?
         end
         self.organisation_standards.where(standard_id: std.id).update_all({is_assigned_to_other: false, assigned_organisation_id: nil})
       end
