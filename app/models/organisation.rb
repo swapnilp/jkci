@@ -58,7 +58,16 @@ class Organisation < ActiveRecord::Base
   end
 
   def standards_name
-    OrganisationStandard.unscoped.where(organisation_id: self.id).map(&:standard).flatten.map(&:std_name).join(", ")
+    #OrganisationStandard.unscoped.where(organisation_id: self.id).map(&:standard).flatten.map(&:std_name).join(", ")
+    std_names = []
+    OrganisationStandard.unscoped.where(organisation_id: self.id).each do |org_std|
+      if org_std.is_assigned_to_other
+        std_names << ["<span class='red'>#{org_std.standard.std_name}</span>"]
+      else
+        std_names << ["<span class='text-success'>#{org_std.standard.std_name}</span>"]
+      end
+    end
+    std_names.join(", ").html_safe
   end
 
   def send_generated_code
