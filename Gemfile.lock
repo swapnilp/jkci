@@ -88,6 +88,8 @@ GEM
     globalid (0.3.0)
       activesupport (>= 4.1.0)
     google_visualr (2.5.1)
+    groupdate (2.5.0)
+      activesupport (>= 3)
     hike (1.2.3)
     i18n (0.7.0)
     jbuilder (2.2.6)
@@ -233,6 +235,7 @@ DEPENDENCIES
   fancybox2-rails (~> 0.2.8)
   font-awesome-rails
   google_visualr (>= 2.5)
+  groupdate
   jbuilder (~> 2.0)
   jquery-rails (~> 4.0.3)
   kaminari

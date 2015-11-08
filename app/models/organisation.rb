@@ -56,6 +56,11 @@ class Organisation < ActiveRecord::Base
     [self.name, self.default_students.count]
   end
 
+  
+
+  def standards_performance
+  end
+
 
   def assigned_standards
     standards.where("organisation_standards.is_assigned_to_other is true")
@@ -64,6 +69,8 @@ class Organisation < ActiveRecord::Base
   def unassigned_standards
     standards.where("organisation_standards.is_assigned_to_other is false")
   end
+
+  
 
   def standards_name
     #OrganisationStandard.unscoped.where(organisation_id: self.id).map(&:standard).flatten.map(&:std_name).join(", ")
