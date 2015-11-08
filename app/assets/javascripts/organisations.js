@@ -131,15 +131,15 @@ function saveSwitchOrganisationStandard(self) {
     alert('Please Select Organisation');
     return true;
   }
-  //url = $(self).data('url');
-  //$.post(""+ url +"?&courses="+ coursesList,
-  //  function(data){
-  //    if(data.success){
-  //	location.reload();
-  //    }else{
-  //	alert('something went wrong');
-  //    }
-  //  }, function(){alert('something went wrong');}, "JSON");
-  //
+
+  url = $(self).data('url');
+  $.get(""+ url +"?&new_organisation_id="+ organisation_id,
+    function(data){
+      if(data.success){
+  	location.reload();
+      }else{
+  	alert('something went wrong');
+      }
+    }, function(){alert('something went wrong');}, "JSON");
 }
 

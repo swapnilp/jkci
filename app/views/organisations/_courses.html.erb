@@ -39,7 +39,7 @@
 	   <br /> 
 	<%- end %>
 	<%- if @organisation.has_children? %>
-	  <%= link_to 'Other Sub Organisaiton', descendants_organisation_path(@organisation), onclick: "openSubOrganisaitonsModal(event, 'Assign To', this, '', #{standard.id});", data: {assigned_id: standard.assigned_organisation_id}  %>
+	  <%= link_to "Other Sub Organisaiton", descendants_organisation_path(@organisation), onclick: "openSubOrganisaitonsModal(event, 'Assign To', this, '#{switch_standard_organisation_path(@organisation, standard.assigned_organisation_id || 0, standard.id)}', #{standard.id});", data: {assigned_id: standard.assigned_organisation_id}  %>
 	<%- end %>
       </td>
       <td>

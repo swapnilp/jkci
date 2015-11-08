@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get "organisation_descendants", as: "descendants"
       get "pull_back_standard/:standard_id" => "organisations#pull_back_standard", as: "pull_back_standard"
       get "pull_back_organisation/:old_organisation" => "organisations#pull_back_organisation", as: "pull_back_organisation"
+      get "switch_organisation_standard/old_organisation/:old_organisation_id/standard/:standard_id" => "organisations#switch_organisation_standard", as: "switch_standard"
       get "delete_users/:user_id" => "organisations#delete_users", as: "delete_user"
       get "disable_users/:user_id" => "organisations#disable_users", as: "disable_user"
       get "edit_password/:user_id" => "organisations#edit_password", as: "edit_password"

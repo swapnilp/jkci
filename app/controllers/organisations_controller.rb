@@ -181,8 +181,11 @@ class OrganisationsController < ApplicationController
     end
   end
   
-  def standard_assign_to_organisation
-    
+  def switch_organisation_standard
+    success = @organisation.switch_organisation(params[:old_organisation_id], params[:new_organisation_id], params[:standard_id])
+    respond_to do |format|
+      format.json {render json: {success: success}}
+    end
     
   end
 

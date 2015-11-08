@@ -89,8 +89,13 @@ class Organisation < ActiveRecord::Base
   def switch_organisation(old_organisation_id, new_organisation_id, standard_id)
     # pull back organisaiton standards classes from sub organisation to master organisation
     std = self.standards.where(id: standard_id).first
-    old_organisation = self.subtree.where(id: old_organisation_id).first
+    if old_organisation_id == 0
+      old_organisation = self
+    else
+      old_organisation = self.subtree.where(id: old_organisation_id).first
+    end
     new_organisation = self.descendants.where(id: new_organisation_id).first
+
     if old_organisation.present? && new_organisation.present? && std.present? && !new_organisation.root?
       class_ids = JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).map(&:id)
       if class_ids.present?
@@ -103,11 +108,20 @@ class Organisation < ActiveRecord::Base
         ClassStudent.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
         Notification.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
         JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
-        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: new_organisation.descendant_ids).each do |org_standard|
+        OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: old_organisation.path_ids).each do |org_standard|
           if org_standard.organisation.root?
             org_standard.update_attributes({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id})
           else
             org_standard.destroy
+          end
+        end
+
+        new_organisation.ancestor_ids.each do |ancestor_id|
+          org = Organisation.where(id: ancestor_id).first
+          if org && org.root?
+            OrganisationStandard.where(id: org.id, standard_id: std.id).update_all({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id})
+          elsif org
+            org.organisation_standards.build({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id, standard_id: std.id})
           end
         end
         new_organisation.standards << std
