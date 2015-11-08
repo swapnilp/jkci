@@ -257,12 +257,16 @@
   <%- end %>
   </div>
 </div>
-<%- if @jkci_classes.present? %>
-  <div id='chart'></div>
-  <%= render_chart @chart, 'chart' %>
-<%- end %>
-<%- if @organisation.has_children? %>
-  <div id='chart1'></div>
-  <%= render_chart @sub_organisaiton_charts, 'chart1' %>
-<%- end %>
+<div id="k-body" class="k-body adminDesk">
+  <div class="container">
+    <%- if @jkci_classes.present? %>
+      <div id='chart' class="col-sm-6" ></div>
+      <%= render_chart @chart, 'chart' %>
+    <%- end %>
+    <%- if @organisation.has_children? %>
+      <div id='chart1' class="col-sm-6"></div>
+      <%= render_chart @sub_organisaiton_charts, 'chart1' %>
+    <%- end %>
+  </div>
+</div>
 
