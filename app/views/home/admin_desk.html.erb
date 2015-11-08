@@ -257,5 +257,12 @@
   <%- end %>
   </div>
 </div>
-<div id='chart'></div>
-<%= render_chart @chart, 'chart' %>
+<%- if @jkci_classes.present? %>
+  <div id='chart'></div>
+  <%= render_chart @chart, 'chart' %>
+<%- end %>
+<%- if @organisation.has_children? %>
+  <div id='chart1'></div>
+  <%= render_chart @sub_organisaiton_charts, 'chart1' %>
+<%- end %>
+

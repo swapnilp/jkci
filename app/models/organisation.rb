@@ -42,12 +42,20 @@ class Organisation < ActiveRecord::Base
     update_attributes({email_code: e_code, mobile_code: m_code})
     self.send_generated_code
     self.update_attributes({super_organisation_id: self.root_id})
-   
   end
 
   def master_organisation?
     parent_id == nil
   end
+
+  def default_students
+    Student.unscoped.where("organisation_id = ? && last_present > ?", self.id, (Time.now - self.absent_days.days))
+  end
+
+  def default_students_count
+    [self.name, self.default_students.count]
+  end
+
 
   def assigned_standards
     standards.where("organisation_standards.is_assigned_to_other is true")

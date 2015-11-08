@@ -33,6 +33,11 @@ class HomeController < ApplicationController
     @jkci_classes = @organisation.jkci_classes.active
     @unpublished_exams = @organisation.exams.unpublished_exams
     @default_students = @organisation.students.default_students(@organisation.absent_days)
+    if  @jkci_classes.present?
     @chart = Charts.pie_chart([['string', 'Class Name'], ['number', 'Exams']], @organisation.jkci_classes.active.map(&:exams_count), {title: 'Class Exams'})
+    end
+    if @organisation.has_children?
+      @sub_organisaiton_charts = Charts.pie_chart([['string', 'Organisation'], ['number', 'Default Students']], @organisation.subtree.map(&:default_students_count), {title: 'Organisaiton Default Students'})
+    end
   end
 end
