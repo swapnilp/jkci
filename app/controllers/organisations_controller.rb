@@ -143,7 +143,7 @@ class OrganisationsController < ApplicationController
       standards.each do |standard|
         @organisation.launch_sub_organisation(@org.id, standard)
       end
-      redirect_to root_path, flash: {success: true, notice: "Sub Organisation has been created."} 
+      redirect_to manage_organisation_path(@organisation), flash: {success: true, notice: "Sub Organisation has been created."} 
     else
       @standard_ids = params[:standards]
       @standards = @organisation.standards.where(id: params[:standards].split(','))

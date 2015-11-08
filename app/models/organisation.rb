@@ -89,8 +89,9 @@ class Organisation < ActiveRecord::Base
   def switch_organisation(old_organisation_id, new_organisation_id, standard_id)
     # pull back organisaiton standards classes from sub organisation to master organisation
     std = self.standards.where(id: standard_id).first
-    if old_organisation_id == 0
+    if old_organisation_id == "0"
       old_organisation = self
+      old_organisation_id = self.id
     else
       old_organisation = self.subtree.where(id: old_organisation_id).first
     end
