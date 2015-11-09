@@ -39,5 +39,10 @@ class HomeController < ApplicationController
     if @organisation.has_children?
       @sub_organisaiton_charts = Charts.pie_chart([['string', 'Organisation'], ['number', 'Default Students']], @organisation.subtree.map(&:default_students_count), {title: 'Organisaiton Default Students'})
     end
+    if @organisation.has_children?
+      weekly_performances = @organisation.subtree_performance_by_week
+
+      @sub_organisaiton_performance = Charts.line_chart(weekly_performances[0], weekly_performances[1], {})
+    end
   end
 end

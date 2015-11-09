@@ -56,11 +56,30 @@ class Organisation < ActiveRecord::Base
     [self.name, self.default_students.count]
   end
 
-  
-
-  def standards_performance
+  def subtree_performance_by_week
+    sub_trees_performances =  self.subtree.map(&:standards_performance_by_week)
+    keys = sub_trees_performances.map(&:keys).flatten.uniq
+    performances = []
+    keys.each do |key|
+      key_arr = [key]
+      sub_trees_performances.each do |sub_trees_performance|
+        key_arr << sub_trees_performance[key].to_i
+      end
+      performances << key_arr
+    end
+    return self.subtree.map(&:name), performances
   end
 
+  def standards_performance_by_week
+    peroid_exams =  Exam.unscoped.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y").count
+    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y").count
+    
+    week_performance= {}
+    ((self.created_at.to_date)..(Date.today+5.days)).select(&:monday?).map{|time| time.strftime("%d %b %Y")}.each do |week_date| 
+      week_performance[week_date] = peroid_exams[week_date].to_i + periods_catlog[week_date].to_i
+    end
+    week_performance
+  end
 
   def assigned_standards
     standards.where("organisation_standards.is_assigned_to_other is true")

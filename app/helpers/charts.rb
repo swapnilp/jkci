@@ -11,10 +11,14 @@ module Charts
     @chart = GoogleVisualr::Interactive::PieChart.new(data_table, option)
   end
 
-  def self.pie_chart(columns, data_set, options)
+  def self.line_chart(columns, data_set, options)
     data_table = GoogleVisualr::DataTable.new
-    columns.each do |datatype, value|
-      data_table.new_column(datatype, value)
+    data_table.new_column('string', 'week')
+    columns.each do | value|
+      data_table.new_column('number', value)
     end
+    data_table.add_rows(data_set)
+    opts   = { :width => "100%", :height => 240, :title => 'Weekly Performance', :legend => 'bottom' }
+    @chart = GoogleVisualr::Interactive::LineChart.new(data_table, opts)
   end
 end
