@@ -18,7 +18,7 @@ module Charts
       data_table.new_column('number', value)
     end
     data_table.add_rows(data_set)
-    opts   = { :width => "100%", :height => 240, :title => 'Weekly Performance', :legend => 'bottom' }
+    opts   = { :width => "100%", :height => 240, :title => 'Weekly Performance', :legend => 'bottom' }.merge(options)
     @chart = GoogleVisualr::Interactive::LineChart.new(data_table, opts)
   end
 end
