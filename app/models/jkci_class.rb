@@ -9,6 +9,7 @@ class JkciClass < ActiveRecord::Base
   belongs_to :batch
   belongs_to :subject
   belongs_to :standard
+  belongs_to :organisation
   belongs_to :current_chapter, class_name: "Chapter", foreign_key: "current_chapter_id"
   has_many :sub_classes
   has_many :exam_notifications, through: :exams, source: :notifications

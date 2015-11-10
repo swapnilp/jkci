@@ -31,6 +31,7 @@ class HomeController < ApplicationController
     @upcomming_exams = @organisation.exams.upcomming_exams
     @todays_exams = @organisation.exams.todays_exams
     @jkci_classes = @organisation.jkci_classes.active
+    @sub_organisation_classes = @organisation.sub_organisation_classes
     @unpublished_exams = @organisation.exams.unpublished_exams
     @default_students = @organisation.students.default_students(@organisation.absent_days)
     if  @jkci_classes.present?

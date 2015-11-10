@@ -13,13 +13,13 @@ class ApplicationController < ActionController::Base
   def authenticate_user!(options={})
     super(options)
     @organisation ||= current_user.organisation
-    Organisation.current_id = @organisation.present? ? @organisation.id : nil
+    Organisation.current_id = @organisation.present? ? @organisation.subtree.map(&:id) : nil
   end
 
   def get_organiser
     if current_user 
       @organisation ||= current_user.organisation 
-      Organisation.current_id = @organisation.present? ? @organisation.id : nil
+      Organisation.current_id = @organisation.present? ? @organisation.subtree.map(&:id) : nil
     end
   end
   

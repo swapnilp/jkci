@@ -49,7 +49,7 @@ class Organisation < ActiveRecord::Base
   end
 
   def default_students
-    Student.unscoped.where("organisation_id = ? && last_present > ?", self.id, (Time.now - self.absent_days.days))
+    Student.where("organisation_id = ? && last_present > ?", self.id, (Time.now - self.absent_days.days))
   end
 
   def default_students_count
@@ -71,8 +71,8 @@ class Organisation < ActiveRecord::Base
   end
 
   def organisation_performance_by_week
-    peroid_exams =  Exam.unscoped.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y", last: 10).count
-    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y", last: 10).count
+    peroid_exams =  Exam.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y", last: 10).count
+    periods_catlog = DailyTeachingPoint.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y", last: 10).count
     
     week_performance= {}
 
@@ -83,8 +83,8 @@ class Organisation < ActiveRecord::Base
   end
 
   def organisation_seperate_performance_by_week
-    peroid_exams =  Exam.unscoped.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y", last: 10).count
-    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y", last: 10).count
+    peroid_exams =  Exam.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y", last: 10).count
+    periods_catlog = DailyTeachingPoint.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y", last: 10).count
     
     week_performance= []
     keys = [peroid_exams, periods_catlog].map(&:keys).flatten.uniq
@@ -113,9 +113,9 @@ class Organisation < ActiveRecord::Base
 
   def standard_performance_by_week(std_id)
     # Standard parformace to all subtree
-    classes = JkciClass.unscoped.where(standard_id: std_id, organisation_id: self.subtree.map(&:id))
-    peroid_exams =  Exam.unscoped.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :exam_date, format: "%d %b %Y", last: 10).count
-    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :date, format: "%d %b %Y", last: 10).count
+    classes = JkciClass.where(standard_id: std_id, organisation_id: self.subtree.map(&:id))
+    peroid_exams =  Exam.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :exam_date, format: "%d %b %Y", last: 10).count
+    periods_catlog = DailyTeachingPoint.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :date, format: "%d %b %Y", last: 10).count
     keys = [peroid_exams, periods_catlog].map(&:keys).flatten.uniq
     performance = keys.map do |key| 
       {key =>  (peroid_exams[key].to_i + periods_catlog[key].to_i)}
@@ -131,12 +131,14 @@ class Organisation < ActiveRecord::Base
     standards.where("organisation_standards.is_assigned_to_other is false")
   end
 
-  
+  def sub_organisation_classes
+    JkciClass.where(organisation_id: descendant_ids)
+  end
 
   def standards_name
-    #OrganisationStandard.unscoped.where(organisation_id: self.id).map(&:standard).flatten.map(&:std_name).join(", ")
+    #OrganisationStandard.where(organisation_id: self.id).map(&:standard).flatten.map(&:std_name).join(", ")
     std_names = []
-    OrganisationStandard.unscoped.where(organisation_id: self.id).each do |org_std|
+    OrganisationStandard.where(organisation_id: self.id).each do |org_std|
       if org_std.is_assigned_to_other
         std_names << ["<span class='red'>#{org_std.standard.std_name}</span>"]
       else
@@ -174,17 +176,17 @@ class Organisation < ActiveRecord::Base
     new_organisation = self.descendants.where(id: new_organisation_id).first
 
     if old_organisation.present? && new_organisation.present? && std.present? && !new_organisation.root?
-      class_ids = JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).map(&:id)
+      class_ids = JkciClass.where(standard_id: std.id, organisation_id: old_organisation_id).map(&:id)
       if class_ids.present?
-        Exam.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
-        ExamCatlog.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
-        DailyTeachingPoint.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
-        ClassCatlog.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
-        SubClass.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
-        Student.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
-        ClassStudent.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
-        Notification.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
-        JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        Exam.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        ExamCatlog.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        DailyTeachingPoint.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        ClassCatlog.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        SubClass.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        Student.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        ClassStudent.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        Notification.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
+        JkciClass.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: new_organisation.id})
         OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: old_organisation.path_ids).each do |org_standard|
           if org_standard.organisation.root?
             org_standard.update_attributes({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id})
@@ -196,9 +198,9 @@ class Organisation < ActiveRecord::Base
         new_organisation.ancestor_ids.each do |ancestor_id|
           org = Organisation.where(id: ancestor_id).first
           if org && org.root?
-            OrganisationStandard.where(id: org.id, standard_id: std.id).update_all({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id})
+            OrganisationStandard.unscoped.where(id: org.id, standard_id: std.id).update_all({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id})
           elsif org
-            org.organisation_standards.build({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id, standard_id: std.id})
+            org.organisation_standards.build({is_assigned_to_other: true, assigned_organisation_id: new_organisation.id, standard_id: std.id}).save
           end
         end
         new_organisation.standards << std
@@ -216,15 +218,15 @@ class Organisation < ActiveRecord::Base
     if old_org && !old_org.root?
       old_organisation_id = old_org.id
       old_org_standards_ids = OrganisationStandard.unscoped.where(organisation_id: old_organisation_id, is_assigned_to_other: false).map(&:standard_id)
-      Exam.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-      ExamCatlog.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-      DailyTeachingPoint.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-      ClassCatlog.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-      SubClass.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-      Student.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-      ClassStudent.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-      Notification.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-      JkciClass.unscoped.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      Exam.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      ExamCatlog.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      DailyTeachingPoint.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      ClassCatlog.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      SubClass.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      Student.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      ClassStudent.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      Notification.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+      JkciClass.where(organisation_id: old_organisation_id).update_all({organisation_id: self.id})
       
       unless self.root?
         OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.path_ids).update_all({is_assigned_to_other: true, assigned_organisation_id: self.id})
@@ -233,9 +235,11 @@ class Organisation < ActiveRecord::Base
       OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.id).update_all({is_assigned_to_other: false, assigned_organisation_id: nil})
       
       
-      OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.descendant_ids).each do |org_standard|
+      OrganisationStandard.unscoped.where(standard_id: old_org_standards_ids, organisation_id: self.subtree_ids).each do |org_standard|
         org_standard.destroy unless org_standard.organisation.root?
       end
+      
+      old_org.organisation_standards.destroy_all
       
       old_org.users.destroy_all
       if old_org.has_children?
@@ -291,18 +295,18 @@ class Organisation < ActiveRecord::Base
 
     old_organisation = Organisation.where(id: old_organisation_id).first
     unless old_organisation.root?
-      class_ids = JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).map(&:id)
+      class_ids = JkciClass.where(standard_id: std.id, organisation_id: old_organisation_id).map(&:id)
       
       if class_ids.present?
-        Exam.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        ExamCatlog.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        DailyTeachingPoint.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        ClassCatlog.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        SubClass.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        Student.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        ClassStudent.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        Notification.unscoped.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
-        JkciClass.unscoped.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+        Exam.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+        ExamCatlog.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+        DailyTeachingPoint.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+        ClassCatlog.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+        SubClass.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+        Student.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+        ClassStudent.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+        Notification.where(jkci_class_id: class_ids, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
+        JkciClass.where(standard_id: std.id, organisation_id: old_organisation_id).update_all({organisation_id: self.id})
         OrganisationStandard.unscoped.where(standard_id: std.id, organisation_id: self.descendant_ids).each do |org_standard|
           org_standard.destroy unless org_standard.organisation.root?
         end
