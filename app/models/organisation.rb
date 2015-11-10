@@ -87,7 +87,9 @@ class Organisation < ActiveRecord::Base
     periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y").count
     
     week_performance= []
-    ((self.created_at.to_date)..(Date.today+5.days)).select(&:monday?).map{|time| time.strftime("%d %b %Y")}.each do |week_date| 
+    keys = [peroid_exams, periods_catlog].map(&:keys).flatten.uniq
+    
+    keys.each do |week_date| 
       week_performance << [week_date, peroid_exams[week_date].to_i, periods_catlog[week_date].to_i]
     end
     week_performance
