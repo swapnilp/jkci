@@ -41,8 +41,9 @@ class HomeController < ApplicationController
     end
     if @organisation.has_children?
       weekly_performances = @organisation.subtree_performance_by_week
-
-      @sub_organisaiton_performance = Charts.line_chart(weekly_performances[0], weekly_performances[1], {})
+      @sub_organisaiton_performance = Charts.line_chart(weekly_performances[0], weekly_performances[1], {title: 'Organisation Performances'})
     end
+    standards_performances = @organisation.standards_performance_by_week
+    @standards_performance = Charts.line_chart(standards_performances[0], standards_performances[1], {title: 'Standards Performances'})
   end
 end

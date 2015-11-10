@@ -266,8 +266,10 @@
     <%- if @organisation.has_children? %>
       <div id='chart1' class="col-sm-6"></div>
       <%= render_chart @sub_organisaiton_charts, 'chart1' %>
-      <div id='chart2' class="col-sm-12"></div>
+      <div id='chart2' class="col-sm-12 paddingTop10"></div>
       <%= render_chart @sub_organisaiton_performance, 'chart2' %>
+      <div id='chart3' class="col-sm-12 paddingTop10"></div>
+      <%= render_chart @standards_performance, 'chart3' %>
     <%- end %>
     
   </div>

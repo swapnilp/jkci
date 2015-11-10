@@ -57,8 +57,8 @@ class Organisation < ActiveRecord::Base
   end
 
   def subtree_performance_by_week
-    sub_trees_performances =  self.subtree.map(&:standards_performance_by_week)
-    keys = sub_trees_performances.map(&:keys).flatten.uniq
+    sub_trees_performances =  self.subtree.map(&:organisation_performance_by_week)
+    keys = sub_trees_performances.map(&:keys).flatten.uniq.map(&:to_date).sort.map{|date| date.strftime("%d %b %Y")}
     performances = []
     keys.each do |key|
       key_arr = [key]
@@ -70,15 +70,55 @@ class Organisation < ActiveRecord::Base
     return self.subtree.map(&:name), performances
   end
 
-  def standards_performance_by_week
+  def organisation_performance_by_week
     peroid_exams =  Exam.unscoped.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y").count
     periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y").count
     
     week_performance= {}
-    ((self.created_at.to_date)..(Date.today+5.days)).select(&:monday?).map{|time| time.strftime("%d %b %Y")}.each do |week_date| 
+
+    [peroid_exams, periods_catlog].map(&:keys).flatten.uniq.each do |week_date|
       week_performance[week_date] = peroid_exams[week_date].to_i + periods_catlog[week_date].to_i
     end
     week_performance
+  end
+
+  def organisation_seperate_performance_by_week
+    peroid_exams =  Exam.unscoped.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y").count
+    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y").count
+    
+    week_performance= []
+    ((self.created_at.to_date)..(Date.today+5.days)).select(&:monday?).map{|time| time.strftime("%d %b %Y")}.each do |week_date| 
+      week_performance << [week_date, peroid_exams[week_date].to_i, periods_catlog[week_date].to_i]
+    end
+    week_performance
+  end
+
+  def standards_performance_by_week
+    standard_performances = self.standards.map do |standard|
+      {standard.std_name => self.standard_performance_by_week(standard.id)}
+    end
+    keys = standard_performances.map(&:values).flatten.map(&:keys).flatten.uniq.map(&:to_date).sort.map{|date| date.strftime("%d %b %Y")}
+    performances = []
+    keys.each do |key|
+      key_arr = [key]
+      standard_performances.map(&:values).flatten.each do |sub_trees_performance|
+        key_arr << sub_trees_performance[key].to_i
+      end
+      performances << key_arr
+    end
+    return standard_performances.map(&:keys).flatten, performances
+  end
+
+  def standard_performance_by_week(std_id)
+    # Standard parformace to all subtree
+    classes = JkciClass.unscoped.where(standard_id: std_id, organisation_id: self.subtree.map(&:id))
+    peroid_exams =  Exam.unscoped.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :exam_date, format: "%d %b %Y").count
+    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :date, format: "%d %b %Y").count
+    keys = [peroid_exams, periods_catlog].map(&:keys).flatten.uniq
+    performance = keys.map do |key| 
+      {key =>  (peroid_exams[key].to_i + periods_catlog[key].to_i)}
+    end.reduce(:merge)
+    return performance || {}
   end
 
   def assigned_standards
