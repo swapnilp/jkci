@@ -71,8 +71,8 @@ class Organisation < ActiveRecord::Base
   end
 
   def organisation_performance_by_week
-    peroid_exams =  Exam.unscoped.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y").count
-    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y").count
+    peroid_exams =  Exam.unscoped.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y", last: 10).count
+    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y", last: 10).count
     
     week_performance= {}
 
@@ -83,8 +83,8 @@ class Organisation < ActiveRecord::Base
   end
 
   def organisation_seperate_performance_by_week
-    peroid_exams =  Exam.unscoped.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y").count
-    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y").count
+    peroid_exams =  Exam.unscoped.where(organisation_id: self.id).group_by_period(:week, :exam_date, format: "%d %b %Y", last: 10).count
+    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.id).group_by_period(:week, :date, format: "%d %b %Y", last: 10).count
     
     week_performance= []
     keys = [peroid_exams, periods_catlog].map(&:keys).flatten.uniq
@@ -114,8 +114,8 @@ class Organisation < ActiveRecord::Base
   def standard_performance_by_week(std_id)
     # Standard parformace to all subtree
     classes = JkciClass.unscoped.where(standard_id: std_id, organisation_id: self.subtree.map(&:id))
-    peroid_exams =  Exam.unscoped.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :exam_date, format: "%d %b %Y").count
-    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :date, format: "%d %b %Y").count
+    peroid_exams =  Exam.unscoped.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :exam_date, format: "%d %b %Y", last: 10).count
+    periods_catlog = DailyTeachingPoint.unscoped.where(organisation_id: self.subtree.map(&:id), jkci_class_id: classes).group_by_period(:week, :date, format: "%d %b %Y", last: 10).count
     keys = [peroid_exams, periods_catlog].map(&:keys).flatten.uniq
     performance = keys.map do |key| 
       {key =>  (peroid_exams[key].to_i + periods_catlog[key].to_i)}
