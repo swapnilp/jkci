@@ -60,7 +60,7 @@ class Exam < ActiveRecord::Base
   def add_absunt_students(exam_absent_students)
     self.exam_catlogs.where(student_id: exam_absent_students).update_all({is_present: false})
     Notification.add_exam_abesnty(self.id, self.organisation)
-    self.update_attributes({verify_absenty: false})
+    self.update_attributes({verify_absenty: false, absents_count: self.absent_students.count})
     #exam_students.each do |student|
       #ExamAbsent.new({student_id: student, exam_id: self.id, sms_sent: false, email_sent: false}).save
     #end
@@ -142,8 +142,9 @@ class Exam < ActiveRecord::Base
   end
 
   def complete_exam
-    self.update_attributes({is_completed: true})
-    exam_students.each do |student|
+    ex_students = self.exam_students
+    self.update_attributes({is_completed: true, students_count: ex_students.count})
+    ex_students.each do |student|
       self.exam_catlogs.build({student_id: student.id, jkci_class_id: self.jkci_class_id, organisation_id: self.organisation_id}).save
     end
     Notification.exam_conducted(self.id, self.organisation)

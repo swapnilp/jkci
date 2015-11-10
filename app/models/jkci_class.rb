@@ -111,6 +111,10 @@ class JkciClass < ActiveRecord::Base
     end
     table
   end
+
+  def exams_table_format
+    
+  end
   
   def class_students_table_format
     table = [["Id", "Name", "Parent Mobile", "Subjects"]]
