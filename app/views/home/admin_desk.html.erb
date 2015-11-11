@@ -158,40 +158,41 @@
     </h3>
   <%- end %>
 
-  
-  <div class="separator-fatty"></div>
-  <h2>Sub Organisation Classes  <small>You can check only reports</small></h2>
-  
-  <div class="" style="margin-top:25px;">
-    <table class="table table-striped highlight">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Class Name</th>
-          <th>Organisation Name</th>
-          <th>Mobile</th>
-	  <th>Last Signed In</th>
-	  <th>Get Report</th>
-        </tr>
-	<%- @sub_organisation_classes.each_with_index do |sub_org_class, index| %>
-	<tr>
-	  <td>
-	    <%= index + 1 %>
-	  </td>
-	  <td><%= sub_org_class.class_name %></td>
-	  <td><%= sub_org_class.organisation.name  %></td>
-	  <td><%= sub_org_class.organisation.mobile  %></td>
-	  <td><%= sub_org_class.organisation.last_signed_in || "Never"  %></td>
-	  <td>
-	    <%= link_to "Get Report" , sub_organisation_class_report_path(sub_org_class.organisation_id, sub_org_class, {format: :pdf}), class: 'btn btn-warning btn-sm', target: "_blank" %> &nbsp;&nbsp;&nbsp;
-	  </td>
-	</tr>
-	<%- end %>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-  </div>
+  <%- if @sub_organisation_classes.present? %>
+    <div class="separator-fatty"></div>
+    <h2>Sub Organisation Classes  <small>You can check only reports</small></h2>
+    
+    <div class="" style="margin-top:25px;">
+      <table class="table table-striped highlight">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Class Name</th>
+            <th>Organisation Name</th>
+            <th>Mobile</th>
+    	  <th>Last Signed In</th>
+    	  <th>Get Report</th>
+          </tr>
+    	<%- @sub_organisation_classes.each_with_index do |sub_org_class, index| %>
+    	<tr>
+    	  <td>
+    	    <%= index + 1 %>
+    	  </td>
+    	  <td><%= sub_org_class.class_name %></td>
+    	  <td><%= sub_org_class.organisation.name  %></td>
+    	  <td><%= sub_org_class.organisation.mobile  %></td>
+    	  <td><%= sub_org_class.organisation.last_signed_in || "Never"  %></td>
+    	  <td>
+    	    <%= link_to "Get Report" , sub_organisation_class_report_path(sub_org_class.organisation_id, sub_org_class, {format: :pdf}), class: 'btn btn-warning btn-sm', target: "_blank" %> &nbsp;&nbsp;&nbsp;
+    	  </td>
+    	</tr>
+    	<%- end %>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  <%- end %>
   
   <%- if @default_students.present? %>
   <div class="col-sm-12">
