@@ -11,6 +11,7 @@
     	<th>Fill Daily Catlog</th>
     	<th>Create Exam</th>
     	<th class="center">Remaining Activities</th>
+	<th>Get Report</th>
         </tr>
       </thead>
       <%- @jkci_classes.each_with_index do |jkci_class, index| %>
@@ -37,6 +38,9 @@
         <td align="center" >
     	<strong><%= link_to  jkci_class.role_exam_notifications(current_user).count, jkci_class_path(jkci_class, {notifications: true}) %></strong>
         </td>
+	<td>
+    	    <%= link_to "Get Report" , sub_organisation_class_report_path(jkci_class.organisation_id, jkci_class, {format: :pdf}), class: 'btn btn-warning btn-sm', target: "_blank" %> &nbsp;&nbsp;&nbsp;
+    	  </td>
       </tr>
       <%- end %>
     </table>
