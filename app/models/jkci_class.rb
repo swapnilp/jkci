@@ -113,7 +113,21 @@ class JkciClass < ActiveRecord::Base
   end
 
   def exams_table_format
-    
+    table = [["Id", "Subject", "Type", "Marks", "Date", "Absents Count", "Published date"]]
+
+    self.exams.order("exam_date desc").each do |exam|
+      table << ["#{exam.id }", "#{exam.subject.try(:name)}", "#{exam.exam_type}", "#{exam.marks}", "#{exam.exam_date.try(:to_date)}", "#{exam.absents_count}", "#{exam.published_date.try(:to_date) || 'Not Published'}"]
+    end
+    table
+  end
+
+  def daily_teaching_table_format
+    table = [["Id", "Subject", "Chapter", "Points", "Date", "Sms Sent", "Divisions"]]
+
+    self.daily_teaching_points.order(chapter_id: :desc,date: :desc).each_with_index do |dtp, index|
+      table << ["#{index}", "#{dtp.subject.try(:name)}", "#{dtp.chapter.try(:name)}", "#{dtp.points}", "#{dtp.date.try(:to_date)}", "#{dtp.is_sms_sent}", "#{dtp.sub_classes}"]
+    end
+    table
   end
   
   def class_students_table_format

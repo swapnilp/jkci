@@ -182,7 +182,9 @@
 	  <td><%= sub_org_class.organisation.name  %></td>
 	  <td><%= sub_org_class.organisation.mobile  %></td>
 	  <td><%= sub_org_class.organisation.last_signed_in || "Never"  %></td>
-	  <td><%= link_to "Get Report", "#", class: "btn btn-warning"%></td>
+	  <td>
+	    <%= link_to "Get Report" , sub_organisation_class_report_path(sub_org_class.organisation_id, sub_org_class, {format: :pdf}), class: 'btn btn-warning btn-sm', target: "_blank" %> &nbsp;&nbsp;&nbsp;
+	  </td>
 	</tr>
 	<%- end %>
       </thead>

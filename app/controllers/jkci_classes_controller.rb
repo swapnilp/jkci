@@ -190,6 +190,16 @@ class JkciClassesController < ApplicationController
       format.pdf { render :layout => false }
     end
   end
+
+  def sub_organisation_class_report
+    @sub_organisation = @organisation.subtree.where(id: params[:sub_organisation_id]).first
+    @jkci_class = @sub_organisation.jkci_classes.where(id: params[:jkci_class_id]).first
+    @exams_table_format = @jkci_class.exams_table_format
+    @daily_teaching_table_format = @jkci_class.daily_teaching_table_format
+    respond_to do |format|
+      format.pdf { render :layout => false }
+    end
+  end
   
   def my_sanitizer
     #params.permit!
