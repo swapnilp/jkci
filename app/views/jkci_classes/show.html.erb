@@ -9,16 +9,8 @@
 	<span class="col-sm-6 paddingTop10"><%= @jkci_class.class_name %></span>
       </div>
       <div class="col-sm-12 textLeft">
-	<span class="col-sm-2"><h5>Start date</h5> </span>
-	<span class="col-sm-6 paddingTop10"><%= @jkci_class.class_start_time %></span>
-      </div>
-      <div class="col-sm-12 textLeft">
-	<span class="col-sm-2"><h5>End Date</h5></span>
-	<span class="col-sm-6 paddingTop10"><%= @jkci_class.class_end_time %></span>
-      </div>
-      <div class="col-sm-12 textLeft">
-	<span class="col-sm-2"><h5>Teacher</h5></span>
-	<span class="col-sm-6 paddingTop10"><%= @jkci_class.teacher.try(:name) %></span>
+	<span class="col-sm-2"><h5>Subjects</h5></span>
+	<span class="col-sm-6 paddingTop10"><%= @jkci_class.standard.subjects.map(&:name).join(" | ") %></span>
       </div>
       <%- if current_user.has_role? :manage_class_sms %>
         <div class="col-sm-12 textLeft">
@@ -90,7 +82,7 @@
 	  <div id="k-tab-students" class="tab-pane fade">
 	    <div class="textLeft">
 	      <%= link_to 'New Student', new_student_path({standard_id: @jkci_class.standard_id}), class: 'btn btn-primary' %>
-	      <%= link_to 'Manage Student Subjects', manage_class_student_subject_path(@jkci_class), class: 'btn btn-primary' %> 
+	      <%= link_to 'Manage Student Optional Subjects', manage_class_student_subject_path(@jkci_class), class: 'btn btn-primary' %> 
 	      <table class="table table-hover studentsTable">
 		<thead>
 		  <tr>
