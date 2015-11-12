@@ -79,3 +79,22 @@ function removeClassStudent(event, self) {
   }
   
 }
+
+function saveStudentSubjects(event, self) {
+  event.preventDefault();
+  var studentSubjects = {};
+  $("tr.studentSubjects").each(function(){
+    subject_ids = $(this).find('input[type=checkbox]:checked').map(function() { return $(this).val().toString(); } ).get().join(",");
+    studentSubjects[$(this).data("student-id")] = subject_ids;
+  });
+  jkci_id = $(self).data("class-id");
+  $.ajax({
+    type: "POST",
+    url: "/class/" + jkci_id + "/save_student_subjects",
+    data: {students: studentSubjects},
+    success: function(data){
+      window.location = "/jkci_classes/"+ data.id;
+    },
+    dataType: "JSON"
+  });
+}

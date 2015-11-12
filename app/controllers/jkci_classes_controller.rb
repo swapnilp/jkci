@@ -200,6 +200,22 @@ class JkciClassesController < ApplicationController
       format.pdf { render :layout => false }
     end
   end
+
+  def manage_student_subject
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    @subjects = @jkci_class.standard.subjects.optional
+    @students = @jkci_class.class_students
+  end
+
+  def save_student_subjects
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    students = @jkci_class.students(params[:students].keys).each do |student|
+      student.add_students_subjects(params[:students][student.id.to_s].split(','))
+    end
+    respond_to do |format|
+      format.json {render json: {success: true, id: @jkci_class.id}}
+    end
+  end
   
   def my_sanitizer
     #params.permit!

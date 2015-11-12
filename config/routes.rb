@@ -109,6 +109,8 @@ Rails.application.routes.draw do
     resources :daily_teachs, only: [:new, :create, :edit, :update, :destroy]
   end
   get "sub_organisation/:sub_organisation_id/class/:jkci_class_id/get_report" => "jkci_classes#sub_organisation_class_report", as: "sub_organisation_class_report"
+  get "/class/:id/manage_student_subjects" => "jkci_classes#manage_student_subject", as: "manage_class_student_subject"
+  post "/class/:id/save_student_subjects" => "jkci_classes#save_student_subjects", as: "save_class_student_subjects"
   get "/class/:id/assign_students" => "jkci_classes#assign_students", as: "class_assign_students"
   get "/class/:id/toggle_class_sms" => "jkci_classes#toggle_class_sms", as: "toggle_class_sms"
   get "/class/:id/toggle_exam_sms" => "jkci_classes#toggle_exam_sms", as: "toggle_class_exam_sms"

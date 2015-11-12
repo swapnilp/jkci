@@ -1,0 +1,38 @@
+<div id="k-body" class="k-body">
+  <div class="container">
+    <div class="col-sm-12 textLeft">
+      <h2>
+	Manage <%=@jkci_class.class_name  %>'s students optional subjects <br />
+	<small><%= @subjects.map(&:name).join(',') %>are optional subjects for <%=@jkci_class.class_name %> class</small>
+      </h2>
+      <table class="table table-hover studentsTable highlight table-striped">
+	<thead>
+	  <tr>
+	    <th>Roll Number</th>
+	    <th>Name</th>
+	    <%- @subjects.each do |subject| %>
+	    <th><%= subject.std_name %></th>
+	    <%- end %>
+	  </tr>
+	</thead>
+	<%- @students.each do |student|  %>
+	  <tr class="studentSubjects" data-student-id="<%= student.student.id %>">
+	    <td>
+	      <%= %>
+	    </td>
+	    <td>
+	      <%= student.student.name %>
+	    </td>
+	    <%- @subjects.each do |subject| %>
+	      <td>
+		<%= check_box_tag 'student', subject.id, ('checked' if student.student.subjects.select([:id]).map(&:id).include?(subject.id) )%>
+	      </td>
+	    <%- end %>
+	  </tr>
+	<%- end %>
+      </table>
+      <%= link_to "Save", "#", class: "btn btn-warning btn-lg", onclick: "saveStudentSubjects(event, this);", data: {class_id: "#{@jkci_class.id}"}%>
+      <%= link_to "Cancel", jkci_class_path(@jkci_class), class: "btn btn-default btn-lg" %>
+    </div>
+  </div>
+</div>
