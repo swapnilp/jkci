@@ -12,6 +12,8 @@
    <%= f.hidden_field  :jkci_class_id, value: f.object.jkci_class_id %>
    <%= f.hidden_field  :daily_teaching_points, value: f.object.daily_teaching_points %>
   <%- end %>
+  <%= f.hidden_field  :is_group, value: f.object.is_group %>
+
   <div class="form-group">
     <%= f.label 'Class', class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
@@ -30,6 +32,7 @@
       <%= f.text_field :name, class: 'form-control col-sm-4' %>
     </div>
   </div>
+  <%- if @exam.is_group == false %>
   <div class="form-group">
     <%= f.label :subject, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
@@ -48,15 +51,16 @@
       <%= f.text_field :marks, class: 'form-control', onkeypress:"return event.charCode >= 48 && event.charCode <= 57;" %>
     </div>
   </div>
+  <%- end %>
   <div class="form-group">
     <%= f.label :exam_date, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
       <div class='input-group date' >
 	<%= f.text_field :exam_date, value: '',  class: 'form-control', id: "datetimepicker_examdate", onkeypress:"return false" %>
-        </span>
       </div>
     </div>
   </div>
+  <%- if @exam.is_group == false %>
   <div class="form-group">
     <%= f.label :duration, 'Duration In min', class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
@@ -69,14 +73,6 @@
       <%= f.select :exam_type , options_for_select([ "Subjective", "Objective" ], "Subjective"), {}, class: 'form-control' %>
     </div>
   </div>
-  
-  <%- unless true #f.object.daily_teaching_points.present? %>
-    <div class="form-group">
-      <%= f.label :class_ids, class: 'col-sm-2 control-label' %>
-      <div class="col-sm-4">
-        <%= f.select(:class_ids , options_from_collection_for_select(@jkci_classes, "id", "class_name", f.object.class_ids.present? ? f.object.class_ids.split(',').reject(&:blank?).map(&:to_i) : []), {}, { multiple: true, :size =>10, class: 'form-control' }) %>
-      </div>
-    </div>
   <%- end %>
   <div class="form-group">
     <%= f.label :remark, class: 'col-sm-2 control-label' %>

@@ -19,6 +19,8 @@ class Exam < ActiveRecord::Base
   scope :unconducted_exams, -> { where("exam_date < ? && is_completed is ?", Date.today, nil).order("id desc")}
   scope :todays_exams, -> { where("exam_date BETWEEN ? AND ? ", Date.today, Date.tomorrow)}
   scope :unpublished_exams, -> { where(is_result_decleared: [nil, false], is_completed: true).order("id desc")}
+  scope :grouped_exams, -> { where(is_group: true)}
+  scope :ungrouped_exams, -> { where(is_group: false)}
   
   validates :name, :exam_date,  presence: true
   validates_presence_of :exam_type, :marks, :subject_id, :if => lambda { self.is_group == false }
@@ -152,7 +154,11 @@ class Exam < ActiveRecord::Base
   end
 
   def predict_name
-    "#{jkci_class.standard.std_name}-#{Exam.last.try(:id)||0 + 1}"
+    if is_group == false
+      "#{jkci_class.standard.std_name}-#{Exam.last.try(:id)||0 + 1}"
+    else
+      "Weekly- #{jkci_class.standard.std_name}-#{Exam.grouped_exams.last.try(:id) || 0 + 1}"
+    end
   end
   
   def status_count

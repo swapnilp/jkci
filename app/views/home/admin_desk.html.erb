@@ -10,6 +10,7 @@
     	<th>Divisions</th>
     	<th>Fill Daily Catlog</th>
     	<th>Create Exam</th>
+	<th>Create Grouped Exams</th>
     	<th class="center">Remaining Activities</th>
 	<th>Get Report</th>
         </tr>
@@ -33,6 +34,11 @@
         <td>
     	<%- if current_user.has_role? :create_exam %>
     	  <%= link_to "Create Exam",  new_jkci_class_exam_path(jkci_class) %>
+    	<%- end %>
+        </td>
+	<td>
+    	<%- if current_user.has_role? :create_exam %>
+    	  <%= link_to "Create Grouped Exam",  new_jkci_class_exam_path(jkci_class, {grouped_exams: true}) %>
     	<%- end %>
         </td>
         <td align="center" >

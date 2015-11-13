@@ -16,6 +16,7 @@ class ExamsController < ApplicationController
   def new
     @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
     @exam = @jkci_class.exams.build({daily_teaching_points: ",#{params[:dtp]},"})
+    @exam.is_group = true if params[:grouped_exams].present?
     @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
     @exam.name = @exam.predict_name
     @subjects = @jkci_class.standard.subjects
