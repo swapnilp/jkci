@@ -20,7 +20,8 @@ class Exam < ActiveRecord::Base
   scope :todays_exams, -> { where("exam_date BETWEEN ? AND ? ", Date.today, Date.tomorrow)}
   scope :unpublished_exams, -> { where(is_result_decleared: [nil, false], is_completed: true).order("id desc")}
   
-  validates :name, :exam_type, :exam_date, :marks, :subject_id,  presence: true
+  validates :name, :exam_date,  presence: true
+  validates_presence_of :exam_type, :marks, :subject_id, :if => lambda { self.is_group == false }
   
   def exam_students
     #Student.where(std: std, is_active: true)
