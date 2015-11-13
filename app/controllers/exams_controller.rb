@@ -67,8 +67,8 @@ class ExamsController < ApplicationController
     params.permit!
     params[:exam][:class_ids] =  (params[:exam][:class_ids].present? && params[:exam][:class_ids].last.present?) ? ","+params[:exam][:class_ids].reject(&:blank?).map(&:to_i).join(',') + ','  : nil
     params[:exam][:sub_classes] = (params[:exam][:sub_classes].map(&:to_i) - [0]).join(',') if params[:exam][:sub_classes].present? 
-    exam = @organisation.exams.where(id: params[:id]).first
-    if exam && exam.update(params[:exam])
+    @exam = @organisation.exams.where(id: params[:id]).first
+    if @exam && @exam.update(params[:exam])
       redirect_to exams_path
     else
       @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
