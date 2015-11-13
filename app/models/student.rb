@@ -52,6 +52,11 @@ class Student < ActiveRecord::Base
     self.update_attributes({enable_sms: true})
     Delayed::Job.enqueue ActivationSms.new(activate_sms_message)
   end
+
+  def deactivate_sms
+    self.update_attributes({enable_sms: false})
+    Delayed::Job.enqueue ActivationSms.new(deactivate_sms_message)
+  end
   
   def exam_query
     query = " "
@@ -125,7 +130,17 @@ class Student < ActiveRecord::Base
 
   def activate_sms_message
     url_arry = []
-    message = "#{self.short_name}'s notification updates has been activaed by JKSAi. JKSai!!"
+    message = "#{self.short_name}'s notification updates has been activaed. JKSai!!"
+    url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=91#{self.p_mobile}&message=#{message}"
+    if self.sms_mobile.present?
+      url_arry = [url, message, self.id, self.organisation_id]
+    end
+    url_arry
+  end
+
+  def deactivate_sms_message
+    url_arry = []
+    message = "#{self.short_name}'s notification updates has been deactivaed.Please contact us JKSai!!"
     url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=update&dmobile=91#{self.p_mobile}&message=#{message}"
     if self.sms_mobile.present?
       url_arry = [url, message, self.id, self.organisation_id]

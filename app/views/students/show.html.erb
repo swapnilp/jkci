@@ -49,11 +49,14 @@
 
     <%- unless @student.is_disabled %>
       <%= link_to "Edit", edit_student_path(@student), class: "btn btn-primary" %>
+      <%- if @student.enable_sms %>
+        <%= link_to "Disable Sms", disable_student_sms_path(@student), class: "btn btn btn-default", onclick: "return confirm('Are you sure?')" %>
+      <%- end %>
       <%= link_to "Disable Student", disable_student_path(@student), class: "btn btn btn-default", onclick: "return confirm('Are you sure?')"%>
     <%- else %>
       <%= link_to "Enable Student", enable_student_path(@student), class: "btn btn btn-default", onclick: "return confirm('Are you sure?')"%>
     <%- end %>
-    <%= link_to 'Back', :back, class: "btn btn-default" %>
+    <%= link_to 'Back', students_path, class: "btn btn-default" %>
   </div>
   <div class="col-sm-12" style="margin-top:15px;">
     <h5>

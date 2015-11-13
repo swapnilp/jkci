@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :students
   get "/students/filter_student/student" => "students#filter_students", as: "filter_students"
   get "/student/:id/enable_sms" => "students#enable_sms", as: "enable_student_sms"
+  get "/student/:id/disable_student_sms" => "students#disable_student_sms", as: "disable_student_sms"
   get "/student/:id/select_user" => "students#select_user", as: "select_login_user"
   get "/student/:id/disable_student" => "students#disable_student", as: "disable_student"
   get "/student/:id/enable_student" => "students#enable_student", as: "enable_student"
