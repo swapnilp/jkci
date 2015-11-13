@@ -51,6 +51,8 @@
       <%= link_to "Edit", edit_student_path(@student), class: "btn btn-primary" %>
       <%- if @student.enable_sms %>
         <%= link_to "Disable Sms", disable_student_sms_path(@student), class: "btn btn btn-default", onclick: "return confirm('Are you sure?')" %>
+      <%- else %>
+	<%= link_to "Enable Sms", enable_student_sms_path(@student), class: "btn btn btn-default", onclick: "return confirm('Are you sure?')" %>
       <%- end %>
       <%= link_to "Disable Student", disable_student_path(@student), class: "btn btn btn-default", onclick: "return confirm('Are you sure?')"%>
     <%- else %>

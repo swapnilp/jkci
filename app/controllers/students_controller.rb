@@ -89,11 +89,15 @@ class StudentsController < ApplicationController
   
   def enable_sms
     student = @organisation.students.select([:id, :enable_sms, :organisation_id, :p_mobile, :initl, :last_name]).where(id: params[:id]).first
-    if student.present?
-      student.activate_sms 
-      render json: {success: true}
-    else
-      render json: {success: false}
+    respond_to do |format|
+      if student.present?
+        student.activate_sms 
+        format.html {redirect_to student_path(student), flash: {success: true, notice: "sms is activated successfully"} }
+        format.json {render json: {success: true}}
+      else
+        format.html {redirect_to students_path, flash: {success: false, notice: "Something went wrong"} }
+        format.json {render json: {success: false}}
+      end
     end
   end
   
