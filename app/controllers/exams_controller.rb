@@ -5,7 +5,7 @@ class ExamsController < ApplicationController
 
 
   def index
-    @exams = @organisation.exams.all.order("id desc").page(params[:page])
+    @exams = @organisation.exams.roots.order("id desc").page(params[:page])
     @jkci_classes = @organisation.jkci_classes.all
     respond_to do |format|
       format.html
@@ -17,6 +17,15 @@ class ExamsController < ApplicationController
     @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
     @exam = @jkci_class.exams.build({daily_teaching_points: ",#{params[:dtp]},"})
     @exam.is_group = true if params[:grouped_exams].present?
+    @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
+    @exam.name = @exam.predict_name
+    @subjects = @jkci_class.standard.subjects
+  end
+
+  def new_grouped_exam
+    @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
+    @master_exam = @organisation.exams.grouped_exams.where(id: params[:master_exam_id]).first
+    @exam = @master_exam.children.build({exam_date: @master_exam.exam_date, sub_classes: @master_exam.sub_classes, jkci_class_id: @jkci_class.id})
     @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
     @exam.name = @exam.predict_name
     @subjects = @jkci_class.standard.subjects
@@ -46,8 +55,8 @@ class ExamsController < ApplicationController
     params[:exam][:sub_classes] = (params[:exam][:sub_classes].map(&:to_i) - [0]).join(',') if params[:exam][:sub_classes].present? 
     @exam = @organisation.exams.build(params[:exam])
     if @exam.save
-      Notification.add_create_exam(@exam.id, @organisation)
-      redirect_to exams_path
+      Notification.add_create_exam(@exam.id, @organisation) if @exam.root?
+      redirect_to @exam.root? ? exams_path : exam_path(@exam.root)
     else
       @jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
       @sub_classes = @jkci_class.sub_classes.select([:id, :name, :jkci_class_id])
@@ -83,15 +92,14 @@ class ExamsController < ApplicationController
     jkci_class = @organisation.jkci_classes.where(id: params[:jkci_class_id]).first
     exam = jkci_class.exams.where(id: params[:id]).first
     exam.update_attributes({is_active: false})
-    exam.delete_notification
+    exam.delete_notification if exam.root?
     redirect_to exams_path
   end
 
   def verify_create_exam
     exam = @organisation.exams.where(id: params[:id]).first
     if exam
-      exam.update_attributes({create_verification: true})
-      Notification.verified_exam(exam.id, @organisation)
+      exam.verify_exam(@organisation)
     end
     redirect_to exam_path(exam)
   end
@@ -187,7 +195,7 @@ class ExamsController < ApplicationController
   end
   
   def filter_exam
-    exams = params[:class_id].present? ? @organisation.exams.where("jkci_class_id = ? OR class_ids like ?", params[:class_id], "%,#{params[:class_id]},%") : @organisation.exams
+    exams = params[:class_id].present? ? @organisation.exams.roots.where("jkci_class_id = ? OR class_ids like ?", params[:class_id], "%,#{params[:class_id]},%") : @organisation.exams.roots
     if params[:type].present?
       exams = exams.where(exam_type: params[:type])
     end
@@ -206,7 +214,7 @@ class ExamsController < ApplicationController
   end
 
   def download_exams_report
-    exams = params[:class_id].present? ? @organisation.exams.where("jkci_class_id = ? OR class_ids like ?", params[:class_id], "%,#{params[:class_id]},%") : @organisation.exams
+    exams = params[:class_id].present? ? @organisation.exams.roots.where("jkci_class_id = ? OR class_ids like ?", params[:class_id], "%,#{params[:class_id]},%") : @organisation.exams.roots
     if params[:type].present?
       exams = exams.where(exam_type: params[:type])
     end

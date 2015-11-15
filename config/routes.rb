@@ -105,7 +105,7 @@ Rails.application.routes.draw do
     get '/sub_class/:id/get_students' => 'sub_classes#get_students', as: "class_students"
     get '/sub_class/:id/add_students' => 'sub_classes#add_students'
     get '/sub_class/:id/remove_students' => 'sub_classes#remove_students'
-    
+    get "/exams/:master_exam_id/new_grouped_exam" => 'exams#new_grouped_exam', as: "new_group_exam"
     resources :exams, only: [:new, :create, :edit, :update, :destroy]
     resources :daily_teachs, only: [:new, :create, :edit, :update, :destroy]
   end

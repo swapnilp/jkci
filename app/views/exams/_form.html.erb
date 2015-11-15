@@ -13,7 +13,11 @@
    <%= f.hidden_field  :daily_teaching_points, value: f.object.daily_teaching_points %>
   <%- end %>
   <%= f.hidden_field  :is_group, value: f.object.is_group %>
-
+  <%- unless @exam.root? %>
+    <%= f.hidden_field  :jkci_class_id, value: f.object.jkci_class_id %>
+    <%= f.hidden_field  :ancestry, value: f.object.ancestry %>
+  <%- end %>
+  
   <div class="form-group">
     <%= f.label 'Class', class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">

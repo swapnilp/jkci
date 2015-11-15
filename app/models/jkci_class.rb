@@ -39,7 +39,7 @@ class JkciClass < ActiveRecord::Base
   end
   
   def jk_exams
-    Exam.where("(jkci_class_id = ? OR class_ids like '%,?,%') AND organisation_id = ?", self.id, self.id, self.organisation_id)
+    Exam.roots.where("(jkci_class_id = ? OR class_ids like '%,?,%') AND organisation_id = ?", self.id, self.id, self.organisation_id)
   end
 
   def role_exam_notifications(user)

@@ -1,5 +1,10 @@
 class Exam < ActiveRecord::Base
+  
+  has_ancestry
 
+  belongs_to :master_exam,   :class_name => "Exam", :foreign_key => "parent_id"
+  has_many   :sub_exams,    :class_name => "Exam", :foreign_key => "parent_id"#, :dependent => :destroy
+  
   belongs_to :subject
   #has_many :exam_absents
   #has_many :exam_results
@@ -29,11 +34,12 @@ class Exam < ActiveRecord::Base
     #Student.where(std: std, is_active: true)
     if sub_classes.present?
       self.jkci_class.sub_classes_students(self.sub_classes.split(',').map(&:to_i), self.subject) rescue []
-    elsif class_ids.nil?
+    elsif subject_id.present?
       self.subject.students.joins(:class_students).where("class_students.jkci_class_id = ?", self.jkci_class_id) rescue []
     else 
       #JkciClass.where(id: class_ids.split(',').reject(&:blank?)).map(&:students)#.flatten.uniq
-      self.subject.students.joins(:class_students).where("class_students.jkci_class_id in (?)", class_ids.split(',').reject(&:blank?)).uniq
+      #self.subject.students.joins(:class_students).where("class_students.jkci_class_id in (?)", class_ids.split(',').reject(&:blank?)).uniq
+      self.jkci_class.students
     end
   end
 
@@ -62,11 +68,20 @@ class Exam < ActiveRecord::Base
   
   def add_absunt_students(exam_absent_students)
     self.exam_catlogs.where(student_id: exam_absent_students).update_all({is_present: false})
-    Notification.add_exam_abesnty(self.id, self.organisation)
+    Notification.add_exam_abesnty(self.id, self.organisation) 
     self.update_attributes({verify_absenty: false, absents_count: self.absent_students.count})
     #exam_students.each do |student|
       #ExamAbsent.new({student_id: student, exam_id: self.id, sms_sent: false, email_sent: false}).save
     #end
+  end
+
+  def verify_exam(organisation)
+    self.update_attributes({create_verification: true})
+    #Notification.verified_exam(self.id, organisation)
+    self.children.each do |sub_exam|
+      sub_exam.update_attributes({create_verification: true})
+      Notification.verified_exam(sub_exam.id, organisation)
+    end
   end
 
   def verify_presenty(organisation)
@@ -123,12 +138,20 @@ class Exam < ActiveRecord::Base
   end
 
   def publish_results
-    if self.jkci_class.enable_exam_sms
-      Delayed::Job.enqueue ExamAbsentSmsSend.new(self.absenty_message_send)
-      Delayed::Job.enqueue ExamResultSmsSend.new(self.result_message_send)
-    end
     self.update_attributes({is_result_decleared: true, is_completed: true, published_date: Time.now})
-    Notification.publish_exam(self.id, self.organisation)
+    if self.jkci_class.enable_exam_sms  
+      if self.root?
+        if self.is_group
+          Delayed::Job.enqueue GroupExamResultSmsSend.new(self.group_result_message_send)
+        else
+          Delayed::Job.enqueue ExamAbsentSmsSend.new(self.absenty_message_send)  
+          Delayed::Job.enqueue ExamResultSmsSend.new(self.result_message_send)
+        end
+      else
+        self.root.publish_results unless self.root.children.map(&:is_result_decleared).include?(nil)
+      end
+    end
+    Notification.publish_exam(self.id, self.organisation) if self.root?
   end
 
   def publish_absentee
@@ -162,6 +185,22 @@ class Exam < ActiveRecord::Base
   end
   
   def status_count
+  end
+
+  def exam_status
+    if is_result_decleared == true
+      return "Published"
+    elsif verify_result  == true
+      return "Result verified"
+    elsif verify_absenty == true
+      return "Absenty verified"
+    elsif is_completed == true
+      return "Conducted"
+    elsif create_verification == true
+      return "Verified"
+    elsif create_verification == false
+      return "Created"
+    end
   end
 
   def delete_notification
@@ -224,5 +263,53 @@ class Exam < ActiveRecord::Base
     url_arry
   end
 
+  def grouped_exam_report_table_head
+    table_head = ["ID", "Name", "Mobile"]
+    self.descendants.order("id ASC").each do |g_exam|
+      table_head << g_exam.subject.try(:name)
+    end
+    table_head
+  end
+
+  def grouped_exam_report
+    return [] unless self.is_group
+    ex_students = self.exam_students
+    group_exams = self.descendants
+    catlogs = ExamCatlog.where(exam_id: group_exams.map(&:id))
+    reports = []
+    
+    ex_students.each do |student|
+      report = [student.id, student.short_name, student.p_mobile]
+      group_exams.order("id ASC").each do |g_exam|
+        mark = catlogs.where(student_id: student.id, exam_id: g_exam.id).first.marks rescue 'nil'
+        report << (mark.present? ? mark : '0' )
+      end
+      reports << report if report[3..15].map(&:to_i).sum != 0
+    end
+    reports
+  end
+
+  def grouped_exams_sms
+    group_exams = grouped_exam_report_table_head
+    reports = []
+    grouped_exam_report.each do |report|
+      report_hash = []
+      group_exams[3..10].zip(report[3..14]){ |a,b| report_hash << "#{a}=#{b == '0' ? 'A' : b}" if b != 'nil' }
+      reports << [report[1] + " got " + report_hash.join(',') + " marks in #{self.name} exams", "91"+report[2], report[0]]
+    end
+    reports
+  end
+
+  def group_result_message_send
+    url_arry = []
+    self.grouped_exams_sms.each do |report|
+      message = report[0]
+      url = "https://www.txtguru.in/imobile/api.php?username=#{SMSUNAME}&password=#{SMSUPASSWORD}&source=JKSAIU&dmobile=#{report[1]}&message=#{message}"
+      student_id = report[2]
+      url_arry << [url, message, self.id, self.organisation_id, student_id]
+    end
+    url_arry
+  end
+  
   handle_asynchronously :send_result_email, :priority => 20
 end

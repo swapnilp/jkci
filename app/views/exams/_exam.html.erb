@@ -7,16 +7,19 @@
       <%= exam.name %>
     </td>
     <td>
-      <%= exam.conducted_by %>
-    </td>
-    <td>
       <%= exam.marks %>
     </td>
     <td>
       <%= exam.exam_date.to_date %>
     </td>
     <td>
+      <%= exam.subject.try(:name) %>
+    </td>
+    <td>
       <%= exam.exam_type %>
+    </td>
+    <td>
+      <%= exam.exam_status %>
     </td>
     <td>
       <%= exam.published_date.try(&:to_date) %>

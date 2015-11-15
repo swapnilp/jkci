@@ -12,7 +12,7 @@
       <%= class_catlog.daily_teaching_point.points %>
     </td>
     <td>
-      <%= class_catlog.daily_teaching_point.chapter.name %>
+      <%= class_catlog.daily_teaching_point.chapter.try(:name) %>
     </td>
     <td>
       <%= class_catlog.is_present.nil? ? 'Not Available' : class_catlog.is_present  %>
