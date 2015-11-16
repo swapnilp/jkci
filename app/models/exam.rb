@@ -77,7 +77,7 @@ class Exam < ActiveRecord::Base
 
   def verify_exam(organisation)
     self.update_attributes({create_verification: true})
-    #Notification.verified_exam(self.id, organisation)
+    Notification.verified_exam(self.id, organisation)
     self.children.each do |sub_exam|
       sub_exam.update_attributes({create_verification: true})
       Notification.verified_exam(sub_exam.id, organisation)
