@@ -18,7 +18,7 @@ class SmsSent < ActiveRecord::Base
       class_catlog.update_attributes({sms_sent: true})
     end
     if self.obj_type == "group_exam_result"
-      ids = Exam.unscoped..where(ancestry: obj_id.to_s).map(&:id)
+      ids = Exam.unscoped.where(ancestry: obj_id.to_s).map(&:id)
       exam_catlog = ExamCatlog.unscoped.where(exam_id: ids, student_id: student_id)
       exam_catlog.update_all({absent_sms_sent: true})
     end
