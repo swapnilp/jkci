@@ -282,7 +282,7 @@ class Exam < ActiveRecord::Base
       report = [student.id, student.short_name, student.p_mobile]
       group_exams.order("id ASC").each do |g_exam|
         mark = catlogs.where(student_id: student.id, exam_id: g_exam.id).first.marks rescue 'nil'
-        report << (mark.present? ? mark : '0' )
+        report << (mark.present? ? "#{mark}/#{g_exam.marks}" : '0' )
       end
       reports << report if report[3..15].map(&:to_i).sum != 0
     end
@@ -295,7 +295,7 @@ class Exam < ActiveRecord::Base
     grouped_exam_report.each do |report|
       report_hash = []
       group_exams[3..10].zip(report[3..14]){ |a,b| report_hash << "#{a}=#{b == '0' ? 'A' : b}" if b != 'nil' }
-      reports << [report[1] + " got " + report_hash.join(',') + " marks in #{self.name} exams", "91"+report[2], report[0]]
+      reports << [report[1] + " got " + report_hash.join(',') + " marks in #{self.name} exams held on #{self.exam_date.try(:to_date)}", "91"+report[2], report[0]]
     end
     reports
   end
