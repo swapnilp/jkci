@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+
+    <Table>
+    <%- @students.each do |student| %>
+      <Row>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String"><%= student.name%></Data></Cell>
+      </Row>
+      
+      <%- student.exam_report_table_format.each do |reports| %>
+        <Row>
+	  <%- reports.each do |cell| %>
+	    <Cell><Data ss:Type="String"><%= cell %></Data></Cell>  
+	  <%- end %>
+	</Row>
+      <%- end %>
+    <%- end %>
+    </Table>
+  </Worksheet>
+</Workbook>

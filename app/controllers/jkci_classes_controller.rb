@@ -197,6 +197,7 @@ class JkciClassesController < ApplicationController
     @students = @jkci_class.students
     respond_to do |format|
       format.pdf { render :layout => false }
+      format.xls 
     end
   end
 
