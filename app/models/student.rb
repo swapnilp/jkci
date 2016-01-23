@@ -128,6 +128,14 @@ class Student < ActiveRecord::Base
     table
   end
 
+  def exam_report_table_format
+    table = [["Index", "Subject", "Exam Type", "Date", "Is Present", "Marks"]]
+    self.exam_catlogs.each_with_index do |exam_catlog, index|
+      table << ["#{index+1}", "#{exam_catlog.exam.subject.name}", "#{exam_catlog.exam.exam_type}", "#{exam_catlog.exam.exam_date.to_date}", "#{exam_catlog.is_present}", "#{exam_catlog.marks.to_i}/#{exam_catlog.exam.marks}"]
+    end
+    table
+  end
+
   def activate_sms_message
     url_arry = []
     message = "#{self.short_name}'s notification updates has been activaed. JKSai!!"

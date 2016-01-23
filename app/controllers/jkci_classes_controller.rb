@@ -191,6 +191,15 @@ class JkciClassesController < ApplicationController
     end
   end
 
+  def download_class_students_report
+    @jkci_class = @organisation.jkci_classes.where(id: params[:id]).first
+    @students_table_format = @jkci_class.class_students_table_format
+    @students = @jkci_class.students
+    respond_to do |format|
+      format.pdf { render :layout => false }
+    end
+  end
+
   def sub_organisation_class_report
     @sub_organisation = @organisation.subtree.where(id: params[:sub_organisation_id]).first
     @jkci_class = @sub_organisation.jkci_classes.where(id: params[:jkci_class_id]).first

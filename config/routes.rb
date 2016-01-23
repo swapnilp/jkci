@@ -118,6 +118,7 @@ Rails.application.routes.draw do
   get "/class/:id/download_class_catlog" => "jkci_classes#download_class_catlog", as: "download_class_catlog"
   get "/class/:id/download_class_student_list" => "jkci_classes#download_class_student_list", as: "download_class_student_list"
   get "/class/:id/download_class_syllabus" => "jkci_classes#download_class_syllabus", as: "download_class_syllabus"
+  get "/class/:id/download_class_students_report" => "jkci_classes#download_class_students_report", as: "download_class_students_report"
   get "/jkci_class/:id/daily_teaches" => "jkci_classes#class_daily_teaches", as: "class_daily_teaches"
   get "/jkci_class/:id/filter_class_exams" => "jkci_classes#filter_class_exams", as: "filter_class_exams"
   get "/jkci_class/:id/filter_daily_teach" => "jkci_classes#filter_daily_teach", as: "filter_daily_teach"
