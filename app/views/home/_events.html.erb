@@ -1,47 +1,26 @@
 <div class="col-lg-4 col-md-4"><!-- upcoming events wrapper -->
   <div class="col-padded col-shaded"><!-- inner custom column -->
     <ul class="list-unstyled clear-margins"><!-- widgets -->
-      <li>
-	<a href="https://s3-ap-southeast-1.amazonaws.com/jkciphoto/jkProdPhoto/useful/jk_2014.jpg" title="" data-fancybox-group="gallery-bssb" class="fancybox">
-	  <img src="https://s3-ap-southeast-1.amazonaws.com/jkciphoto/jkProdPhoto/useful/jk_2014.jpg" />
-	</a>
-      </li>
+      <li class="widget-container widget_up_events"><!-- widgets list -->
+        <h1 class="title-widget">Upcoming Events</h1>
+        <ul class="list-unstyled">
+          <li class="up-event-wrap">
+	    <h1 class="title-median">Adminision Open For crash course batch March 2016</h1>
+            <div class="up-event-meta clearfix">
+              <div class="up-event-time">15 March 2016</div>
+	      <div class="up-event-time">1 May 2016</div>
+            </div>
+            <p>
+              <strong>Adminision is open</strong> For March 2016 crash course for 12 MHT-CET, Meadical, Engineering and Pharmacy entrance exam. Please contact on 9420674796
+            </p>
+          </li>
+        </ul>
+      </li><!-- widgets list end -->
       <li style="margin-top:20px;">
 	<a href="https://s3-ap-southeast-1.amazonaws.com/jkciphoto/jkProdPhoto/useful/result.jpg" title="" data-fancybox-group="gallery-bssb" class="fancybox">
-	  <img src="https://s3-ap-southeast-1.amazonaws.com/jkciphoto/jkProdPhoto/useful/result.jpg" />
+          <img src="https://s3-ap-southeast-1.amazonaws.com/jkciphoto/jkProdPhoto/useful/result.jpg" />
 	</a>
       </li>
-      <%- if @events.count > 0 %>
-        <li class="widget-container widget_up_events"><!-- widgets list -->
-          <h1 class="title-widget">Upcoming Events</h1>
-          <ul class="list-unstyled">
-            <%- @events.each do |event| %>
-              <li class="up-event-wrap">
-		<h1 class="title-median">
-        	  <a href="<%= event_path(event) %>" title="<%= event.name %>"><%= event.name %></a>
-        	</h1>
-                <div class="up-event-meta clearfix">
-        	  <%- if event.is_single_day %>
-                    <div class="up-event-date"><%= event.start_date %></div>
-        	    <%- if event.time.present? %>
-        	      <div class="up-event-time"><%= event.time %></div>
-        	    <%- end %>
-        	  <%- else %>
-        	    <div class="up-event-date"><%= event.start_date %></div>
-        	    <div class="up-event-date"><%= event.end_date %></div>
-        	  <%- end %>
-                </div>
-                <p>
-        	  <%= event.description.truncate(120) %>
-        	  <%- if event.description.length > 120  %>
-        	    <a href="<%= event_path(event) %>" class="moretag" title="read more">MORE</a> 
-        	  <%- end %>
-                </p>
-              </li>
-            <%- end %>
-          </ul>
-        </li><!-- widgets list end -->
-      <%- end %>
     </ul><!-- widgets end -->
   </div><!-- inner custom column end -->
 </div><!-- upcoming events wrapper end -->
