@@ -81,7 +81,7 @@ class ResultsController < ApplicationController
   end
   
   def result_params
-    params.require(:result).permit!
+    params.require(:result).permit(:batch_result_id, :name, :marks, :stream, :college, :rank, :disp_rank, :student_img)
   end
 
 end
