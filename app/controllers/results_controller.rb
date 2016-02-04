@@ -1,8 +1,8 @@
 class ResultsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
-  load_and_authorize_resource :class => "BatchResult", except: [:edit, :create, :destroy]
-  load_and_authorize_resource :class => "Result", only: [:edit, :create, :destroy]
+  load_and_authorize_resource :class => "BatchResult", except: [:edit, :create, :destroy, :update]
+  load_and_authorize_resource :class => "Result", only: [:edit, :create, :destroy, :update]
   
   load_and_authorize_resource param_method: :my_sanitizer
 
