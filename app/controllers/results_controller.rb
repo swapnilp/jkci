@@ -1,7 +1,9 @@
 class ResultsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
-  load_and_authorize_resource :class => "BatchResult"#, only: [:index, :show]
+  load_and_authorize_resource :class => "BatchResult", except: [:create]
+  load_and_authorize_resource :class => "Result", only: [:create]
+  
   load_and_authorize_resource param_method: :my_sanitizer
 
   def index
