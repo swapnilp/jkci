@@ -19,7 +19,7 @@ class ResultsController < ApplicationController
   
   def create
     params.permit!
-    result = Result.new(params[:result])
+    result = Result.new(result_params)
     if result.save
       render json: {success: true, is_new: true, html: render_to_string(:partial => "result.html.erb", :layout => false, locals: {result: result})}
     else
@@ -79,5 +79,10 @@ class ResultsController < ApplicationController
     #params.permit!
     params.require(:result).permit!
   end
+  
+  def result_params
+    params.require(:result).permit!
+  end
+
 end
 
