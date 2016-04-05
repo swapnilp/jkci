@@ -266,3 +266,50 @@ table th.center {
   -ms-user-select: none;
   user-select: none;   
 }
+
+
+
+
+.marquee-outer {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  color: orange;
+}
+.marquee-inner {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  line-height: 50px;
+  text-align: center;
+  /* Starting position */
+  -moz-transform:translateX(100%);
+  -webkit-transform:translateX(100%);
+  transform:translateX(100%);
+  /* Apply animation to this element */
+  -moz-animation: scroll-left 30s linear infinite;
+  -webkit-animation: scroll-left 30s linear infinite;
+  animation: scroll-left 30s linear infinite;
+}
+/* Move it (define the animation) */
+@-moz-keyframes scroll-left {
+  0%   { -moz-transform: translateX(100%); }
+  100% { -moz-transform: translateX(-230%); }
+}
+@-webkit-keyframes scroll-left {
+  0%   { -webkit-transform: translateX(100%); }
+  100% { -webkit-transform: translateX(-230%); }
+}
+@keyframes scroll-left {
+  0%   { 
+    -moz-transform: translateX(100%); /* Browser bug fix */
+    -webkit-transform: translateX(100%); /* Browser bug fix */
+    transform: translateX(100%); 
+  }
+  100% { 
+    -moz-transform: translateX(-230%); /* Browser bug fix */
+    -webkit-transform: translateX(-230%); /* Browser bug fix */
+    transform: translateX(-230%); 
+  }
+}
