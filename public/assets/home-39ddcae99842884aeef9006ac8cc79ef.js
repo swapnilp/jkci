@@ -1,0 +1,1 @@
+function followStudent(e,n){e.preventDefault(),window.confirm("Are you sure?")&&$.get($(n).data("href")+".json",function(){$(n).parent().parent().remove()})}
