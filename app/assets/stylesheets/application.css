@@ -313,3 +313,9 @@ table th.center {
     transform: translateX(-370%); 
   }
 }
+
+.boldFont p{
+  font-size: 18px !important;
+  font-weight:bold;
+  line-height:30px !important;
+}
