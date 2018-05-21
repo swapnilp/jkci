@@ -202,8 +202,25 @@ figure.gallery-photo-thumb{
   .sideBarLink{
     display:none !important;
   }
+  .marquee-outer {
+    max-height: 115px;
+  }
 }
 
+@media only screen and (max-width: 768px) {
+  .marquee-outer {
+    max-height: 100px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .marquee-outer {
+    max-height: 70px;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+}
 .studentShow div{
   margin-bottom:10px;
 }
