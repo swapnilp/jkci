@@ -6,8 +6,8 @@
         <div class="col-padded col-naked">
           <ul class="list-unstyled clear-margins"><!-- widgets -->
             <li class="widget-container widget_nav_menu"><!-- widgets list -->
-	      <%= render partial: 'layouts/links' %>
-	    </li>
+              <%= render partial: 'layouts/links' %>
+            </li>
           </ul>
         </div>
       </div><!-- widgets column left end -->
@@ -19,14 +19,14 @@
               <div itemscope itemtype="http://data-vocabulary.org/Organization"> 
                 <h2 class="title-median m-contact-subject" itemprop="name">J K science Academy Islampur</h2>
                 <div class="m-contact-address" itemprop="address" itemscope itemtype="http://data-vocabulary.org/Address">
-                  <span class="m-contact-street" itemprop="street-address">JK Building, Mahadevnagar</span>
+                  <span class="m-contact-street" itemprop="street-address">क्रांतीसिंह नाना पाटील नगर , रस्ता क्र. २ व ३</span>
+                  <span class="m-contact-street" itemprop="street-address">इस्लामपूर- ताकारी रोड, Essar पेट्रोल पँपासमोर,</span>
                   <span class="m-contact-city-region">
-		    <span class="m-contact-city" itemprop="locality">Islampur</span>, 
-		    <span class="m-contact-region" itemprop="region">Maharashtra</span>
-		  </span>
+                    <span class="m-contact-city" itemprop="locality">इस्लामपूर ता. वाळवा, जि. सांगली पिन :४१५४०९</span>, 
+                  </span>
                   <span class="m-contact-zip-country">
-		    <span class="m-contact-zip" itemprop="postal-code">411415</span> 
-		  </span>
+                    <span class="m-contact-region" itemprop="region">Maharashtra</span>
+                  </span>
                 </div>
                 <div class="m-contact-tel-fax">
                   <span class="m-contact-tel">Tel: <span itemprop="tel">02342(220364)</span></span>
@@ -40,7 +40,7 @@
                   <li><a href="#" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                 </ul>
               </div>
-	    </li>
+            </li>
           </ul>
         </div>
       </div><!-- widgets column center end -->
@@ -50,15 +50,15 @@
             <li class="widget-container widget_sofa_flickr"><!-- widgets list -->
               <h1 class="title-widget">Flickr Stream</h1>
               <ul class="k-flickr-photos list-unstyled">
-		<%- @flicker_photos.each do |img, album| %>
+                <%- @flicker_photos.each do |img, album| %>
                 <li>
-		  <a href="<%= album%>" title="Flickr photo" data-no-turbolink="true">
-		    <img src="<%= img %>" alt="Photo 1" />
-		  </a>
-		</li>
+                  <a href="<%= album%>" title="Flickr photo" data-no-turbolink="true">
+                    <img src="<%= img %>" alt="Photo 1" />
+                  </a>
+                </li>
                 <%- end %>
               </ul>
-	    </li>
+            </li>
           </ul> 
         </div>
       </div><!-- widgets column right end -->
@@ -88,22 +88,22 @@
     
     <!-- Drop-down -->
     <!--script src="js/dropdown-menu/dropdown-menu.js"></script>
-	
-	<!-- Fancybox -->
-	<!--script src="js/fancybox/jquery.fancybox.pack.js"></script>
-	    <script src="js/fancybox/jquery.fancybox-media.js"></script><!-- Fancybox media -->
-	    
-	    <!-- Responsive videos -->
-	    <!--script src="js/jquery.fitvids.js"></script>
-			
-			<!-- Audio player -->
-			<!--script src="js/audioplayer/audioplayer.min.js"></script>
-			    
-			    <!-- Pie charts -->
-			    <!--script src="js/jquery.easy-pie-chart.js"></script>
-				
-				<!-- Google Maps -->
-				<!--script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
-				    
-				    <!-- Theme -->
-				    <!--script src="js/theme.js"></script-->
+        
+        <!-- Fancybox -->
+        <!--script src="js/fancybox/jquery.fancybox.pack.js"></script>
+            <script src="js/fancybox/jquery.fancybox-media.js"></script><!-- Fancybox media -->
+            
+            <!-- Responsive videos -->
+            <!--script src="js/jquery.fitvids.js"></script>
+                        
+                        <!-- Audio player -->
+                        <!--script src="js/audioplayer/audioplayer.min.js"></script>
+                            
+                            <!-- Pie charts -->
+                            <!--script src="js/jquery.easy-pie-chart.js"></script>
+                                
+                                <!-- Google Maps -->
+                                <!--script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+                                    
+                                    <!-- Theme -->
+                                    <!--script src="js/theme.js"></script-->
